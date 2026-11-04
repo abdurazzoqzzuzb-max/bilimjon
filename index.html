@@ -113,6 +113,7 @@ body.th-orol .road{background:rgba(255,255,255,.18)}
 @keyframes lockbar{from{width:0}to{width:100%}}
 .hint,.good,.explain{border-radius:16px;padding:10px 12px;font-weight:700;margin-top:8px;color:#172033}
 .hint{background:#FFF4D6;border:2px solid #F2A900}.good{background:#E7F7EA;border:2px solid var(--ok)}.explain{background:#fff;border:2px solid #90A4AE}
+.dars{background:#fff;color:#172033;border:3px solid #7C4DFF;border-radius:20px;padding:14px;display:grid;gap:10px;margin-top:6px}.dars .dh{display:flex;gap:8px;align-items:center;font-weight:800;font-size:1.15rem}.dars .dkat{font-size:.88rem;color:#5B6478;font-weight:700}.dars .dq{background:#F1ECFF;border-radius:14px;padding:10px 12px;font-weight:700;line-height:1.45}.dars .dex{border:2px dashed #C9BDF5;border-radius:14px;padding:10px 12px;display:grid;gap:6px}.dars .dl{font-size:.85rem;color:#5B6478;font-weight:700}.dars .dsav{font-weight:800;font-size:1.1rem}.dars .dsteps{margin:0;padding-left:1.4em;display:grid;gap:6px;font-weight:700;line-height:1.4}.dars .dans{background:#E7F7EA;border:2px solid #2E9E5B;border-radius:14px;padding:8px 12px;font-weight:800}.dars .dnext{margin:0;font-weight:800;text-align:center}.dars .btn[disabled]{opacity:.55}
 .otatip{background:rgba(255,255,255,.08);border:1px dashed var(--line);border-radius:14px;padding:8px 10px;margin-top:8px;font-size:.9rem}.otatip summary{cursor:pointer;font-weight:800;min-height:32px}
 .matn{background:#fff;color:#172033;border-radius:16px;padding:10px 12px;font-size:1.1rem}.matn summary{font-weight:800;cursor:pointer}
 /* special types */
@@ -1411,7 +1412,7 @@ BJ.vis = vis;
 (function (G) {
 'use strict';
 const BJ = G.BJ, A = BJ.A = {}, gen = BJ.gen, B = BJ.bank;
-A.VER = '0.1.1';
+A.VER = '0.2.0';
 /* ================= UTIL ================= */
 const pad = n => String(n).padStart(2, '0');
 const todayKey = d => { d = d || new Date(); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
@@ -1887,6 +1888,159 @@ function afterAnswer(b, it, st0, r, m) {
   if (e.togri_1) A.addStar(b, 1, it.tur === 'arena');
   A.save(); return { e, ev };
 }
+/* ================= KICHIK DARS (0.2.0) =================
+   2-xatodan keyin to'g'ri javob shunchaki ko'rsatilib, keyingi savolga o'tib ketilmaydi:
+   qoida + shu savolning yechimi (namuna) → o'xshash YANGI savol (egizak). Egizakni bola o'zi yechmaguncha oldinga o'tilmaydi.
+   2 ta egizak ham xato bo'lsa — mavzu «qiyin» deb logga yoziladi (📚 Bugungi qiyinlar), bola esa charchab qolmasligi uchun davom etadi.
+   Pedagogik asos: namuna yechim (worked example) → mustaqil mashq; javobni tasodifan bosib topish foyda bermaydi. */
+const DARS = {
+  'M0.1': ["Kichik guruhni sanamasdan ko'rishga harakat qil: 2 ta — juftlik, 3 ta — uchburchak, 4 ta — kvadrat, 5 ta — kubikdagi besh nuqta."],
+  'M0.2': ["Har raqamning o'z shakli bor. Raqamni barmog'ing bilan havoda chizib ko'r va nomini ayt."],
+  'M0.3': ["Har bir narsaga barmog'ingni tegizib sana. Har biri faqat bir marta sanaladi.", "Oxirgi aytgan soning — javob."],
+  'M0.4': ["6, 7, 8, 9, 10 — beshdan keyin keladigan sonlar. 10 ikki raqamdan yoziladi: 1 va 0."],
+  'M0.5': ["Ikki guruhdan bittadan juftlab chiq.", "Ortib qolgan tomonda — ko'p. Hech biri ortmasa — teng."],
+  'M0.6': ["Burchaklarini sana: uchburchakda 3 ta, to'rtburchakda 4 ta. Doirada burchak yo'q."],
+  'M0.7': ["Avval nima bo'yicha ajratishni tanla: rangimi, shaklimi yoki kattaligimi. Keyin har birini bittadan tekshir."],
+  'M0.8': ["10 gacha sanab bo'lgach, davom et: o'n bir, o'n ikki, o'n uch… Har biri «o'n» va yana bir nechta."],
+  'M0.9': ["Qo'shish — ikki guruhni bitta qilish. Birlashtirib, hammasini sana."],
+  'M0.10': ["Qo'shsak — ko'payadi, ayirsak — kamayadi.", "Katta sonni yodda tut va barmoqlaringda davom etib sana."],
+  'M1.1': ["Katta sonni yodda tut. Qo'shishda oldinga, ayirishda orqaga sana."],
+  'M1.2': ["11 dan 19 gacha sonlar = 1 ta o'nlik + bir nechta birlik.", "Masalan, 14 = 10 + 4: bitta bog'lam va 4 ta tayoqcha."],
+  'M1.3': ["Avval o'nliklarni solishtir. O'nliklar teng bo'lsa — birliklarni.", "Belgining og'zi (> yoki <) doim katta songa qaraydi."],
+  'M1.4': ["Qavs ichidagini birinchi hisobla, keyin qolganini."],
+  'M1.5': ["Avval 10 gacha to'ldir, keyin qolganini qo'sh.", "Masalan: 8 + 5 = 8 + 2 + 3 = 13."],
+  'M1.6': ["Avval 10 gacha ayir, keyin qolganini ayir.", "Masalan: 13 − 5 = 13 − 3 − 2 = 8."],
+  'M1.7': ["Yaxlit o'nliklarni bog'lam deb o'yla: 30 + 20 = 3 bog'lam + 2 bog'lam = 5 bog'lam = 50."],
+  'M1.8': ["Ikki xonali sonda chapdagi raqam — o'nliklar, o'ngdagi — birliklar.", "47 = 4 ta o'nlik va 7 ta birlik."],
+  'M1.9': ["Avval o'nliklarni solishtir. O'nliklar teng bo'lsa — birliklarni."],
+  'M1.10': ["O'nliklarni o'nliklar bilan, birliklarni birliklar bilan hisoblaymiz."],
+  'M1.11': ["Chapdan o'ngga ketma-ket hisobla. Qavs bo'lsa — avval qavs ichi."],
+  'M1.12': ["Masaladagi kalit so'zni top.", "«Yana oldi», «qo'shildi», «keldi» — qo'shamiz. «Berdi», «yedi», «ketdi» — ayiramiz."],
+  'M2.1': ["O'nliklar bilan o'nliklar, birliklar bilan birliklar alohida hisoblanadi, keyin qo'shiladi."],
+  'M2.2': ["Birliklar 10 dan oshsa, 1 ta o'nlikni o'nliklarga o'tkazamiz.", "Ayirishda birlik yetmasa, 1 ta o'nlikni «qarz» olamiz."],
+  'M2.3': ["Sonlarni xona ostiga xona qilib yoz. Birliklardan (o'ngdan) boshla.", "10 dan oshsa — 1 ni keyingi xonaga o'tkaz; yetmasa — keyingi xonadan 1 qarz ol."],
+  'M2.4': ["Masalani 2 marta o'qi. Nima ma'lum va nima so'ralyapti — ajrat.", "«Undan ko'p» — qo'shamiz, «undan kam» — ayiramiz. 2 ta amal bo'lsa, ketma-ket bajaramiz."],
+  'M2.5': ["10 ta o'nlik = 1 ta yuzlik (100).", "Katta kvadrat — 100, tayoqcha — 10, kubikcha — 1."],
+  'M2.6': ["Uch xonali son: yuzliklar, o'nliklar, birliklar.", "352 = 3 ta yuzlik, 5 ta o'nlik, 2 ta birlik."],
+  'M2.7': ["Avval yuzliklarni, keyin o'nliklarni, keyin birliklarni solishtir."],
+  'M2.8': ["Har xonani alohida hisobla: yuzlik bilan yuzlik, o'nlik bilan o'nlik, birlik bilan birlik."],
+  'M2.9': ["Avval birliklar ustunini qo'sh. O'tgan o'nlikni tepaga kichkina qilib yozib qo'yishni unutma."],
+  'M2.10': ["1 m = 10 dm, 1 dm = 10 sm, 1 sm = 10 mm.", "Katta birlikdan kichigiga o'tsang — son kattalashadi."],
+  'M2.11': ["Perimetr — shaklning hamma tomonlari uzunligi yig'indisi. Har bir tomonni qo'shib chiq."],
+  'M2.12': ["Noma'lum sonni top: qo'shiluvchi = yig'indi − boshqa qo'shiluvchi.", "Kamayuvchi = ayirma + ayriluvchi. Topgach, tekshirib ko'r."],
+  'M2.13': ["Kichik mil — soat, katta mil — daqiqa.", "Katta mil 12 da bo'lsa — soat to'liq, 6 da bo'lsa — yarim."],
+  'M2.14': ["Shartni bo'laklarga ajrat. Har bir shartni rasm yoki chizma bilan tasavvur qil."],
+  'H0.1': ["Unli harflar: A, O, U, I, E, Oʻ. Ularni og'izni ochib, cho'zib aytamiz: «aaa», «ooo».", "O'xshash harflarni farqla: Oʻ ning yonida belgi bor, O da yo'q."],
+  'H0.2': ["Harfni nomi bilan emas, tovushi bilan ayt: «mmm», «nnn», «lll», «sss», «t»."],
+  'H0.3': ["Undosh + unli = bo'g'in. Ikkalasini qo'shib, cho'zib ayt: «m…a» → «ma»."],
+  'H0.4': ["So'zni bo'g'inlarga bo'lib o'qi, keyin qo'shib ayt: «ma-ma» → «mama»."],
+  'H0.5': ["Harfning tovushini eshit va og'zing qanday ochilishini kuzat. Keyin o'zing takrorla."],
+  'H0.6': ["So'zni bo'g'inma-bo'g'in o'qi, oxirida butun so'zni bir nafasda ayt."],
+  'H0.7': ["Gapni so'zma-so'z o'qi. Har so'zdan keyin ma'nosini o'yla."],
+  'H1.1': ["Harfni ko'ramiz va yozamiz, tovushni eshitamiz va aytamiz."],
+  'H1.2': ["Har bo'g'inda bitta unli bor. Unlilarni sanasang — bo'g'inlar sonini bilasan."],
+  'H1.3': ["Har bir harfni tartib bilan tekshir: birinchi, ikkinchi, uchinchi…"],
+  'H1.4': ["Gap bosh harf bilan boshlanadi va nuqta, so'roq yoki undov belgisi bilan tugaydi."],
+  'H1.5': ["Avval savolni o'qi, keyin javobni matndan qidir. Javob matnning ichida bor."],
+  'H2.1': ["Matnni o'qib, «Kim? Nima qildi? Qayerda? Nega?» savollariga javob top."],
+  'H2.2': ["Tutuq belgisi (ʼ) tovushni bir lahza to'xtatib aytishni bildiradi: maʼno, taʼlim, sanʼat."],
+  'H2.3': ["So'zni bo'g'in bo'yicha ko'chiramiz. Bitta harfni qator oxirida qoldirib bo'lmaydi."],
+  'H2.4': ["Ba'zi so'zlarda bir xil undosh ikki marta yoziladi: katta, achchiq, ikki. Sekin aytib, eshitib ko'r."],
+  'H2.5': ["Ma'nodosh — ma'nosi yaqin so'zlar (katta — ulkan).", "Zid — teskari ma'noli so'zlar (katta — kichik)."],
+  'H2.6': ["So'zni bo'g'inlarga bo'lib, har bo'g'inni yozib chiq. Oxirida o'qib tekshir."],
+  'L.1': ["Takrorlanadigan bo'lakni top (masalan: qizil, ko'k, qizil, ko'k). Keyingisi shu tartibda keladi."],
+  'L.2': ["Hammasiga umumiy belgini top: rang, shakl yoki tur. Unga mos kelmaydigani — ortiqcha."],
+  'L.3': ["Ikki narsa nimasi bilan bog'liq? Shu bog'lanishni ikkinchi juftga ham qo'lla."],
+  'L.5': ["Har qadamda nima o'zgaryapti? Qancha qo'shilyapti yoki ayrilyapti — shuni top."],
+  'L.9': ["Har bir shartni alohida chiz yoki yoz. Mos kelmagan variantni birma-bir o'chir."],
+  'OL': ["Shoshilma. Shartni diqqat bilan o'qi va har bir variantni tekshirib chiq."]
+};
+const DARS_FAN = {
+  mat: ["Shoshilma: sonlarni barmoq yoki chizma bilan tekshir."],
+  til: ["Harf va bo'g'inlarni sekin, birma-bir o'qi."],
+  mant: ["Diqqat bilan qara: nima bir xil, nima boshqacha?"],
+  en: ["So'zni eshit va rasmga qara. Tovushini o'zing ham takrorlab ayt."],
+  ar: ["Harfning shakliga va nuqtalariga qara: nuqtaning soni va joyi harfni farqlaydi."],
+  dunyo: ["Kartochkani yana bir marta o'qi: javob o'sha yerda yozilgan."]
+};
+const DARS_QADAM = {
+  'M1.2': it => { const n = +(it.ex && it.ex.f); return n >= 11 && n <= 19 ? ["1 bog'lam (to'la ramka) = 10 ta.", `Alohida turganlari: ${n - 10} ta.`, `10 + ${n - 10} = ${n}`] : []; },
+  'M0.3': it => { const n = +it.a; if (!(n >= 1 && n <= 20)) return []; const s = []; for (let i = 1; i <= n; i++) s.push(i); return [`Barmoq bilan bittadan sanaymiz: ${s.join(', ')}.`, `Oxirgisi — ${n}. Demak, ${n} ta.`]; },
+  'M0.8': it => { const n = +it.a; if (!(n >= 11 && n <= 20)) return []; const s = []; for (let i = 10; i <= n; i++) s.push(i); return [`10 dan keyin davom etamiz: ${s.join(', ')}.`, `Javob: ${n}.`]; },
+  'M2.4': it => { if (!(it.ex && it.ex.f != null)) return []; const m = String(it.sav).match(/\d+/g); if (!m || m.length < 3) return []; const [a, b, c] = m.map(Number), v = a - b + c; if (v !== +it.ex.f) return [];
+    return [`Boshida: ${a} kishi.`, `${b} kishi tushdi — kamaydi: ${a} − ${b} = ${a - b}.`, `${c} kishi chiqdi — ko'paydi: ${a - b} + ${c} = ${v}.`]; }
+};
+function darsMumkin(it, r) { return !r.yakuniy && !r.final && (it.t === 'tanla' || it.t === 'yoz') && !!(it.tugun && gen.reg[it.tugun]) && it.tugun !== 'KASHF' && it.tur !== 'duel' && it.tur !== 'kashf'; }
+/* Matematik namuna yechim: ifodadagi a, b, amal bo'yicha bosqichma-bosqich */
+function mathSteps(ex) {
+  const a = +ex.a, b = +ex.b, op = ex.op; if (!isFinite(a) || !isFinite(b) || (op !== '+' && op !== '−')) return [];
+  const v = op === '+' ? a + b : a - b, o = x => Math.floor(x / 10) * 10, u = x => x % 10;
+  if (ex.yoq === 'b') return [`□ — yashiringan son. Natija allaqachon yozilgan: ${v}.`, op === '+' ? `${a} ga nechta qo'shsak ${v} bo'ladi? ${v} − ${a} = ${b}.` : `${a} dan nechta olsak ${v} qoladi? ${a} − ${v} = ${b}.`, `Demak, □ = ${b}. Tekshiramiz: ${a} ${op} ${b} = ${v} ✓`];
+  if (ex.yoq) return [];
+  if (a >= 100 || b >= 100 || v >= 100) return ["Har xonani alohida hisobla: yuzliklar, o'nliklar, birliklar.", `${a} ${op} ${b} = ${v}`];
+  if (op === '+') {
+    if (a < 10 && b < 10 && v <= 10) { const s = []; for (let i = a + 1; i <= v; i++) s.push(i); return [`${a} ni yodda tut.`, `Yana ${b} marta oldinga sana: ${s.join(', ') || a}.`, `${a} + ${b} = ${v}`]; }
+    if (u(a) + u(b) >= 10) { const k = 10 - u(a), t = a + k; return [`${a} ni yaxlit o'nlikkacha to'ldiramiz: ${a} + ${k} = ${t}.`, `${b} dan ${k} ni ishlatdik, ${b - k} qoldi.`, `${t} + ${b - k} = ${v}`]; }
+    if (b < 10) return [`Birliklarni qo'shamiz: ${u(a)} + ${b} = ${u(a) + b}.`, `O'nliklar o'zgarmaydi: ${o(a)} + ${u(a) + b} = ${v}`];
+    return [`O'nliklar: ${o(a)} + ${o(b)} = ${o(a) + o(b)}.`, `Birliklar: ${u(a)} + ${u(b)} = ${u(a) + u(b)}.`, `Jami: ${o(a) + o(b)} + ${u(a) + u(b)} = ${v}`];
+  }
+  if (a <= 10) { const s = []; for (let i = a - 1; i >= v; i--) s.push(i); return [`${a} ni yodda tut.`, `${b} marta orqaga sana: ${s.join(', ') || a}.`, `${a} − ${b} = ${v}`]; }
+  if (u(a) < u(b)) { const k = u(a), t = a - k; return [`Avval ${a} dan ${k} ni olamiz: ${a} − ${k} = ${t}.`, `Yana ${b - k} ni olish kerak: ${t} − ${b - k} = ${v}`]; }
+  if (b < 10) return [`Birliklardan ayiramiz: ${u(a)} − ${b} = ${u(a) - b}.`, `O'nliklar o'zgarmaydi: ${o(a)} + ${u(a) - b} = ${v}`];
+  return [`O'nliklar: ${o(a)} − ${o(b)} = ${o(a) - o(b)}.`, `Birliklar: ${u(a)} − ${u(b)} = ${u(a) - u(b)}.`, `Jami: ${o(a) - o(b)} + ${u(a) - u(b)} = ${v}`];
+}
+function darsQadam(it) {
+  const out = [], ex = it.ex || {};
+  let q = DARS_QADAM[it.tugun] ? DARS_QADAM[it.tugun](it) : [];
+  if (!q.length && ex.a != null && ex.b != null && ex.op) q = mathSteps(ex);
+  /* maslahat: matnli masalada (kalit so'z) yoki yechim qadami bo'lmasa; oddiy misolda qadam bilan takrorlanmasin */
+  if (it.hint && it.hint.sav && (it.matn || !q.length)) out.push('💡 ' + it.hint.sav);
+  out.push(...q);
+  if (it.tushun) out.push(it.tushun);
+  if (it.t === 'yoz') { try { out.push("Bo'g'inlab o'qi va harflarni tartib bilan joylashtir: " + BJ.uz.tok(it.a).join(' · ')); } catch (e) {} }
+  return out.slice(0, 5);
+}
+function javobHTML(it) {
+  if (it.t === 'tanla' && Array.isArray(it.o)) { const o = it.o.find(x => x.v === String(it.a)); if (o) { if (o.vis) return `<span class="ov">${ART.vis(o.vis)}</span>`; return `<b>${esc(o.h != null ? o.h : o.v)}</b>`; } }
+  return `<b>${esc(it.aLabel || it.a)}</b>`;
+}
+function twinItem(b, it, n) {
+  const q = Math.max(1, (it.q || 1) - (n >= 2 ? 1 : 0));
+  const tw = A.makeItem(b, { tugun: it.tugun, q, tur: 'dars', harf: it.harf });
+  tw.tur = 'dars'; tw.dars = n; return tw;
+}
+function darsFlow(b, m, st, it, next) {
+  const n = it.tur === 'dars' ? (it.dars || 1) + 1 : 1;
+  A.pushLog(b.id, { t: 'dars', ts: Date.now(), bola: b.id, fan: it.fan, tugun: it.tugun, n, savol: String(it.savLog || it.sav || '').slice(0, 80) });
+  if (n > 2) {
+    FX.play('yumshoq');
+    $('#fb').innerHTML = `<div class="explain">🙂 Bu mavzu hozircha qiyin. Hechqisi yo'q — dadang yoki oying bilan ko'rib chiqing, ertaga yana birga o'rganamiz!</div><button class="btn big" data-next>Davom ➜</button>`;
+    $('[data-next]').onclick = next; return;
+  }
+  showLesson(b, m, st, it, n);
+}
+function showLesson(b, m, st, it, n) {
+  FX.play('yumshoq'); FX.vibrate(30);
+  const d = gen.reg[it.tugun] || {}, kat = A.gl(b.daraja) === 'g0', qoida = DARS[it.tugun] || DARS_FAN[it.fan] || [], qad = darsQadam(it);
+  const html = `<div class="dars" role="region" aria-label="Kichik dars">
+  <div class="dh"><span>📖</span><span>Kichik dars${d.nom ? ': ' + esc(d.nom) : ''}</span></div>
+  ${kat ? `<div class="dkat">👨‍👩‍👦 Kattalar o'qib bersin</div>` : ''}
+  ${qoida.length ? `<div class="dq">${qoida.map(esc).join('<br>')}</div>` : ''}
+  <div class="dex"><div class="dl">Shu savolni birga yechamiz:</div><div class="dsav">${esc(it.sav)}</div>${it.vis ? `<div class="visw">${ART.vis(it.vis)}</div>` : ''}</div>
+  ${qad.length ? `<ol class="dsteps">${qad.map(s => `<li>${esc(s)}</li>`).join('')}</ol>` : ''}
+  ${kat && it.ota ? `<div class="dkat">👨 Kattalarga: ${esc(it.ota)}</div>` : ''}
+  <div class="dans">✅ Javob: ${javobHTML(it)}</div>
+  <p class="dnext">${n === 1 ? "Endi xuddi shunday savolni o'zing yech! 💪" : "Yana bittasini mashq qilamiz — bu safar osonrog'i."}</p>
+  <button class="btn big" data-twin disabled>Men tayyorman ✍️ <span data-c></span></button></div>`;
+  const host = $('.item'); if (host) host.outerHTML = html; else { const s = $('#stage') || app; s.innerHTML = html; }
+  const btn = $('[data-twin]'), c = $('[data-c]'); let k = A.TEZ ? 0 : 5;
+  const tick = () => { if (!document.body.contains(btn)) return; if (k <= 0) { btn.disabled = false; c.textContent = ''; return; } c.textContent = '(' + k + ')'; k--; setTimeout(tick, 1000); };
+  tick();
+  btn.onclick = () => { if (btn.disabled) return; const tw = twinItem(b, it, n); if (CUR && CUR.k === 'missiya') showItem(b, m, st, tw); else arenaNext(b, tw); };
+  try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) {}
+}
+A.darsQadam = darsQadam; A.mathSteps = mathSteps; A.DARS = DARS;
+if (A.TEZ) G.__bjCur = () => CUR; /* faqat ?tez=1 avtomatik sinov uchun */
 function onAnswer(b, m, st, it, st0, r) {
   const ctx = CUR; if (!ctx || ctx.it !== it) return;
   r.shoshildi = r.shoshildi || (!r.togri && Date.now() - st0.shown < 1200 && st0.urinish === 1);
@@ -1896,12 +2050,15 @@ function onAnswer(b, m, st, it, st0, r) {
     return; }
   const fin = { togri: !!r.togri, togri_1: !!r.togri && st0.urinish === 1 && !r.xato_soni, javob: r.javob, xato_turi: r.togri && st0.urinish === 1 ? (r.xato_turi || null) : (st0.x1 || r.xato_turi || null), shoshildi: r.shoshildi };
   if (r.xato_soni) { st0.urinish = 1 + r.xato_soni; if (r.maslahat) st0.maslahat = 1; }
-  const res = m ? m.res[m.si] : null; const { ev } = afterAnswer(b, it, st0, fin, m);
+  const res = m && it.tur !== 'dars' ? m.res[m.si] : null; const { ev } = afterAnswer(b, it, st0, fin, m);
   if (res) res.push({ ok: fin.togri_1 ? 1 : 0, ms: Date.now() - st0.shown, ball: it.tur === 'duel' ? duelBall(fin, Date.now() - st0.shown) : 0 });
   if (m) m.cur = null; A.save(true);
   const next = () => { if (CUR && CUR.k === 'missiya') stepRun(b, m); else if (CUR && CUR.k === 'arena') arenaNext(b); };
+  if (it.tur === 'dars' && fin.togri) setTimeout(() => toast("🎓 Barakalla! Darsdan keyin o'zing yechding!"), 250);
   if (fin.togri_1) { const el = r.el || $('#body'); const bb = el.getBoundingClientRect(); const t0 = performance.now(); FX.boom(bb.left + bb.width / 2, bb.top + Math.min(bb.height / 2, 160), b.dunyo).then(() => { A.agg(b).fx += Math.round(performance.now() - t0); if (ev === 'ozl') toast('🟢 Yangi ko\'nikma o\'zlashtirildi!'); next(); }); return; }
   if (fin.togri) { FX.play('ding'); $('#fb').innerHTML = `<div class="good">✅ ${esc(pickA(PRAISE1))}</div>`; setTimeout(next, A.TEZ ? 200 : 1300); return; }
+  /* 0.2.0: 2-xatoda javob shunchaki ko'rsatilmaydi — kichik dars → egizak savol */
+  if (darsMumkin(it, r)) return darsFlow(b, m, st, it, next);
   /* 2-xato: to'g'ri javob tushuntiriladi → takrorga */
   FX.play('yumshoq'); $$('.opt').forEach(o => { if (o.dataset.v === String(it.a)) o.classList.add('ok'); });
   $('#fb').innerHTML = `<div class="explain">${r.yakuniy ? '🙂 Bu mashq hozircha qiyin bo\'ldi.' : `👉 To'g'ri javob: <b>${esc(it.aLabel || it.a)}</b>`}${it.tushun ? '<br>' + esc(it.tushun) : ''}<br><span class="sm">Bu mashq keyinroq yana chiqadi — eslab qolamiz.</span></div><button class="btn big" data-next>Davom ➜</button>`;
@@ -2098,8 +2255,8 @@ function arenaPick(b) {
   const top = ids.slice(0, 5), id = top[Math.floor(Math.random() * top.length)]; return { tugun: id, q: b.tugun[id].q, tur: 'arena' };
 }
 function screenArena(b) { CUR = { k: 'arena', b }; startSession(b, 'arena'); theme(b.dunyo); arenaNext(b); }
-function arenaNext(b) {
-  if (!CUR || CUR.k !== 'arena') return; const it = A.makeItem(b, arenaPick(b)), ay = b.arenaYulduz[A.todayKey()] || 0, st0 = { shown: Date.now(), first: null, urinish: 1, maslahat: 0, ovoz: 0, lock: b.shosh ? Date.now() + 1500 : 0 };
+function arenaNext(b, given) {
+  if (!CUR || CUR.k !== 'arena') return; const it = given || A.makeItem(b, arenaPick(b)), ay = b.arenaYulduz[A.todayKey()] || 0, st0 = { shown: Date.now(), first: null, urinish: 1, maslahat: 0, ovoz: 0, lock: b.shosh ? Date.now() + 1500 : 0 };
   CUR.it = it; CUR.st = st0; CUR.fan = it.fan;
   app.innerHTML = `<div class="wrap play"><div class="top"><button class="ib" data-x aria-label="Chiqish">✕</button><div class="ttl">⚔️ Arena</div><span class="sp"></span><span class="pill">⭐ ${ay}/20</span></div><div class="item t-${it.t}">${headHTML(b, it)}<div id="body"></div><div id="fb"></div>${otaTip(b, it)}</div></div>`;
   $('[data-x]').onclick = () => { endSession(b); go('uy'); };
@@ -2153,6 +2310,7 @@ A.screenOta = function (h) {
   if ((m = h.match(/^ota-mavzu-(\w+)$/))) return mavzuPanel(A.bola(m[1]));
   if (h === 'ota-sozlama') return settings();
   if (h === 'ota-arab') return arabPanel();
+  if (h === 'ota-qiyin') { QKUN = null; return qiyinPanel(); }
   if (h === 'ota-eksport') return exportPanel();
   if (h === 'ota-zaxira') return backupPanel();
   return weekPanel();
@@ -2179,7 +2337,7 @@ function weekPanel() {
     <div class="kgrid"><div><b class="mono">${A.fmtHMS(s.faol)}</b><span>faol vaqt</span></div><div><b>${s.kunlar}/7</b><span>kun</span></div><div><b>${s.n ? s.acc1 + '%' : '—'}</b><span>aniqlik</span></div><div><b>${s.med ? (s.med / 1000).toFixed(1) + ' s' : '—'}</b><span>median</span></div><div><b>+${s.ozl.length} 🟢</b><span>o'sish</span></div><div><b>${s.wcpm ? s.wcpm[1] : '—'}</b><span>WCPM</span></div></div>
     <div class="lvl"><span class="sm">O'z darajasida (matematika): ${levelPct(b)}%</span><div class="tbar"><i style="width:${levelPct(b)}%"></i></div></div></button>`; }).join('') || '<div class="card">Hali bola yo\'q.</div>'}
   ${noms.length ? `<div class="card"><h3>🏆 Hafta nominatsiyalari (shu telefondagi bolalar)</h3>${noms.map(n => `<div class="nr">${n.ic} <b>${esc(n.nom)}</b>: ${n.bola ? esc(A.bola(n.bola).laqab) : '<span class="mut">sifat sharti bajarilmadi — summa keyingi haftaga</span>'}</div>`).join('')}<p class="sm mut">To'liq hisob (hamma telefonlar) — Firebase ulangach (2-bosqich).</p></div>` : ''}
-  <div class="menu">${isAdmin() ? '<button class="btn" data-go="ota-qosh">➕ Bola qo\'shish</button>' : ''}<button class="btn" data-go="ota-eksport">🤖 Claude uchun hafta</button><button class="btn" data-go="ota-arab">🕌 Arab so'zlari</button><button class="btn" data-go="ota-zaxira">💾 Zaxira</button><button class="btn" data-go="ota-sozlama">⚙️ Sozlamalar</button><button class="btn ghost" data-out>🔒 Paneldan chiqish</button></div>
+  <div class="menu">${isAdmin() ? '<button class="btn" data-go="ota-qosh">➕ Bola qo\'shish</button>' : ''}<button class="btn" data-go="ota-qiyin">📚 Bugungi qiyinlar</button><button class="btn" data-go="ota-eksport">🤖 Claude uchun hafta</button><button class="btn" data-go="ota-arab">🕌 Arab so'zlari</button><button class="btn" data-go="ota-zaxira">💾 Zaxira</button><button class="btn" data-go="ota-sozlama">⚙️ Sozlamalar</button><button class="btn ghost" data-out>🔒 Paneldan chiqish</button></div>
   <p class="sm mut">Versiya ${A.VER} · ${A.storageOK ? 'xotira ✓' : '⚠️ xotiraga yozib bo\'lmadi'}</p></div>`;
   bindTop(); $$('[data-wk]').forEach(x => x.onclick = () => { const d = +x.dataset.wk; WK = d < 0 ? A.prevWeek(WK) : A.isoWeek(A.addDays(A.weekDays(WK)[6], 1)); weekPanel(); });
   $$('[data-b]').forEach(x => x.onclick = () => A.go('ota-bola-' + x.dataset.b)); $$('[data-go]').forEach(x => x.onclick = () => A.go(x.dataset.go));
@@ -2303,6 +2461,35 @@ function settings() {
     A.applyFX(); A.save(true); toast('Saqlandi ✓'); A.go('ota'); };
   const w = $('[data-wipe]'); if (w) w.onclick = () => sheet(`<h2>⚠️ Hammasini o'chirish</h2><input id="cf" class="inp" placeholder="Tasdiqlash: OCHIR" autocomplete="off"><div class="row"><button class="btn danger" data-ok>O'chirish</button><button class="btn ghost" data-x>Bekor</button></div>`, el => { $('[data-ok]', el).onclick = () => { if ($('#cf', el).value.trim().toUpperCase() !== 'OCHIR') return toast('OCHIR deb yozing'); A.logKeys().forEach(k => localStorage.removeItem(k)); localStorage.removeItem(A.KEY); location.hash = ''; location.reload(); }; });
 }
+/* ================= 📚 BUGUNGI QIYINLAR (0.2.0): Claude kichik dars yozishi uchun kunlik matn ================= */
+let QKUN = null;
+function qiyinMatn(kun) {
+  const L = A.bolalar(), out = [`BILIMJON-QIYIN|v${A.VER}|${kun}|bolalar=${L.length}`], odam = [];
+  L.forEach(b => {
+    const log = A.readLog(b.id, kun), ans = log.filter(e => e.t === 'ans'), dars = log.filter(e => e.t === 'dars'), g = {};
+    const G0 = id => g[id] || (g[id] = { n: 0, xato: 0, dars: 0, egz: 0, egzOk: 0, ex: [] });
+    ans.forEach(e => { const x = G0(e.tugun); x.n++; if (e.tur === 'dars') { x.egz++; if (e.togri) x.egzOk++; } if (!e.togri_1) { x.xato++; if (x.ex.length < 3) x.ex.push(e); } });
+    dars.forEach(e => { G0(e.tugun).dars++; });
+    const ids = Object.keys(g).filter(id => g[id].xato || g[id].dars).sort((p, q) => g[q].xato - g[p].xato);
+    out.push(`BOLA|${b.kod}|daraja=${b.daraja}|javob=${ans.length}|xato=${ans.filter(e => !e.togri_1).length}|dars=${dars.length}`);
+    ids.forEach(id => { const x = g[id], nom = (BJ.gen.reg[id] || {}).nom || id; out.push(`Q|${id}|${nom}|n=${x.n}|xato=${x.xato}|dars=${x.dars}|egizak=${x.egzOk}/${x.egz}`); x.ex.forEach(e => out.push(`  e|${e.savol}|bola=${e.javob}|togri=${e.togri_javob}|xato_turi=${e.xato_turi || '-'}`)); });
+    odam.push({ b, ids: ids.map(id => (BJ.gen.reg[id] || {}).nom || id) });
+  });
+  return { txt: out.join('\n'), odam };
+}
+function qiyinPanel() {
+  const kun = QKUN || A.todayKey(), r = qiyinMatn(kun);
+  app.innerHTML = `<div class="wrap ota">${top('📚 Bugungi qiyinlar', 'ota')}
+  <div class="wkbar"><button class="ib" data-d="-1" aria-label="Oldingi kun">◀</button><b>${esc(kun)}</b><button class="ib" data-d="1" aria-label="Keyingi kun" ${kun >= A.todayKey() ? 'disabled' : ''}>▶</button></div>
+  <div class="card"><p class="sm">Bolalar qiynalgan mavzular. Kun oxirida shu matnni nusxa olib Claude'ga yuboring — u shu mavzular bo'yicha kichik darslar tayyorlab, keyingi versiyada chiqaradi.</p>
+  ${r.odam.map(o => `<p><b>${esc(o.b.avatar + ' ' + o.b.laqab)}:</b> ${o.ids.length ? esc(o.ids.join(', ')) : "qiyinchilik yo'q ✓"}</p>`).join('')}</div>
+  <div class="card"><textarea class="inp mono" rows="10" readonly aria-label="Claude uchun matn">${esc(r.txt)}</textarea>
+  <div class="row"><button class="btn" data-copy>📋 Nusxa olish</button><button class="btn ghost" data-share>📤 Ulashish</button></div></div></div>`;
+  bindTop();
+  $$('[data-d]').forEach(x => x.onclick = () => { if (x.disabled) return; QKUN = A.addDays(kun, +x.dataset.d); qiyinPanel(); });
+  $('[data-copy]').onclick = () => copyText(r.txt);
+  $('[data-share]').onclick = () => shareText(r.txt, 'Bilimjon — qiyinlar ' + kun);
+}
 /* ================= EKSPORT: BJW2 + CSV (6.6) ================= */
 function exportPanel() {
   WK = WK || A.isoWeek(); const L = A.bolalar(), txt = [`BILIMJON|v${A.VER}|${WK}|bolalar=${L.length}`].concat(L.map(b => A.bjw2(b, WK))).join('\n');
@@ -2337,12 +2524,13 @@ function backupPanel() {
 }
 /* ================= ISHGA TUSHIRISH ================= */
 function start() {
-  const s = S(); if (s.appVer !== A.VER) { s.appVer = A.VER; A.save(true); }
+  const s = S(), oldVer = s.appVer; if (s.appVer !== A.VER) { s.appVer = A.VER; A.save(true); }
   try { A.ensurePlans(); A.pruneLogs(); } catch (e) { console.warn(e); }
   A.applyFX(); FX.ensure();
   if (!G.BJ_BITTA && 'serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')) navigator.serviceWorker.register('sw.js').catch(() => {});
   BJ.debug = { state: () => A.S(), fx: FX.stats, A, gen: BJ.gen };
   A.render();
+  if (oldVer && oldVer !== A.VER) setTimeout(() => toast('🆕 Bilimjon ' + A.VER + ": xato qilsang — kichik dars, keyin o'zing yechasan!"), 900);
 }
 start();
 })(window);
