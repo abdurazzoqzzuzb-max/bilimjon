@@ -150,6 +150,51 @@ body.th-orol .road{background:rgba(255,255,255,.18)}
 @keyframes boom{0%{transform:translate(-50%,-50%) scale(.3);opacity:0}25%{transform:translate(-50%,-50%) scale(1.25);opacity:1}100%{transform:translate(-50%,-120%) scale(1);opacity:0}}
 .fxlayer{position:fixed;inset:0;z-index:63;display:flex;align-items:flex-end;justify-content:flex-end;padding:18px}
 .skip{min-height:56px;padding:8px 16px;border-radius:999px;border:2px solid rgba(255,255,255,.5);background:rgba(0,0,0,.45);color:#fff;font-weight:800}
+/* --- 🎮 dam olish o'yinlari va 😴 charchadim (0.3.0) --- */
+.charch{display:block;margin:18px auto 4px;font-size:1rem;min-height:48px;padding:8px 18px;width:auto}
+.pill.kam{background:#FFF4D6;color:#4A3500;border-color:#F2A900;animation:blink 1s infinite}
+.oyhero{display:flex;align-items:flex-end;gap:4px}.oyhero .bubble{margin:0 0 18px 6px;flex:1}
+.ogrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+.ocard{display:flex;flex-direction:column;align-items:center;gap:4px;min-height:160px;border-radius:22px;border:3px solid var(--line);background:var(--card);color:var(--ink);padding:12px;box-shadow:0 5px 0 var(--line);font:inherit}
+.ocard.yangi{border-color:var(--acc)}.ocard span{font-size:3.4rem;line-height:1.1}.ocard b{font-size:1.25rem}.ocard small{color:var(--mut);font-size:.85rem;text-align:center}
+.oqayt{display:block;margin:16px auto 0;width:auto}
+.oyfin{text-align:center;padding-top:24px}
+.pgbar{display:flex;align-items:center;gap:8px;background:#fff;color:#172033;border-radius:18px;padding:6px 10px;margin:4px 0 8px;min-height:66px}
+.pgbar .pill{background:#E7F7EA;color:#172033;border-color:#B9E4C2}
+.pgg{font-size:1.7rem}.pggoal{display:flex;align-items:center;gap:4px;min-height:52px;background:#263238;border-radius:14px;padding:4px 8px}.pggoal svg{display:block}.pgq{color:#FFC400;font-size:1.8rem;padding:0 4px}
+.pgdot{display:inline-block;width:46px;height:46px;border-radius:50%;border:3px solid #fff}
+.pg{position:relative;height:300px;border-radius:20px;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;cursor:pointer}
+.pg.garaj{background:#2B2B2B}.pg.orol{background:linear-gradient(180deg,#5B2C9A,#E35BB0)}
+.pgl{position:absolute;left:0;right:0;height:33.34%;background:repeating-linear-gradient(90deg,transparent 0 40px,rgba(255,255,255,.05) 40px 80px);animation:pgscroll .7s linear infinite}
+.pgl[data-l="0"]{top:0}.pgl[data-l="1"]{top:33.33%}.pgl[data-l="2"]{top:66.66%}
+.pg.garaj .pgl+.pgl{border-top:4px dashed rgba(255,214,0,.8)}.pg.orol .pgl+.pgl{border-top:3px dashed rgba(255,255,255,.55)}
+@keyframes pgscroll{to{background-position:-80px 0}}
+.pgcar{position:absolute;left:4px;width:102px;height:33.33%;display:flex;align-items:center;transition:top .18s ease-out;z-index:3;pointer-events:none}.pgcar svg{width:100%;height:auto;max-height:92%}
+.pgcar.bump{animation:shk .35s}
+.pggate{position:absolute;top:0;bottom:0;left:0;width:90px;display:grid;grid-template-rows:repeat(3,1fr);gap:8px;padding:6px 0;z-index:2;will-change:transform;pointer-events:none}
+.pgc{background:#fff;border-radius:16px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 0 rgba(0,0,0,.35);border:4px solid transparent}
+.pgc.ok{border-color:var(--ok);background:#E7F7EA}.pgc.no{border-color:var(--no);background:#FDECEC}
+.pggrp{display:flex;flex-wrap:wrap;justify-content:center;gap:1px;max-width:76px}
+.pgtip{text-align:center;margin-top:8px}
+.pzh{display:flex;align-items:center;gap:10px;margin:4px 0 10px}.pzth{width:72px;height:72px;flex:0 0 72px;border-radius:12px;background-size:cover;border:3px solid #fff;box-shadow:0 3px 0 rgba(0,0,0,.25)}
+.pzb{display:grid;gap:3px;width:100%;max-width:360px;aspect-ratio:1;margin:0 auto;background:rgba(0,0,0,.3);border-radius:14px;padding:3px;touch-action:none;user-select:none;-webkit-user-select:none;transition:gap .3s,padding .3s}
+.pzt{border-radius:6px;background-repeat:no-repeat;position:relative;cursor:pointer;touch-action:none}
+.pzt.sel{outline:4px solid #F2A900;outline-offset:-4px;z-index:2}.pzt.drag{z-index:5;filter:drop-shadow(0 6px 6px rgba(0,0,0,.45))}
+.pzt.ok::after{content:"";position:absolute;right:4px;bottom:4px;width:10px;height:10px;border-radius:50%;background:var(--ok);border:2px solid #fff}
+.pzb.done{gap:0;padding:0}.pzb.done .pzt{border-radius:0}.pzb.done .pzt::after{display:none}
+.kzh{display:flex;flex-direction:column;gap:2px;margin:4px 0 8px;text-align:center}.kzh b{font-size:1.3rem}
+.kz{position:relative;display:grid;gap:2px;width:100%;max-width:360px;aspect-ratio:1;margin:0 auto;background:#fff;border-radius:14px;padding:4px;touch-action:none;user-select:none;-webkit-user-select:none}
+.kz::after{content:"";position:absolute;top:0;bottom:0;left:50%;border-left:3px dashed #7C4DFF;transform:translateX(-50%);pointer-events:none}
+.kzc{border-radius:5px;background:#E8EDF5}.kzc.r{background:#F7F9FC;box-shadow:inset 0 0 0 1px #CFD8E3}.kzc.r.f{box-shadow:none;animation:pop .2s}
+.kzc.no{box-shadow:inset 0 0 0 3px var(--no)!important}.kzc.blink{animation:blink .45s 4}
+.kz.done .kzc.r{box-shadow:none}.kz.done .kzc:not(.f){background:#F7F9FC}.kz.done::after{border-left-color:transparent}
+.kzpal{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:12px 0 4px}
+.kzp{width:54px;height:54px;border-radius:50%;border:3px solid #fff;box-shadow:0 3px 0 rgba(0,0,0,.3);padding:0}.kzp.on{outline:4px solid #F2A900;outline-offset:2px}.kzp.er{background:#fff;font-size:1.5rem}
+.rey .ry{display:grid;grid-template-columns:30px 32px minmax(0,1fr) auto;gap:8px;align-items:center;margin:4px 0;padding:5px 6px;border-radius:12px}
+.rey .ry.men{background:rgba(255,196,0,.16);box-shadow:inset 0 0 0 2px rgba(255,196,0,.6)}.rey .ry.eski{opacity:.6}
+.rey .rn{font-size:1.3rem;text-align:center;font-weight:800}.rey .rb{min-width:0}
+.rey .rnm{font-weight:800;font-size:.95rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rey .rnm i{font-weight:600;color:var(--mut);font-style:normal;font-size:.8rem}
+.rey .rv{font-weight:800;text-align:right;display:flex;flex-direction:column;line-height:1.15;white-space:nowrap}.rey .rv small{font-size:.75rem;color:var(--mut)}.rey .rleg{margin-top:6px}
 /* --- ota-ona --- */
 .ota .card h3{margin-top:0}
 .wkbar{display:flex;align-items:center;justify-content:center;gap:10px;margin:6px 0}
@@ -1412,7 +1457,7 @@ BJ.vis = vis;
 (function (G) {
 'use strict';
 const BJ = G.BJ, A = BJ.A = {}, gen = BJ.gen, B = BJ.bank;
-A.VER = '0.2.0';
+A.VER = '0.3.0';
 /* ================= UTIL ================= */
 const pad = n => String(n).padStart(2, '0');
 const todayKey = d => { d = d || new Date(); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
@@ -1435,7 +1480,7 @@ function seeded(str) { let h = parseInt(fnv(str), 16) || 1; return () => { h ^= 
 Object.assign(A, { pad, todayKey, addDays, dayDiff, isoWeek, weekDays, prevWeek, fmtMS, fmtHMS, median, sum, clone, clamp, pct, fnv, rid, seeded });
 A.TEZ = /[?&]tez=1/.test(location.search);
 /* ================= KONFIG ================= */
-const FAN = { mat: { ic: '🔢', nom: 'Matematika' }, til: { ic: '📖', nom: "Ona tili va o'qish" }, yoz: { ic: '✏️', nom: 'Yozishga tayyorlov' }, en: { ic: '🇬🇧', nom: 'Ingliz tili' }, ar: { ic: '🕌', nom: 'Arab tili' }, mant: { ic: '🧩', nom: 'Mantiq va olimpiada' }, dunyo: { ic: '🌍', nom: 'Dunyo bilimi' }, oqish: { ic: '⏱', nom: "O'qish tezligi" } };
+const FAN = { mat: { ic: '🔢', nom: 'Matematika' }, til: { ic: '📖', nom: "Ona tili va o'qish" }, yoz: { ic: '✏️', nom: 'Yozishga tayyorlov' }, en: { ic: '🇬🇧', nom: 'Ingliz tili' }, ar: { ic: '🕌', nom: 'Arab tili' }, mant: { ic: '🧩', nom: 'Mantiq va olimpiada' }, dunyo: { ic: '🌍', nom: 'Dunyo bilimi' }, oqish: { ic: '⏱', nom: "O'qish tezligi" }, oyin: { ic: '🎮', nom: "Dam olish o'yini" } };
 const rng = (p, a, b) => Array.from({ length: b - a + 1 }, (_, i) => p + (a + i));
 const ZANJIR = { mat: rng('M0.', 1, 10).concat(rng('M1.', 1, 12), rng('M2.', 1, 14)), til: rng('H0.', 1, 7).concat(rng('H1.', 1, 5), rng('H2.', 1, 6)), yoz: rng('Y0.', 1, 4), en: B.enTartib.map(t => 'EN.' + t), al: rng('AL.', 1, 7) };
 const BOSH = { mat: { g0: 'M0.1', g1: 'M1.1', g2: 'M2.1' }, til: { g0: 'H0.1', g1: 'H1.1', g2: 'H2.1' }, yoz: { g0: 'Y0.1' }, en: { g0: 'EN.ranglar', g1: 'EN.salom', g2: 'EN.oila' } };
@@ -1450,7 +1495,7 @@ Object.assign(A, { FAN, ZANJIR, BOSH, DARAJA, gl, BLOK, MANT_KUN, UZUN, XATO, TU
 /* ================= STORE ================= */
 const KEY = 'bj_state_v1'; /* HECH QACHON o'zgarmaydi: yangi versiya eski holatni migrate() bilan yangilaydi */
 const SV = 1;
-function defaults() { return { v: SV, oila: null, pin: null, pinOta: null, sozlama: { ovoz: 0.8, kamEffekt: 'auto', tanaffus: 20, sandiq: { bronza: 40, kumush: 90, oltin: 150, olmos: 220 }, arTasdiq: {}, alifTasdiq: false }, bolalar: {}, tartib: [], joriy: null, duel: {}, qurilma: null, lastBackup: null, seenVer: null, appVer: null }; }
+function defaults() { return { v: SV, oila: null, pin: null, pinOta: null, sozlama: { ovoz: 0.8, kamEffekt: 'auto', tanaffus: 20, oyinHar: 5, oyinDaq: 3, reyting: true, sandiq: { bronza: 40, kumush: 90, oltin: 150, olmos: 220 }, arTasdiq: {}, alifTasdiq: false }, bolalar: {}, tartib: [], joriy: null, duel: {}, oilaTel: {}, qurilma: null, lastBackup: null, seenVer: null, appVer: null }; }
 let S = load(); A.storageOK = true;
 /* Xotira tekshiruvi: brauzer yozishga ruxsat beradimi va ilova begona sayt ichida (sinov havolasi) ochilganmi */
 A.storageProbe = (function () { try { const k = 'bj_probe'; localStorage.setItem(k, String(Date.now())); const ok = !!localStorage.getItem(k); localStorage.removeItem(k); return ok; } catch (e) { return false; } })();
@@ -1484,7 +1529,7 @@ function weekLog(id, wk) { return weekDays(wk).reduce((a, k) => a.concat(readLog
 Object.assign(A, { readLog, pushLog, flushLog, logKeys, pruneLogs, weekLog, LOGP });
 addEventListener('pagehide', () => { flushLog(); save(true); });
 /* ================= BOLA ================= */
-function bolaDefaults() { return { id: null, kod: '', laqab: '', avatar: '🦊', daraja: 'g1', arab: 'asosiy', dunyo: null, muxlisga: true, yaratildi: null, boshlandi: null, mavzu: {}, fan: {}, harfK: 2, harfKun: null, harfSt: {}, tugun: {}, takror: [], yulduz: 0, yulduzKun: {}, arenaYulduz: {}, detal: [], kun: {}, wcpm: [], missiya: null, reja: null, shosh: false, me: {}, olqish: [], oqilgan: [] }; }
+function bolaDefaults() { return { id: null, kod: '', laqab: '', avatar: '🦊', daraja: 'g1', arab: 'asosiy', dunyo: null, muxlisga: true, yaratildi: null, boshlandi: null, mavzu: {}, fan: {}, harfK: 2, harfKun: null, harfSt: {}, tugun: {}, takror: [], yulduz: 0, yulduzKun: {}, arenaYulduz: {}, detal: [], kun: {}, wcpm: [], missiya: null, reja: null, shosh: false, me: {}, olqish: [], oqilgan: [], oyin: {} }; }
 function newBola(o) {
   const b = fixBola(Object.assign(bolaDefaults(), o)); b.id = b.id || 'b' + rid(7).toLowerCase(); b.yaratildi = todayKey();
   if (!b.kod) { const n = Object.keys(S.bolalar).length + 1; b.kod = ({ g0: 'K', g1: 'B', g2: 'I', g3: 'U', g4: 'T' }[b.daraja] || 'B') + n; }
@@ -1685,13 +1730,48 @@ function nominatsiyalar(wk, list) {
 A.nominatsiyalar = nominatsiyalar;
 /* ================= BJW2 (6.6) ================= */
 function bjw2(b, wk) {
-  const s = weekStats(b, wk), lines = [`BJW2|${wk}|${b.kod}|daraja=${b.daraja}|kun=${s.kunlar}|faol=${fmtHMS(s.faol)}|acc1=${s.acc1}|wcpm=${s.wcpm ? s.wcpm[0] + '>' + s.wcpm[1] : '-'}|arena=${fmtHMS(s.arena)}|charchash=${s.charchash > 0 ? '+' : ''}${s.charchash}|shosh=${s.shosh}|missiya=${s.missiya}|yulduz=${s.yulduz}`];
+  const s = weekStats(b, wk), lines = [`BJW2|${wk}|${b.kod}|daraja=${b.daraja}|kun=${s.kunlar}|faol=${fmtHMS(s.faol)}|acc1=${s.acc1}|wcpm=${s.wcpm ? s.wcpm[0] + '>' + s.wcpm[1] : '-'}|arena=${fmtHMS(s.arena)}|charchash=${s.charchash > 0 ? '+' : ''}${s.charchash}|shosh=${s.shosh}|missiya=${s.missiya}|yulduz=${s.yulduz}|oyin=${sum(s.days.map(k => (b.kun[k] || {}).oyin || 0))}|charch=${sum(s.days.map(k => (b.kun[k] || {}).charch || 0))}`];
   Object.keys(s.nodes).sort().forEach(id => { const n = s.nodes[id], xs = Object.keys(n.xato).sort((a, c) => n.xato[c] - n.xato[a]).slice(0, 3).map(k => k + ':' + n.xato[k]).join(','), tr = n.h1[0] >= 3 && n.h2[0] >= 3 ? pct(n.h2[1], n.h2[0]) - pct(n.h1[1], n.h1[0]) : 0;
     lines.push(`T|${id}|n=${n.n}|acc=${pct(n.ok1, n.n)}|med=${(median(n.ms) / 1000).toFixed(1)}|hint=${pct(n.hint, n.n)}|xato=${xs || '-'}|trend=${tr > 0 ? '+' : ''}${tr}|holat=${holatOf(b, id)}`); });
   Object.keys(b.fan).forEach(f => { const F = b.fan[f]; if (F.cur) lines.push(`R|${f}|cur=${F.cur}${F.kalib && F.kalib.done ? '|kalib=' + F.kalib.natija : ''}`); });
   return lines.join('\n');
 }
 A.bjw2 = bjw2;
+/* ================= 🏆 OILA REYTINGI (0.3.0) =================
+   Serversiz: har telefon o'z bolalarining hafta xulosasini KOD qiladi (BILIMJON-REYTING|1|…), boshqa oila telefoni uni qo'yadi (S.oilaTel).
+   Tartib: hafta ⭐ (birinchi urinishdagi to'g'ri javoblar) → faol kunlar → 🚀 o'sish (bu hafta o'zlashtirilgan yangi ko'nikmalar). */
+function reytingSatr(b, wk) {
+  const days = weekDays(wk || isoWeek());
+  return { id: b.id, av: b.avatar, laqab: b.laqab, daraja: b.daraja, yulduz: weekStars(b, wk), kun: days.filter(k => b.kun[k] && b.kun[k].faol > 60).length,
+    osish: Object.keys(b.tugun).filter(id => b.tugun[id].ozlSana && days.includes(b.tugun[id].ozlSana)).length, detal: b.detal.length, missiya: days.filter(k => b.kun[k] && b.kun[k].missiya).length };
+}
+const tozala = x => String(x == null ? '' : x).replace(/[|\r\n\t]/g, ' ').trim().slice(0, 24);
+function reytingKod() {
+  if (!S.qurilma) { S.qurilma = { id: rid(8), yaratildi: Date.now() }; save(true); }
+  const wk = isoWeek(), lines = [`BILIMJON-REYTING|1|${S.qurilma.id}|${tozala(S.oila && S.oila.nom)}|${wk}|${Date.now()}`];
+  bolalar().forEach(b => { const r = reytingSatr(b, wk); lines.push(['B', r.id, tozala(r.av), tozala(r.laqab), r.daraja, r.yulduz, r.kun, r.osish, r.detal, r.missiya].join('|')); });
+  return lines.join('\n');
+}
+function reytingImport(txt) {
+  const L = String(txt || '').split(/\r?\n/).map(x => x.trim()).filter(Boolean), i = L.findIndex(x => x.indexOf('BILIMJON-REYTING|') === 0);
+  if (i < 0) return { xato: 'Bu Bilimjon reyting kodi emas' };
+  const h = L[i].split('|');
+  if (h[1] !== '1' || !/^[A-Z0-9]{4,12}$/.test(h[2] || '') || !/^\d{4}-W\d{2}$/.test(h[4] || '')) return { xato: 'Kod buzilgan yoki boshqa versiya' };
+  if (S.qurilma && h[2] === S.qurilma.id) return { xato: "Bu shu telefonning o'z kodi — uni boshqa telefonga yuboring" };
+  const num = (x, mx) => Math.max(0, Math.min(mx || 99999, parseInt(x, 10) || 0)), ts = /^\d{10,14}$/.test(h[5] || '') ? +h[5] : Date.now(), bl = [];
+  L.slice(i + 1).forEach(x => { const p = x.split('|'); if (p[0] !== 'B' || p.length < 10 || !/^[a-z0-9]{2,16}$/.test(p[1]) || S.bolalar[p[1]]) return;
+    bl.push({ id: p[1], av: tozala(p[2]).slice(0, 8) || '🙂', laqab: tozala(p[3]) || 'Bola', daraja: /^g[0-4]$/.test(p[4]) ? p[4] : 'g1', yulduz: num(p[5]), kun: num(p[6], 7), osish: num(p[7], 999), detal: num(p[8]), missiya: num(p[9], 7) }); });
+  if (!bl.length) return { xato: 'Kodda bola topilmadi' };
+  const old = S.oilaTel[h[2]]; if (old && old.ts > ts) return { xato: 'Bu kod eskiroq — telefonda yangisi bor' };
+  const nom = tozala(h[3]) || 'Oila'; S.oilaTel[h[2]] = { nom, wk: h[4], ts, olindi: Date.now(), bolalar: bl }; save(true);
+  return { ok: true, nom, n: bl.length };
+}
+function reytingRoyxat() {
+  const wk = isoWeek(), out = bolalar().map(b => Object.assign(reytingSatr(b, wk), { mahalliy: 1 }));
+  Object.keys(S.oilaTel || {}).sort((p, q) => S.oilaTel[q].ts - S.oilaTel[p].ts).forEach(q => { const t = S.oilaTel[q]; (t.bolalar || []).forEach(x => { if (out.some(o => o.id === x.id)) return; out.push(Object.assign({}, x, { tel: q, telNom: t.nom, ts: t.ts, eski: t.wk !== wk })); }); });
+  return out.filter(x => !x.eski).sort((p, q) => (q.yulduz - p.yulduz) || (q.kun - p.kun) || (q.osish - p.osish)).concat(out.filter(x => x.eski));
+}
+Object.assign(A, { reytingSatr, reytingKod, reytingImport, reytingRoyxat });
 A.dataNow = () => S;
 })(window);
 
@@ -1780,16 +1860,24 @@ function kechagi(b) { const t = A.agg(b), y = b.kun[A.addDays(A.todayKey(), -1)]
 function worldScene(b, big) { const d = ART.decor(b.detal); if (b.dunyo === 'orol') return `<div class="scene orol">${ART.island(d)}<div class="peg">${ART.pegasus(d, { w: big ? 230 : 170 })}</div><div class="drg">${ART.dragon({ dunyo: 'orol', scale: 0.75 })}</div></div>`;
   return `<div class="scene garaj"><div class="lift"></div><div class="carw">${ART.car(d, { w: big ? 280 : 230 })}</div><div class="drg">${ART.dragon({ dunyo: 'garaj', scale: 0.75 })}</div></div>`; }
 A.worldScene = worldScene;
+/* 🏆 Hafta reytingi (0.3.0): shu telefondagi va kod bilan ulangan oila telefonlaridagi bolalar. ⚙️ da o'chirilsa — ko'rinmaydi. */
+const qachon = ts => { const h = Math.round((Date.now() - ts) / 3600000); return h < 1 ? 'hozir' : h < 24 ? h + ' soat oldin' : Math.round(h / 24) + ' kun oldin'; };
+function reytingHTML(b) {
+  if (A.S().sozlama.reyting === false) return ''; const R = A.reytingRoyxat(); if (R.length < 2) return '';
+  const mx = Math.max(10, ...R.filter(x => !x.eski).map(x => x.yulduz)), med = ['🥇', '🥈', '🥉'];
+  return `<div class="trek rey"><div class="tl">🏆 Hafta reytingi</div>${R.map((x, i) => `<div class="ry${x.id === b.id ? ' men' : ''}${x.eski ? ' eski' : ''}"><span class="rn">${x.eski ? '⏳' : med[i] || (i + 1)}</span><span class="tav">${esc(x.av)}</span>
+  <div class="rb"><div class="rnm">${esc(x.laqab)}${x.id === b.id ? ' <i>(sen)</i>' : x.tel ? ` <i>· ${esc(qachon(x.ts))}</i>` : ''}</div>${x.eski ? '<div class="sm mut">bu hafta kodi hali kelmadi</div>' : `<div class="tbar"><i style="width:${Math.round(100 * x.yulduz / mx)}%"></i></div>`}</div>
+  <span class="rv">${x.eski ? '' : `⭐ ${x.yulduz}${x.osish ? `<small>🚀 +${x.osish}</small>` : ''}`}</span></div>`).join('')}<div class="sm mut rleg">⭐ — birinchi urinishda topilgan javoblar · 🚀 — bu hafta o'rgangan yangi ko'nikmalar</div></div>`;
+}
 function screenHome(b) {
   theme(b.dunyo); const t = A.agg(b), m = b.missiya, today = A.todayKey(), done = m && m.sana === today && m.done, going = m && m.sana === today && !m.done, sq = A.sandiq(b);
-  const L = A.bolalar(), maxT = Math.max(5, ...L.map(x => x.detal.length));
   app.innerHTML = `<div class="wrap kidw"><div class="top"><button class="ib av" data-tanla aria-label="Bola almashtirish">${b.avatar}</button><div class="ttl">${esc(b.laqab)}</div><span class="sp"></span><span class="pill">⭐ ${b.yulduz}</span><span class="pill">${sq.ic}</span><button class="ib" data-ota aria-label="Ota-ona paneli">👨‍👩‍👧</button></div>
   ${worldScene(b, true)}<div class="bubble">${esc(done ? 'Bugungi missiya bajarildi! Arenada mashq qilsang ham bo\'ladi.' : going ? 'Missiya kutib turibdi — davom etamiz!' : A.isSunday() && A.dayNo(b) >= 3 ? 'Bugun yakshanba — KATTA FINAL!' : 'Salom! Bugungi missiyaga tayyormisan?')}</div>
   <div class="row cta">${done ? `<button class="btn big alt" data-arena>⚔️ Arena</button>` : `<button class="btn big" data-start>${going ? '▶ Davom etish' : A.isSunday() && A.dayNo(b) >= 3 ? '🏆 Finalni boshlash' : '🚀 Missiyani boshlash'}</button>`}</div>
   <div class="stats"><div><b>⭐ ${t.yulduz}</b><span>bugun</span></div><div><b>⏱ ${Math.round(t.faol / 60)}</b><span>daqiqa</span></div><div><b>${b.detal.length}</b><span>${b.dunyo === 'orol' ? 'bezak' : 'detal'}</span></div></div>
   ${kechagi(b) ? `<div class="note kn">${esc(kechagi(b))}</div>` : ''}
   ${b.detal.length ? `<div class="coll">${b.detal.slice(-12).map(r => `<span title="${esc(r.nom || '')}">${r.ic || '🔩'}</span>`).join('')}</div>` : ''}
-  ${L.length > 1 ? `<div class="trek"><div class="tl">🏁 Trek</div>${L.map(x => `<div class="tr"><span class="tav">${x.avatar}</span><div class="tbar"><i style="width:${Math.round(100 * x.detal.length / maxT)}%"></i></div><span class="sm">${x.detal.length}</span></div>`).join('')}</div>` : ''}
+  ${reytingHTML(b)}
   ${installTip()}</div>`;
   const st = $('[data-start]'); if (st) st.onclick = () => go('missiya');
   const ar = $('[data-arena]'); if (ar) ar.onclick = () => go('arena');
@@ -1812,7 +1900,7 @@ function screenMission(b) {
   CUR = { k: 'missiya', b, m }; startSession(b, 'missiya'); theme(b.dunyo); stepRun(b, m);
 }
 function stepTotal(m) { return m.steps.reduce((s, x) => s + (x.n || 1), 0); }
-function stepDone(m) { let d = 0; m.steps.forEach((x, i) => { if (i < m.si) d += x.n || 1; else if (i === m.si) d += (m.res[i] || []).length; }); return d; }
+function stepDone(m) { let d = 0; m.steps.forEach((x, i) => { if (i < m.si) d += x.n || 1; else d += Math.min(x.n || 1, (m.res[i] || []).length); }); return d; }
 function frame(b, m, title, body) {
   const p = Math.min(1, stepDone(m) / Math.max(1, stepTotal(m))), icon = b.dunyo === 'orol' ? '🦄' : '🏎️';
   app.innerHTML = `<div class="wrap play"><div class="top"><button class="ib" data-pause aria-label="To'xtatish">⏸</button><div class="ttl">${title}</div><span class="sp"></span><span class="pill">⭐ ${A.agg(b).yulduz}</span></div>
@@ -1829,7 +1917,7 @@ function stepRun(b, m) {
   if (st.k === 'yakun') return stepYakun(b, m, st);
   const n = st.k === 'kashf' ? (st.savollar || 1) : st.k === 'duel' ? (st.sozlar || []).length : st.k === 'qayta' ? 1 : st.n;
   if (res.length >= n) { m.si++; m.cur = null; A.save(true); return stepRun(b, m); }
-  if (!m.cur || m.cur.si !== m.si) m.cur = { si: m.si, item: nextItem(b, m, st, res.length) };
+  if (!m.cur || m.cur.si !== m.si) { const q = st.qoldi; if (q) delete st.qoldi; m.cur = { si: m.si, item: q || nextItem(b, m, st, res.length) }; }
   showItem(b, m, st, m.cur.item);
 }
 /* Navbatdagi topshiriq */
@@ -1863,7 +1951,9 @@ function showItem(b, m, st, it) {
   const st0 = { shown: Date.now(), first: null, urinish: 1, maslahat: 0, ovoz: 0, lock: b.shosh ? Date.now() + 1500 : 0 };
   CUR.it = it; CUR.st = st0; CUR.fan = it.fan;
   const R = RENDER[it.t] || RENDER.tanla;
-  frame(b, m, stepTitle(st), `<div class="item t-${it.t}">${headHTML(b, it)}<div id="body"></div><div id="fb"></div>${otaTip(b, it)}</div>`);
+  const ch = charchOk(m, st, it);
+  frame(b, m, stepTitle(st), `<div class="item t-${it.t}">${headHTML(b, it)}<div id="body"></div><div id="fb"></div>${otaTip(b, it)}</div>${ch ? '<button class="btn ghost charch" data-charch>😴 Charchadim</button>' : ''}`);
+  if (ch) $('[data-charch]').onclick = () => charchadim(b, m, st);
   const say = $('[data-say]'); if (say) { say.onclick = () => { st0.ovoz++; speak(it.tts); }; if (it.ovozKoz || it.tugun.indexOf('EN.') === 0) setTimeout(() => speak(it.tts), 350); }
   const fv = $('.flashvis'); if (fv) { const ms = +fv.dataset.ms; setTimeout(() => { fv.style.visibility = 'hidden'; }, ms); }
   R($('#body'), it, b, (r) => onAnswer(b, m, st, it, st0, r), st0);
@@ -2033,6 +2123,7 @@ function showLesson(b, m, st, it, n) {
   <p class="dnext">${n === 1 ? "Endi xuddi shunday savolni o'zing yech! 💪" : "Yana bittasini mashq qilamiz — bu safar osonrog'i."}</p>
   <button class="btn big" data-twin disabled>Men tayyorman ✍️ <span data-c></span></button></div>`;
   const host = $('.item'); if (host) host.outerHTML = html; else { const s = $('#stage') || app; s.innerHTML = html; }
+  const chb = $('[data-charch]'); if (chb) chb.remove();
   const btn = $('[data-twin]'), c = $('[data-c]'); let k = A.TEZ ? 0 : 5;
   const tick = () => { if (!document.body.contains(btn)) return; if (k <= 0) { btn.disabled = false; c.textContent = ''; return; } c.textContent = '(' + k + ')'; k--; setTimeout(tick, 1000); };
   tick();
@@ -2051,9 +2142,9 @@ function onAnswer(b, m, st, it, st0, r) {
   const fin = { togri: !!r.togri, togri_1: !!r.togri && st0.urinish === 1 && !r.xato_soni, javob: r.javob, xato_turi: r.togri && st0.urinish === 1 ? (r.xato_turi || null) : (st0.x1 || r.xato_turi || null), shoshildi: r.shoshildi };
   if (r.xato_soni) { st0.urinish = 1 + r.xato_soni; if (r.maslahat) st0.maslahat = 1; }
   const res = m && it.tur !== 'dars' ? m.res[m.si] : null; const { ev } = afterAnswer(b, it, st0, fin, m);
-  if (res) res.push({ ok: fin.togri_1 ? 1 : 0, ms: Date.now() - st0.shown, ball: it.tur === 'duel' ? duelBall(fin, Date.now() - st0.shown) : 0 });
+  if (res) { res.push({ ok: fin.togri_1 ? 1 : 0, ms: Date.now() - st0.shown, ball: it.tur === 'duel' ? duelBall(fin, Date.now() - st0.shown) : 0 }); m.oyinN = (m.oyinN || 0) + 1; }
   if (m) m.cur = null; A.save(true);
-  const next = () => { if (CUR && CUR.k === 'missiya') stepRun(b, m); else if (CUR && CUR.k === 'arena') arenaNext(b); };
+  const next = () => { if (CUR && CUR.k === 'missiya') missionNext(b, m); else if (CUR && CUR.k === 'arena') arenaNext(b); };
   if (it.tur === 'dars' && fin.togri) setTimeout(() => toast("🎓 Barakalla! Darsdan keyin o'zing yechding!"), 250);
   if (fin.togri_1) { const el = r.el || $('#body'); const bb = el.getBoundingClientRect(); const t0 = performance.now(); FX.boom(bb.left + bb.width / 2, bb.top + Math.min(bb.height / 2, 160), b.dunyo).then(() => { A.agg(b).fx += Math.round(performance.now() - t0); if (ev === 'ozl') toast('🟢 Yangi ko\'nikma o\'zlashtirildi!'); next(); }); return; }
   if (fin.togri) { FX.play('ding'); $('#fb').innerHTML = `<div class="good">✅ ${esc(pickA(PRAISE1))}</div>`; setTimeout(next, A.TEZ ? 200 : 1300); return; }
@@ -2064,6 +2155,44 @@ function onAnswer(b, m, st, it, st0, r) {
   $('#fb').innerHTML = `<div class="explain">${r.yakuniy ? '🙂 Bu mashq hozircha qiyin bo\'ldi.' : `👉 To'g'ri javob: <b>${esc(it.aLabel || it.a)}</b>`}${it.tushun ? '<br>' + esc(it.tushun) : ''}<br><span class="sm">Bu mashq keyinroq yana chiqadi — eslab qolamiz.</span></div><button class="btn big" data-next>Davom ➜</button>`;
   $('[data-next]').onclick = next;
 }
+/* ================= 🎮 O'YIN NAVBATI va 😴 CHARCHADIM (0.3.0) =================
+   Har N ta missiya savolidan keyin (⚙️ oyinHar, 0 — o'chiq) dam olish o'yini ochiladi. Dars egizagi sanalmaydi, faqat yakun qolganda o'yin chiqmaydi.
+   «Charchadim» bolani o'yinga emas, BOSHQA FANGA o'tkazadi: joriy blok yakundan oldinga suriladi va keyin AYNAN shu savoldan davom etadi.
+   Har blok faqat bir marta keyinga qoldiriladi — tugma qiyin savoldan qochish yo'li bo'lmasin. */
+function oyinKerak(b, m) {
+  const har = +(A.S().sozlama.oyinHar) || 0; if (!har || !A.oyin || (m.oyinN || 0) < har) return false;
+  if (stepTotal(m) - stepDone(m) <= 1) { m.oyinN = 0; return false; } /* faqat yakun poygasi qoldi — o'yinsiz tugatamiz */
+  return true;
+}
+function missionNext(b, m) {
+  if (oyinKerak(b, m)) { m.oyinN = 0; m.oyinSoni = (m.oyinSoni || 0) + 1; A.save(true); return A.oyin.boshla(b, m, () => { CUR = { k: 'missiya', b, m }; theme(b.dunyo); stepRun(b, m); }); }
+  stepRun(b, m);
+}
+function charchOk(m, st, it) { return !!(m && !m.done && st && !st.kechik && it.tur !== 'dars' && !['yakun', 'oqish'].includes(st.k)); }
+/* Qadamni yakundan oldinga ko'chirish; natijalar (m.res — indeks bo'yicha) ham birga ko'chadi */
+function moveLater(m, i) {
+  const arr = m.steps.map((_, k) => m.res[k]), yi = m.steps.findIndex((x, k) => k > i && x.k === 'yakun'), to = yi < 0 ? m.steps.length - 1 : yi - 1;
+  const st = m.steps.splice(i, 1)[0], r = arr.splice(i, 1)[0]; m.steps.splice(to, 0, st); arr.splice(to, 0, r);
+  m.res = {}; arr.forEach((x, k) => { if (x) m.res[k] = x; });
+}
+function charchadim(b, m, st) {
+  const j = m.steps.findIndex((x, i) => i > m.si && x.k !== 'yakun'), drg = ART.dragon({ dunyo: b.dunyo, scale: 0.7, mood: 'wow' });
+  if (j < 0) {
+    A.pushLog(b.id, { t: 'charch', ts: Date.now(), bola: b.id, sessiya: b.sessiya || null, fan: st.fan, k: st.k, oxirgi: 1 });
+    return sheet(`<h2>😴 Charchadingmi?</h2>${drg}<p>Bu — bugungi oxirgi fan, oz qoldi! 💪</p><ul class="tl"><li>👀 Ko'zingni 10 soniya yum.</li><li>🙆 Qo'llaringni yuqoriga cho'z.</li><li>💧 Bir qultum suv ich.</li></ul><button class="btn big" data-x>Davom etaman ▶</button>`);
+  }
+  sheet(`<h2>😴 Charchadingmi?</h2>${drg}<p>Unda boshqa fanga o'tamiz: <b>${esc(stepTitle(m.steps[j]))}</b></p><p class="sm mut">${esc(stepTitle(st))} keyinroq aynan shu savoldan davom etadi.</p><div class="row"><button class="btn" data-ha>✅ Boshqa fan</button><button class="btn ghost" data-x>💪 Davom etaman</button></div>`,
+    el => { $('[data-ha]', el).onclick = () => { closeSheets(); charchDo(b, m, st); }; });
+}
+function charchDo(b, m, st) {
+  if (!CUR || CUR.k !== 'missiya' || m.steps[m.si] !== st) return;
+  const it = m.cur && m.cur.si === m.si ? m.cur.item : null, d = A.agg(b);
+  st.kechik = 1; if (it) st.qoldi = it; d.charch = (d.charch || 0) + 1;
+  A.pushLog(b.id, { t: 'charch', ts: Date.now(), bola: b.id, sessiya: b.sessiya || null, fan: st.fan, k: st.k, tugun: it ? it.tugun : null, javob: (m.res[m.si] || []).length });
+  moveLater(m, m.si); m.cur = null; A.save(true); FX.play('ding');
+  toast('👉 ' + stepTitle(m.steps[m.si])); stepRun(b, m);
+}
+A.setCur = c => { CUR = c; }; A.moveLater = moveLater; A.stepTitle = stepTitle;
 function duelBall(fin, ms) { if (!fin.togri_1) return 0; const bonus = Math.max(0, Math.min(5, Math.round(5 - (ms - 2000) / 1000))); return 10 + bonus; }
 /* ================= TOPSHIRIQ TURLARI ================= */
 const RENDER = {};
@@ -2277,13 +2406,257 @@ setInterval(() => {
   if (now - lastAct > 60000 && !effect) { if (!pauseFlag) { pauseFlag = true; d.pauza++; } return; }
   d.faol++; const f = CUR.fan || 'boshqa'; d.fan[f] = (d.fan[f] || 0) + 1; const h = new Date().getHours(); d.soat[h] = (d.soat[h] || 0) + 1; if (CUR.k === 'arena') d.arena = (d.arena || 0) + 1;
   const s = d.sess.find(x => x.id === b.sessiya); if (s) { s.e = now; s.faol++; }
-  contSec++; if (contSec >= A.S().sozlama.tanaffus * 60 && !$('.scrim') && !effect) { contSec = 0; d.tanaffus++; breakSheet(); }
+  contSec++; if (contSec >= A.S().sozlama.tanaffus * 60 && !$('.scrim') && !effect && CUR.k !== 'oyin') { contSec = 0; d.tanaffus++; breakSheet(); }
   if (d.faol % 5 === 0) A.save();
 }, 1000);
 document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') { A.flushLog(); if (CUR && CUR.b) { A.agg(CUR.b).chiq++; A.pushLog(CUR.b.id, { t: 'sessiya', ts: Date.now(), bola: CUR.b.id, sessiya: CUR.b.sessiya, hodisa: 'chiqdi' }); } A.save(true); } });
 function breakSheet() { sheet(`<h2>⏸ Tanaffus!</h2>${ART.dragon({ scale: 0.8, mood: 'wow' })}<p>${A.S().sozlama.tanaffus} daqiqa ishlading — endi ko'zlaringga dam ber:</p><ul class="tl"><li>👀 Uzoqqa (deraza tashqarisiga) 20 soniya qara.</li><li>🤸 O'rningdan tur, 10 marta sakra.</li><li>💧 Suv ich.</li></ul><button class="btn big" data-x>Davom etaman ▶</button>`); }
 A.CUR = () => CUR;
 Object.assign(A, { screenHome, screenPicker, screenMission, frame, showItem, onAnswer, afterAnswer, theme, startSession, endSession, kechagi });
+})(window);
+
+</script>
+<script>
+/* Bilimjon — 🎮 dam olish o'yinlari (0.3.0). Missiyada har N ta savoldan keyin (⚙️ Sozlamalar: oyinHar, oyinDaq) 1–5 daqiqa.
+   Maktabgacha — 🏎️ poyga (orolda 🦄 parvoz): 🎯 belgisiga mos yo'lakka buril — shakl, rang, son, naqsh (o'qishsiz, faqat rasm).
+   1-sinf va kattalar — 🧩 pazl (rasm bo'laklarini almashtirib yig') yoki 🎨 ko'zgu rasm (chap yarmiga qarab o'ng yarmini chiz).
+   Yulduz bermaydi: o'yin — dam olish, mukofot emas. Natija logga: { t: 'oyin', tur, sek, ok, xato, raund, erta }. */
+(function (G) {
+'use strict';
+const BJ = G.BJ, A = BJ.A, FX = BJ.fx, ART = BJ.art;
+const { $, $$, esc, toast, app } = A;
+const rnd = n => Math.floor(Math.random() * n), pick = a => a[rnd(a.length)];
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = rnd(i + 1); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const OYIN = {
+  poyga: { ic: '🏎️', nom: 'Poyga', izoh: "Mos yo'lakka buril" },
+  pazl: { ic: '🧩', nom: 'Pazl', izoh: "Rasmni bo'laklardan yig'" },
+  kozgu: { ic: '🎨', nom: "Ko'zgu rasm", izoh: 'Rasmning ikkinchi yarmini chiz' }
+};
+const turlar = b => A.gl(b.daraja) === 'g0' ? ['poyga'] : ['pazl', 'kozgu'];
+const nomi = (tur, b) => tur === 'poyga' && b.dunyo === 'orol' ? '🦄 Parvoz poygasi' : OYIN[tur].ic + ' ' + OYIN[tur].nom;
+function cfg() { const z = A.S().sozlama, har = +z.oyinHar, daq = +z.oyinDaq; return { har: har === 0 ? 0 : A.clamp(Math.round(har) || 5, 3, 15), daq: A.clamp(daq || 3, 1, 5) }; }
+function yay(el, n) { if (FX.low || !el || !SES) return; const r = el.getBoundingClientRect(); FX.burst(r.left + r.width / 2, r.top + r.height / 2, { tema: SES.b.dunyo, n: n || 24, max: 6 }); }
+const prog = (b, k) => { b.oyin = b.oyin || {}; return b.oyin[k] || 0; };
+const progUp = (b, k) => { b.oyin = b.oyin || {}; b.oyin[k] = (b.oyin[k] || 0) + 1; };
+
+/* ================= SEANS: tanlash → o'yin → vaqt → darsga qaytish ================= */
+let SES = null;
+function boshla(b, m, done) {
+  const tl = turlar(b);
+  SES = { b, m, done, tl, sek: A.TEZ ? 8 : Math.round(cfg().daq * 60), t0: 0, end: 0, tur: null, ok: 0, xato: 0, raund: 0, tugadi: false, game: null };
+  A.setCur({ k: 'oyin', b, m, fan: 'oyin' }); A.theme(b.dunyo); FX.play('fanfar');
+  if (tl.length === 1) return run(tl[0]);
+  pickScreen(SES);
+}
+function pickScreen(S0) {
+  const b = S0.b, last = (b.oyin || {}).oxirgi;
+  app.innerHTML = `<div class="wrap play oyin"><div class="top"><div class="ttl">🎮 Dam olish vaqti!</div><span class="sp"></span><span class="pill mono">⏱ ${A.fmtMS(S0.sek)}</span></div>
+  <div class="oyhero">${ART.dragon({ dunyo: b.dunyo, scale: 0.8, mood: 'wow' })}<div class="bubble">Zo'r ishlading! Endi miyang dam olsin — o'yinni tanla:</div></div>
+  <div class="ogrid">${S0.tl.map(t => `<button class="ocard${t !== last ? ' yangi' : ''}" data-o="${t}"><span>${OYIN[t].ic}</span><b>${OYIN[t].nom}</b><small>${OYIN[t].izoh}</small></button>`).join('')}</div>
+  <button class="btn ghost oqayt" data-qayt>↩ Darsga qaytish</button></div>`;
+  $$('[data-o]').forEach(x => x.onclick = () => run(x.dataset.o));
+  $('[data-qayt]').onclick = () => finish(true);
+}
+function run(tur) {
+  const S0 = SES; if (!S0) return; S0.tur = tur; S0.t0 = Date.now(); S0.end = S0.t0 + S0.sek * 1000; S0.b.oyin = S0.b.oyin || {}; S0.b.oyin.oxirgi = tur;
+  app.innerHTML = `<div class="wrap play oyin"><div class="top"><div class="ttl">${nomi(tur, S0.b)}</div><span class="sp"></span><span class="pill mono" data-tm>${A.fmtMS(S0.sek)}</span></div><div id="oy"></div><div id="oyfb"></div>
+  <button class="btn ghost oqayt" data-qayt>↩ Darsga qaytish</button></div>`;
+  $('[data-qayt]').onclick = () => finish(true);
+  S0.game = GAME[tur]($('#oy'), S0);
+  S0.iv = setInterval(() => tick(S0), 250);
+}
+function tick(S0) {
+  if (SES !== S0) return clearInterval(S0.iv);
+  const tm = $('[data-tm]'); if (!tm) return abandon(S0); /* bola boshqa ekranga o'tib ketdi */
+  const left = Math.max(0, (S0.end - Date.now()) / 1000);
+  tm.textContent = A.fmtMS(Math.ceil(left)); tm.classList.toggle('kam', left <= 15);
+  if (left <= 0 && !S0.tugadi) { S0.tugadi = true; S0.grace = Date.now() + (A.TEZ ? 4000 : 45000); if (S0.game && S0.game.vaqt) S0.game.vaqt(); else finish(false); }
+  if (S0.tugadi && Date.now() > S0.grace) finish(false);
+}
+/* Raund tugadi: vaqt bor bo'lsa — keyingisi, vaqt tugagan bo'lsa — yakun */
+function raundTugadi(S0) { S0.raund++; A.save(); if (S0.tugadi) { setTimeout(() => finish(false), 900); return false; } return true; }
+function logOyin(S0, erta) {
+  const b = S0.b, sek = S0.t0 ? Math.round((Date.now() - S0.t0) / 1000) : 0, d = A.agg(b);
+  d.oyin = (d.oyin || 0) + 1; d.oyinSek = (d.oyinSek || 0) + sek;
+  A.pushLog(b.id, { t: 'oyin', ts: Date.now(), bola: b.id, sessiya: b.sessiya || null, tur: S0.tur || '-', sek, ok: S0.ok, xato: S0.xato, raund: S0.raund, erta: erta ? 1 : 0 });
+  A.save(true);
+}
+function stopGame(S0) { clearInterval(S0.iv); if (S0.game && S0.game.stop) S0.game.stop(); }
+function abandon(S0) { if (S0.fin) return; S0.fin = true; stopGame(S0); logOyin(S0, true); if (SES === S0) SES = null; }
+function finish(erta) {
+  const S0 = SES; if (!S0 || S0.fin) return; S0.fin = true; stopGame(S0); logOyin(S0, erta);
+  if (erta) return back(S0);
+  const b = S0.b, nat = S0.tur === 'poyga' ? `✅ ${S0.ok} ta to'g'ri burilish` : S0.tur === 'pazl' ? `🧩 ${S0.raund} ta pazl yig'ding` : `🎨 ${S0.raund} ta rasm chizding`;
+  app.innerHTML = `<div class="wrap play oyin"><div class="oyfin">${ART.dragon({ dunyo: b.dunyo, scale: 0.9, mood: 'wow' })}<h2>⏰ Dam olish tugadi!</h2><div class="note kn">${nat}</div><p>Miyang dam oldi — endi yana o'qiymiz! 🚀</p><button class="btn big" data-dav>▶ Darsga qaytish</button></div></div>`;
+  FX.play('ding'); $('[data-dav]').onclick = () => back(S0);
+}
+function back(S0) { if (SES === S0) SES = null; S0.done(); }
+const vaqtBanner = () => { const f = $('#oyfb'); if (f) f.innerHTML = `<div class="hint">⏰ Vaqt tugadi! Shuni tugat — keyin darsga qaytamiz.</div>`; };
+
+/* ================= 🏎️ POYGA (maktabgacha) =================
+   3 yo'lak, o'ngdan darvoza keladi. Bola 🎯 dagi belgiga mos yo'lakni bosadi. Har 3 ta ketma-ket to'g'rida daraja oshadi:
+   0–1: shakl (rangga qarama) va rang (shaklga qarama) → 2–3: + son (1–3, nuqtalarni sanash) → 4+: son 1–5 va naqsh (AB, AAB; 5+: ABB, ABC). */
+const SHK = ['doira', 'kvadrat', 'uchburchak', 'yulduz', 'yurak', 'romb'];
+const RNG6 = ['#E53935', '#FBC02D', '#2E9E44', '#1E63D6', '#FB8C00', '#EC4FA0'];
+const shp = (k, col, sz, outline) => `<svg viewBox="0 0 100 100" width="${sz}" height="${sz}" aria-hidden="true"><path d="${ART.SH[k]}" fill="${outline ? 'none' : col}" stroke="${outline ? '#fff' : '#1A1A1A'}" stroke-width="${outline ? 9 : 4}" stroke-linejoin="round"/></svg>`;
+const DICE = { 1: [[50, 50]], 2: [[28, 28], [72, 72]], 3: [[25, 25], [50, 50], [75, 75]], 4: [[28, 28], [72, 28], [28, 72], [72, 72]], 5: [[28, 28], [72, 28], [50, 50], [28, 72], [72, 72]] };
+const dice = n => `<svg viewBox="0 0 100 100" width="48" height="48" aria-hidden="true"><rect x="4" y="4" width="92" height="92" rx="18" fill="#fff" stroke="#1A1A1A" stroke-width="4"/>${DICE[n].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="10" fill="#1A1A1A"/>`).join('')}</svg>`;
+const group = (n, col) => `<span class="pggrp">${Array.from({ length: n }, () => shp('yulduz', col, n > 3 ? 22 : 26)).join('')}</span>`;
+function pgTask(lv) {
+  const kinds = lv < 2 ? ['shakl', 'rang'] : lv < 4 ? ['shakl', 'rang', 'son'] : ['shakl', 'rang', 'son', 'naqsh'], k = pick(kinds), a = rnd(3);
+  if (k === 'shakl') { const s = shuffle(SHK).slice(0, 3), c = shuffle(RNG6); return { k, a, goal: shp(s[a], null, 48, true), cells: s.map((x, i) => shp(x, c[i], 56)) }; }
+  if (k === 'rang') { const c = shuffle(RNG6).slice(0, 3), s = shuffle(SHK); return { k, a, goal: `<span class="pgdot" style="background:${c[a]}"></span>`, cells: c.map((x, i) => shp(s[i], x, 56)) }; }
+  if (k === 'son') { const max = lv < 4 ? 3 : 5, lim = Math.max(4, max), n = 1 + rnd(max), o = [n]; while (o.length < 3) { const x = 1 + rnd(lim); if (!o.includes(x)) o.push(x); }
+    const op = shuffle(o), col = pick(RNG6); return { k, a: op.indexOf(n), n, goal: dice(n), cells: op.map(x => group(x, col)) }; }
+  const P = pick(lv < 5 ? ['AB', 'AAB'] : ['AB', 'AAB', 'ABB', 'ABC']), sh = shuffle(SHK).slice(0, 3), co = shuffle(RNG6).slice(0, 3), el = { A: [sh[0], co[0]], B: [sh[1], co[1]], C: [sh[2], co[2]] };
+  const o0 = rnd(P.length), seq = Array.from({ length: 4 }, (_, i) => P[(o0 + i) % P.length]), nx = P[(o0 + 4) % P.length], op = shuffle(['A', 'B', 'C']);
+  return { k: 'naqsh', a: op.indexOf(nx), seq, nx, goal: seq.map(x => shp(el[x][0], el[x][1], 30)).join('') + '<b class="pgq">?</b>', cells: op.map(x => shp(el[x][0], el[x][1], 56)) };
+}
+function poyga(host, S0) {
+  const b = S0.b, tema = b.dunyo === 'orol' ? 'orol' : 'garaj', d = ART.decor(b.detal);
+  host.innerHTML = `<div class="pgbar"><span class="pgg">🎯</span><span class="pggoal" data-goal></span><span class="sp"></span><span class="pill">✅ <b data-ok>0</b></span></div>
+  <div class="pg ${tema}" data-pg role="application" aria-label="Poyga: yo'lakni bosing"><div class="pgl" data-l="0"></div><div class="pgl" data-l="1"></div><div class="pgl" data-l="2"></div>
+  <div class="pggate" data-gate></div><div class="pgcar" data-car>${tema === 'orol' ? ART.pegasus(d, { w: 92 }) : ART.car(d, { w: 100 })}</div></div>
+  <p class="sm mut pgtip" data-tip>👆 Yo'lakni bos — ${tema === 'orol' ? 'uchar ot' : 'mashina'} o'sha yo'lakka o'tadi. 🎯 dagi belgini top!</p>`;
+  const pg = $('[data-pg]', host), gate = $('[data-gate]', host), car = $('[data-car]', host), goal = $('[data-goal]', host), okEl = $('[data-ok]', host);
+  let lane = 1, lv = 0, streak = 0, T = null, g = null, raf = 0, stopped = false, oxir = false;
+  const setLane = l => { lane = Math.max(0, Math.min(2, l)); car.style.top = (lane * 33.333) + '%'; };
+  setLane(1);
+  const dur = () => A.TEZ ? 1200 : Math.max(3000, 5200 - lv * 350);
+  function spawn() {
+    if (stopped) return; T = pgTask(lv); goal.innerHTML = T.goal;
+    gate.innerHTML = T.cells.map((c, i) => `<div class="pgc" data-c="${i}">${c}</div>`).join('');
+    const W = pg.clientWidth; g = { ph: 'move', t0: performance.now(), dur: dur(), x0: W + 4, x1: 104 }; gate.style.transform = `translateX(${g.x0}px)`;
+  }
+  function resolve() {
+    g.ph = 'stop'; const cs = $$('.pgc', gate), ok = lane === T.a;
+    if (ok) { S0.ok++; streak++; okEl.textContent = S0.ok; cs[T.a].classList.add('ok'); FX.play('ding'); yay(car, 16); if (streak % 3 === 0 && lv < 6) lv++; const tip = $('[data-tip]', host); if (tip && S0.ok >= 2) tip.remove(); }
+    else { S0.xato++; streak = 0; cs[lane].classList.add('no'); cs[T.a].classList.add('ok'); FX.play('yumshoq'); FX.vibrate(30); car.classList.remove('bump'); void car.offsetWidth; car.classList.add('bump'); }
+    setTimeout(() => { if (stopped) return; if (oxir) { stopped = true; return finish(false); } spawn(); }, ok ? 600 : 1100);
+  }
+  function loop(now) { if (stopped) return; if (g && g.ph === 'move') { const k = Math.min(1, (now - g.t0) / g.dur); gate.style.transform = `translateX(${g.x0 + (g.x1 - g.x0) * k}px)`; if (k >= 1) resolve(); } raf = requestAnimationFrame(loop); }
+  pg.addEventListener('pointerdown', e => { e.preventDefault(); const r = pg.getBoundingClientRect(); setLane(Math.floor((e.clientY - r.top) / (r.height / 3))); });
+  const key = e => { if (e.key === 'ArrowUp') setLane(lane - 1); else if (e.key === 'ArrowDown') setLane(lane + 1); };
+  document.addEventListener('keydown', key);
+  setTimeout(spawn, A.TEZ ? 50 : 700); raf = requestAnimationFrame(loop);
+  return { stop() { stopped = true; cancelAnimationFrame(raf); document.removeEventListener('keydown', key); }, vaqt() { oxir = true; if (!g || g.ph !== 'move') finish(false); },
+    state: () => ({ a: T && T.a, lane, ph: g && g.ph, lv, k: T && T.k }), setLane };
+}
+
+/* ================= 🧩 PAZL (1-sinf va kattalar) =================
+   O'zimiz chizgan rasm (bolaning o'z mashinasi / uchar oti — yig'gan detallari bilan) N×N bo'lakka bo'linadi va aralashtiriladi.
+   Ikki bo'lakni ketma-ket bosish (yoki sudrash) — o'rnini almashtiradi. 1–2-raund 3×3, keyin 4×4. Joyidagi bo'lakda yashil nuqta. */
+const nest = (svg, x, y, w, h) => svg.replace(/^<svg /, `<svg x="${x}" y="${y}" width="${w}" height="${h}" `).replace(/ style="[^"]*"/, '');
+const sun = (x, y) => `<circle cx="${x}" cy="${y}" r="40" fill="#FFE082" opacity=".45"/><circle cx="${x}" cy="${y}" r="26" fill="#FFC400"/>`;
+const cloud = (x, y, s) => `<g fill="#fff" opacity=".92"><ellipse cx="${x}" cy="${y}" rx="${30 * s}" ry="${14 * s}"/><ellipse cx="${x - 18 * s}" cy="${y + 4 * s}" rx="${18 * s}" ry="${11 * s}"/><ellipse cx="${x + 20 * s}" cy="${y + 5 * s}" rx="${16 * s}" ry="${10 * s}"/></g>`;
+const bg = (a, c) => `<defs><linearGradient id="pzbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${c}"/></linearGradient></defs><rect width="300" height="300" fill="url(#pzbg)"/>`;
+const PZ = ['ot', 'mashina', 'ajdar', 'orol'], PZ_TARTIB = { garaj: ['mashina', 'ajdar', 'ot', 'orol'], orol: ['ot', 'orol', 'ajdar', 'mashina'] };
+function pzRasm(b, k) {
+  const d = ART.decor(b.detal); let s;
+  if (k === 'ot') s = bg('#5B2C9A', '#FF9AD5') + sun(250, 52) + cloud(70, 60, 1.1) + cloud(210, 255, 0.9) + ['#FF5252', '#FFD740', '#69F0AE', '#40C4FF'].map((c, i) => `<path d="M-10 ${300 - i * 10} Q150 ${120 - i * 10} 310 ${300 - i * 10}" stroke="${c}" stroke-width="9" fill="none" opacity=".75"/>`).join('') + nest(ART.pegasus(d, { w: 200 }), 30, 78, 240, 192);
+  else if (k === 'mashina') s = bg('#0B1020', '#2B3446') + Array.from({ length: 12 }, (_, i) => `<path d="M${i * 30 - 10} 0 h15 l-14 22 h-15z" fill="#FFC400"/>`).join('') + `<path d="M150 22 L60 230 H240Z" fill="#FFE082" opacity=".14"/><rect y="226" width="300" height="74" fill="#2B2B2B"/>` + Array.from({ length: 6 }, (_, i) => `<rect x="${i * 56 + 6}" y="268" width="32" height="7" fill="#FFC400"/>`).join('') + Array.from({ length: 12 }, (_, i) => `<rect x="${222 + (i % 4) * 14}" y="${40 + Math.floor(i / 4) * 14}" width="14" height="14" fill="${(i + Math.floor(i / 4)) % 2 ? '#111' : '#fff'}"/>`).join('') + `<rect x="220" y="40" width="2" height="90" fill="#ddd"/>` + nest(ART.car(d, { w: 220 }), 14, 120, 272, 134);
+  else if (k === 'ajdar') s = bg('#4FC3F7', '#E1F5FE') + sun(60, 60) + cloud(220, 70, 1) + `<path d="M0 230 Q80 180 160 225 T300 215 V300 H0Z" fill="#66BB6A"/><path d="M0 260 Q100 230 200 262 T300 255 V300 H0Z" fill="#43A047"/>` + [[30, 272, '#FF4FB0'], [262, 280, '#FFC400'], [210, 290, '#E53935'], [70, 292, '#7E44C9']].map(([x, y, c]) => `<circle cx="${x}" cy="${y}" r="7" fill="${c}"/><circle cx="${x}" cy="${y}" r="3" fill="#FFF59D"/>`).join('') + nest(ART.dragon({ dunyo: b.dunyo }), 55, 62, 190, 190);
+  else s = nest(ART.island(d), 0, 0, 300, 300) + nest(ART.pegasus(d, { w: 160 }), 70, 20, 160, 128);
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="300" height="300">${s}</svg>`;
+}
+const svgUrl = svg => `url("data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}")`;
+function aralash(n) { let p; do { p = shuffle(Array.from({ length: n * n }, (_, i) => i)); } while (p.filter((x, i) => x === i).length > 1); return p; }
+function pazl(host, S0) {
+  const b = S0.b; let N, pos, sel = null, url, stopped = false, oxir = false, busy = false;
+  function raund() {
+    const L = PZ_TARTIB[b.dunyo] || PZ, k = L[prog(b, 'pazl') % L.length]; N = A.TEZ ? 2 : (S0.raund >= 2 ? 4 : 3); pos = aralash(N); sel = null; busy = false; url = svgUrl(pzRasm(b, k));
+    host.innerHTML = `<div class="pzh"><div class="pzth" data-th></div><div><b>Rasmni yig'!</b><div class="sm mut">Ikki bo'lakni ketma-ket bos — o'rni almashadi. Chapdagi namunaga qara.</div></div></div><div class="pzb" data-b style="grid-template-columns:repeat(${N},1fr)"></div>`;
+    $('[data-th]', host).style.backgroundImage = url; draw();
+  }
+  function draw() {
+    const bd = $('[data-b]', host); bd.innerHTML = pos.map((h, p) => `<div class="pzt${h === p ? ' ok' : ''}${sel === p ? ' sel' : ''}" data-p="${p}" role="button" aria-label="Bo'lak ${p + 1}"></div>`).join('');
+    $$('.pzt', bd).forEach(t => { const h = pos[+t.dataset.p]; Object.assign(t.style, { backgroundImage: url, backgroundSize: `${N * 100}% ${N * 100}%`, backgroundPosition: `${(h % N) * 100 / (N - 1)}% ${Math.floor(h / N) * 100 / (N - 1)}%` }); bind(t); });
+  }
+  function swap(p, q) {
+    const bef = (pos[p] === p) + (pos[q] === q); [pos[p], pos[q]] = [pos[q], pos[p]]; const aft = (pos[p] === p) + (pos[q] === q);
+    if (aft <= bef) S0.xato++; sel = null; FX.play(aft > bef ? 'ding' : 'bosish'); draw();
+    if (pos.every((h, i) => h === i)) solved();
+  }
+  function solved() {
+    busy = true; S0.ok++; progUp(b, 'pazl'); const bd = $('[data-b]', host); bd.classList.add('done'); FX.play('kristall'); yay(bd, 40);
+    host.insertAdjacentHTML('beforeend', `<div class="good">🎉 Zo'r! Rasm tayyor!</div>`);
+    if (raundTugadi(S0)) setTimeout(() => { if (!stopped) raund(); }, A.TEZ ? 300 : 1600);
+  }
+  function bind(t) {
+    let dr = null; const p = +t.dataset.p;
+    t.addEventListener('pointerdown', e => { if (busy) return; e.preventDefault(); dr = { x: e.clientX, y: e.clientY, mv: false }; try { t.setPointerCapture(e.pointerId); } catch (er) {} });
+    t.addEventListener('pointermove', e => { if (!dr) return; const dx = e.clientX - dr.x, dy = e.clientY - dr.y; if (Math.hypot(dx, dy) > 8) { dr.mv = true; t.classList.add('drag'); t.style.transform = `translate(${dx}px,${dy}px)`; } });
+    t.addEventListener('pointerup', e => { if (!dr) return; const mv = dr.mv; dr = null; t.classList.remove('drag'); t.style.transform = '';
+      if (mv) { t.style.visibility = 'hidden'; const u = document.elementFromPoint(e.clientX, e.clientY); t.style.visibility = ''; const q = u && u.closest && u.closest('.pzt'); if (q && +q.dataset.p !== p) return swap(p, +q.dataset.p); return; }
+      if (sel === null) { sel = p; FX.play('bosish'); draw(); } else if (sel === p) { sel = null; draw(); } else swap(sel, p); });
+    t.addEventListener('pointercancel', () => { dr = null; t.classList.remove('drag'); t.style.transform = ''; });
+  }
+  raund();
+  return { stop() { stopped = true; }, vaqt() { oxir = true; vaqtBanner(); }, state: () => ({ N, pos: pos.slice(), sel }), swap: (p, q) => swap(p, q) };
+}
+
+/* ================= 🎨 KO'ZGU RASM (1-sinf va kattalar) =================
+   8×8 katak. Chap yarmi tayyor, o'ng yarmini bola ko'zgudagidek bo'yaydi (simmetriya — fazoviy mantiq).
+   Bosib yoki barmoqni yurgizib bo'yaydi; o'sha rangni qayta bossa — o'chadi. «🔍 Tekshir» noto'g'ri kataklarni ko'rsatadi.
+   Rasmlar oson → qiyin; bola keyingi safar keyingi rasmdan davom etadi (b.oyin.kozgu). */
+const KR = { r: '#E53935', p: '#FF8FC8', y: '#FBC02D', b: '#1E63D6', g: '#2E9E44', o: '#FB8C00', v: '#8E5CF7', k: '#263238', w: '#B0BEC5', n: '#8D6E63' };
+const KZ = [
+  { nom: 'Yurak', r: ['.rr..rr.', 'rprrrrpr', 'rrrrrrrr', 'rrrrrrrr', '.rrrrrr.', '..rrrr..', '...rr...', '........'] },
+  { nom: 'Archa', r: ['...yy...', '...gg...', '..gggg..', '.gggggg.', '..gggg..', '.gggggg.', 'gggggggg', '...nn...'] },
+  { nom: 'Uy', r: ['...rr...', '..rrrr..', '.rrrrrr.', 'rrrrrrrr', '.yyyyyy.', '.ybyyby.', '.yyooyy.', '.yyooyy.'] },
+  { nom: 'Gul', r: ['.pp..pp.', 'pppyyppp', '.pyyyyp.', 'pppyyppp', '.pp..pp.', '...gg...', '.g.gg.g.', '..gggg..'] },
+  { nom: 'Toj', r: ['........', 'y..yy..y', 'yy.yy.yy', 'yyyyyyyy', 'yryyyyry', 'yyybbyyy', 'yyyyyyyy', '........'] },
+  { nom: 'Kapalak', r: ['vv....vv', 'vpv..vpv', 'vvvkkvvv', '.vvkkvv.', '.yykkyy.', 'yyykkyyy', 'yy.kk.yy', '........'] },
+  { nom: 'Raketa', r: ['...rr...', '..wwww..', '..wbbw..', '..wbbw..', '..wwww..', '.rwwwwr.', 'rr.oo.rr', '...oo...'] },
+  { nom: 'Mushuk', r: ['o......o', 'oo....oo', 'oooooooo', 'okooooko', 'oooooooo', 'oooppooo', '.oooooo.', '..oooo..'] }
+];
+function kozgu(host, S0) {
+  const b = S0.b; let P, cur, col, stopped = false, oxir = false, busy = false, paint = null, chk = 0;
+  const half = () => P.r[0].length / 2, W = () => P.r[0].length;
+  function raund() {
+    P = KZ[prog(b, 'kozgu') % KZ.length]; const w = W(); cur = P.r.map(row => row.split('').map((c, x) => x < w / 2 ? c : '.')); chk = 0; busy = false;
+    const cols = Array.from(new Set(P.r.join('').replace(/\./g, '').split(''))); col = cols[0];
+    host.innerHTML = `<div class="kzh"><b>🎨 ${esc(P.nom)}</b><span class="sm mut">Chap yarmiga qarab o'ng yarmini chiz — xuddi ko'zgudagidek!</span></div>
+    <div class="kz" data-kz style="grid-template-columns:repeat(${w},1fr)" role="application" aria-label="Ko'zgu rasm">${P.r.map((row, y) => row.split('').map((_, x) => `<div class="kzc ${x < w / 2 ? 'l' : 'r'}" data-x="${x}" data-y="${y}"></div>`).join('')).join('')}</div>
+    <div class="kzpal">${cols.map(c => `<button class="kzp" data-c="${c}" style="background:${KR[c]}" aria-label="Rang"></button>`).join('')}<button class="kzp er" data-c="." aria-label="O'chirg'ich">🧽</button></div>
+    <div class="row"><button class="btn ghost" data-chk>🔍 Tekshir</button></div><div data-kzfb></div>`;
+    $$('.kzp', host).forEach(p => p.onclick = () => { col = p.dataset.c; FX.play('bosish'); pal(); });
+    $('[data-chk]', host).onclick = tekshir; bindKz(); pal(); drawAll();
+  }
+  const pal = () => $$('.kzp', host).forEach(p => p.classList.toggle('on', p.dataset.c === col));
+  const cell = (x, y) => $(`.kzc[data-x="${x}"][data-y="${y}"]`, host);
+  const paintCell = (x, y) => { const c = cur[y][x], el = cell(x, y); el.style.background = c === '.' ? '' : KR[c]; el.classList.toggle('f', c !== '.'); };
+  const drawAll = () => P.r.forEach((row, y) => row.split('').forEach((_, x) => paintCell(x, y)));
+  const target = (x, y) => P.r[y][x];
+  const done = () => P.r.every((row, y) => row.split('').every((c, x) => x < half() || cur[y][x] === c));
+  function setAt(x, y, mode) { if (x < half() || busy) return; const v = mode === 'er' ? '.' : col; if (cur[y][x] === v) return; cur[y][x] = v; paintCell(x, y); cell(x, y).classList.remove('no'); if (done()) solved(); }
+  function bindKz() {
+    const kz = $('[data-kz]', host);
+    const at = e => { const u = document.elementFromPoint(e.clientX, e.clientY); const c = u && u.closest && u.closest('.kzc'); return c && kz.contains(c) ? [+c.dataset.x, +c.dataset.y] : null; };
+    kz.addEventListener('pointerdown', e => { e.preventDefault(); const p = at(e); if (!p || p[0] < half()) return; paint = (col === '.' || cur[p[1]][p[0]] === col) ? 'er' : 'pa'; FX.play('bosish'); setAt(p[0], p[1], paint); try { kz.setPointerCapture(e.pointerId); } catch (er) {} });
+    kz.addEventListener('pointermove', e => { if (!paint) return; const p = at(e); if (p) setAt(p[0], p[1], paint); });
+    const up = () => { paint = null; }; kz.addEventListener('pointerup', up); kz.addEventListener('pointercancel', up);
+  }
+  function tekshir() {
+    if (busy) return; chk++; const fb = $('[data-kzfb]', host); let bad = 0, miss = 0;
+    P.r.forEach((row, y) => row.split('').forEach((c, x) => { if (x < half()) return; const v = cur[y][x]; if (v !== '.' && v !== c) { bad++; cell(x, y).classList.add('no'); } else if (v === '.' && c !== '.') miss++; }));
+    if (bad) { S0.xato++; FX.play('yumshoq'); fb.innerHTML = `<div class="hint">🔍 ${bad} ta katak noto'g'ri (qizil ramkali). Chap tomondagi juftiga qara: ko'zguda chap ↔ o'ng almashadi.</div>`; }
+    else fb.innerHTML = `<div class="hint">👍 Hozircha hammasi to'g'ri! Yana ${miss} ta katak qoldi.</div>`;
+    if (chk >= 3 && miss && !bad) { const m = []; P.r.forEach((row, y) => row.split('').forEach((c, x) => { if (x >= half() && c !== '.' && cur[y][x] === '.') m.push([x, y]); })); const [x, y] = m[0]; const el = cell(x, y); el.classList.add('blink'); setTimeout(() => el.classList.remove('blink'), 1800); }
+  }
+  function solved() {
+    busy = true; S0.ok++; progUp(b, 'kozgu'); const kz = $('[data-kz]', host); kz.classList.add('done'); FX.play('kristall'); yay(kz, 40);
+    $('[data-kzfb]', host).innerHTML = `<div class="good">🎉 Zo'r! ${esc(P.nom)} tayyor — ko'zgudagidek!</div>`;
+    if (raundTugadi(S0)) setTimeout(() => { if (!stopped) raund(); }, A.TEZ ? 300 : 1800);
+  }
+  raund();
+  return { stop() { stopped = true; }, vaqt() { oxir = true; vaqtBanner(); },
+    state: () => ({ nom: P.nom, r: P.r, cur: cur.map(r => r.join('')), col }), setCol: c => { col = c; pal(); }, setAt: (x, y) => setAt(x, y, cur[y][x] === col ? 'er' : 'pa') };
+}
+
+const GAME = { poyga, pazl, kozgu };
+A.oyin = { boshla, cfg, turlar, pgTask, KZ, KR, PZ, pzRasm, OYIN, finish: () => finish(false) };
+if (A.TEZ) G.__bjOyin = () => SES; /* faqat ?tez=1 avtomatik sinov uchun */
 })(window);
 
 </script>
@@ -2313,6 +2686,7 @@ A.screenOta = function (h) {
   if (h === 'ota-qiyin') { QKUN = null; return qiyinPanel(); }
   if (h === 'ota-eksport') return exportPanel();
   if (h === 'ota-zaxira') return backupPanel();
+  if (h === 'ota-reyting') return reytingPanel();
   return weekPanel();
 };
 const deny = () => { toast('Bu amal faqat admin uchun'); A.go('ota'); };
@@ -2336,8 +2710,8 @@ function weekPanel() {
   ${L.map(b => { const s = A.weekStats(b, WK), sq = A.sandiq(b, WK); return `<button class="card kc" data-b="${b.id}"><div class="kh"><span class="av">${b.avatar}</span><b>${esc(b.laqab)}</b><span class="sm mut">${A.DARAJA[b.daraja]} · ${esc(b.kod)}</span><span class="sp"></span><span>${sq.ic}</span></div>
     <div class="kgrid"><div><b class="mono">${A.fmtHMS(s.faol)}</b><span>faol vaqt</span></div><div><b>${s.kunlar}/7</b><span>kun</span></div><div><b>${s.n ? s.acc1 + '%' : '—'}</b><span>aniqlik</span></div><div><b>${s.med ? (s.med / 1000).toFixed(1) + ' s' : '—'}</b><span>median</span></div><div><b>+${s.ozl.length} 🟢</b><span>o'sish</span></div><div><b>${s.wcpm ? s.wcpm[1] : '—'}</b><span>WCPM</span></div></div>
     <div class="lvl"><span class="sm">O'z darajasida (matematika): ${levelPct(b)}%</span><div class="tbar"><i style="width:${levelPct(b)}%"></i></div></div></button>`; }).join('') || '<div class="card">Hali bola yo\'q.</div>'}
-  ${noms.length ? `<div class="card"><h3>🏆 Hafta nominatsiyalari (shu telefondagi bolalar)</h3>${noms.map(n => `<div class="nr">${n.ic} <b>${esc(n.nom)}</b>: ${n.bola ? esc(A.bola(n.bola).laqab) : '<span class="mut">sifat sharti bajarilmadi — summa keyingi haftaga</span>'}</div>`).join('')}<p class="sm mut">To'liq hisob (hamma telefonlar) — Firebase ulangach (2-bosqich).</p></div>` : ''}
-  <div class="menu">${isAdmin() ? '<button class="btn" data-go="ota-qosh">➕ Bola qo\'shish</button>' : ''}<button class="btn" data-go="ota-qiyin">📚 Bugungi qiyinlar</button><button class="btn" data-go="ota-eksport">🤖 Claude uchun hafta</button><button class="btn" data-go="ota-arab">🕌 Arab so'zlari</button><button class="btn" data-go="ota-zaxira">💾 Zaxira</button><button class="btn" data-go="ota-sozlama">⚙️ Sozlamalar</button><button class="btn ghost" data-out>🔒 Paneldan chiqish</button></div>
+  ${noms.length ? `<div class="card"><h3>🏆 Hafta nominatsiyalari (shu telefondagi bolalar)</h3>${noms.map(n => `<div class="nr">${n.ic} <b>${esc(n.nom)}</b>: ${n.bola ? esc(A.bola(n.bola).laqab) : '<span class="mut">sifat sharti bajarilmadi — summa keyingi haftaga</span>'}</div>`).join('')}<p class="sm mut">Boshqa telefonlardagi bolalar bilan solishtirish — 📲 Oila reytingi.</p></div>` : ''}
+  <div class="menu">${isAdmin() ? '<button class="btn" data-go="ota-qosh">➕ Bola qo\'shish</button>' : ''}<button class="btn" data-go="ota-qiyin">📚 Bugungi qiyinlar</button><button class="btn" data-go="ota-reyting">📲 Oila reytingi</button><button class="btn" data-go="ota-eksport">🤖 Claude uchun hafta</button><button class="btn" data-go="ota-arab">🕌 Arab so'zlari</button><button class="btn" data-go="ota-zaxira">💾 Zaxira</button><button class="btn" data-go="ota-sozlama">⚙️ Sozlamalar</button><button class="btn ghost" data-out>🔒 Paneldan chiqish</button></div>
   <p class="sm mut">Versiya ${A.VER} · ${A.storageOK ? 'xotira ✓' : '⚠️ xotiraga yozib bo\'lmadi'}</p></div>`;
   bindTop(); $$('[data-wk]').forEach(x => x.onclick = () => { const d = +x.dataset.wk; WK = d < 0 ? A.prevWeek(WK) : A.isoWeek(A.addDays(A.weekDays(WK)[6], 1)); weekPanel(); });
   $$('[data-b]').forEach(x => x.onclick = () => A.go('ota-bola-' + x.dataset.b)); $$('[data-go]').forEach(x => x.onclick = () => A.go(x.dataset.go));
@@ -2447,6 +2821,10 @@ function settings() {
   app.innerHTML = `<div class="wrap ota">${top('⚙️ Sozlamalar', 'ota')}<div class="card form">
   <label class="lb">🔊 Effekt ovozi: <b id="vv">${Math.round(z.ovoz * 100)}%</b></label><input type="range" id="vol" min="0" max="100" value="${Math.round(z.ovoz * 100)}"><button class="btn sm ghost" data-test>▶ Sinash</button>
   <label class="lb">✨ Effektlar</label><select id="ke" class="inp"><option value="auto" ${z.kamEffekt === 'auto' ? 'selected' : ''}>Avtomatik (sekin telefonda «kam effekt»)${z.kamAuto ? ' — hozir yoqilgan' : ''}</option><option value="on" ${z.kamEffekt === 'on' ? 'selected' : ''}>Kam effekt</option><option value="off" ${z.kamEffekt === 'off' ? 'selected' : ''}>To'liq effekt</option></select>
+  <label class="lb">🎮 Dam olish o'yini</label><select id="oh" class="inp">${[0, 3, 4, 5, 6, 8, 10].map(n => `<option value="${n}" ${+z.oyinHar === n ? 'selected' : ''}>${n ? `Har ${n} ta savoldan keyin` : "O'chiq"}</option>`).join('')}</select>
+  <label class="lb">⏱ O'yin davomiyligi</label><select id="od" class="inp">${[1, 2, 3, 4, 5].map(n => `<option value="${n}" ${+z.oyinDaq === n ? 'selected' : ''}>${n} daqiqa</option>`).join('')}</select>
+  <p class="sm mut">Maktabgacha — 🏎️ poyga (shakl, rang, son, naqsh). 1-sinf va kattalar — 🧩 pazl yoki 🎨 ko'zgu rasm. O'yin faqat savollar ishlangandan keyin ochiladi va yulduz bermaydi. Missiyadagi «😴 Charchadim» bolani o'yinga emas, boshqa fanga o'tkazadi.</p>
+  <label class="chk"><input type="checkbox" id="rk" ${z.reyting !== false ? 'checked' : ''}> 🏆 Bolalar o'z ekranida hafta reytingini ko'rsin</label>
   ${ad ? `<label class="lb">☕ Tanaffus eslatmasi (daqiqa)</label><input id="tn" class="inp" type="number" min="10" max="40" value="${z.tanaffus}">
   <label class="lb">🎁 Sandiq chegaralari (haftalik ⭐)</label><div class="sq">${['bronza', 'kumush', 'oltin', 'olmos'].map(k => `<label>${{ bronza: '🥉', kumush: '🥈', oltin: '🥇', olmos: '💎' }[k]}<input class="inp" type="number" min="1" data-sq="${k}" value="${z.sandiq[k]}"></label>`).join('')}</div>
   <label class="lb">Oila nomi</label><input id="onm" class="inp" maxlength="30" value="${esc(s.oila.nom)}">
@@ -2456,7 +2834,7 @@ function settings() {
   ${ad ? `<details class="danger"><summary>⚠️ Hamma ma'lumotni o'chirish</summary><p class="sm">Shu telefondagi oila, bolalar va hamma natija o'chadi. Avval 💾 Zaxira qiling.</p><button class="btn danger" data-wipe>🗑 Hammasini o'chirish</button></details>` : ''}</div></div>`;
   bindTop(); $('#vol').oninput = e => { $('#vv').textContent = e.target.value + '%'; FX.setVol(e.target.value / 100); };
   $('[data-test]').onclick = () => FX.boom(innerWidth / 2, innerHeight / 3, 'garaj');
-  $('[data-save]').onclick = () => { z.ovoz = $('#vol').value / 100; z.kamEffekt = $('#ke').value; if (z.kamEffekt !== 'auto') z.kamAuto = null;
+  $('[data-save]').onclick = () => { z.ovoz = $('#vol').value / 100; z.kamEffekt = $('#ke').value; if (z.kamEffekt !== 'auto') z.kamAuto = null; z.oyinHar = +$('#oh').value; z.oyinDaq = +$('#od').value; z.reyting = $('#rk').checked;
     if (ad) { z.tanaffus = Math.max(10, Math.min(40, +$('#tn').value || 20)); $$('[data-sq]').forEach(i => { z.sandiq[i.dataset.sq] = Math.max(1, +i.value || 1); }); s.oila.nom = $('#onm').value.trim() || s.oila.nom; const po = $('#po').value.trim(), pa = $('#pa').value.trim(); if (po) { if (!/^\d{4}$/.test(po)) return toast('PIN — 4 raqam'); s.pinOta = A.pinHash(po); } if (pa) { if (!/^\d{4}$/.test(pa)) return toast('PIN — 4 raqam'); s.pin = A.pinHash(pa); } }
     A.applyFX(); A.save(true); toast('Saqlandi ✓'); A.go('ota'); };
   const w = $('[data-wipe]'); if (w) w.onclick = () => sheet(`<h2>⚠️ Hammasini o'chirish</h2><input id="cf" class="inp" placeholder="Tasdiqlash: OCHIR" autocomplete="off"><div class="row"><button class="btn danger" data-ok>O'chirish</button><button class="btn ghost" data-x>Bekor</button></div>`, el => { $('[data-ok]', el).onclick = () => { if ($('#cf', el).value.trim().toUpperCase() !== 'OCHIR') return toast('OCHIR deb yozing'); A.logKeys().forEach(k => localStorage.removeItem(k)); localStorage.removeItem(A.KEY); location.hash = ''; location.reload(); }; });
@@ -2466,14 +2844,14 @@ let QKUN = null;
 function qiyinMatn(kun) {
   const L = A.bolalar(), out = [`BILIMJON-QIYIN|v${A.VER}|${kun}|bolalar=${L.length}`], odam = [];
   L.forEach(b => {
-    const log = A.readLog(b.id, kun), ans = log.filter(e => e.t === 'ans'), dars = log.filter(e => e.t === 'dars'), g = {};
+    const log = A.readLog(b.id, kun), ans = log.filter(e => e.t === 'ans'), dars = log.filter(e => e.t === 'dars'), ch = log.filter(e => e.t === 'charch').map(e => e.fan || e.k), oy = log.filter(e => e.t === 'oyin'), g = {};
     const G0 = id => g[id] || (g[id] = { n: 0, xato: 0, dars: 0, egz: 0, egzOk: 0, ex: [] });
     ans.forEach(e => { const x = G0(e.tugun); x.n++; if (e.tur === 'dars') { x.egz++; if (e.togri) x.egzOk++; } if (!e.togri_1) { x.xato++; if (x.ex.length < 3) x.ex.push(e); } });
     dars.forEach(e => { G0(e.tugun).dars++; });
     const ids = Object.keys(g).filter(id => g[id].xato || g[id].dars).sort((p, q) => g[q].xato - g[p].xato);
-    out.push(`BOLA|${b.kod}|daraja=${b.daraja}|javob=${ans.length}|xato=${ans.filter(e => !e.togri_1).length}|dars=${dars.length}`);
+    out.push(`BOLA|${b.kod}|daraja=${b.daraja}|javob=${ans.length}|xato=${ans.filter(e => !e.togri_1).length}|dars=${dars.length}|charch=${ch.join(',') || '-'}|oyin=${oy.length}`);
     ids.forEach(id => { const x = g[id], nom = (BJ.gen.reg[id] || {}).nom || id; out.push(`Q|${id}|${nom}|n=${x.n}|xato=${x.xato}|dars=${x.dars}|egizak=${x.egzOk}/${x.egz}`); x.ex.forEach(e => out.push(`  e|${e.savol}|bola=${e.javob}|togri=${e.togri_javob}|xato_turi=${e.xato_turi || '-'}`)); });
-    odam.push({ b, ids: ids.map(id => (BJ.gen.reg[id] || {}).nom || id) });
+    odam.push({ b, ids: ids.map(id => (BJ.gen.reg[id] || {}).nom || id), ch: ch.map(f => (A.FAN[f] || { nom: f === 'isinish' ? 'Isinish' : f }).nom) });
   });
   return { txt: out.join('\n'), odam };
 }
@@ -2482,7 +2860,7 @@ function qiyinPanel() {
   app.innerHTML = `<div class="wrap ota">${top('📚 Bugungi qiyinlar', 'ota')}
   <div class="wkbar"><button class="ib" data-d="-1" aria-label="Oldingi kun">◀</button><b>${esc(kun)}</b><button class="ib" data-d="1" aria-label="Keyingi kun" ${kun >= A.todayKey() ? 'disabled' : ''}>▶</button></div>
   <div class="card"><p class="sm">Bolalar qiynalgan mavzular. Kun oxirida shu matnni nusxa olib Claude'ga yuboring — u shu mavzular bo'yicha kichik darslar tayyorlab, keyingi versiyada chiqaradi.</p>
-  ${r.odam.map(o => `<p><b>${esc(o.b.avatar + ' ' + o.b.laqab)}:</b> ${o.ids.length ? esc(o.ids.join(', ')) : "qiyinchilik yo'q ✓"}</p>`).join('')}</div>
+  ${r.odam.map(o => `<p><b>${esc(o.b.avatar + ' ' + o.b.laqab)}:</b> ${o.ids.length ? esc(o.ids.join(', ')) : "qiyinchilik yo'q ✓"}${o.ch.length ? `<br><span class="sm">😴 Charchadi: ${esc(o.ch.join(', '))}</span>` : ''}</p>`).join('')}</div>
   <div class="card"><textarea class="inp mono" rows="10" readonly aria-label="Claude uchun matn">${esc(r.txt)}</textarea>
   <div class="row"><button class="btn" data-copy>📋 Nusxa olish</button><button class="btn ghost" data-share>📤 Ulashish</button></div></div></div>`;
   bindTop();
@@ -2503,6 +2881,23 @@ function exportPanel() {
     download(new Blob([csv], { type: 'text/csv' }), `Bilimjon_${b.kod}_${WK}.csv`); });
 }
 function download(blob, name) { if (G.BJ_BITTA && G.top !== G.self) return toast('Bu sinov havolasida fayl saqlanmaydi — «📋 Zaxirani nusxalash»dan foydalaning'); try { const u = URL.createObjectURL(blob), a = document.createElement('a'); a.href = u; a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(u); a.remove(); }, 1500); toast('⬇️ ' + name); } catch (e) { toast('Yuklab bo\'lmadi'); } }
+/* ================= 📲 OILA REYTINGI (0.3.0): telefonlar kod almashadi, server yo'q ================= */
+function reytingPanel() {
+  const s = S(), kod = A.reytingKod(), tel = Object.keys(s.oilaTel || {}).map(q => Object.assign({ q }, s.oilaTel[q])), R = A.reytingRoyxat();
+  app.innerHTML = `<div class="wrap ota">${top('📲 Oila reytingi', 'ota')}
+  <div class="card"><p class="sm">Server yo'q — telefonlar <b>kod</b> almashadi. 1) Shu telefonda «📤 Yuborish» → Telegram orqali ikkinchi telefonga. 2) O'sha telefonda 👨‍👩‍👧 → 📲 Oila reytingi → kodni pastga qo'yib «📥 Qo'shish». Ikkinchi telefon kodini bu yerga ham xuddi shunday qo'ying. Reyting kod qo'yilgan payt yangilanadi — kuniga bir marta yetarli.</p></div>
+  <div class="card"><h3>📤 Shu telefon kodi</h3><textarea class="inp mono" rows="5" readonly aria-label="Reyting kodi">${esc(kod)}</textarea><div class="row"><button class="btn" data-share>📤 Yuborish</button><button class="btn ghost" data-copy>📋 Nusxa</button></div></div>
+  <div class="card"><h3>📥 Boshqa telefon kodini qo'shish</h3><textarea id="rkod" class="inp mono" rows="4" placeholder="BILIMJON-REYTING|1|… kodini shu yerga qo'ying"></textarea><div class="row"><button class="btn" data-add>📥 Qo'shish</button><button class="btn ghost" data-paste>📋 Buferdan</button></div></div>
+  <div class="card"><h3>🔗 Ulangan telefonlar</h3>${tel.length ? tel.map(t => `<div class="nr"><b>${esc(t.nom)}</b>: ${(t.bolalar || []).map(x => esc(x.av + ' ' + x.laqab)).join(', ')}<div class="sm mut">Kod: ${esc(new Date(t.ts).toLocaleString())}${t.wk !== A.isoWeek() ? ' · ⏳ o\'tgan hafta' : ''}</div><button class="btn sm ghost" data-del="${esc(t.q)}">🗑 Uzish</button></div>`).join('') : '<p class="sm mut">Hali ulangan telefon yo\'q.</p>'}</div>
+  <div class="card"><h3>🏆 Bolalar ko'radigan reyting</h3>${R.map((x, i) => `<div class="nr">${x.eski ? '⏳' : (i + 1) + '.'} ${esc(x.av + ' ' + x.laqab)} — ⭐ ${x.eski ? '—' : x.yulduz} · 📅 ${x.kun}/7 kun · 🚀 +${x.osish}${x.tel ? ` <span class="sm mut">(${esc(x.telNom)})</span>` : ''}</div>`).join('') || '<p class="sm mut">Bola yo\'q.</p>'}
+  <p class="sm mut">${s.sozlama.reyting === false ? "⚠️ Bolalar ekranida o'chirilgan (⚙️ Sozlamalar)." : "Bola uyida 2 va undan ko'p bola bo'lsa chiqadi."} Maslahat: o'rinni emas, harakatni maqtang — «bu hafta 5 kun kirding, barakalla!».</p></div></div>`;
+  bindTop();
+  $('[data-copy]').onclick = () => copyText(kod); $('[data-share]').onclick = () => shareText(kod, 'Bilimjon reyting kodi');
+  const add = txt => { const r = A.reytingImport(txt); if (r.xato) return toast('⚠️ ' + r.xato); toast(`✅ ${r.nom}: ${r.n} ta bola qo'shildi`); reytingPanel(); };
+  $('[data-add]').onclick = () => add($('#rkod').value);
+  $('[data-paste]').onclick = async () => { try { const t = await navigator.clipboard.readText(); $('#rkod').value = t; add(t); } catch (e) { toast("Buferni o'qib bo'lmadi — kodni qo'lda qo'ying"); } };
+  $$('[data-del]').forEach(x => x.onclick = () => { delete s.oilaTel[x.dataset.del]; A.save(true); toast('Uzildi'); reytingPanel(); });
+}
 /* ================= ZAXIRA (BACKUP) ================= */
 function backupPanel() {
   const s = S();
@@ -2530,7 +2925,7 @@ function start() {
   if (!G.BJ_BITTA && 'serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')) navigator.serviceWorker.register('sw.js').catch(() => {});
   BJ.debug = { state: () => A.S(), fx: FX.stats, A, gen: BJ.gen };
   A.render();
-  if (oldVer && oldVer !== A.VER) setTimeout(() => toast('🆕 Bilimjon ' + A.VER + ": xato qilsang — kichik dars, keyin o'zing yechasan!"), 900);
+  if (oldVer && oldVer !== A.VER) setTimeout(() => toast('🆕 Bilimjon ' + A.VER + ": har 5 savoldan keyin 🎮 o'yin, charchasang — 😴 boshqa fan, 🏆 hafta reytingi!"), 900);
 }
 start();
 })(window);
