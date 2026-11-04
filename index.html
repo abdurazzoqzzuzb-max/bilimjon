@@ -195,6 +195,21 @@ body.th-orol .road{background:rgba(255,255,255,.18)}
 .rey .rn{font-size:1.3rem;text-align:center;font-weight:800}.rey .rb{min-width:0}
 .rey .rnm{font-weight:800;font-size:.95rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rey .rnm i{font-weight:600;color:var(--mut);font-style:normal;font-size:.8rem}
 .rey .rv{font-weight:800;text-align:right;display:flex;flex-direction:column;line-height:1.15;white-space:nowrap}.rey .rv small{font-size:.75rem;color:var(--mut)}.rey .rleg{margin-top:6px}
+/* --- 🕌 arab tili, 📚 mashq, 📝 vazifa (0.4.0) --- */
+.arab.big.uzun{font-size:2.5rem;line-height:1.7}.opt .arab.uz{font-size:1.6rem;line-height:1.6}
+.arsoz{min-height:86px;background:#fff;color:#172033;border-radius:18px;display:flex;align-items:center;justify-content:center;gap:2px;font-size:3rem;padding:6px 12px;border:3px dashed var(--optline);margin:6px 0}
+.arsoz.ok{border:3px solid var(--ok);background:#E7F7EA}.arsoz.no{border:3px solid var(--no);animation:shk .35s}
+.arkur{width:3px;height:46px;background:var(--acc);animation:kur 1s steps(2) infinite}@keyframes kur{50%{opacity:0}}
+.tiles.artl .tile{font-size:2.3rem;min-width:62px;min-height:66px;line-height:1.2}
+.daf{display:flex;justify-content:center;background:#fff;border-radius:18px;padding:6px}.dafc{touch-action:none;border-radius:12px;background:#FBFDFF;display:block}
+.dafnam{background:#fff;color:#172033;border-radius:16px;padding:10px;text-align:center;margin-top:8px}.dafnam .arab{font-size:3rem}.dafnam .dl{font-weight:800}
+.ogrid.g3{grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0}.ogrid.g3 .ocard{min-height:112px;padding:8px 4px}.ogrid.g3 .ocard span{font-size:2.2rem}.ogrid.g3 .ocard b{font-size:.92rem;text-align:center}
+.ocard.off{opacity:.5}.msh{margin:16px 0 2px}
+.vz{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:10px 12px;margin:10px 0}.vz .tl{font-weight:800;padding:0}
+.vzi{display:flex;align-items:center;gap:8px;padding:8px 0;border-top:1px solid var(--line)}.vz .tl+.vzi{border-top:0}.vzb{flex:1;min-width:0}.vzi.ok{opacity:.7}.vzok{font-size:1.4rem}.kech{color:#FF8A80;font-weight:800}
+.vzr{padding:8px 0;border-bottom:1px solid var(--line);position:relative;padding-right:60px}.vzr .btn{position:absolute;right:0;top:6px}
+.tjd{border:1px solid var(--line);border-radius:12px;padding:8px 10px;margin:8px 0}.tjd summary{cursor:pointer;min-height:32px}
+.tjm{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:4px 0;border-bottom:1px dashed var(--line)}.tjm .arab{font-size:1.5rem;white-space:nowrap}.tjm .sm{text-align:right}
 /* --- ota-ona --- */
 .ota .card h3{margin-top:0}
 .wkbar{display:flex;align-items:center;justify-content:center;gap:10px;margin:6px 0}
@@ -375,15 +390,28 @@ ar: [
   ['oila', 'أُمٌّ', '👩', 'ona'], ['oila', 'أَبٌ', '👨', 'ota'], ['oila', 'أَخٌ', '👦', 'aka-uka'], ['oila', 'أُخْتٌ', '👧', 'opa-singil'], ['oila', 'جَدٌّ', '👴', 'bobo'], ['oila', 'جَدَّةٌ', '👵', 'buvi'], ['oila', 'طِفْلٌ', '👶', 'bola, chaqaloq'],
   ['uy', 'بَيْتٌ', '🏠', 'uy'], ['uy', 'بَابٌ', '🚪', 'eshik'], ['uy', 'كُرْسِيٌّ', '🪑', 'stul'], ['uy', 'سَرِيرٌ', '🛏️', 'karavot'], ['uy', 'مِصْبَاحٌ', '💡', 'chiroq'],
   ['tana', 'عَيْنٌ', '👁️', "ko'z"], ['tana', 'أُذُنٌ', '👂', 'quloq'], ['tana', 'أَنْفٌ', '👃', 'burun'], ['tana', 'يَدٌ', '✋', "qo'l"], ['tana', 'فَمٌ', '👄', "og'iz"], ['tana', 'رِجْلٌ', '🦵', 'oyoq'],
-  ['ovqat', 'خُبْزٌ', '🍞', 'non'], ['ovqat', 'مَاءٌ', '💧', 'suv'], ['ovqat', 'حَلِيبٌ', '🥛', 'sut'], ['ovqat', 'تُفَّاحٌ', '🍎', 'olma'], ['ovqat', 'مَوْزٌ', '🍌', 'banan'], ['ovqat', 'بَيْضٌ', '🥚', 'tuxum'], ['ovqat', 'عَسَلٌ', '🍯', 'asal'],
+  ['ovqat', 'خُبْزٌ', '🍞', 'non'], ['ovqat', 'مَاءٌ', '💧', 'suv'], ['ovqat', 'حَلِيبٌ', '🥛', 'sut'], ['ovqat', 'تُفَّاحٌ', '🍎', 'olma'], ['ovqat', 'مَوْزٌ', '🍌', 'banan'], ['ovqat', 'بَيْضٌ', '🥚', 'tuxum'], ['ovqat', 'عَسَلٌ', '🍯', 'asal'], ['ovqat', 'أَرُزٌّ', '🍚', 'guruch'], ['ovqat', 'لَحْمٌ', '🍖', "go'sht"], ['ovqat', 'جُبْنٌ', '🧀', 'pishloq'], ['ovqat', 'عِنَبٌ', '🍇', 'uzum'], ['ovqat', 'بُرْتُقَالٌ', '🍊', 'apelsin'],
   ['hayvon', 'قِطٌّ', '🐱', 'mushuk'], ['hayvon', 'كَلْبٌ', '🐶', 'it'], ['hayvon', 'أَسَدٌ', '🦁', 'sher'], ['hayvon', 'حِصَانٌ', '🐴', 'ot'], ['hayvon', 'سَمَكٌ', '🐟', 'baliq'], ['hayvon', 'طَائِرٌ', '🐦', 'qush'], ['hayvon', 'بَقَرَةٌ', '🐄', 'sigir'], ['hayvon', 'فِيلٌ', '🐘', 'fil'],
   ['rang', 'أَحْمَرُ', '🟥', 'qizil'], ['rang', 'أَزْرَقُ', '🟦', "ko'k"], ['rang', 'أَصْفَرُ', '🟨', 'sariq'], ['rang', 'أَخْضَرُ', '🟩', 'yashil'], ['rang', 'أَبْيَضُ', '⬜', 'oq'], ['rang', 'أَسْوَدُ', '⬛', 'qora'],
-  ['son', 'وَاحِدٌ', '1️⃣', 'bir'], ['son', 'اِثْنَانِ', '2️⃣', 'ikki'], ['son', 'ثَلَاثَةٌ', '3️⃣', 'uch'], ['son', 'أَرْبَعَةٌ', '4️⃣', "to'rt"], ['son', 'خَمْسَةٌ', '5️⃣', 'besh'],
+  ['son', 'وَاحِدٌ', '1️⃣', 'bir'], ['son', 'اِثْنَانِ', '2️⃣', 'ikki'], ['son', 'ثَلَاثَةٌ', '3️⃣', 'uch'], ['son', 'أَرْبَعَةٌ', '4️⃣', "to'rt"], ['son', 'خَمْسَةٌ', '5️⃣', 'besh'], ['son', 'سِتَّةٌ', '6️⃣', 'olti'], ['son', 'سَبْعَةٌ', '7️⃣', 'yetti'], ['son', 'ثَمَانِيَةٌ', '8️⃣', 'sakkiz'], ['son', 'تِسْعَةٌ', '9️⃣', "to'qqiz"], ['son', 'عَشَرَةٌ', '🔟', "o'n"],
   ['maktab', 'كِتَابٌ', '📖', 'kitob'], ['maktab', 'قَلَمٌ', '✏️', 'qalam'], ['maktab', 'مَدْرَسَةٌ', '🏫', 'maktab'], ['maktab', 'حَقِيبَةٌ', '🎒', 'sumka'], ['maktab', 'دَفْتَرٌ', '📓', 'daftar'],
-  ['tabiat', 'شَمْسٌ', '☀️', 'quyosh'], ['tabiat', 'قَمَرٌ', '🌙', 'oy'], ['tabiat', 'نَجْمٌ', '⭐', 'yulduz'], ['tabiat', 'شَجَرَةٌ', '🌳', 'daraxt'], ['tabiat', 'وَرْدَةٌ', '🌹', 'atirgul'], ['tabiat', 'بَحْرٌ', '🌊', 'dengiz'],
-  ['transport', 'سَيَّارَةٌ', '🚗', 'mashina'], ['transport', 'طَائِرَةٌ', '✈️', 'samolyot'], ['transport', 'قِطَارٌ', '🚂', 'poyezd'], ['transport', 'سَفِينَةٌ', '🚢', 'kema']
+  ['tabiat', 'شَمْسٌ', '☀️', 'quyosh'], ['tabiat', 'قَمَرٌ', '🌙', 'oy'], ['tabiat', 'نَجْمٌ', '⭐', 'yulduz'], ['tabiat', 'شَجَرَةٌ', '🌳', 'daraxt'], ['tabiat', 'وَرْدَةٌ', '🌹', 'atirgul'], ['tabiat', 'بَحْرٌ', '🌊', 'dengiz'], ['tabiat', 'سَمَاءٌ', '🌌', 'osmon'], ['tabiat', 'أَرْضٌ', '🌍', 'yer'], ['tabiat', 'جَبَلٌ', '⛰️', "tog'"], ['tabiat', 'نَهْرٌ', '🏞️', 'daryo'], ['tabiat', 'مَطَرٌ', '🌧️', "yomg'ir"], ['tabiat', 'ثَلْجٌ', '❄️', 'qor'], ['tabiat', 'رِيحٌ', '💨', 'shamol'],
+  ['transport', 'سَيَّارَةٌ', '🚗', 'mashina'], ['transport', 'طَائِرَةٌ', '✈️', 'samolyot'], ['transport', 'قِطَارٌ', '🚂', 'poyezd'], ['transport', 'سَفِينَةٌ', '🚢', 'kema'],
+  /* 0.4.0: yangi mavzular (oyisi tasdiqlagach chiqadi) */
+  ['kiyim', 'قَمِيصٌ', '👕', "ko'ylak"], ['kiyim', 'حِذَاءٌ', '👟', 'poyabzal'], ['kiyim', 'قُبَّعَةٌ', '🧢', 'qalpoq'], ['kiyim', 'ثَوْبٌ', '👗', 'libos'], ['kiyim', 'جَوْرَبٌ', '🧦', 'paypoq'], ['kiyim', 'مِعْطَفٌ', '🧥', 'palto'],
+  ['fel', 'كَتَبَ', '✍️', 'yozdi'], ['fel', 'قَرَأَ', '📚', "o'qidi"], ['fel', 'ذَهَبَ', '🚶', 'ketdi'], ['fel', 'جَلَسَ', '🪑', "o'tirdi"], ['fel', 'أَكَلَ', '😋', 'yedi'], ['fel', 'شَرِبَ', '🥤', 'ichdi'], ['fel', 'نَامَ', '😴', 'uxladi'], ['fel', 'فَتَحَ', '🔓', 'ochdi'],
+  ['sifat', 'كَبِيرٌ', '🏔️', 'katta'], ['sifat', 'صَغِيرٌ', '🐜', 'kichik'], ['sifat', 'جَمِيلٌ', '🌸', 'chiroyli'], ['sifat', 'جَدِيدٌ', '🆕', 'yangi'], ['sifat', 'طَوِيلٌ', '🦒', 'uzun'], ['sifat', 'حَارٌّ', '🔥', 'issiq'], ['sifat', 'بَارِدٌ', '🧊', 'sovuq'],
+  ['vaqt', 'يَوْمٌ', '📅', 'kun'], ['vaqt', 'لَيْلٌ', '🌃', 'tun'], ['vaqt', 'صَبَاحٌ', '🌅', 'tong'], ['vaqt', 'مَسَاءٌ', '🌆', 'kech'], ['vaqt', 'سَنَةٌ', '🗓️', 'yil'], ['vaqt', 'سَاعَةٌ', '⏰', 'soat'],
+  ['din', 'مَسْجِدٌ', '🕌', 'masjid'], ['din', 'صَلَاةٌ', '🧎', 'namoz'], ['din', 'دُعَاءٌ', '🤲', 'duo'], ['din', 'كَعْبَةٌ', '🕋', 'Kaba'], ['din', 'قُرْآنٌ', '📗', "Qur'on"],
+  ['oshxona', 'مِلْعَقَةٌ', '🥄', 'qoshiq'], ['oshxona', 'كُوبٌ', '☕', 'stakan'], ['oshxona', 'صَحْنٌ', '🍽️', 'likopcha'], ['oshxona', 'قِدْرٌ', '🍲', 'qozon']
 ],
-arTartib: ['oila', 'uy', 'tana', 'ovqat', 'hayvon', 'rang', 'son', 'maktab', 'tabiat', 'transport'],
+/* 0.4.0: arab iboralari va gaplar (harakatli) — arab, emoji, o'zbekcha. Tasdiq — arTasdiq (so'zlar bilan bir xil). */
+arIbora: [['السَّلَامُ عَلَيْكُمْ', '👋', 'Assalomu alaykum'], ['وَعَلَيْكُمُ السَّلَامُ', '🤝', 'Va alaykum assalom'], ['صَبَاحُ الْخَيْرِ', '🌅', 'Xayrli tong'], ['مَسَاءُ الْخَيْرِ', '🌆', 'Xayrli kech'],
+  ['شُكْرًا', '🙏', 'Rahmat'], ['عَفْوًا', '😊', 'Arzimaydi'], ['مَعَ السَّلَامَةِ', '👋', "Xayr, sog' bo'ling"], ['كَيْفَ حَالُكَ؟', '🙂', 'Ahvoling qanday?'],
+  ['بِخَيْرٍ، وَالْحَمْدُ لِلّٰهِ', '😊', 'Yaxshi, Allohga hamd'], ['مَا اسْمُكَ؟', '📛', 'Isming nima?'], ['مَا هٰذَا؟', '🤔', 'Bu nima?'], ['هٰذَا بَيْتٌ', '🏠', 'Bu — uy'],
+  ['هٰذِهِ شَجَرَةٌ', '🌳', 'Bu — daraxt'], ['الْبَيْتُ كَبِيرٌ', '🏠', 'Uy katta'], ['الْقِطُّ صَغِيرٌ', '🐱', 'Mushuk kichik'], ['أَيْنَ الْكِتَابُ؟', '📖', 'Kitob qayerda?'],
+  ['الْقَلَمُ فِي الْحَقِيبَةِ', '🎒', 'Qalam sumkada'], ['أَنَا أَقْرَأُ', '📚', "Men o'qiyapman"], ['أَنَا أَكْتُبُ', '✍️', 'Men yozyapman'], ['اِفْتَحِ الْبَابَ', '🚪', 'Eshikni och']],
+arTartib: ['oila', 'uy', 'tana', 'ovqat', 'hayvon', 'rang', 'son', 'maktab', 'tabiat', 'transport', 'kiyim', 'fel', 'sifat', 'vaqt', 'din', 'oshxona'],
 /* Arab alifbosi: harf, o'zbekcha nomi, bog'lanmaydigan (faqat o'ngdan ulanadi) */
 alif: [['ا', 'alif', 1], ['ب', 'ba'], ['ت', 'ta'], ['ث', 'sa'], ['ج', 'jim'], ['ح', 'ḥa'], ['خ', 'xo'], ['د', 'dal', 1], ['ذ', 'zal', 1], ['ر', 'ro', 1], ['ز', 'zay', 1], ['س', 'sin'], ['ش', 'shin'], ['ص', 'sod'], ['ض', 'dod'], ['ط', 'to'], ['ظ', 'zo'], ['ع', 'ayn'], ['غ', "g'ayn"], ['ف', 'fa'], ['ق', 'qof'], ['ك', 'kaf'], ['ل', 'lam'], ['م', 'mim'], ['ن', 'nun'], ['ه', 'ha'], ['و', 'vav', 1], ['ي', 'ya']],
 /* O'qish matnlari: daraja 1 (1-sinf, 20–40 so'z), 2 (2-sinf, 60–120 so'z); 3 savol, variantlar teng uzunlikda */
@@ -1202,6 +1230,222 @@ add('KASHF', { fan: 'dunyo', nom: 'Kun kashfiyoti', me: 20, gen(q, c) {
 
 </script>
 <script>
+/* Bilimjon — 🕌 ARAB TILI 2 (0.4.0): bemalol o'qiydigan va yozadigan bolalar uchun (arab = «asosiy»). Hammasi o'zbekcha.
+   O'qish: AQ.1 ma'no, AQ.2 arabchasini top, AQ.3 belgilar va harflar soni, AQ.4 iboralar.
+   Yozish: AY.1 harflardan so'z yig'ish (imlo), AY.2 harflarni qo'shish, AY.3 tushib qolgan harf, AY.4 daftarga yozish (o'zi tekshiradi).
+   Tajvid: TJ.1 lom (shamsiy/qamariy), TJ.2 nun sokin va tanvin, TJ.3 mim sokin, TJ.4 qalqala, TJ.5 madd, TJ.6 g'unna.
+   Daraja sinfga emas, bolaning arab darajasiga qarab (b.arDaraja → boshlang'ich q). So'z va iboralar — oyisi tasdiqlagani (arTasdiq),
+   tajvid — bo'lim tasdig'i (sozlama.tjTasdiq). Maktabgacha bolaga (ctx.g0) javoblari arabcha bo'lgan savollar ko'proq beriladi. */
+(function (G) {
+'use strict';
+const BJ = G.BJ, B = BJ.bank, gen = BJ.gen, ARW = BJ.ARW, AL = BJ.AL;
+const { pick, sample, shuf, opts, add, rid, R } = gen;
+const f = () => R.f();
+const HRK = /[ً-ٰٟ]/g;
+const skelet = w => String(w).replace(HRK, '').replace(/[؟?،!.]/g, '');
+const harflar = w => Array.from(skelet(w).replace(/\s+/g, ''));
+const HNOM = {}; AL.forEach(a => { HNOM[a.h] = a.nom; });
+Object.assign(HNOM, { 'ء': 'hamza', 'أ': 'alif (hamza bilan)', 'إ': 'alif (ostida hamza)', 'آ': 'alif madda', 'ؤ': 'vav (hamza bilan)', 'ئ': 'ya (hamza bilan)', 'ة': 'ta marbuta', 'ى': 'alif maqsura' });
+const hn = c => HNOM[c] || c;
+/* Ko'rinishi yoki tovushi o'xshash harflar — chalg'ituvchi uchun */
+const GURUH = ['بتثنيئ', 'جحخ', 'دذ', 'رزو', 'سش', 'صض', 'طظ', 'عغ', 'فق', 'كل', 'هةم', 'اأإآى', 'وؤ'];
+const yaqin = c => Array.from(new Set(GURUH.filter(g => g.includes(c)).join('').split(''))).filter(x => x !== c);
+const ODDIY = AL.map(a => a.h);
+const IBR = (B.arIbora || []).map(x => ({ w: x[0], e: x[1], uz: x[2] }));
+/* Faqat oyisi tasdiqlagan so'zlar (sinov ekranida, tasdiq bo'lmasa — hammasi) */
+const sozlar = c => { const t = c && c.arTasdiq, L = t ? ARW.filter(w => t[w.w]) : []; return L.length >= 6 ? L : ARW; };
+const iboralar = c => { const t = c && c.arTasdiq, L = t ? IBR.filter(w => t[w.w]) : []; return L.length >= 4 ? L : IBR; };
+const arO = o => o.map(x => Object.assign(x, { h: x.v, ar: 1 }));
+const sg = (k, o) => k + '|' + o.map(x => x.v).join('|') + '|' + rid();
+
+/* ================= 📖 O'QISH ================= */
+add('AQ.1', { fan: 'ar', nom: "Arab so'z ma'nosi", me: 7, gen(q, c) {
+  const L = sozlar(c), w = pick(L), emo = v => ((L.find(x => x.uz === v) || {}).e || '') + ' ';
+  const same = L.filter(x => x.m === w.m && x.uz !== w.uz), oth = L.filter(x => x.m !== w.m && x.uz !== w.uz);
+  const ds = sample(same, 3).map(x => ({ v: x.uz, x: 'arab_soz_adashdi' })).concat(sample(oth, 4).map(x => ({ v: x.uz, x: 'arab_mavzu_adashdi' })));
+  const o = opts(w.uz, ds, q === 1 ? 3 : 4).map(x => Object.assign(x, { h: (c.g0 ? emo(x.v) : '') + x.v }));
+  return { sav: w.w, arab: 1, big: 1, sav2: "O'qi: ma'nosi nima?", o, a: w.uz, k: 'm' + w.w, sig: sg('m' + w.w, o), ex: { w: w.w }, tushun: `${w.w} — «${w.uz}» ${w.e}`, ota: c.g0 ? "Variantlarni o'qib bering — arabchani bola o'zi o'qiydi." : null };
+}, chk: it => ARW.some(x => x.w === it.ex.w && x.uz === it.a) || 'ar' });
+add('AQ.2', { fan: 'ar', nom: 'Arabchasini top', me: 7, gen(q, c) {
+  const L = sozlar(c), w = pick(L), s0 = harflar(w.w)[0];
+  const look = L.filter(x => x.w !== w.w && harflar(x.w)[0] === s0), same = L.filter(x => x.m === w.m && x.w !== w.w), oth = L.filter(x => x.m !== w.m);
+  const ds = (q === 3 ? sample(look, 2).map(x => ({ v: x.w, x: 'arab_soz_adashdi' })) : []).concat(sample(same, 2).map(x => ({ v: x.w, x: 'arab_soz_adashdi' })), sample(oth, 4).map(x => ({ v: x.w, x: 'arab_mavzu_adashdi' })));
+  const o = arO(opts(w.w, ds, q === 1 ? 3 : 4));
+  return { sav: `${w.e}  «${w.uz}»`, sav2: 'Arabchasini top', big: 1, o, a: w.w, k: 'r' + w.w, sig: sg('r' + w.w, o), ex: { w: w.w }, tushun: `«${w.uz}» — ${w.w}` };
+}, chk: it => ARW.some(x => x.w === it.a && x.w === it.ex.w) || 'ar' });
+const BELGI = [
+  { k: 'shadda', t: /ّ/, nom: 'shadda (ـّ)', izoh: "Shadda — harf ikki marta o'qiladi: أُمٌّ «umm»." },
+  { k: 'sukun', t: /ْ/, nom: 'sukun (ـْ)', izoh: "Sukun — harf harakatsiz o'qiladi: بَيْتٌ «bayt»." },
+  { k: 'tanvin', t: /[ً-ٍ]/, nom: 'tanvin (ـٌ ـٍ ـً)', izoh: "Tanvin — so'z oxirida «-un, -in, -an» deb o'qiladi: كِتَابٌ «kitaabun»." }];
+function sanash(q, c) {
+  const L = sozlar(c), w = pick(L), hs = harflar(w.w), n = hs.length;
+  const o = opts(n, [{ v: n + 1, x: 'sanashda_xato' }, { v: n - 1, x: 'sanashda_xato' }, { v: n + 2, x: 'sanashda_xato' }], q === 1 ? 3 : 4);
+  return { sav: w.w, arab: 1, big: 1, sav2: "Bu so'zda nechta harf bor? (harakatlar sanalmaydi)", o, a: String(n), k: 'n' + w.w, sig: sg('n' + w.w, o), ex: { w: w.w, n }, tushun: `${hs.join(' · ')} — ${n} ta harf` };
+}
+add('AQ.3', { fan: 'ar', nom: 'Belgilar va harflar', me: 8, gen(q, c) {
+  if (f() < 0.4) return sanash(q, c);
+  const L = sozlar(c);
+  for (let g = 0; g < 12; g++) {
+    const Bx = pick(BELGI), pos = L.filter(x => Bx.t.test(x.w)), neg = L.filter(x => !Bx.t.test(x.w)); if (!pos.length || neg.length < 3) continue;
+    const w = pick(pos), o = arO(opts(w.w, sample(neg, 3).map(x => ({ v: x.w, x: 'belgi_xato' })), 4));
+    return { sav: `Qaysi so'zda ${Bx.nom} bor?`, o, a: w.w, k: Bx.k + w.w, sig: sg(Bx.k + w.w, o), ex: { w: w.w, b: Bx.k }, tushun: Bx.izoh };
+  }
+  return sanash(q, c);
+}, chk: it => it.ex.n != null ? (harflar(it.ex.w).length === +it.a || 'son') : ((BELGI.find(b => b.k === it.ex.b) || { t: /$^/ }).t.test(it.a) || 'belgi') });
+add('AQ.4', { fan: 'ar', nom: 'Arab iboralari', me: 9, gen(q, c) {
+  const L = iboralar(c), w = pick(L);
+  if (q >= 2 && f() < 0.4) {
+    const o = arO(opts(w.w, sample(L.filter(x => x.w !== w.w), 4).map(x => ({ v: x.w, x: 'ibora_adashdi' })), q === 2 ? 3 : 4));
+    return { sav: `${w.e}  «${w.uz}»`, sav2: 'Arabchasini top', o, a: w.w, k: 'ir' + w.w, sig: sg('ir' + w.w, o), ex: { w: w.w }, tushun: `«${w.uz}» — ${w.w}` };
+  }
+  const o = opts(w.uz, sample(L.filter(x => x.uz !== w.uz), 5).map(x => ({ v: x.uz, x: 'ibora_adashdi' })), q === 1 ? 3 : 4);
+  return { sav: w.w, arab: 1, big: 1, sav2: "O'qi: ma'nosi nima?", o, a: w.uz, k: 'i' + w.w, sig: sg('i' + w.w, o), ex: { w: w.w }, tushun: `${w.w} — «${w.uz}» ${w.e}`, ota: c.g0 ? "Variantlarni o'qib bering." : null };
+}, chk: it => IBR.some(x => x.w === it.ex.w && (x.uz === it.a || x.w === it.a)) || 'ibora' });
+
+/* ================= ✍️ YOZISH ================= */
+add('AY.1', { fan: 'ar', nom: "Harflardan so'z yig'ish (imlo)", me: 14, gen(q, c) {
+  const lim = q === 1 ? 4 : q === 2 ? 5 : 9, L0 = sozlar(c), L = L0.filter(x => { const n = harflar(x.w).length; return n >= 2 && n <= lim; }), w = pick(L.length ? L : L0), hs = harflar(w.w), ext = [];
+  for (let g = 0; g < 40 && ext.length < q; g++) { const src = pick(hs), y = yaqin(src), cand = y.length && f() < 0.7 ? pick(y) : pick(ODDIY); if (!hs.includes(cand) && !ext.includes(cand)) ext.push(cand); }
+  const tiles = shuf(hs.concat(ext)).map((ch, i) => ({ id: i, c: ch }));
+  return { t: 'arharf', sav: `${w.e}  «${w.uz}»`, sav2: "Arabcha yoz: harflarni tartib bilan bos (o'ngdan chapga)", tiles, n: hs.length, a: hs.join(''), word: w.w, aLabel: w.w, k: 'y' + w.w, sig: 'y' + w.w + '|' + rid(), ex: { w: w.w },
+    hint: { sav: `Birinchi harf — «${hn(hs[0])}» (${hs[0]}). Jami ${hs.length} ta harf.` }, tushun: `${w.w} = ${hs.join(' + ')}` };
+}, chk: it => (harflar(it.word).join('') === it.a && it.tiles.length > it.n) || 'imlo' });
+add('AY.2', { fan: 'ar', nom: "Harflarni qo'shib yozish", me: 9, gen(q, c) {
+  const L0 = sozlar(c), L = L0.filter(x => harflar(x.w).length >= 3), w = pick(L.length ? L : L0), hs = harflar(w.w), a = hs.join(''), ds = [];
+  for (let i = 0; i < hs.length - 1; i++) { const t = hs.slice(); [t[i], t[i + 1]] = [t[i + 1], t[i]]; ds.push({ v: t.join(''), x: 'tartib_almashdi' }); }
+  ds.push({ v: hs.slice().reverse().join(''), x: 'yonalish_xato' });
+  hs.forEach((h, i) => { const y = yaqin(h); if (y.length) { const t = hs.slice(); t[i] = pick(y); ds.push({ v: t.join(''), x: 'oxshash_harf' }); } });
+  const o = arO(opts(a, shuf(ds), q === 1 ? 3 : 4));
+  return { sav: "Harflarni qo'shib yoz — qaysi so'z chiqadi?", vis: { k: 'arab', t: hs.join('   ') }, o, a, k: 'q' + w.w, sig: sg('q' + w.w, o), ex: { w: w.w }, tushun: `${hs.join(' + ')} = ${w.w} («${w.uz}»)` };
+}, chk: it => harflar(it.ex.w).join('') === it.a || 'qosh' });
+add('AY.3', { fan: 'ar', nom: 'Tushib qolgan harf', me: 8, gen(q, c) {
+  const L0 = sozlar(c), L = L0.filter(x => harflar(x.w).length >= 3), w = pick(L.length ? L : L0), hs = harflar(w.w);
+  const idx = hs.map((_, i) => i).filter(i => q > 1 || !/[ءأإآؤئةى]/.test(hs[i])), i = pick(idx.length ? idx : [0]), h = hs[i], t = hs.slice(); t[i] = '□';
+  const ds = yaqin(h).filter(v => !/[ءأإآؤئةى]/.test(v) || q > 1).map(v => ({ v, x: 'oxshash_harf' })).concat(sample(ODDIY.filter(x => x !== h), 4).map(v => ({ v, x: 'harf_adashdi' })));
+  const o = arO(opts(h, ds, q === 1 ? 3 : 4));
+  return { sav: `${w.e}  «${w.uz}» — qaysi harf tushib qolgan?`, vis: { k: 'arab', t: t.join('') }, o, a: h, k: 'b' + w.w + i, sig: sg('b' + w.w + i, o), ex: { w: w.w, i }, tushun: `${w.w}: ${i + 1}-harf — «${hn(h)}» (${h})` };
+}, chk: it => harflar(it.ex.w)[it.ex.i] === it.a || 'harf' });
+add('AY.4', { fan: 'ar', nom: 'Daftarga yozish', me: 25, gen(q, c) {
+  const L = sozlar(c).concat(q >= 3 ? iboralar(c) : []), w = pick(L);
+  return { t: 'daftar', sav: `${w.e}  «${w.uz}»`, sav2: "Arabchasini barmog'ing bilan yoz, keyin «👀 Tekshirish»ni bos", word: w.w, a: 'daftar', k: 'd' + w.w, sig: 'd' + w.w + '|' + rid(), ex: { w: w.w },
+    tushun: "Xato bo'lsa, so'zni daftaringga 3 marta to'g'ri yozib chiq ✍️", ota: "Bola yozib bo'lgach, namuna bilan birga solishtiring." };
+}, chk: it => !!it.word || 'daftar' });
+
+/* ================= 📗 TAJVID =================
+   Misollar — Qur'ondagi mashhur o'rinlar; hukm «hal qiluvchi harf» bo'yicha dastur tomonidan ham tekshiriladi (sinov). Oyisi bo'lim bo'yicha tasdiqlaydi. */
+const SHAMSIY = 'تثدذرزسشصضطظلن';
+const lomHarf = w => harflar(w)[2];
+const lomTur = w => { const c = lomHarf(w), x = /[أإآ]/.test(c) ? 'ا' : c; return SHAMSIY.includes(x) ? 'shamsiy' : 'qamariy'; };
+const LOM = ['الشَّمْسُ', 'الْقَمَرُ', 'النُّورُ', 'الْكِتَابُ', 'الرَّحْمٰنُ', 'الْبَيْتُ', 'السَّمَاءُ', 'الْأَرْضُ', 'الدِّينُ', 'الْحَمْدُ', 'التِّينُ', 'الْعِلْمُ', 'الصَّلَاةُ', 'الْمَسْجِدُ',
+  'اللَّيْلُ', 'الْيَوْمُ', 'الطَّيْرُ', 'الْوَلَدُ', 'الزَّيْتُونُ', 'الْفِيلُ', 'الذَّهَبُ', 'الْجَنَّةُ', 'الظِّلُّ', 'الْخُبْزُ', 'الثَّوْبُ', 'الْهِلَالُ', 'الضُّحَى', 'الْغَنَمُ'];
+const LOMN = { shamsiy: "☀️ Shamsiy — lom o'qilmaydi", qamariy: "🌙 Qamariy — lom o'qiladi" };
+add('TJ.1', { fan: 'ar', nom: 'Tajvid: shamsiy va qamariy lom', me: 7, gen(q, c) {
+  const sh = q === 1 ? (x => x) : skelet;
+  if (c.g0 || f() < 0.4) {
+    const tt = pick(['shamsiy', 'qamariy']), pos = LOM.filter(x => lomTur(x) === tt), neg = LOM.filter(x => lomTur(x) !== tt), a = pick(pos);
+    const o = arO(opts(sh(a), sample(neg, 3).map(x => ({ v: sh(x), x: 'tajvid_xato' })), 4));
+    return { sav: `Qaysi so'zda lom ${tt === 'shamsiy' ? "o'qilmaydi (☀️ shamsiy)" : "o'qiladi (🌙 qamariy)"}?`, o, a: sh(a), k: 'l' + a, sig: sg('l' + a, o), ex: { w: a, tt }, tushun: `${a}: «ال» dan keyin «${hn(lomHarf(a))}» — ${LOMN[tt]}` };
+  }
+  const w = pick(LOM), tur = lomTur(w), o = opts(tur, [{ v: tur === 'shamsiy' ? 'qamariy' : 'shamsiy', x: 'tajvid_xato' }], 2).map(x => Object.assign(x, { h: LOMN[x.v] }));
+  return { sav: "«ال» dagi lom qanday o'qiladi?", vis: { k: 'arab', t: sh(w) }, o, a: tur, k: 'L' + w, sig: sg('L' + w, o), ex: { w }, tushun: `«ال» dan keyin «${hn(lomHarf(w))}» keldi — ${LOMN[tur]}` };
+}, chk: it => (it.ex.tt ? lomTur(it.ex.w) === it.ex.tt : lomTur(it.ex.w) === it.a) || 'lom' });
+/* Nun sokin va tanvin: hukm keyingi harfga qarab */
+const NUN_SET = { izhor: 'ءأإآهعحغخ', idgom_g: 'ينمو', idgom: 'لر', iqlob: 'ب' };
+const nunTur = h => Object.keys(NUN_SET).find(k => NUN_SET[k].includes(h)) || 'ixfo';
+const NUN = [['مَنْ آمَنَ', 'آ'], ['مِنْ هَادٍ', 'ه'], ['أَنْعَمْتَ', 'ع'], ['عَذَابٌ أَلِيمٌ', 'أ'], ['مِنْ عِلْمٍ', 'ع'], ['مِنْ خَوْفٍ', 'خ'], ['نَارٌ حَامِيَةٌ', 'ح'], ['مِنْ غِلٍّ', 'غ'],
+  ['مَنْ يَقُولُ', 'ي'], ['مِنْ نِعْمَةٍ', 'ن'], ['مِنْ مَالٍ', 'م'], ['مِنْ وَالٍ', 'و'], ['خَيْرًا يَرَهُ', 'ي'], ['وُجُوهٌ يَوْمَئِذٍ', 'ي'],
+  ['مِنْ رَبِّهِمْ', 'ر'], ['هُدًى لِلْمُتَّقِينَ', 'ل'], ['غَفُورٌ رَحِيمٌ', 'ر'], ['مِنْ لَدُنْهُ', 'ل'],
+  ['مِنْ بَعْدِ', 'ب'], ['أَنْبِئْهُمْ', 'ب'], ['سَمِيعٌ بَصِيرٌ', 'ب'], ['يُنْبِتُ', 'ب'],
+  ['مِنْ قَبْلِ', 'ق'], ['أَنْتُمْ', 'ت'], ['يُنْفِقُونَ', 'ف'], ['مِنْ شَرِّ', 'ش'], ['مِنْ دُونِ', 'د'], ['أَنْزَلْنَا', 'ز'], ['عَنْكُمْ', 'ك'], ['مِنْ صَلْصَالٍ', 'ص']];
+const NUNN = { izhor: "Izhor — aniq o'qiladi", idgom_g: "Idg'om g'unnali — qo'shiladi, g'unna bilan", idgom: "Idg'om g'unnasiz — qo'shiladi, g'unnasiz", iqlob: "Iqlob — «m» ga aylanadi", ixfo: "Ixfo — yashirin, g'unna bilan" };
+const mimTur = h => h === 'ب' ? 'ixfo_sh' : h === 'م' ? 'idgom_sh' : 'izhor_sh';
+const MIM = [['تَرْمِيهِمْ بِحِجَارَةٍ', 'ب'], ['إِنَّ رَبَّهُمْ بِهِمْ', 'ب'], ['وَهُمْ بِالْآخِرَةِ', 'ب'], ['لَهُمْ مَا', 'م'], ['كَمْ مِنْ', 'م'], ['أَمْ مَنْ', 'م'],
+  ['لَهُمْ فِيهَا', 'ف'], ['أَلَمْ تَرَ', 'ت'], ['عَلَيْهِمْ وَلَا', 'و'], ['عَلَيْهِمْ غَيْرِ', 'غ']];
+const MIMN = { ixfo_sh: "Ixfo shafaviy — keyin «ب», lab bilan yashirin", idgom_sh: "Idg'om shafaviy — keyin «م», mimlar qo'shiladi", izhor_sh: "Izhor shafaviy — aniq o'qiladi" };
+function hukm(DATA, TUR, NOMS, nomi, kal) {
+  return function (q, c) {
+    const turlar = Object.keys(NOMS);
+    if (c.g0 || f() < 0.35) {
+      const tt = pick(turlar), pos = DATA.filter(d => TUR(d[1]) === tt), neg = DATA.filter(d => TUR(d[1]) !== tt), a = pick(pos);
+      const o = arO(opts(a[0], sample(neg, 3).map(d => ({ v: d[0], x: 'tajvid_xato' })), 4));
+      return { sav: `Qaysi misolda «${NOMS[tt].split(' — ')[0]}» bor?`, o, a: a[0], k: kal + 'b' + a[0], sig: sg(kal + a[0], o), ex: { t: a[0], tt }, tushun: `${a[0]}: «${hn(a[1])}» (${a[1]}) harfi → ${NOMS[tt]}` };
+    }
+    const d = pick(DATA), tur = TUR(d[1]), n = Math.min(turlar.length, q === 1 ? 3 : q === 2 ? 4 : 5);
+    const o = opts(tur, shuf(turlar.filter(t => t !== tur)).map(v => ({ v, x: 'tajvid_xato' })), n).map(x => Object.assign(x, { h: NOMS[x.v] }));
+    return { sav: `${nomi} — qaysi hukm?`, vis: { k: 'arab', t: d[0] }, o, a: tur, k: kal + d[0], sig: sg(kal + d[0], o), ex: { t: d[0] }, tushun: `«${hn(d[1])}» (${d[1]}) harfi keldi → ${NOMS[tur]}` };
+  };
+}
+const hukmChk = (DATA, TUR) => it => { const d = DATA.find(x => x[0] === it.ex.t); return !!d && (it.ex.tt ? TUR(d[1]) === it.ex.tt : TUR(d[1]) === it.a) || 'hukm'; };
+add('TJ.2', { fan: 'ar', nom: 'Tajvid: nun sokin va tanvin', me: 9, gen: hukm(NUN, nunTur, NUNN, 'Nun sokin yoki tanvin', 'n'), chk: hukmChk(NUN, nunTur) });
+add('TJ.3', { fan: 'ar', nom: 'Tajvid: mim sokin', me: 8, gen: hukm(MIM, mimTur, MIMN, 'Mim sokin', 'm'), chk: hukmChk(MIM, mimTur) });
+const QALQ = 'قطبجد';
+const QPOS = ['يَدْخُلُونَ', 'أَقْرَبُ', 'يَجْعَلُونَ', 'أَطْعَمَهُمْ', 'يَبْخَلُونَ', 'قَدْ أَفْلَحَ'];
+const QNEG = ['يَعْلَمُونَ', 'يَسْمَعُونَ', 'يَشْكُرُ', 'يَرْحَمُ', 'يَحْزَنُونَ', 'أَنْعَمْتَ'];
+add('TJ.4', { fan: 'ar', nom: 'Tajvid: qalqala', me: 7, gen(q, c) {
+  if (q === 1 || f() < 0.4) {
+    const h = pick(QALQ.split('')), o = arO(opts(h, sample(ODDIY.filter(x => !QALQ.includes(x)), 4).map(v => ({ v, x: 'tajvid_xato' })), 4));
+    return { sav: 'Qaysi harf — qalqala harfi?', o, a: h, k: 'qh' + h, sig: sg('qh' + h, o), ex: { h }, tushun: `Qalqala harflari 5 ta: ق ط ب ج د («قُطْبُ جَدٍّ»). «${hn(h)}» — shulardan biri.` };
+  }
+  const w = pick(QPOS), o = arO(opts(w, sample(QNEG, 3).map(v => ({ v, x: 'tajvid_xato' })), 4));
+  return { sav: "Qaysi so'zda qalqala bor (sukunli qalqala harfi)?", o, a: w, k: 'qs' + w, sig: sg('qs' + w, o), ex: { w }, tushun: `${w}: sukunli qalqala harfi bor — tovush biroz «sakraydi».` };
+}, chk: it => (it.ex.h ? QALQ.includes(it.a) : QPOS.includes(it.a)) || 'qalqala' });
+const MADD = [['قَالَ', 'tabiiy'], ['يَقُولُ', 'tabiiy'], ['قِيلَ', 'tabiiy'], ['كِتَابٌ', 'tabiiy'], ['جَاءَ', 'muttasil'], ['السَّمَاءِ', 'muttasil'], ['سُوءَ', 'muttasil'], ['شَاءَ', 'muttasil'],
+  ['قُوا أَنْفُسَكُمْ', 'munfasil'], ['فِي أَنْفُسِكُمْ', 'munfasil'], ['بِمَا أُنْزِلَ', 'munfasil'], ['يَا أَيُّهَا', 'munfasil'], ['الضَّالِّينَ', 'lozim'], ['الْحَاقَّةُ', 'lozim'], ['دَابَّةٍ', 'lozim'], ['الطَّامَّةُ', 'lozim']];
+const MADDN = { tabiiy: 'Madd tabiiy — 2 harakat', muttasil: "Madd muttasil — hamza shu so'zda", munfasil: "Madd munfasil — hamza keyingi so'zda", lozim: 'Madd lozim — 6 harakat' };
+add('TJ.5', { fan: 'ar', nom: 'Tajvid: madd turlari', me: 9, gen(q, c) {
+  if (q >= 2 && !c.g0 && f() < 0.2) {
+    const k = pick(['tabiiy', 'lozim']), a = k === 'tabiiy' ? '2' : '6', o = opts(a, [{ v: '2', x: 'tajvid_xato' }, { v: '4', x: 'tajvid_xato' }, { v: '6', x: 'tajvid_xato' }], 3);
+    return { sav: `${k === 'tabiiy' ? 'Madd tabiiy' : 'Madd lozim'} necha harakat cho'ziladi?`, o, a, k: 'mh' + k, sig: sg('mh' + k, o), ex: { s: k }, tushun: 'Madd tabiiy — 2 harakat, madd lozim — 6 harakat.' };
+  }
+  const tur0 = Object.keys(MADDN);
+  if (c.g0 || f() < 0.35) {
+    const tt = pick(tur0), a = pick(MADD.filter(d => d[1] === tt)), o = arO(opts(a[0], sample(MADD.filter(d => d[1] !== tt), 3).map(d => ({ v: d[0], x: 'tajvid_xato' })), 4));
+    return { sav: `Qaysi misol — «${MADDN[tt].split(' — ')[0]}» namunasi?`, o, a: a[0], k: 'mb' + a[0], sig: sg('mb' + a[0], o), ex: { t: a[0], tt }, tushun: `${a[0]} → ${MADDN[tt]}` };
+  }
+  const d = pick(MADD), o = opts(d[1], shuf(tur0.filter(t => t !== d[1])).map(v => ({ v, x: 'tajvid_xato' })), q === 1 ? 3 : 4).map(x => Object.assign(x, { h: MADDN[x.v] }));
+  return { sav: 'Bu misol qaysi madd namunasi?', vis: { k: 'arab', t: d[0] }, o, a: d[1], k: 'ma' + d[0], sig: sg('ma' + d[0], o), ex: { t: d[0] }, tushun: `${d[0]} → ${MADDN[d[1]]}` };
+}, chk: it => { if (it.ex.s) return (it.ex.s === 'tabiiy' ? it.a === '2' : it.a === '6') || 'madd'; const d = MADD.find(x => x[0] === it.ex.t); return !!d && (it.ex.tt ? d[1] === it.ex.tt : d[1] === it.a) || 'madd'; } });
+const GPOS = ['إِنَّ', 'ثُمَّ', 'جَنَّةٌ', 'أُمَّةٌ', 'النَّاسِ', 'عَمَّ', 'لَمَّا'];
+const GNEG = ['كَتَبَ', 'قَالَ', 'يَعْلَمُ', 'رَبِّ', 'الْحَقُّ', 'كُلُّ', 'يَوْمٌ'];
+add('TJ.6', { fan: 'ar', nom: "Tajvid: g'unna", me: 6, gen(q, c) {
+  if (q >= 2 && !c.g0 && f() < 0.25) { const o = opts('2', [{ v: '4', x: 'tajvid_xato' }, { v: '6', x: 'tajvid_xato' }], 3); return { sav: "Nun va mim shaddali bo'lsa (نّ ، مّ), g'unna necha harakat?", o, a: '2', k: 'gh', sig: sg('gh', o), ex: { s: 1 }, tushun: "G'unna — burunda 2 harakat ushlab turiladi: إِنَّ ، ثُمَّ." }; }
+  const w = pick(GPOS), o = arO(opts(w, sample(GNEG, 3).map(v => ({ v, x: 'tajvid_xato' })), 4));
+  return { sav: "Qaysi so'zda g'unna bor?", o, a: w, k: 'g' + w, sig: sg('g' + w, o), ex: { w }, tushun: `${w}: nun yoki mim shaddali — burunda 2 harakat g'unna.` };
+}, chk: it => (it.ex.s ? it.a === '2' : GPOS.includes(it.a)) || 'gunna' });
+
+/* ================= Kichik dars qoidalari (o'zbekcha) ================= */
+const DARS = {
+  'AQ.1': ["So'zni harakatlari bilan sekin o'qi, keyin ma'nosini esla. Bir mavzudagi so'zlar bir-biriga yaqin — shoshilma."],
+  'AQ.2': ["Avval so'z qaysi tovush bilan boshlanishini o'yla, keyin variantlarni o'ngdan chapga o'qib chiq."],
+  'AQ.3': ["Shadda (ـّ) — harf ikki marta o'qiladi. Sukun (ـْ) — harf harakatsiz.", "Tanvin (ـٌ ـٍ ـً) — oxirida «-un, -in, -an». Harflarni sanaganda harakatlar sanalmaydi."],
+  'AQ.4': ["Iborani so'zma-so'z o'qi: har so'zning ma'nosini esla, keyin birga qo'sh."],
+  'AY.2': ["Arabchada o'ngdan chapga yoziladi: birinchi harf — eng o'ngda.", "Harflar tartibini saqla, nuqtalarga e'tibor ber."],
+  'AY.3': ["So'zni ichingda o'qi: qaysi tovush yetishmayapti?", "Nuqtalarga qara: ب — pastda 1 ta, ت — tepada 2 ta, ث — tepada 3 ta."],
+  'TJ.1': ["«ال» dan keyingi harfga qara.", "☀️ Shamsiy harflar (14 ta): ت ث د ذ ر ز س ش ص ض ط ظ ل ن — lom o'qilmaydi, keyingi harf shaddali: الشَّمْسُ.", "🌙 Qamariy harflar (14 ta): ا ب ج ح خ ع غ ف ق ك م و ه ي — lom sukunli, aniq o'qiladi: الْقَمَرُ."],
+  'TJ.2': ["Nun sokin (نْ) yoki tanvindan keyingi harfga qara:", "Izhor — ء ه ع ح غ خ: aniq o'qiladi.", "Idg'om g'unnali — ي ن م و: qo'shib, burunda. Idg'om g'unnasiz — ل ر.", "Iqlob — ب: nun «m» ga aylanadi. Ixfo — qolgan 15 harf: yashirin, g'unna bilan."],
+  'TJ.3': ["Mim sokin (مْ) dan keyingi harfga qara:", "Ixfo shafaviy — ب: lab yopiq, g'unna bilan. Idg'om shafaviy — م: ikki mim qo'shiladi.", "Izhor shafaviy — qolgan harflar: aniq o'qiladi (ayniqsa و va ف oldidan)."],
+  'TJ.4': ["Qalqala harflari 5 ta: ق ط ب ج د («قُطْبُ جَدٍّ»).", "Ular sukunli bo'lsa, tovush biroz «sakraydi»: يَدْخُلُونَ ، قَدْ."],
+  'TJ.5': ["Madd — cho'zib o'qish. Madd harflari: ا (fathadan keyin), و (dammadan keyin), ي (kasradan keyin).", "Madd tabiiy — 2 harakat: قَالَ. Madd lozim — maddan keyin shadda/sukun, 6 harakat: الضَّالِّينَ.", "Muttasil — hamza shu so'zda: جَاءَ. Munfasil — hamza keyingi so'zda: يَا أَيُّهَا (ikkalasi ham ustozingiz o'rgatgan miqdorda cho'ziladi)."],
+  'TJ.6': ["Nun va mim shaddali bo'lsa (نّ ، مّ) — g'unna: burunda 2 harakat ushlab turiladi: إِنَّ ، ثُمَّ."]
+};
+/* ================= Bo'limlar va mavjudlik ================= */
+const OQ = ['AQ.1', 'AQ.2', 'AQ.3', 'AQ.4'], YZ = ['AY.1', 'AY.2', 'AY.3'], TJ = ['TJ.1', 'TJ.2', 'TJ.3', 'TJ.4', 'TJ.5', 'TJ.6'];
+const BOLIM = {
+  aralash: { ic: '🎲', nom: 'Aralash', ids: OQ.concat(YZ, TJ) }, oqish: { ic: '📖', nom: "O'qish", ids: OQ }, yozish: { ic: '✍️', nom: 'Yozish', ids: YZ },
+  tajvid: { ic: '📗', nom: 'Tajvid', ids: TJ }, lugat: { ic: '🔤', nom: "Lug'at", ids: ['AQ.1', 'AQ.2', 'AQ.4'] }, daftar: { ic: '📓', nom: 'Daftarga yozish', ids: ['AY.4'] } };
+function mavjud(S, ids) {
+  const z = (S && S.sozlama) || {}, T = z.arTasdiq || {}, J = z.tjTasdiq || {}, nW = ARW.filter(w => T[w.w]).length, nI = IBR.filter(w => T[w.w]).length;
+  return ids.filter(id => /^TJ/.test(id) ? !!J[id] : id === 'AQ.4' ? nI >= 4 : nW >= 6);
+}
+/* Ota-ona tasdig'i uchun: har tajvid bo'limining misollari va hukmi */
+const TJ_MISOL = {
+  'TJ.1': LOM.map(w => [w, LOMN[lomTur(w)]]), 'TJ.2': NUN.map(d => [d[0], NUNN[nunTur(d[1])]]), 'TJ.3': MIM.map(d => [d[0], MIMN[mimTur(d[1])]]),
+  'TJ.4': QPOS.map(w => [w, 'qalqala bor']).concat(QNEG.map(w => [w, "qalqala yo'q"])), 'TJ.5': MADD.map(d => [d[0], MADDN[d[1]]]), 'TJ.6': GPOS.map(w => [w, "g'unna bor"]).concat(GNEG.map(w => [w, "g'unna yo'q"])) };
+BJ.arab = { BOLIM, mavjud, skelet, harflar, hn, yaqin, IBR, DARS, TJ_MISOL, LOM, NUN, MIM, QPOS, QNEG, MADD, GPOS, GNEG, lomTur, nunTur, mimTur, OQ, YZ, TJ };
+})(typeof window !== 'undefined' ? window : globalThis);
+
+</script>
+<script>
 /* Bilimjon — effektlar: zarrachalar (Canvas), chaqnash (sekundiga ≤3, WCAG 2.3.1), silkinish, titrash, WebAudio sintez, «kam effekt».
    Har effektning uzunligi va chaqnashlar FX.stats ga yoziladi (avtomatik sinov uchun). */
 (function (G) {
@@ -1415,7 +1659,7 @@ function vis(v) {
     case 'raqam': return `<div class="raqam">${v.n}</div>`;
     case 'qator': return `<div class="qator">${v.s.map(e => `<span>${e}</span>`).join('')}<span class="q">❓</span></div>`;
     case 'emoji': return `<div class="bigemo">${v.e}</div>`;
-    case 'arab': return `<div class="arab big" dir="rtl" lang="ar">${esc(v.t)}</div>`;
+    case 'arab': return `<div class="arab big${String(v.t).length > 9 ? ' uzun' : ''}" dir="rtl" lang="ar">${esc(v.t)}</div>`;
     case 'taroz': return `<svg viewBox="0 0 200 80" class="vis"><path d="M100 70 L100 20 M40 24 L160 16" stroke="#5D4037" stroke-width="4"/><path d="M90 74 h20" stroke="#5D4037" stroke-width="6"/><path d="M20 30 h44 l-6 10 h-32z M136 22 h44 l-6 10 h-32z" fill="#FFCC80" stroke="#5D4037"/>${Array.from({ length: v.m }, (_, i) => emo(30 + i * 13, 24, v.e1, 12)).join('')}${emo(158, 16, v.e2, 14)}</svg>`;
     case 'katak': { let s = ''; for (let i = 0; i <= v.m; i++) s += `<path d="M${10 + i * 80 / v.m} 10 v80 M10 ${10 + i * 80 / v.m} h80" stroke="#37474F" stroke-width="2"/>`; return `<svg viewBox="0 0 100 100" class="vis" style="max-width:150px">${s}</svg>`; }
   }
@@ -1457,7 +1701,7 @@ BJ.vis = vis;
 (function (G) {
 'use strict';
 const BJ = G.BJ, A = BJ.A = {}, gen = BJ.gen, B = BJ.bank;
-A.VER = '0.3.0';
+A.VER = '0.4.0';
 /* ================= UTIL ================= */
 const pad = n => String(n).padStart(2, '0');
 const todayKey = d => { d = d || new Date(); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
@@ -1489,13 +1733,13 @@ const gl = d => d === 'g0' ? 'g0' : d === 'g1' ? 'g1' : 'g2';
 const BLOK = { g0: [['til', 5], ['yoz', 3], ['mat', 4], ['en', 2], ['mant', 3]], g1: [['mat', 7], ['til', 7], ['en', 3], ['mant', 4]], g2: [['mat', 8], ['til', 7], ['en', 4], ['mant', 5]] };
 const MANT_KUN = { g0: [['L.3'], ['L.4'], ['L.5'], ['L.6'], ['L.8'], ['L.10'], ['L.1'], ['L.2']], g1: [['L.1', 'L.2'], ['L.6'], ['L.8'], ['L.7'], ['L.3'], ['L.5', 'L.9'], ['L.4']], g2: [['L.1', 'L.7'], ['L.7', 'L.2'], ['L.6', 'L.8'], ['L.1'], ['L.7'], ['L.9', 'L.4'], ['L.5', 'L.10']] };
 const UZUN = { 'L.4': 1, 'L.6': 1, 'L.7': 1, 'L.8': 1, 'L.10': 1 };
-const XATO = { birga_xato: "1 ga adashdi", xona_almashdi: 'xonalar almashdi (47→74)', nol_tushib_qoldi: 'nol tushib qoldi (305→35)', nol_ortiqcha: 'ortiqcha nol (47→407)', onlik_xato: "o'nlikda adashdi", yuzlik_xato: 'yuzlikda adashdi', qarzni_unutdi: "qarzni unutdi (52−17=45)", eslab_qolishni_unutdi: "o'nlikni eslab qolmadi (38+27=55)", amal_almashdi: 'amalni almashtirdi (+ ↔ −)', belgi_teskari: '< > belgisini teskari qo\'ydi', taqqoslash_xato: 'taqqoslashda adashdi', kattalik_aldandi: "katta narsalar «ko'p» ko'rindi", sanashda_xato: 'sanashda adashdi', faqat_bittasi: "faqat bitta guruhni oldi", qavs_etiborsiz: "qavsga e'tibor bermadi", tartib_xato: 'amallar tartibi', natijani_yozdi: "natijani javob deb oldi", shakl_adashdi: 'shakl nomida adashdi', rang_adashdi: 'rangda adashdi', saralash_xato: 'saralashda adashdi', raqam_adashdi: 'raqamni tanimadi', birlik_xato: "o'lchov birligida adashdi", perimetr_yarim: 'perimetrda 2 tomonni qo\'shdi', tomon_tushdi: 'bir tomonni unutdi', soat_almashdi: 'soat va daqiqa millari almashdi', daqiqa_xato: 'daqiqada adashdi', soat_daqiqa_adashdi: 'soat bilan daqiqani aralashtirdi', qadam_xato: 'qadamda adashdi', naqsh_xato: 'naqshni topmadi', oxshash_harf: "o'xshash harfni tanladi (b/d)", harf_adashdi: 'harfda adashdi', tartib_almashdi: "harflar tartibi almashdi (ma→am)", unli_xato: 'unlida adashdi', undosh_xato: 'undoshda adashdi', birinchi_harfga_qaradi: "faqat birinchi harfga qarab taxmin qildi", soz_adashdi: "so'zda adashdi", manoga_mos_emas: "ma'noga mos emas", bogin_xato: "bo'g'inga noto'g'ri bo'ldi", harf_tushdi: 'harf tushib qoldi', tutuq_tushdi: 'tutuq belgisi tushib qoldi', tutuq_joyi: "tutuq noto'g'ri joyda", tutuq_ortiqcha: 'ortiqcha tutuq', qosh_undosh_tushdi: "qo'sh undoshdan biri tushdi", qosh_undosh_ortiqcha: 'ortiqcha undosh', kochirish_xato: "ko'chirish qoidasi", manodoshni_tanladi: "zid o'rniga ma'nodosh", zidni_tanladi: "ma'nodosh o'rniga zid", soz_manosi: "so'z ma'nosi", matnni_tushunmadi: 'matnni tushunmadi', yozuv_xato: 'yozishda adashdi', guruhni_tushunmadi: 'guruhni topmadi', juft_xato: 'juftni topmadi', teskari_tushundi: 'shartni teskari tushundi', ortadagini_tanladi: "o'rtadagini tanladi", shartni_unutdi: 'shartni unutdi', mavzu_adashdi: 'boshqa mavzudagi so\'z', ibora_adashdi: 'iborada adashdi', arab_soz_adashdi: "arab so'zida adashdi", arab_mavzu_adashdi: 'arabcha: boshqa mavzu', harakat_xato: 'harakatda adashdi (a/i/u)', shakl_adashdi_ar: 'harf shaklida adashdi', yonalish_xato: "yo'nalishda adashdi", kashfiyot_xato: 'kashfiyot savolida adashdi', hisob_xato: 'hisobda adashdi', boshqa: 'boshqa', xato_bosish: "noto'g'ri joyni bosdi", devorga_urildi: 'labirintda devorga urildi', iz_chetda: 'iz chiziqdan chiqdi', notogri_qism: "qismni noto'g'ri joyga qo'ydi", bittaga_kop: 'bittaga ko\'p sanadi', bittaga_kam: 'bittaga kam sanadi', ikki_marta_sanadi: "o'zini ikki marta sanadi", boshlarni_sanadi: 'oyoq o\'rniga boshlarni sanadi', yarim_hisob: 'faqat yarmini hisobladi', oxirgi_qadamni_unutdi: 'oxirgi qadamni unutdi', ikkiga_bolmadi: 'ikkiga bo\'lmadi' };
-const TUR_IC = { tanla: '👆', yoz: '⌨️', tartib: '🔢', farq: '🔍', labirint: '🧭', sudoku: '🔲', xotira: '🃏', iz: '✍️', yigish: '🧩', oqish: '⏱', matn: '📄' };
+const XATO = { birga_xato: "1 ga adashdi", xona_almashdi: 'xonalar almashdi (47→74)', nol_tushib_qoldi: 'nol tushib qoldi (305→35)', nol_ortiqcha: 'ortiqcha nol (47→407)', onlik_xato: "o'nlikda adashdi", yuzlik_xato: 'yuzlikda adashdi', qarzni_unutdi: "qarzni unutdi (52−17=45)", eslab_qolishni_unutdi: "o'nlikni eslab qolmadi (38+27=55)", amal_almashdi: 'amalni almashtirdi (+ ↔ −)', belgi_teskari: '< > belgisini teskari qo\'ydi', taqqoslash_xato: 'taqqoslashda adashdi', kattalik_aldandi: "katta narsalar «ko'p» ko'rindi", sanashda_xato: 'sanashda adashdi', faqat_bittasi: "faqat bitta guruhni oldi", qavs_etiborsiz: "qavsga e'tibor bermadi", tartib_xato: 'amallar tartibi', natijani_yozdi: "natijani javob deb oldi", shakl_adashdi: 'shakl nomida adashdi', rang_adashdi: 'rangda adashdi', saralash_xato: 'saralashda adashdi', raqam_adashdi: 'raqamni tanimadi', birlik_xato: "o'lchov birligida adashdi", perimetr_yarim: 'perimetrda 2 tomonni qo\'shdi', tomon_tushdi: 'bir tomonni unutdi', soat_almashdi: 'soat va daqiqa millari almashdi', daqiqa_xato: 'daqiqada adashdi', soat_daqiqa_adashdi: 'soat bilan daqiqani aralashtirdi', qadam_xato: 'qadamda adashdi', naqsh_xato: 'naqshni topmadi', oxshash_harf: "o'xshash harfni tanladi (b/d)", harf_adashdi: 'harfda adashdi', tartib_almashdi: "harflar tartibi almashdi (ma→am)", unli_xato: 'unlida adashdi', undosh_xato: 'undoshda adashdi', birinchi_harfga_qaradi: "faqat birinchi harfga qarab taxmin qildi", soz_adashdi: "so'zda adashdi", manoga_mos_emas: "ma'noga mos emas", bogin_xato: "bo'g'inga noto'g'ri bo'ldi", harf_tushdi: 'harf tushib qoldi', tutuq_tushdi: 'tutuq belgisi tushib qoldi', tutuq_joyi: "tutuq noto'g'ri joyda", tutuq_ortiqcha: 'ortiqcha tutuq', qosh_undosh_tushdi: "qo'sh undoshdan biri tushdi", qosh_undosh_ortiqcha: 'ortiqcha undosh', kochirish_xato: "ko'chirish qoidasi", manodoshni_tanladi: "zid o'rniga ma'nodosh", zidni_tanladi: "ma'nodosh o'rniga zid", soz_manosi: "so'z ma'nosi", matnni_tushunmadi: 'matnni tushunmadi', yozuv_xato: 'yozishda adashdi', guruhni_tushunmadi: 'guruhni topmadi', juft_xato: 'juftni topmadi', teskari_tushundi: 'shartni teskari tushundi', ortadagini_tanladi: "o'rtadagini tanladi", shartni_unutdi: 'shartni unutdi', mavzu_adashdi: 'boshqa mavzudagi so\'z', ibora_adashdi: 'iborada adashdi', arab_soz_adashdi: "arab so'zida adashdi", arab_mavzu_adashdi: 'arabcha: boshqa mavzu', harakat_xato: 'harakatda adashdi (a/i/u)', shakl_adashdi_ar: 'harf shaklida adashdi', yonalish_xato: "yo'nalishda adashdi", kashfiyot_xato: 'kashfiyot savolida adashdi', hisob_xato: 'hisobda adashdi', boshqa: 'boshqa', xato_bosish: "noto'g'ri joyni bosdi", devorga_urildi: 'labirintda devorga urildi', iz_chetda: 'iz chiziqdan chiqdi', notogri_qism: "qismni noto'g'ri joyga qo'ydi", bittaga_kop: 'bittaga ko\'p sanadi', bittaga_kam: 'bittaga kam sanadi', ikki_marta_sanadi: "o'zini ikki marta sanadi", boshlarni_sanadi: 'oyoq o\'rniga boshlarni sanadi', yarim_hisob: 'faqat yarmini hisobladi', oxirgi_qadamni_unutdi: 'oxirgi qadamni unutdi', ikkiga_bolmadi: 'ikkiga bo\'lmadi', imlo_xato: 'arabcha imloda adashdi', tajvid_xato: 'tajvid qoidasida adashdi', belgi_xato: 'harakat/belgida adashdi' };
+const TUR_IC = { arharf: '🔤', daftar: '📓', tanla: '👆', yoz: '⌨️', tartib: '🔢', farq: '🔍', labirint: '🧭', sudoku: '🔲', xotira: '🃏', iz: '✍️', yigish: '🧩', oqish: '⏱', matn: '📄' };
 Object.assign(A, { FAN, ZANJIR, BOSH, DARAJA, gl, BLOK, MANT_KUN, UZUN, XATO, TUR_IC });
 /* ================= STORE ================= */
 const KEY = 'bj_state_v1'; /* HECH QACHON o'zgarmaydi: yangi versiya eski holatni migrate() bilan yangilaydi */
 const SV = 1;
-function defaults() { return { v: SV, oila: null, pin: null, pinOta: null, sozlama: { ovoz: 0.8, kamEffekt: 'auto', tanaffus: 20, oyinHar: 5, oyinDaq: 3, reyting: true, sandiq: { bronza: 40, kumush: 90, oltin: 150, olmos: 220 }, arTasdiq: {}, alifTasdiq: false }, bolalar: {}, tartib: [], joriy: null, duel: {}, oilaTel: {}, qurilma: null, lastBackup: null, seenVer: null, appVer: null }; }
+function defaults() { return { v: SV, oila: null, pin: null, pinOta: null, sozlama: { ovoz: 0.8, kamEffekt: 'auto', tanaffus: 20, oyinHar: 5, oyinDaq: 3, reyting: true, tjTasdiq: {}, sandiq: { bronza: 40, kumush: 90, oltin: 150, olmos: 220 }, arTasdiq: {}, alifTasdiq: false }, bolalar: {}, tartib: [], joriy: null, duel: {}, oilaTel: {}, qurilma: null, lastBackup: null, seenVer: null, appVer: null }; }
 let S = load(); A.storageOK = true;
 /* Xotira tekshiruvi: brauzer yozishga ruxsat beradimi va ilova begona sayt ichida (sinov havolasi) ochilganmi */
 A.storageProbe = (function () { try { const k = 'bj_probe'; localStorage.setItem(k, String(Date.now())); const ok = !!localStorage.getItem(k); localStorage.removeItem(k); return ok; } catch (e) { return false; } })();
@@ -1504,7 +1748,7 @@ function load() { try { const raw = localStorage.getItem(KEY); if (raw) return m
 function migrate(s) {
   if (!s || typeof s !== 'object') return defaults();
   const d = defaults(); Object.keys(d).forEach(k => { if (s[k] === undefined) s[k] = d[k]; });
-  s.sozlama = Object.assign(d.sozlama, s.sozlama || {}); s.sozlama.sandiq = Object.assign(d.sozlama.sandiq, s.sozlama.sandiq || {});
+  s.sozlama = Object.assign(d.sozlama, s.sozlama || {}); if (!s.sozlama.tjTasdiq) s.sozlama.tjTasdiq = {}; s.sozlama.sandiq = Object.assign(d.sozlama.sandiq, s.sozlama.sandiq || {});
   Object.values(s.bolalar || {}).forEach(fixBola);
   /* v1 → keyingi versiyalar shu yerga qo'shiladi; hech narsa o'chirilmaydi */
   s.v = SV; return s;
@@ -1529,7 +1773,7 @@ function weekLog(id, wk) { return weekDays(wk).reduce((a, k) => a.concat(readLog
 Object.assign(A, { readLog, pushLog, flushLog, logKeys, pruneLogs, weekLog, LOGP });
 addEventListener('pagehide', () => { flushLog(); save(true); });
 /* ================= BOLA ================= */
-function bolaDefaults() { return { id: null, kod: '', laqab: '', avatar: '🦊', daraja: 'g1', arab: 'asosiy', dunyo: null, muxlisga: true, yaratildi: null, boshlandi: null, mavzu: {}, fan: {}, harfK: 2, harfKun: null, harfSt: {}, tugun: {}, takror: [], yulduz: 0, yulduzKun: {}, arenaYulduz: {}, detal: [], kun: {}, wcpm: [], missiya: null, reja: null, shosh: false, me: {}, olqish: [], oqilgan: [], oyin: {} }; }
+function bolaDefaults() { return { id: null, kod: '', laqab: '', avatar: '🦊', daraja: 'g1', arab: 'asosiy', dunyo: null, muxlisga: true, yaratildi: null, boshlandi: null, mavzu: {}, fan: {}, harfK: 2, harfKun: null, harfSt: {}, tugun: {}, takror: [], yulduz: 0, yulduzKun: {}, arenaYulduz: {}, detal: [], kun: {}, wcpm: [], missiya: null, reja: null, shosh: false, me: {}, olqish: [], oqilgan: [], oyin: {}, arDaraja: 1, fokus: '', vazifa: [] }; }
 function newBola(o) {
   const b = fixBola(Object.assign(bolaDefaults(), o)); b.id = b.id || 'b' + rid(7).toLowerCase(); b.yaratildi = todayKey();
   if (!b.kod) { const n = Object.keys(S.bolalar).length + 1; b.kod = ({ g0: 'K', g1: 'B', g2: 'I', g3: 'U', g4: 'T' }[b.daraja] || 'B') + n; }
@@ -1612,13 +1856,22 @@ function pickNode(b, fan, ctx) {
   if (F.kalib && !F.kalib.done && dayNo(b) <= 2) return { tugun: kalibNode(fan, F.kalib), q: 2, tur: 'missiya', kalib: 1 };
   if (fan === 'til' && L === 'g0') return pickLetters(b);
   if (fan === 'mant') { const types = ctx.mantTypes; return { tugun: types[ctx.i % types.length], q: mantQ(b, types[ctx.i % types.length]), tur: 'missiya' }; }
-  if (fan === 'ar') return { tugun: F.cur || 'AL.1', q: nodeSt(b, F.cur || 'AL.1').q, tur: 'missiya' };
+  if (fan === 'ar') { if (b.arab === 'asosiy') { const p = arPick(b, ctx && ctx.bolim); if (p) return p; } return { tugun: F.cur || 'AL.1', q: nodeSt(b, F.cur || 'AL.1').q, tur: 'missiya' }; }
   const rev = dueReview(b, fan), Z = ZANJIR[fan] || [], cur = F.cur || Z[0];
   if (R < 0.2 && rev.length) return Object.assign({}, rev[Math.floor(Math.random() * rev.length)]);
   const weak = Object.keys(b.tugun).filter(id => id !== cur && gen.reg[id] && gen.reg[id].fan === (fan === 'yoz' ? 'yoz' : fan) && ['qiyin', 'mashq'].includes(b.tugun[id].holat) && Z.includes(id));
   const fok = (b.reja && b.reja.fokus && b.reja.fokus[fan] || []).filter(id => id !== cur);
   if (R < 0.5 && (fok.length || weak.length)) { const id = (fok.length ? fok : weak)[Math.floor(Math.random() * (fok.length ? fok : weak).length)]; return { tugun: id, q: nodeSt(b, id).q, tur: 'missiya' }; }
   return { tugun: cur, q: nodeSt(b, cur).q, tur: 'missiya' };
+}
+/* 0.4.0: arab «asosiy» bolaga yangi mashqlar (o'qish/yozish/tajvid). Daraja sinfga emas, b.arDaraja ga qarab; qiyin tugunlar ko'proq chiqadi. */
+function arMavjud(bolim) { return BJ.arab ? BJ.arab.mavjud(S, (BJ.arab.BOLIM[bolim || 'aralash'] || BJ.arab.BOLIM.aralash).ids) : []; }
+function arPick(b, bolim) {
+  const ids = arMavjud(bolim); if (!ids.length) return null;
+  const w = ids.map(id => { const t = b.tugun[id]; return !t ? 1.2 : ['qiyin', 'mashq'].includes(t.holat) ? 2 : t.holat === 'ozl' ? 0.6 : 1; });
+  let r = Math.random() * sum(w), i = 0; while (i < ids.length - 1 && r > w[i]) { r -= w[i]; i++; }
+  const id = ids[i], t = nodeSt(b, id), d0 = clamp(b.arDaraja || 1, 1, 3); if (!t.n && t.q < d0) t.q = d0;
+  return { tugun: id, q: t.q, tur: 'missiya' };
 }
 function mantQ(b, id) { const L = gl(b.daraja), base = L === 'g0' ? 1 : L === 'g1' ? 1 : 2; const t = nodeSt(b, id); return t.n ? t.q : base; }
 /* Maktabgacha harflar: yangi harf (kuniga ≤1 ta qo'shiladi) → bo'g'in → so'z */
@@ -1636,7 +1889,7 @@ function letterProgress(b, it, ok) {
 }
 /* Topshiriq yaratish (bola konteksti bilan) */
 function makeItem(b, sel) {
-  const t = nodeSt(b, sel.tugun), ctx = { dunyo: b.dunyo, harflar: knownLetters(b), oldin: t.oldin.slice(-40), arTasdiq: S.sozlama.arTasdiq, kashfId: sel.kashfId, kashfSavol: sel.kashfSavol };
+  const t = nodeSt(b, sel.tugun), ctx = { dunyo: b.dunyo, harflar: knownLetters(b), oldin: t.oldin.slice(-40), arTasdiq: S.sozlama.arTasdiq, tjTasdiq: S.sozlama.tjTasdiq, g0: gl(b.daraja) === 'g0', kashfId: sel.kashfId, kashfSavol: sel.kashfSavol };
   let it; try { it = gen.make(sel.tugun, sel.q || t.q, ctx); if (sel.harf && it.harf && it.harf !== sel.harf) { for (let i = 0; i < 12 && it.harf !== sel.harf; i++) it = gen.make(sel.tugun, sel.q || t.q, ctx); } }
   catch (e) { it = gen.make('M1.1', 1, {}); }
   const v = gen.valid(it); if (v !== true) { console.warn('topshiriq yaroqsiz', sel.tugun, v); it = gen.make('M0.3', 1, ctx); }
@@ -1657,12 +1910,15 @@ function buildMission(b) {
   const rev = dueReview(b); const yest = Object.keys(b.tugun).filter(id => b.tugun[id].kun[addDays(todayKey(), -1)]);
   if (D >= 2 && (rev.length || yest.length)) steps.push({ k: 'isinish', fan: 'isinish', n: A.TEZ ? 2 : 3 });
   BLOK[L].forEach(([fan, min]) => {
-    if (fan === 'mant') { const types = MANT_KUN[L][(D - 1) % MANT_KUN[L].length]; const n = A.TEZ ? types.length : types.reduce((s, id) => s + (UZUN[id] ? (L === 'g0' ? 1 : 2) : 3), 0); steps.push({ k: 'blok', fan, n, mantTypes: types, olimp: 1 }); }
-    else { const cur = (b.fan[fan] || {}).cur || (BOSH[fan] && BOSH[fan][L]); const me = cur && gen.reg[cur] ? norm(b, cur) : 8; steps.push({ k: 'blok', fan, n: blokSoni(min, me, b) }); }
+    const fk = b.fokus === fan ? 2 : 1; /* 🎯 fokus fan — blok ikki barobar */
+    if (fan === 'mant') { const types = MANT_KUN[L][(D - 1) % MANT_KUN[L].length]; const n = A.TEZ ? types.length : types.reduce((s, id) => s + (UZUN[id] ? (L === 'g0' ? 1 : 2) : 3), 0); steps.push({ k: 'blok', fan, n: A.TEZ ? n : n * fk, mantTypes: types, olimp: 1 }); }
+    else { const cur = (b.fan[fan] || {}).cur || (BOSH[fan] && BOSH[fan][L]); const me = cur && gen.reg[cur] ? norm(b, cur) : 8; steps.push({ k: 'blok', fan, n: A.TEZ ? blokSoni(min, me, b) : Math.min(24, blokSoni(min, me, b) * fk) }); }
   });
   if (b.dunyo === 'garaj' && (b.detal.length % 3 === 2)) steps.push({ k: 'qayta', fan: 'mant' });
   if (L !== 'g0') steps.push({ k: 'oqish', fan: 'oqish' });
-  if (b.arab === 'asosiy') steps.push({ k: 'duel', fan: 'ar' }); else steps.push({ k: 'blok', fan: 'ar', n: A.TEZ ? 2 : blokSoni(3, 6, b) });
+  if (b.arab === 'asosiy') steps.push({ k: 'duel', fan: 'ar' }); else steps.push({ k: 'blok', fan: 'ar', n: A.TEZ ? 2 : blokSoni(3, 6, b) * (b.fokus === 'ar' ? 2 : 1) });
+  /* 0.4.0: arab fokusida — o'qish, yozish va tajvid aralash bloki (oyisi tasdiqlagan bo'lsa) */
+  if (b.fokus === 'ar' && b.arab === 'asosiy' && arMavjud('aralash').length) steps.push({ k: 'blok', fan: 'ar', n: A.TEZ ? 2 : blokSoni(8, 9, b), arBolim: 'aralash' });
   steps.push({ k: 'kashf', fan: 'dunyo', id: kashfOfDay(b).id });
   steps.push({ k: 'yakun', fan: 'yakun' });
   return { sana: todayKey(), D, steps, si: 0, done: false, items: {}, res: {}, t0: Date.now(), final: false };
@@ -1675,7 +1931,7 @@ function buildFinal(b) {
 }
 /* Yakshanba finali uchun hafta tugunlari */
 function weekNodes(b) { const days = weekDays(isoWeek()); const ids = Object.keys(b.tugun).filter(id => days.some(d => b.tugun[id].kun[d]) && gen.reg[id] && !['KASHF', 'OL'].includes(id) && gen.reg[id].fan !== 'ar'); return ids.length ? ids : Object.keys(b.tugun).filter(id => gen.reg[id] && gen.reg[id].fan === 'mat'); }
-Object.assign(A, { buildMission, buildFinal, pickNode, makeItem, letterProgress, knownLetters, dueReview, duelWords, kashfOfDay, isSunday, weekNodes, letterNode });
+Object.assign(A, { arPick, arMavjud, buildMission, buildFinal, pickNode, makeItem, letterProgress, knownLetters, dueReview, duelWords, kashfOfDay, isSunday, weekNodes, letterNode });
 /* ================= MUKOFOT, YULDUZ, SANDIQ ================= */
 function addStar(b, n, arena) { const k = todayKey(); if (arena) { const a = b.arenaYulduz[k] || 0; n = Math.max(0, Math.min(n, 20 - a)); b.arenaYulduz[k] = a + n; } if (!n) return 0; b.yulduz += n; b.yulduzKun[k] = (b.yulduzKun[k] || 0) + n; agg(b).yulduz += n; return n; }
 function weekStars(b, wk) { return sum(weekDays(wk || isoWeek()).map(k => b.yulduzKun[k] || 0)); }
@@ -1811,6 +2067,9 @@ function render() {
   if (h === 'missiya') return screenMission(b);
   if (h === 'arena') return screenArena(b);
   if (h === 'natija') return screenResult(b);
+  if (h === 'mashq') return screenMashq(b);
+  if ((m = h.match(/^mashq-([a-z]+)(?:-([a-z]+))?$/))) return mashqStart(b, m[1], m[2]);
+  if ((m = h.match(/^vazifa-(\w+)$/))) return vazifaStart(b, m[1]);
   if (A.TEZ && (m = h.match(/^sinov-([A-Za-z0-9.]+)-(\d)$/))) return screenSinov(b, m[1], +m[2]);
   return screenHome(b);
 }
@@ -1874,6 +2133,7 @@ function screenHome(b) {
   app.innerHTML = `<div class="wrap kidw"><div class="top"><button class="ib av" data-tanla aria-label="Bola almashtirish">${b.avatar}</button><div class="ttl">${esc(b.laqab)}</div><span class="sp"></span><span class="pill">⭐ ${b.yulduz}</span><span class="pill">${sq.ic}</span><button class="ib" data-ota aria-label="Ota-ona paneli">👨‍👩‍👧</button></div>
   ${worldScene(b, true)}<div class="bubble">${esc(done ? 'Bugungi missiya bajarildi! Arenada mashq qilsang ham bo\'ladi.' : going ? 'Missiya kutib turibdi — davom etamiz!' : A.isSunday() && A.dayNo(b) >= 3 ? 'Bugun yakshanba — KATTA FINAL!' : 'Salom! Bugungi missiyaga tayyormisan?')}</div>
   <div class="row cta">${done ? `<button class="btn big alt" data-arena>⚔️ Arena</button>` : `<button class="btn big" data-start>${going ? '▶ Davom etish' : A.isSunday() && A.dayNo(b) >= 3 ? '🏆 Finalni boshlash' : '🚀 Missiyani boshlash'}</button>`}</div>
+  <div class="row"><button class="btn ghost" data-mashq>📚 Mashq — fanni o'zing tanla</button></div>${vazifaHTML(b)}
   <div class="stats"><div><b>⭐ ${t.yulduz}</b><span>bugun</span></div><div><b>⏱ ${Math.round(t.faol / 60)}</b><span>daqiqa</span></div><div><b>${b.detal.length}</b><span>${b.dunyo === 'orol' ? 'bezak' : 'detal'}</span></div></div>
   ${kechagi(b) ? `<div class="note kn">${esc(kechagi(b))}</div>` : ''}
   ${b.detal.length ? `<div class="coll">${b.detal.slice(-12).map(r => `<span title="${esc(r.nom || '')}">${r.ic || '🔩'}</span>`).join('')}</div>` : ''}
@@ -1882,6 +2142,9 @@ function screenHome(b) {
   const st = $('[data-start]'); if (st) st.onclick = () => go('missiya');
   const ar = $('[data-arena]'); if (ar) ar.onclick = () => go('arena');
   $('[data-tanla]').onclick = () => go('tanla'); $('[data-ota]').onclick = () => go('ota');
+  $('[data-mashq]').onclick = () => go('mashq');
+  $$('[data-vz]').forEach(x => x.onclick = () => go('vazifa-' + x.dataset.vz));
+  $$('[data-vzok]').forEach(x => x.onclick = () => { const v = (b.vazifa || []).find(y => y.id === x.dataset.vzok); if (!v) return; v.done = true; v.qolda = 1; v.doneTs = Date.now(); v.doneSana = A.todayKey(); A.addStar(b, 2); A.pushLog(b.id, { t: 'vazifa', ts: Date.now(), bola: b.id, id: v.id, fan: v.fan, n: 0, qolda: 1 }); A.save(true); FX.play('ding'); toast('✅ Barakalla! +2 ⭐'); screenHome(b); });
 }
 /* ================= OVOZ (ingliz — telefon TTS) ================= */
 let spk = null;
@@ -1907,7 +2170,7 @@ function frame(b, m, title, body) {
   <div class="road"><div class="rfill" style="width:${Math.round(p * 100)}%"></div><span class="rcar" style="left:calc(${Math.round(p * 100)}% - 18px)">${icon}</span><span class="rflag">🏁</span></div><div id="stage">${body}</div></div>`;
   $('[data-pause]').onclick = () => { endSession(b); go('uy'); };
 }
-function stepTitle(st) { const F = A.FAN[st.fan]; return ({ isinish: '🔥 Isinish', qayta: "💥 Qayta yig'", oqish: "⏱ 1 daqiqa o'qish", duel: '⚔️ Arab dueli', kashf: '🌍 Kun kashfiyoti', final15: '🏆 Yakshanba finali', turnir: '🧠 Olimpiada turniri', viktorina: '🌍 Hafta viktorinasi', yakun: '🏁 Final poyga' })[st.k] || (F ? F.ic + ' ' + F.nom : st.k); }
+function stepTitle(st) { if (st.arBolim) return "🕌 Arab: o'qish · yozish · tajvid"; const F = A.FAN[st.fan]; return ({ isinish: '🔥 Isinish', qayta: "💥 Qayta yig'", oqish: "⏱ 1 daqiqa o'qish", duel: '⚔️ Arab dueli', kashf: '🌍 Kun kashfiyoti', final15: '🏆 Yakshanba finali', turnir: '🧠 Olimpiada turniri', viktorina: '🌍 Hafta viktorinasi', yakun: '🏁 Final poyga' })[st.k] || (F ? F.ic + ' ' + F.nom : st.k); }
 function stepRun(b, m) {
   if (m.si >= m.steps.length) { m.done = true; A.save(true); return go('natija'); }
   const st = m.steps[m.si], res = m.res[m.si] || (m.res[m.si] = []);
@@ -1924,7 +2187,7 @@ function stepRun(b, m) {
 function nextItem(b, m, st, i) {
   let sel;
   if (st.k === 'isinish') { const rev = A.dueReview(b), yest = Object.keys(b.tugun).filter(id => b.tugun[id].kun[A.addDays(A.todayKey(), -1)] && gen.reg[id] && !['KASHF', 'OL'].includes(id)); const pool = rev.length ? rev : yest.map(id => ({ tugun: id, q: b.tugun[id].q, tur: 'takror' })); sel = pool.length ? pool[i % pool.length] : { tugun: (b.fan.mat || {}).cur || 'M0.3', q: 1, tur: 'missiya' }; sel = Object.assign({}, sel, { tur: sel.tur === 'takror' ? 'takror' : 'missiya' }); }
-  else if (st.k === 'blok') { sel = (st.olimp && i === st.n - 1) ? { tugun: 'OL', q: A.gl(b.daraja) === 'g0' ? 1 : A.gl(b.daraja) === 'g1' ? 2 : 3, tur: 'olimp' } : A.pickNode(b, st.fan, { mantTypes: st.mantTypes, i }); }
+  else if (st.k === 'blok') { sel = (st.olimp && i === st.n - 1) ? { tugun: 'OL', q: A.gl(b.daraja) === 'g0' ? 1 : A.gl(b.daraja) === 'g1' ? 2 : 3, tur: 'olimp' } : A.pickNode(b, st.fan, { mantTypes: st.mantTypes, i, bolim: st.arBolim }); }
   else if (st.k === 'qayta') { const it = gen.make('L.10', 2, { dunyo: b.dunyo }); const f = BJ.FIG.mashina; it.fig = 'mashina'; it.qism = f.p.map((p, j) => ({ id: 'p' + j, sh: p[0], x: p[1], y: p[2], w: p[3], h: p[4], rang: ART.RANGLAR[(b.detal.length + j) % ART.RANGLAR.length] })); it.sav = "💥 Sinov poygasi: mashina devorga urilib parchalandi! Detallarni joyiga sudrab qayta yig'!"; it.tur = 'missiya'; it.fan = 'mant'; return it; }
   else if (st.k === 'kashf') { sel = { tugun: 'KASHF', q: qOfGrade(b), tur: 'kashf', kashfId: st.id, kashfSavol: i }; }
   else if (st.k === 'duel') { const w = BJ.ARW.find(x => x.w === st.sozlar[i]); const it = BJ.arItem(w, 1); it.tugun = 'AR.' + w.m; it.q = 1; it.t = 'tanla'; it.gen = 'AR'; it.tur = 'duel'; it.fan = 'ar'; return it; }
@@ -1975,7 +2238,7 @@ function afterAnswer(b, it, st0, r, m) {
   if (it.tugun && gen.reg[it.tugun] && it.tur !== 'duel') { ev = A.recordAnswer(b, it, e); if (it.tur === 'takror') A.takrorDone(b, it.tugun, e.togri_1); if (it.kalib) A.kalibAnswer(b, it.fan, !!e.togri_1); const nh = A.letterProgress(b, it, !!e.togri_1); if (nh) setTimeout(() => toast('🔤 Yangi harf ochildi: «' + nh.toUpperCase() + '»'), 900); }
   /* shoshilish nazorati: oxirgi 20 javob */
   b.shL = (b.shL || []).concat([e.shoshildi]).slice(-20); const sr = A.sum(b.shL) / b.shL.length; if (b.shL.length >= 10) { if (sr > 0.15) b.shosh = true; else if (sr < 0.05) b.shosh = false; }
-  if (e.togri_1) A.addStar(b, 1, it.tur === 'arena');
+  if (e.togri_1) A.addStar(b, 1, it.tur === 'arena' || it.tur === 'mashq');
   A.save(); return { e, ev };
 }
 /* ================= KICHIK DARS (0.2.0) =================
@@ -2127,9 +2390,10 @@ function showLesson(b, m, st, it, n) {
   const btn = $('[data-twin]'), c = $('[data-c]'); let k = A.TEZ ? 0 : 5;
   const tick = () => { if (!document.body.contains(btn)) return; if (k <= 0) { btn.disabled = false; c.textContent = ''; return; } c.textContent = '(' + k + ')'; k--; setTimeout(tick, 1000); };
   tick();
-  btn.onclick = () => { if (btn.disabled) return; const tw = twinItem(b, it, n); if (CUR && CUR.k === 'missiya') showItem(b, m, st, tw); else arenaNext(b, tw); };
+  btn.onclick = () => { if (btn.disabled) return; const tw = twinItem(b, it, n); if (CUR && CUR.k === 'missiya') showItem(b, m, st, tw); else if (CUR && CUR.k === 'mashq') mashqNext(b, tw); else arenaNext(b, tw); };
   try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) {}
 }
+Object.assign(DARS, (BJ.arab && BJ.arab.DARS) || {});
 A.darsQadam = darsQadam; A.mathSteps = mathSteps; A.DARS = DARS;
 if (A.TEZ) G.__bjCur = () => CUR; /* faqat ?tez=1 avtomatik sinov uchun */
 function onAnswer(b, m, st, it, st0, r) {
@@ -2143,8 +2407,9 @@ function onAnswer(b, m, st, it, st0, r) {
   if (r.xato_soni) { st0.urinish = 1 + r.xato_soni; if (r.maslahat) st0.maslahat = 1; }
   const res = m && it.tur !== 'dars' ? m.res[m.si] : null; const { ev } = afterAnswer(b, it, st0, fin, m);
   if (res) { res.push({ ok: fin.togri_1 ? 1 : 0, ms: Date.now() - st0.shown, ball: it.tur === 'duel' ? duelBall(fin, Date.now() - st0.shown) : 0 }); m.oyinN = (m.oyinN || 0) + 1; }
+  if (ctx.k === 'mashq' && it.tur !== 'dars') { ctx.n++; ctx.i++; ctx.oyinN = (ctx.oyinN || 0) + 1; if (fin.togri_1) ctx.ok++; if (ctx.vz) { ctx.vz.qildi++; if (fin.togri_1) ctx.vz.ok++; } }
   if (m) m.cur = null; A.save(true);
-  const next = () => { if (CUR && CUR.k === 'missiya') missionNext(b, m); else if (CUR && CUR.k === 'arena') arenaNext(b); };
+  const next = () => { if (CUR && CUR.k === 'missiya') missionNext(b, m); else if (CUR && CUR.k === 'arena') arenaNext(b); else if (CUR && CUR.k === 'mashq') mashqNext(b); };
   if (it.tur === 'dars' && fin.togri) setTimeout(() => toast("🎓 Barakalla! Darsdan keyin o'zing yechding!"), 250);
   if (fin.togri_1) { const el = r.el || $('#body'); const bb = el.getBoundingClientRect(); const t0 = performance.now(); FX.boom(bb.left + bb.width / 2, bb.top + Math.min(bb.height / 2, 160), b.dunyo).then(() => { A.agg(b).fx += Math.round(performance.now() - t0); if (ev === 'ozl') toast('🟢 Yangi ko\'nikma o\'zlashtirildi!'); next(); }); return; }
   if (fin.togri) { FX.play('ding'); $('#fb').innerHTML = `<div class="good">✅ ${esc(pickA(PRAISE1))}</div>`; setTimeout(next, A.TEZ ? 200 : 1300); return; }
@@ -2201,7 +2466,7 @@ function locked(st0) { return st0.lock && Date.now() < st0.lock; }
 function optInner(o, it) {
   if (o.vis) return `<span class="ov">${ART.vis(o.vis)}</span>`;
   if (it.rasmEmoji) return `<span class="oe">${o.h || '❓'}</span>`;
-  if (o.ar) return `<span class="arab" dir="rtl" lang="ar">${esc(o.h)}</span>`;
+  if (o.ar) return `<span class="arab${String(o.h).length > 8 ? ' uz' : ''}" dir="rtl" lang="ar">${esc(o.h)}</span>`;
   return `<span class="ot">${esc(o.h != null ? o.h : o.v)}</span>`;
 }
 RENDER.tanla = (el, it, b, done, st0) => {
@@ -2321,6 +2586,42 @@ RENDER.yigish = (el, it, b, done, st0) => {
   $$('.slotg', board).forEach(g => g.addEventListener('click', () => { if (!sel) return; const p = all.find(x => x.id === sel); if (fits(p, g.dataset.slot)) place(p, g.dataset.slot); else { miss(); sel = null; drawTray(); } }));
   requestAnimationFrame(drawTray);
 };
+/* 0.4.0 ✍️ Arabcha imlo: harf kartochkalarini o'ngdan chapga tartib bilan bosib so'z yig'ish */
+RENDER.arharf = (el, it, b, done, st0) => {
+  let got = []; const T = it.tiles;
+  el.innerHTML = `<div class="arsoz" dir="rtl" lang="ar"><span class="arab" data-w></span><span class="arkur"></span></div><div class="tiles artl" dir="rtl">${T.map(t => `<button class="tile arab" data-t="${t.id}">${esc(t.c)}</button>`).join('')}</div><div class="row"><button class="btn ghost" data-undo>⌫ Oxirgisini o'chirish</button></div>`;
+  const W = $('[data-w]', el), draw = () => { W.textContent = got.map(i => T[i].c).join(''); $$('.tile', el).forEach(x => { x.disabled = got.includes(+x.dataset.t); }); };
+  $$('.tile', el).forEach(x => x.onclick = () => {
+    if (locked(st0) || x.disabled) return; firstTap(st0); FX.play('bosish'); got.push(+x.dataset.t); draw();
+    if (got.length < it.n) return; const s0 = got.map(i => T[i].c).join(''), ok = s0 === it.a;
+    if (ok) { $('.arsoz', el).classList.add('ok'); W.textContent = it.word; $$('.tile', el).forEach(y => y.disabled = true); }
+    else { $('.arsoz', el).classList.add('no'); setTimeout(() => { if (!document.body.contains(el)) return; got = []; $('.arsoz', el).classList.remove('no'); draw(); }, 900); }
+    done({ togri: ok, javob: s0, xato_turi: ok ? null : 'imlo_xato', el });
+  });
+  $('[data-undo]', el).onclick = () => { got.pop(); draw(); };
+  draw();
+};
+/* 0.4.0 📓 Daftarga yozish: barmoq bilan yozadi → namuna bilan solishtiradi → o'zi (yoki oyisi) baholaydi */
+RENDER.daftar = (el, it, b, done, st0) => {
+  el.innerHTML = `<div class="daf"><canvas class="dafc" aria-label="Yozish maydoni"></canvas></div><div class="row"><button class="btn ghost" data-clr>🧽 Tozalash</button><button class="btn" data-show>👀 Tekshirish</button></div><div data-res></div>`;
+  const cv = $('.dafc', el), W = Math.min(480, el.clientWidth || 340), H = 230, dpr = Math.min(2, devicePixelRatio || 1), c = cv.getContext('2d'); let strokes = [], cur = null;
+  cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + 'px'; cv.style.height = H + 'px'; c.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const paint = () => { c.clearRect(0, 0, W, H); c.strokeStyle = '#D5E3F5'; c.lineWidth = 1; [75, 150].forEach(y => { c.beginPath(); c.moveTo(8, y); c.lineTo(W - 8, y); c.stroke(); });
+    c.strokeStyle = '#172033'; c.lineWidth = 5; c.lineCap = 'round'; c.lineJoin = 'round'; strokes.forEach(p => { c.beginPath(); p.forEach(([x, y], j) => j ? c.lineTo(x, y) : c.moveTo(x, y)); if (p.length === 1) c.lineTo(p[0][0] + 0.1, p[0][1]); c.stroke(); }); };
+  const pos = e => { const r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+  cv.addEventListener('pointerdown', e => { e.preventDefault(); firstTap(st0); cur = [pos(e)]; strokes.push(cur); try { cv.setPointerCapture(e.pointerId); } catch (er) {} paint(); });
+  cv.addEventListener('pointermove', e => { if (!cur) return; cur.push(pos(e)); paint(); });
+  const up = () => { cur = null; }; cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
+  $('[data-clr]', el).onclick = () => { strokes = []; paint(); };
+  $('[data-show]', el).onclick = () => {
+    if (!strokes.length) return toast("Avval barmog'ing bilan yozib ko'r ✍️");
+    $('[data-show]', el).disabled = true;
+    $('[data-res]', el).innerHTML = `<div class="dafnam"><div class="dl">Namuna:</div><div class="arab" dir="rtl" lang="ar">${esc(it.word)}</div><p class="sm">Harflar, nuqtalar va harakatlarni solishtir.</p></div><div class="row"><button class="btn" data-ok>✅ To'g'ri yozdim</button><button class="btn ghost" data-no>🔁 Xato bor edi</button></div>`;
+    $('[data-ok]', el).onclick = () => done({ togri: true, javob: 'togri', yakuniy: 1, el });
+    $('[data-no]', el).onclick = () => done({ togri: false, javob: 'xato', xato_turi: 'imlo_xato', yakuniy: 1, el });
+  };
+  requestAnimationFrame(paint);
+};
 A.RENDER = RENDER;
 /* ================= MAXSUS QADAMLAR ================= */
 function stepKashfCard(b, m, st) {
@@ -2392,6 +2693,73 @@ function arenaNext(b, given) {
   const say = $('[data-say]'); if (say) say.onclick = () => { st0.ovoz++; speak(it.tts); };
   (RENDER[it.t] || RENDER.tanla)($('#body'), it, b, r => onAnswer(b, null, null, it, st0, r), st0);
 }
+/* ================= 📚 MASHQ va 📝 UYGA VAZIFA (0.4.0) =================
+   Mashq — bola fanni (arabda bo'limni ham) o'zi tanlaydi, cheksiz savol; xato bo'lsa kichik dars, har N savolda o'yin, yulduz kunlik 20 chegarasi bilan.
+   Uyga vazifa — ota-ona bergan N ta savol shu pleyerda; tugasa +5 ⭐ va ota-ona panelida natija. */
+const MASHQ_FAN = { g0: ['ar', 'mat', 'til', 'yoz', 'en', 'mant'], g: ['ar', 'mat', 'til', 'en', 'mant'] };
+const sana2 = k => k ? k.slice(8, 10) + '.' + k.slice(5, 7) : '';
+function vzNom(v) { if (v.fan === 'izoh') return '📝 Topshiriq'; if (v.fan === 'ar' && v.bolim && BJ.arab && BJ.arab.BOLIM[v.bolim]) return '🕌 Arab: ' + BJ.arab.BOLIM[v.bolim].nom.toLowerCase(); const F = A.FAN[v.fan] || { ic: '📚', nom: v.fan }; return F.ic + ' ' + F.nom; }
+A.vzNom = vzNom;
+function vazifaHTML(b) {
+  const today = A.todayKey(), L = (b.vazifa || []).filter(v => !v.done || v.doneSana === today).sort((p, q) => (p.done - q.done) || (p.muddat < q.muddat ? -1 : 1)); if (!L.length) return '';
+  return `<div class="vz"><div class="tl">📝 Uyga vazifa</div>${L.map(v => { const late = !v.done && v.muddat < today;
+    return `<div class="vzi${v.done ? ' ok' : ''}"><div class="vzb"><b>${esc(vzNom(v))}</b>${v.n ? ` <span class="sm">· ${v.qildi}/${v.n}</span>` : ''}${late ? ` <span class="sm kech">⏰ muddati o'tdi</span>` : v.done ? '' : ` <span class="sm mut">· ${v.muddat === today ? 'bugun' : sana2(v.muddat) + ' gacha'}</span>`}${v.izoh ? `<div class="sm">${esc(v.izoh)}</div>` : ''}</div>
+    ${v.done ? '<span class="vzok">✅</span>' : v.n ? `<button class="btn sm" data-vz="${esc(v.id)}">▶ Boshlash</button>` : `<button class="btn sm" data-vzok="${esc(v.id)}">✅ Bajardim</button>`}</div>`; }).join('')}</div>`;
+}
+function screenMashq(b) {
+  theme(b.dunyo); const L = A.gl(b.daraja), fans = L === 'g0' ? MASHQ_FAN.g0 : MASHQ_FAN.g, ar = b.arab === 'asosiy' && BJ.arab, AB = BJ.arab, s = A.S();
+  const fanBtn = f => `<button class="ocard${b.fokus === f ? ' yangi' : ''}" data-f="${f}"><span>${A.FAN[f].ic}</span><b>${esc(A.FAN[f].nom)}</b>${b.fokus === f ? '<small>🎯 fokus</small>' : ''}</button>`;
+  const arCards = ar ? Object.keys(AB.BOLIM).map(k => { const B0 = AB.BOLIM[k], ok = AB.mavjud(s, B0.ids).length; return `<button class="ocard${ok ? '' : ' off'}" data-ar="${k}"><span>${B0.ic}</span><b>${esc(B0.nom)}</b>${ok ? '' : '<small>🔒 oyisi ochadi</small>'}</button>`; }).join('') : '';
+  app.innerHTML = `<div class="wrap kidw"><div class="top"><button class="ib" data-back aria-label="Orqaga">←</button><div class="ttl">📚 Mashq</div><span class="sp"></span><span class="pill">⭐ ${b.arenaYulduz[A.todayKey()] || 0}/20</span></div>
+  <div class="bubble">Qaysi fandan ko'proq mashq qilamiz?</div>
+  ${ar ? `<h3 class="msh">🕌 Arab tili${b.fokus === 'ar' ? ' · 🎯 fokus' : ''}</h3><div class="ogrid g3">${arCards}</div><h3 class="msh">Boshqa fanlar</h3>` : ''}
+  <div class="ogrid g3">${fans.filter(f => !(ar && f === 'ar')).map(fanBtn).join('')}</div></div>`;
+  $('[data-back]').onclick = () => go('uy');
+  $$('[data-f]').forEach(x => x.onclick = () => go('mashq-' + x.dataset.f));
+  $$('[data-ar]').forEach(x => x.onclick = () => { if (x.classList.contains('off')) return toast("🔒 Bu bo'limni oyisi ochadi: 👨‍👩‍👧 → 🕌 Arab so'zlari"); go('mashq-ar-' + x.dataset.ar); });
+}
+function mashqStart(b, fan, bolim, vz) {
+  if (!A.FAN[fan]) return go('mashq');
+  CUR = { k: 'mashq', b, fan, bolim: bolim || null, vz: vz || null, n: 0, ok: 0, i: 0, oyinN: 0 }; startSession(b, 'mashq'); theme(b.dunyo); mashqNext(b);
+}
+function vazifaStart(b, id) {
+  const v = (b.vazifa || []).find(x => x.id === id); if (!v) return go('uy');
+  if (v.done) { toast('✅ Bu vazifa bajarilgan'); return go('uy'); }
+  if (!v.n) return go('uy');
+  mashqStart(b, v.fan, v.bolim, v);
+}
+function mashqItem(b, C) {
+  let sel;
+  if (C.fan === 'ar' && b.arab === 'asosiy') { sel = A.arPick(b, C.bolim || 'aralash'); if (!sel) return null; }
+  else if (C.fan === 'mant') { const L = A.gl(b.daraja), types = Array.from(new Set([].concat(...A.MANT_KUN[L]))); sel = A.pickNode(b, 'mant', { mantTypes: types, i: C.i }); }
+  else sel = A.pickNode(b, C.fan, { i: C.i });
+  return A.makeItem(b, Object.assign({}, sel, { tur: C.vz ? 'vazifa' : 'mashq' }));
+}
+function mashqNext(b, given) {
+  const C = CUR; if (!C || C.k !== 'mashq') return;
+  if (!given && C.vz && C.vz.qildi >= C.vz.n) return vazifaDone(b, C);
+  const har = +(A.S().sozlama.oyinHar) || 0;
+  if (!given && har && A.oyin && C.oyinN >= har) { C.oyinN = 0; return A.oyin.boshla(b, C, () => { CUR = C; theme(b.dunyo); mashqNext(b); }); }
+  const it = given || mashqItem(b, C);
+  if (!it) { app.innerHTML = `<div class="wrap kidw"><div class="card"><h2>🔒 Hali ochilmagan</h2><p>Bu bo'lim uchun oyisi 👨‍👩‍👧 → 🕌 Arab so'zlari bo'limida so'zlar yoki tajvid misollarini tasdiqlashi kerak.</p><button class="btn big" data-back>← Orqaga</button></div></div>`; $('[data-back]').onclick = () => go('mashq'); return; }
+  const st0 = { shown: Date.now(), first: null, urinish: 1, maslahat: 0, ovoz: 0, lock: b.shosh ? Date.now() + 1500 : 0 }; C.it = it; C.st = st0;
+  const ay = b.arenaYulduz[A.todayKey()] || 0, ttl = C.vz ? vzNom(C.vz) : C.fan === 'ar' && C.bolim && BJ.arab ? '🕌 ' + BJ.arab.BOLIM[C.bolim].nom : '📚 ' + A.FAN[C.fan].nom, p = C.vz ? Math.min(1, C.vz.qildi / Math.max(1, C.vz.n)) : 0;
+  app.innerHTML = `<div class="wrap play"><div class="top"><button class="ib" data-x aria-label="Chiqish">✕</button><div class="ttl">${esc(ttl)}</div><span class="sp"></span>${C.vz ? `<span class="pill">📝 ${C.vz.qildi}/${C.vz.n}</span>` : `<span class="pill">✅ ${C.n}</span><span class="pill">⭐ ${ay}/20</span>`}</div>
+  ${C.vz ? `<div class="road"><div class="rfill" style="width:${Math.round(p * 100)}%"></div><span class="rcar" style="left:calc(${Math.round(p * 100)}% - 18px)">${b.dunyo === 'orol' ? '🦄' : '🏎️'}</span><span class="rflag">🏁</span></div>` : ''}
+  <div class="item t-${it.t}">${headHTML(b, it)}<div id="body"></div><div id="fb"></div>${otaTip(b, it)}</div></div>`;
+  $('[data-x]').onclick = () => { endSession(b); A.save(true); if (C.n && !C.vz) toast(`📚 ${C.n} ta savol · ${C.ok} tasi birinchi urinishda ✅`); go('uy'); };
+  const say = $('[data-say]'); if (say) say.onclick = () => { st0.ovoz++; speak(it.tts); };
+  if (st0.lock) { const ob = $('#body'); ob.classList.add('locked'); setTimeout(() => ob.classList.remove('locked'), 1500); }
+  (RENDER[it.t] || RENDER.tanla)($('#body'), it, b, r => onAnswer(b, null, null, it, st0, r), st0);
+}
+function vazifaDone(b, C) {
+  const v = C.vz;
+  if (!v.done) { v.done = true; v.doneTs = Date.now(); v.doneSana = A.todayKey(); A.addStar(b, 5); A.pushLog(b.id, { t: 'vazifa', ts: Date.now(), bola: b.id, id: v.id, fan: v.fan, bolim: v.bolim || null, n: v.n, ok: v.ok }); A.save(true); }
+  endSession(b); CUR = null;
+  app.innerHTML = `<div class="wrap kidw"><div class="oyfin">${ART.dragon({ dunyo: b.dunyo, scale: 0.9, mood: 'wow' })}<h2>🎉 Uyga vazifa bajarildi!</h2><div class="note kn">${esc(vzNom(v))} · ${v.ok}/${v.n} tasi birinchi urinishda · +5 ⭐</div><p>Oyingga ko'rsat — u panelda natijangni ko'radi! 💪</p><button class="btn big" data-home>🏠 Uyga</button></div></div>`;
+  FX.play('fanfar'); FX.burst(innerWidth / 2, innerHeight * 0.3, { tema: b.dunyo, n: 40 }); $('[data-home]').onclick = () => go('uy');
+}
+A.mashqStart = mashqStart;
 /* Sinov ekrani (faqat ?tez=1): bitta tugunning topshirig'ini ko'rsatadi — avtomatik sinov va ko'z bilan tekshirish uchun */
 function screenSinov(b, id, q) { CUR = { k: 'arena', b }; theme(b.dunyo); const it = A.makeItem(b, { tugun: id, q, tur: 'arena' }), st0 = { shown: Date.now(), first: null, urinish: 1, maslahat: 0, ovoz: 0 }; CUR.it = it; CUR.st = st0; CUR.fan = it.fan;
   app.innerHTML = `<div class="wrap play"><div class="top"><button class="ib" data-x aria-label="Chiqish">✕</button><div class="ttl">🧪 ${esc(id)} q${q}</div></div><div class="item t-${it.t}">${headHTML(b, it)}<div id="body"></div><div id="fb"></div>${otaTip(b, it)}</div></div>`;
@@ -2687,6 +3055,7 @@ A.screenOta = function (h) {
   if (h === 'ota-eksport') return exportPanel();
   if (h === 'ota-zaxira') return backupPanel();
   if (h === 'ota-reyting') return reytingPanel();
+  if (h === 'ota-vazifa') return vazifaPanel();
   return weekPanel();
 };
 const deny = () => { toast('Bu amal faqat admin uchun'); A.go('ota'); };
@@ -2711,7 +3080,7 @@ function weekPanel() {
     <div class="kgrid"><div><b class="mono">${A.fmtHMS(s.faol)}</b><span>faol vaqt</span></div><div><b>${s.kunlar}/7</b><span>kun</span></div><div><b>${s.n ? s.acc1 + '%' : '—'}</b><span>aniqlik</span></div><div><b>${s.med ? (s.med / 1000).toFixed(1) + ' s' : '—'}</b><span>median</span></div><div><b>+${s.ozl.length} 🟢</b><span>o'sish</span></div><div><b>${s.wcpm ? s.wcpm[1] : '—'}</b><span>WCPM</span></div></div>
     <div class="lvl"><span class="sm">O'z darajasida (matematika): ${levelPct(b)}%</span><div class="tbar"><i style="width:${levelPct(b)}%"></i></div></div></button>`; }).join('') || '<div class="card">Hali bola yo\'q.</div>'}
   ${noms.length ? `<div class="card"><h3>🏆 Hafta nominatsiyalari (shu telefondagi bolalar)</h3>${noms.map(n => `<div class="nr">${n.ic} <b>${esc(n.nom)}</b>: ${n.bola ? esc(A.bola(n.bola).laqab) : '<span class="mut">sifat sharti bajarilmadi — summa keyingi haftaga</span>'}</div>`).join('')}<p class="sm mut">Boshqa telefonlardagi bolalar bilan solishtirish — 📲 Oila reytingi.</p></div>` : ''}
-  <div class="menu">${isAdmin() ? '<button class="btn" data-go="ota-qosh">➕ Bola qo\'shish</button>' : ''}<button class="btn" data-go="ota-qiyin">📚 Bugungi qiyinlar</button><button class="btn" data-go="ota-reyting">📲 Oila reytingi</button><button class="btn" data-go="ota-eksport">🤖 Claude uchun hafta</button><button class="btn" data-go="ota-arab">🕌 Arab so'zlari</button><button class="btn" data-go="ota-zaxira">💾 Zaxira</button><button class="btn" data-go="ota-sozlama">⚙️ Sozlamalar</button><button class="btn ghost" data-out>🔒 Paneldan chiqish</button></div>
+  <div class="menu">${isAdmin() ? '<button class="btn" data-go="ota-qosh">➕ Bola qo\'shish</button>' : ''}<button class="btn" data-go="ota-qiyin">📚 Bugungi qiyinlar</button><button class="btn" data-go="ota-vazifa">📝 Uyga vazifa</button><button class="btn" data-go="ota-reyting">📲 Oila reytingi</button><button class="btn" data-go="ota-eksport">🤖 Claude uchun hafta</button><button class="btn" data-go="ota-arab">🕌 Arab so'zlari</button><button class="btn" data-go="ota-zaxira">💾 Zaxira</button><button class="btn" data-go="ota-sozlama">⚙️ Sozlamalar</button><button class="btn ghost" data-out>🔒 Paneldan chiqish</button></div>
   <p class="sm mut">Versiya ${A.VER} · ${A.storageOK ? 'xotira ✓' : '⚠️ xotiraga yozib bo\'lmadi'}</p></div>`;
   bindTop(); $$('[data-wk]').forEach(x => x.onclick = () => { const d = +x.dataset.wk; WK = d < 0 ? A.prevWeek(WK) : A.isoWeek(A.addDays(A.weekDays(WK)[6], 1)); weekPanel(); });
   $$('[data-b]').forEach(x => x.onclick = () => A.go('ota-bola-' + x.dataset.b)); $$('[data-go]').forEach(x => x.onclick = () => A.go(x.dataset.go));
@@ -2768,12 +3137,15 @@ A.copyText = copyText;
 /* ================= BOLA QO'SHISH / TAHRIRLASH (2.3) ================= */
 const NAMUNA = [{ kod: 'Q2', laqab: 'Q2', daraja: 'g2', arab: 'asosiy', dunyo: 'orol', avatar: '🦄' }, { kod: 'O0', laqab: 'O0', daraja: 'g0', arab: 'asosiy', dunyo: 'garaj', avatar: '🐯' }, { kod: 'Q1', laqab: 'Q1', daraja: 'g1', arab: 'AL.1', dunyo: null, avatar: '🦋' }, { kod: 'J1', laqab: 'J1', daraja: 'g1', arab: 'asosiy', dunyo: null, avatar: '🐬' }, { kod: 'J0', laqab: 'J0', daraja: 'g0', arab: 'AL.5', dunyo: null, avatar: '🦁' }];
 function childForm(b) {
-  const nw = !b, v = b || { laqab: '', avatar: '🦊', daraja: 'g1', arab: 'asosiy', dunyo: null, kod: '', muxlisga: true };
+  const nw = !b, v = b || { laqab: '', avatar: '🦊', daraja: 'g1', arab: 'asosiy', dunyo: null, kod: '', muxlisga: true, arDaraja: 1, fokus: '' };
   app.innerHTML = `<div class="wrap ota">${top(nw ? '➕ Bola qo\'shish' : '✏️ ' + v.laqab, 'ota')}<div class="card form">
   <label class="lb">Laqab (ism-familiya emas)</label><input id="fl" class="inp" maxlength="16" value="${esc(v.laqab)}" placeholder="Masalan: Yulduzcha" autocomplete="off">
   <label class="lb">Avatar</label><div class="avs">${A.AVATAR.map(a => `<button class="avb${a === v.avatar ? ' on' : ''}" data-a="${a}">${a}</button>`).join('')}</div>
   <label class="lb">Daraja</label><select id="fd" class="inp">${Object.keys(A.DARAJA).map(k => `<option value="${k}" ${k === v.daraja ? 'selected' : ''}>${A.DARAJA[k]}</option>`).join('')}</select>
   <label class="lb">Arab tili</label><select id="fa" class="inp"><option value="AL.1" ${v.arab === 'AL.1' ? 'selected' : ''}>Bilmaydi → alifbo yo'li AL.1</option><option value="AL.5" ${v.arab === 'AL.5' ? 'selected' : ''}>Harflarni biladi → AL.5</option><option value="asosiy" ${v.arab === 'asosiy' ? 'selected' : ''}>Bemalol o'qiydi → asosiy liga</option>${/^AL\.[234 67]$/.test(v.arab) ? `<option value="${v.arab}" selected>Hozir: ${v.arab}</option>` : ''}</select>
+  <label class="lb">🕌 Arab darajasi (bemalol o'qiydigan bola uchun)</label><select id="fq" class="inp">${[[1, 'Endi boshlagan (bir necha oy)'], [2, "1 yildan ortiq o'qigan"], [3, 'Juda yaxshi biladi']].map(([k, t]) => `<option value="${k}" ${(v.arDaraja || 1) === k ? 'selected' : ''}>${t}</option>`).join('')}</select>
+  <label class="lb">🎯 Fokus fan — ko'proq shug'ullanadi</label><select id="ff" class="inp"><option value="">Yo'q — hamma fan teng</option>${['ar', 'mat', 'til', 'en', 'mant', 'yoz'].map(f => `<option value="${f}" ${v.fokus === f ? 'selected' : ''}>${A.FAN[f].ic} ${A.FAN[f].nom}</option>`).join('')}</select>
+  <p class="sm mut">Fokus fan bloki missiyada ikki barobar uzun bo'ladi (ertangi missiyadan). Arab tanlansa — qo'shimcha «o'qish · yozish · tajvid» bloki ham qo'shiladi. Arab savollari sinfga emas, arab darajasiga qarab beriladi.</p>
   <label class="lb">Dunyo</label><select id="fw" class="inp"><option value="">Bolaning o'zi tanlaydi</option><option value="garaj" ${v.dunyo === 'garaj' ? 'selected' : ''}>🏎️ Turbo garaj</option><option value="orol" ${v.dunyo === 'orol' ? 'selected' : ''}>🦄 Pushti uchar ot oroli</option></select>
   <label class="lb">Qisqa kod — Claude hisobotida ism o'rniga (masalan Q2). Bo'sh qolsa, ilova o'zi beradi</label><input id="fk" class="inp mono" maxlength="6" value="${esc(v.kod)}" autocomplete="off">
   <label class="chk"><input type="checkbox" id="fm" ${v.muxlisga ? 'checked' : ''}> Muxlislarga (qarindoshlarga) ko'rinsin — 2-bosqichda</label>
@@ -2782,7 +3154,7 @@ function childForm(b) {
   ${!nw ? `<details class="danger"><summary>⚠️ Xavfli amallar</summary><button class="btn ghost" data-rk>↺ Kalibrlashni qayta boshlash</button><button class="btn danger" data-del>🗑 Bolani va uning ma'lumotini o'chirish</button></details>` : ''}</div></div>`;
   bindTop(); let av = v.avatar;
   $$('[data-a]').forEach(x => x.onclick = () => { av = x.dataset.a; $$('.avb').forEach(y => y.classList.toggle('on', y === x)); });
-  $('[data-save]').onclick = () => { const laqab = $('#fl').value.trim(); if (!laqab) return toast('Laqab yozing'); const o = { laqab, avatar: av, daraja: $('#fd').value, arab: $('#fa').value, dunyo: $('#fw').value || null, kod: $('#fk').value.trim().toUpperCase(), muxlisga: $('#fm').checked };
+  $('[data-save]').onclick = () => { const laqab = $('#fl').value.trim(); if (!laqab) return toast('Laqab yozing'); const o = { laqab, avatar: av, daraja: $('#fd').value, arab: $('#fa').value, arDaraja: +$('#fq').value || 1, fokus: $('#ff').value, dunyo: $('#fw').value || null, kod: $('#fk').value.trim().toUpperCase(), muxlisga: $('#fm').checked };
     if (nw) { const nb = A.newBola(o); toast('✓ ' + nb.laqab + ' qo\'shildi'); } else { const ch = o.daraja !== b.daraja || o.arab !== b.arab; Object.assign(b, o); if (ch) A.initFan(b); A.save(true); toast('Saqlandi ✓'); } A.go('ota'); };
   const nm = $('[data-namuna]'); if (nm) nm.onclick = () => { NAMUNA.forEach(o => A.newBola(Object.assign({}, o))); toast('5 bola qo\'shildi — laqablarini tahrirlang'); A.go('ota'); };
   const rk = $('[data-rk]'); if (rk) rk.onclick = () => { b.boshlandi = null; b.fan = {}; A.initFan(b); A.save(true); toast('Kalibrlash qayta boshlanadi (D1–D2)'); };
@@ -2806,12 +3178,16 @@ function oqishPanel(b) {
 }
 /* ================= ARAB SO'ZLARI TASDIG'I ================= */
 function arabPanel() {
-  const s = S(), T = s.sozlama.arTasdiq, n = Object.keys(T).filter(k => T[k]).length;
-  app.innerHTML = `<div class="wrap ota">${top('🕌 Arab so\'zlari', 'ota')}<div class="card"><p class="sm">Oyisi yoki ustoz har so'zni (harakat, ma'no, rasm) tekshirib ✓ qo'ysin. Tasdiqlanmagan so'z duelda chiqmaydi. Tasdiqlangan: <b>${n}</b> / ${BJ.ARW.length}.</p>
+  const s = S(), T = s.sozlama.arTasdiq, J = s.sozlama.tjTasdiq || (s.sozlama.tjTasdiq = {}), n = BJ.ARW.filter(w => T[w.w]).length, nI = BJ.arab ? BJ.arab.IBR.filter(w => T[w.w]).length : 0, nJ = Object.keys(J).filter(k => J[k]).length;
+  app.innerHTML = `<div class="wrap ota">${top('🕌 Arab so\'zlari', 'ota')}<div class="card"><p class="sm">Oyisi yoki ustoz har so'zni (harakat, ma'no, rasm) tekshirib ✓ qo'ysin. Tasdiqlanmagan so'z duelda va mashqlarda chiqmaydi.</p><div class="kgrid"><div><b>${n}/${BJ.ARW.length}</b><span>so'z (kamida 6)</span></div><div><b>${nI}/${BJ.arab ? BJ.arab.IBR.length : 0}</b><span>ibora (kamida 4)</span></div><div><b>${nJ}/6</b><span>tajvid bo'limi</span></div></div>
   <button class="btn sm" data-all>✓ Ko'rinib turganlarni tasdiqlash</button></div>
   ${B.arTartib.map(m => `<div class="card"><h3>${esc(m)}</h3>${BJ.ARW.filter(w => w.m === m).map(w => `<label class="arw"><input type="checkbox" data-w="${esc(w.w)}" ${T[w.w] ? 'checked' : ''}><span class="arab" dir="rtl" lang="ar">${w.w}</span><span class="e">${w.e}</span><span>${esc(w.uz)}</span></label>`).join('')}</div>`).join('')}
+  ${BJ.arab ? `<div class="card"><h3>💬 Iboralar va gaplar (0.4.0)</h3>${BJ.arab.IBR.map(w => `<label class="arw"><input type="checkbox" data-w="${esc(w.w)}" ${T[w.w] ? 'checked' : ''}><span class="arab" dir="rtl" lang="ar">${w.w}</span><span class="e">${w.e}</span><span>${esc(w.uz)}</span></label>`).join('')}</div>
+  <div class="card"><h3>📗 Tajvid (0.4.0)</h3><p class="sm">Har bo'limdagi misol va hukmni tekshiring. «✅» qo'yilgan bo'lim bolalarga ochiladi. Xato ko'rsangiz, belgilamang va Claude'ga yozing — tuzatiladi.</p>
+  ${Object.keys(BJ.arab.TJ_MISOL).map(id => `<details class="tjd"><summary><b>${esc(BJ.gen.reg[id].nom)}</b> ${J[id] ? '✅' : '⏳'}</summary>${BJ.arab.TJ_MISOL[id].map(([w, h]) => `<div class="tjm"><span class="arab" dir="rtl" lang="ar">${w}</span><span class="sm">${esc(h)}</span></div>`).join('')}<label class="chk"><input type="checkbox" data-tj="${id}" ${J[id] ? 'checked' : ''}> Misollar to'g'ri — bolalarga ochilsin</label></details>`).join('')}</div>` : ''}
   <div class="card"><h3>Alifbo harflari nomlari</h3><p class="sm">${BJ.AL.map(a => `<span class="arab" dir="rtl">${a.h}</span> ${esc(a.nom)}`).join(' · ')}</p><label class="chk"><input type="checkbox" id="alt" ${s.sozlama.alifTasdiq ? 'checked' : ''}> Harf nomlari to'g'ri (oyisi/ustoz tasdiqladi)</label></div></div>`;
   bindTop(); $$('[data-w]').forEach(c => c.onchange = () => { T[c.dataset.w] = c.checked; A.save(); });
+  $$('[data-tj]').forEach(c => c.onchange = () => { J[c.dataset.tj] = c.checked; A.save(true); const sm = c.closest('details').querySelector('summary'); sm.lastChild.textContent = c.checked ? ' ✅' : ' ⏳'; });
   $('[data-all]').onclick = () => { $$('[data-w]').forEach(c => { c.checked = true; T[c.dataset.w] = true; }); A.save(true); toast('Tasdiqlandi ✓'); };
   $('#alt').onchange = e => { s.sozlama.alifTasdiq = e.target.checked; A.save(); };
 }
@@ -2851,6 +3227,7 @@ function qiyinMatn(kun) {
     const ids = Object.keys(g).filter(id => g[id].xato || g[id].dars).sort((p, q) => g[q].xato - g[p].xato);
     out.push(`BOLA|${b.kod}|daraja=${b.daraja}|javob=${ans.length}|xato=${ans.filter(e => !e.togri_1).length}|dars=${dars.length}|charch=${ch.join(',') || '-'}|oyin=${oy.length}`);
     ids.forEach(id => { const x = g[id], nom = (BJ.gen.reg[id] || {}).nom || id; out.push(`Q|${id}|${nom}|n=${x.n}|xato=${x.xato}|dars=${x.dars}|egizak=${x.egzOk}/${x.egz}`); x.ex.forEach(e => out.push(`  e|${e.savol}|bola=${e.javob}|togri=${e.togri_javob}|xato_turi=${e.xato_turi || '-'}`)); });
+    (b.vazifa || []).filter(v => v.berildi === kun || v.doneSana === kun || (!v.done && v.muddat >= kun)).forEach(v => out.push(`VZ|fan=${v.fan}${v.bolim ? '|bolim=' + v.bolim : ''}|n=${v.n}|qildi=${v.qildi}|ok=${v.ok}|holat=${v.done ? 'bajarildi' : v.muddat < kun ? 'kechikdi' : 'jarayonda'}`));
     odam.push({ b, ids: ids.map(id => (BJ.gen.reg[id] || {}).nom || id), ch: ch.map(f => (A.FAN[f] || { nom: f === 'isinish' ? 'Isinish' : f }).nom) });
   });
   return { txt: out.join('\n'), odam };
@@ -2881,6 +3258,32 @@ function exportPanel() {
     download(new Blob([csv], { type: 'text/csv' }), `Bilimjon_${b.kod}_${WK}.csv`); });
 }
 function download(blob, name) { if (G.BJ_BITTA && G.top !== G.self) return toast('Bu sinov havolasida fayl saqlanmaydi — «📋 Zaxirani nusxalash»dan foydalaning'); try { const u = URL.createObjectURL(blob), a = document.createElement('a'); a.href = u; a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(u); a.remove(); }, 1500); toast('⬇️ ' + name); } catch (e) { toast('Yuklab bo\'lmadi'); } }
+/* ================= 📝 UYGA VAZIFA (0.4.0): ota-ona beradi, bola uyida chiqadi, natija shu yerda ================= */
+const VZ_TUR = [['ar:aralash', "🕌 Arab: aralash (o'qish, yozish, tajvid)"], ['ar:oqish', "🕌 Arab: o'qish"], ['ar:yozish', '🕌 Arab: yozish (harflardan)'], ['ar:daftar', '🕌 Arab: daftarga yozish'], ['ar:tajvid', '🕌 Arab: tajvid'], ['ar:lugat', "🕌 Arab: lug'at"],
+  ['mat:', '🔢 Matematika'], ['til:', "📖 Ona tili va o'qish"], ['en:', '🇬🇧 Ingliz tili'], ['mant:', '🧩 Mantiq'], ['yoz:', '✏️ Yozuv (maktabgacha)'], ['izoh:', '📝 Faqat topshiriq matni (ilovasiz)']];
+function vazifaPanel() {
+  const L = A.bolalar(), today = A.todayKey();
+  const holat = v => v.done ? (v.qolda ? '✅ bola «bajardim» deb belgiladi' : `✅ ${v.ok}/${v.n} tasi birinchi urinishda`) : (v.muddat < today ? `⏰ muddati o'tdi${v.n ? ' · ' + v.qildi + '/' + v.n : ''}` : v.n ? `⏳ ${v.qildi}/${v.n}` : '⏳ hali bajarilmagan');
+  app.innerHTML = `<div class="wrap ota">${top('📝 Uyga vazifa', 'ota')}
+  <div class="card form"><h3>➕ Yangi vazifa</h3>
+  <label class="lb">Kimga</label>${L.map(b => `<label class="chk"><input type="checkbox" data-k="${b.id}" checked> ${esc(b.avatar + ' ' + b.laqab)}</label>`).join('') || '<p class="sm">Avval bola qo\'shing.</p>'}
+  <label class="lb">Nima</label><select id="vt" class="inp">${VZ_TUR.map(([k, t]) => `<option value="${k}">${t}</option>`).join('')}</select>
+  <label class="lb">Nechta savol</label><select id="vn" class="inp">${[5, 10, 15, 20, 30].map(n => `<option value="${n}" ${n === 10 ? 'selected' : ''}>${n} ta</option>`).join('')}</select>
+  <label class="lb">Muddat</label><select id="vm" class="inp"><option value="0">Bugun</option><option value="1" selected>Ertaga</option><option value="3">3 kun ichida</option><option value="7">1 hafta ichida</option></select>
+  <label class="lb">Izoh (ixtiyoriy) — bola ekranida chiqadi</label><textarea id="vi" class="inp" maxlength="200" rows="3" placeholder="Masalan: Fotiha surasini oyingga 3 marta o'qib ber"></textarea>
+  <button class="btn big" data-save>📝 Vazifa berish</button></div>
+  ${L.map(b => { const V = (b.vazifa || []).slice().reverse().slice(0, 15); return `<div class="card"><h3>${esc(b.avatar + ' ' + b.laqab)}</h3>${V.length ? V.map(v => `<div class="vzr"><b>${esc(A.vzNom(v))}</b> <span class="sm mut">· ${esc(v.muddat.slice(8, 10) + '.' + v.muddat.slice(5, 7))} gacha</span><div class="sm">${holat(v)}</div>${v.izoh ? `<div class="sm mut">${esc(v.izoh)}</div>` : ''}<button class="btn sm ghost" data-del="${b.id}|${esc(v.id)}">🗑</button></div>`).join('') : '<p class="sm mut">Hali vazifa yo\'q.</p>'}</div>`; }).join('')}</div>`;
+  bindTop();
+  $('[data-save]').onclick = () => {
+    const ks = $$('[data-k]').filter(c => c.checked).map(c => A.bola(c.dataset.k)).filter(Boolean); if (!ks.length) return toast('Kamida bitta bolani belgilang');
+    const [fan, bolim] = $('#vt').value.split(':'), izoh = $('#vi').value.trim().slice(0, 200), n = fan === 'izoh' ? 0 : +$('#vn').value;
+    if (fan === 'izoh' && !izoh) return toast('Topshiriq matnini yozing');
+    if (fan === 'ar' && bolim && !A.arMavjud(bolim).length && ks.some(b => b.arab === 'asosiy')) toast("⚠️ Bu arab bo'limi hali yopiq — 🕌 Arab so'zlari bo'limida tasdiqlang");
+    ks.forEach(b => { b.vazifa = (b.vazifa || []).concat([{ id: A.rid(6), berildi: today, muddat: A.addDays(today, +$('#vm').value), fan, bolim: bolim || null, n, izoh, qildi: 0, ok: 0, done: false }]).slice(-40); });
+    A.save(true); toast(`✅ Vazifa berildi: ${ks.length} ta bola`); vazifaPanel();
+  };
+  $$('[data-del]').forEach(x => x.onclick = () => { const [bid, id] = x.dataset.del.split('|'), b = A.bola(bid); if (!b) return; b.vazifa = (b.vazifa || []).filter(v => v.id !== id); A.save(true); toast("O'chirildi"); vazifaPanel(); });
+}
 /* ================= 📲 OILA REYTINGI (0.3.0): telefonlar kod almashadi, server yo'q ================= */
 function reytingPanel() {
   const s = S(), kod = A.reytingKod(), tel = Object.keys(s.oilaTel || {}).map(q => Object.assign({ q }, s.oilaTel[q])), R = A.reytingRoyxat();
@@ -2925,7 +3328,7 @@ function start() {
   if (!G.BJ_BITTA && 'serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')) navigator.serviceWorker.register('sw.js').catch(() => {});
   BJ.debug = { state: () => A.S(), fx: FX.stats, A, gen: BJ.gen };
   A.render();
-  if (oldVer && oldVer !== A.VER) setTimeout(() => toast('🆕 Bilimjon ' + A.VER + ": har 5 savoldan keyin 🎮 o'yin, charchasang — 😴 boshqa fan, 🏆 hafta reytingi!"), 900);
+  if (oldVer && oldVer !== A.VER) setTimeout(() => toast('🆕 Bilimjon ' + A.VER + ": 🕌 arab o'qish, yozish va tajvid, 📚 Mashq, 📝 Uyga vazifa!"), 900);
 }
 start();
 })(window);

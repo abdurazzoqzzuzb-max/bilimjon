@@ -4,21 +4,21 @@ Yangi chat shu fayldan davom etadi. Javoblar o'zbekcha. Repo PUBLIC: bu yerga is
 
 ## Loyiha
 - Oilaviy o'yin-darslik (PWA). Sayt: https://abdurazzoqzzuzb-max.github.io/bilimjon/ (GitHub Pages, main / root).
-- Fayllar: `index.html` (butun ilova, ichida 14 ta `<script>` moduli), `sw.js` (network-first kesh), `manifest.webmanifest`, `icon.svg`, `icon-192.png`, `icon-512.png`.
+- Fayllar: `index.html` (butun ilova, ichida 15 ta `<script>` moduli), `sw.js` (network-first kesh), `manifest.webmanifest`, `icon.svg`, `icon-192.png`, `icon-512.png`.
 - **Haqiqat manbai — shu repo.** Kompyuterdagi `Desktop\Claude outputs\Bilimjon` (ko'p faylli manba va v0.1.1 ZIP) ESKI, ishlatilmaydi.
 - Hamma oilalar uchun bitta umumiy versiya. Yangilanish telefonga o'zi keladi (ilovani yopib qayta ochganda), natijalar telefonda (localStorage) qoladi.
 
 ## Versiya
-- Hozir: **0.3.0** (04.11.2026).
+- Hozir: **0.4.0** (04.11.2026).
 - Har chiqarishda ikkalasi birga oshiriladi: `index.html` → `VER = 'x.y.z'`, `sw.js` → `const V = 'bj-vx.y.z'`.
 
 ## Modullar xaritasi (index.html, tartib bilan)
 1. Kontent banki (`BJ.bank`).
-2. Generatorlar: mat `M0.1–M2.14` · mantiq `L.1–L.10` · ona tili `H0–H2` · yozuv `Y0.1–Y0.4` · olimpiada `OL` · `EN.*`, `AR.*`, `AL.*`, `KASHF`. Ro'yxat: `BJ.gen.reg`, yaratish: `gen.make(id, q, ctx)`.
+2. Generatorlar: mat `M0.1–M2.14` · mantiq `L.1–L.10` · ona tili `H0–H2` · yozuv `Y0.1–Y0.4` · olimpiada `OL` · `EN.*`, `AR.*`, `AL.*`, `KASHF` · **arab 2 (`BJ.arab`)**: `AQ.1–4`, `AY.1–4`, `TJ.1–6`. Ro'yxat: `BJ.gen.reg`, yaratish: `gen.make(id, q, ctx)`.
 3. Core (`BJ.A`): holat `A.S()`, log `A.pushLog/readLog`, rejalash `makeItem`, `buildMission`, `pickNode`, `recordAnswer`.
-4. Bola tomoni: router, `screenMission → stepRun → showItem → onAnswer → missionNext`, `RENDER.{tanla,yoz,tartib,farq,labirint,sudoku,xotira,iz,yigish}`, Arena (`arenaNext(b, given)`), **KICHIK DARS**, **😴 CHARCHADIM**, `reytingHTML`.
+4. Bola tomoni: router, `screenMission → stepRun → showItem → onAnswer → missionNext`, `RENDER.{tanla,yoz,tartib,farq,labirint,sudoku,xotira,iz,yigish,arharf,daftar}`, **📚 Mashq** (`screenMashq`, `mashqStart/mashqNext`, `CUR.k='mashq'`), **📝 Uyga vazifa** (`vazifaHTML`, `vazifaStart`, `vazifaDone`), Arena (`arenaNext(b, given)`), **KICHIK DARS**, **😴 CHARCHADIM**, `reytingHTML`.
 5. **O'yinlar** (`A.oyin`): `boshla(b, m, done)`, `poyga`, `pazl`, `kozgu`, `pgTask(lv)`, `KZ` rasmlari, `pzRasm`.
-6. Ota-ona paneli (`ota-*` yo'nalishlari), `exportPanel` (BJW2), `qiyinPanel`, `reytingPanel` (`ota-reyting`), zaxira, `start()`.
+6. Ota-ona paneli (`ota-*` yo'nalishlari), `exportPanel` (BJW2), `qiyinPanel`, `reytingPanel` (`ota-reyting`), `vazifaPanel` (`ota-vazifa`), `arabPanel` (so'z, ibora, tajvid tasdig'i), zaxira, `start()`.
 
 ## 0.2.0 — KICHIK DARS (bajarildi)
 - `onAnswer`: 1-xato → maslahat. 2-xato → `darsMumkin(it, r)` (faqat `t` = tanla | yoz; KASHF va duel emas) → `darsFlow` → `showLesson`: qoida (`DARS[tugun]` yoki `DARS_FAN[fan]`) + shu savolning namuna yechimi (`DARS_QADAM[tugun]` yoki `mathSteps(ex)`) + javob → «Men tayyorman» (5 s) → `twinItem`: o'xshash yangi savol, `tur: 'dars'`.
@@ -48,6 +48,27 @@ Yangi chat shu fayldan davom etadi. Javoblar o'zbekcha. Repo PUBLIC: bu yerga is
 - `?tez=1`: o'yin 8 s, pazl 2×2; `window.__bjOyin()` — joriy o'yin seansi (`game.state()`, `game.swap`, `game.setLane`, `game.setCol/setAt`), `A.oyin.finish()`.
 - Tekshiruvlar: `pgTask` — 3 ta katakda bitta to'g'ri; `KZ` — 8×8 va simmetrik; `pzRasm` — to'g'ri SVG; 5 savol → o'yin → darsga qaytish; Charchadim → blok ko'chishi va o'sha savol qaytishi; 2 xato → dars (Charchadim yo'q); eski 0.2.0 holatdan yangilanish.
 
+## 0.4.0 — Arab tili kuchaytirildi, Mashq, Uyga vazifa (bajarildi)
+- **Arab tili 2** (`BJ.arab`, alohida modul): bemalol o'qiydigan-yozadigan bolalar uchun (arab = `asosiy`). Daraja sinfga emas, `b.arDaraja` (1–3) ga qarab — `arPick` birinchi marta `q = arDaraja` qo'yadi, keyin odatdagi moslashuv.
+  - O'qish: `AQ.1` ma'no, `AQ.2` arabchasini top, `AQ.3` belgilar (shadda/sukun/tanvin) va harflar soni, `AQ.4` iboralar (`B.arIbora`, 20 ta).
+  - Yozish: `AY.1` harf kartochkalaridan so'z yig'ish (`RENDER.arharf`, imlo), `AY.2` harflarni qo'shish, `AY.3` tushib qolgan harf, `AY.4` daftarga yozish (`RENDER.daftar`, o'zi baholaydi — faqat «📓 Daftar» bo'limi va vazifada).
+  - Tajvid: `TJ.1` shamsiy/qamariy lom, `TJ.2` nun sokin va tanvin (izhor, idg'om g'unnali/g'unnasiz, iqlob, ixfo), `TJ.3` mim sokin, `TJ.4` qalqala, `TJ.5` madd (tabiiy, muttasil, munfasil, lozim), `TJ.6` g'unna. Har biriga o'zbekcha `DARS` qoidasi (kichik dars).
+  - Lug'at: 112 so'z (yangi mavzular: kiyim, fel, sifat, vaqt, din, oshxona; son 6–10, ovqat, tabiat qo'shimchalari).
+  - Tasdiq: so'z va iboralar — `sozlama.arTasdiq` (kamida 6 so'z / 4 ibora), tajvid — bo'lim bo'yicha `sozlama.tjTasdiq`. Tasdiqsiz bo'lim bolaga 🔒.
+  - Bo'limlar `BJ.arab.BOLIM`: aralash, oqish, yozish, tajvid, lugat, daftar.
+- **🎯 Fokus fan** (`b.fokus`, bola tahririda): fokus fanning bloki ikki barobar; `ar` + `asosiy` bo'lsa, duel dan keyin `{ k: 'blok', fan: 'ar', arBolim: 'aralash' }` bloki.
+- **📚 Mashq** (bola uyi → `#mashq`): fan tanlash, arabda bo'lim tanlash → `#mashq-<fan>[-<bolim>]`. Cheksiz savol, kichik dars, har `oyinHar` savolda o'yin, yulduz arena bilan umumiy kunlik 20 chegarasida (`tur: 'mashq'`).
+- **📝 Uyga vazifa** (`b.vazifa[]`: `{ id, berildi, muddat, fan, bolim, n, izoh, qildi, ok, done, doneSana, qolda }`): ota-ona → 📝 Uyga vazifa (bir nechta bolaga birdan). Bola uyida karta → `#vazifa-<id>` (`tur: 'vazifa'`, yulduz chegarasiz) → tugasa +5 ⭐. Faqat matnli vazifa (`fan: 'izoh'`) → bola «✅ Bajardim» (+2 ⭐). «📚 Bugungi qiyinlar» → `VZ|fan=…|bolim=…|n|qildi|ok|holat`.
+- Sinov: arab matnlarida bitta harfda ko'pi bilan bitta harakat; lom/nun/mim hukmi hal qiluvchi harfdan mustaqil tekshiriladi; qalqala, g'unna, madd evristikalari; 14 tugun × 3 qiyinlik × g0/katta generatorlari `gen.valid`.
+
+## KEYINGI: v0.5.0 — ☁️ Oila akkaunti va 🏆 Reyting guruhi (foydalanuvchi tasdiqlagan)
+- Talab: bolalar ikkala telefonda (dadasi va oyisi) o'ynaydi, qayerda to'xtasa, ikkinchi telefonda aynan o'sha joydan davom etadi; dadasi hammasini ko'radi.
+- Yechim: **Firebase** (Auth + Firestore, bepul Spark tarifi). Kirish — **har oila o'z Google akkaunti** (zaxira: email + parol, chunki iPhone PWA'da Google popup ba'zan qotadi). Bitta akkauntni ko'p oila bilan bo'lishish — RAD ETILDI (xavfli).
+- Ma'lumot: `oila/{uid}` (sozlama), `oila/{uid}/bolalar/{bid}` (bola holati, missiya — oxirgi yozuv ustun), `oila/{uid}/log/{bid}_{kun}` (arrayUnion). Qoidalar: faqat `request.auth.uid == uid`.
+- **🏆 Reyting guruhi** (foydalanuvchi 2-variantni tanladi): oila guruh kodini kiritadi → `guruh/{kod}/azo/{bid}` ga faqat haftalik xulosa (laqab, avatar, ⭐, kun, 🚀). Guruh a'zolarigina o'qiydi. Ism-familiya yo'q.
+- Firebase loyihasini foydalanuvchining kompyuterida brauzerda Claude ochadi (foydalanuvchi kuzatadi; shartlarni qabul qilishdan oldin ruxsat so'raladi). Config (ochiq kalitlar) repoga yoziladi.
+- 0.3.0 dagi kod bilan «📲 Oila reytingi» akkauntsiz oilalar uchun qoladi.
+
 ## KEYINGI (g'oyalar, foydalanuvchi tasdig'isiz qilinmaydi)
-- Oilalar orasidagi reyting (server/Firebase, taxalluslar, ota-ona roziligi) — xavf: bolalar ma'lumoti internetga chiqadi, ochiq reyting orqada qolgan bolaning ishtiyoqini so'ndirishi mumkin.
 - O'yin sozlamasini har bola uchun alohida qilish (hozir oila uchun bitta).
+- Arab: tajvid misollarini oyisi/ustoz izohi bilan kengaytirish; ra (tafxim/tarqiq), vaqf belgilari.
