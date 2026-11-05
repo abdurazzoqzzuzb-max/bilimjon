@@ -89,10 +89,10 @@ Yangi chat shu fayldan davom etadi. Javoblar o'zbekcha. Repo PUBLIC: bu yerga is
 Asos — 1-kun ma'lumoti: maktabgacha bola 53 daq faol (18–22 soat), 30-savoldan keyin aniqlik 93% → 67%; 2-sinf bolasi 13 daq, 87%, missiya tugatilmagan, 2× «charchadim»; ⭐ reyting yoshlar orasida adolatsiz (69 ga 13).
 Pedagogik qoidalar: sovg'a — muntazamlik uchun (tezlik uchun emas), oila umumiy sovg'asi; solishtirish — o'z maqsadi % bilan; katta effekt — har javobda emas, kombo/marrada.
 - [x] Sinxron: soat farqi (hash bo'yicha qabul), log yo'qolishi, ko'p kun oflayn — `sinov/bulut/sinov_chekka.py` (10 tekshiruv).
-- [ ] 1. 🌙 Kun chegarasi (`b.kunDaq`, standart g0 25 / boshqa 35) + uyqu vaqti (`sozlama.uyqu`, '21:00'); yetganda — ajdarho «ertaga davom», ota-ona PIN bilan +10 daq. Qulf emas.
-- [ ] 1. 🎮 O'yin sozlamasi har bolaga (`b.oyinHar`, `b.oyinDaq`; bo'sh bo'lsa oila sozlamasi).
-- [ ] 1. ⚖️ Adolatli reyting: tartib — hafta «kun maqsadi %» (har kun maqsad = `b.kunDaq` faol daqiqa yoki missiya), keyin 🚀 o'sish; ⭐ faqat ko'rsatiladi.
-- [ ] 1. 💥 Kombo: ketma-ket birinchi urinishda to'g'ri — 3/5/8 da kattalashuvchi effekt, ×2 ×3 belgisi.
+- [x] 1. 🌙 Kun chegarasi: `A.kunLimit(b)` (`b.kunDaq`: null — standart `KUN_STD` g0 25 / g1–g2 35, 0 — cheklanmagan), `A.qolganSek`, `b.qoshDaq[kun]` (PIN bilan +10). Uyqu: `sozlama.uyqu` ('21:00', '' — o'chiq), oraliq uyqu…05:00, `b.uyquOchiq`. `A.damHolat(b, davom)` → {sabab:'limit'|'uyqu'}; davom=true — boshlangan missiyaga 15 daq imtiyoz. Tekshiruv: router (missiya/arena/mashq/vazifa), `missionNext`, `arenaNext`, `mashqNext` → `screenDam`. Taymer: 3 daq qolganda va 0 da toast. Uyda `vaqtHTML`. Log `{t:'dam'}`. `?tez=1` da o'chiq (`A.damSinov=true` bilan yoqiladi).
+- [x] 1. 🎮 `A.oyinCfg(b)` — `b.oyinHar`/`b.oyinDaq` (null — oila sozlamasi); bola tahririda `#fz #fo #fp`, ⚙️ da `#uq` (uyqu).
+- [x] 1. ⚖️ `reytingRoyxat`: `x.maqsad` = bajarilgan missiya kunlari / haftaning o'tgan kunlari (%), tartib maqsad → kun → 🚀 → ⭐. Yangi maydon YO'Q (guruh `firestore.rules` o'zgarmaydi). Ekranda «🎯 m/d».
+- [x] 1. 💥 Kombo: `KOMBO` (kid modul), `komboMarra` 3, 5, 8, 12, 16…; `komboFX` — portlash + `.kombo` yozuvi, 5+ da bonus ⭐ 1/2/3; dars egizagi sanalmaydi; `agg.komboMax`, `b.komboMax`, log `{t:'kombo'}`.
 - [ ] 2. 🎁 Sovg'a vitrinasi: ota-ona sovg'a nomi + rasmi (kamera, siqilgan JPEG), shart (masalan 7 kundan 5 kun maqsad); bola uyida «sovg'agacha N%»; oila umumiy sovg'asi.
 - [ ] 2. 📊 Hafta hisoboti (ota-ona): vaqt, aniqlik fan bo'yicha, charchash, eng zaif/kuchli ko'nikma, keyingi hafta tavsiyasi.
 - [ ] 3. 🔧 Konstruktor + krash-test (garaj): detal 10–15 to'g'ri javobda 1 ta; yig'ish → devorga urish → parchalanish → qayta yig'ish.
@@ -104,6 +104,7 @@ Pedagogik qoidalar: sovg'a — muntazamlik uchun (tezlik uchun emas), oila umumi
 - [ ] 5. 🕌 Arab: ra (tafxim/tarqiq), vaqf belgilari — yangi TJ tugunlari, DARS, tasdiq.
 - [ ] 6. 🎙️ Ota-ona ovozi: MediaRecorder, 3–5 s qisqa yozuv, Firestore'da (Storage — faqat Blaze tarif!), iPhone↔Android ijro sinovi.
 - [ ] 7. To'liq sinov, VER 0.6.0, push main faqat «chiqar» bilan.
+- Sinovlar: `sinov/v060/sinov_bosqich1.py` (21), `sinov/bulut/sinov_bulut.py` (21), `sinov/bulut/sinov_chekka.py` (10).
 
 ## KEYINGI (g'oyalar, foydalanuvchi tasdig'isiz qilinmaydi)
 - ⚔️ Jonli duel (ikki oila, videoqo'ng'iroqda) — 0.6.0 ga kirmadi.

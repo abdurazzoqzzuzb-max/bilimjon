@@ -53,6 +53,10 @@ textarea.inp{min-height:160px;font-size:.8rem}
 .lb{display:block;font-weight:800;margin-top:12px;font-size:.95rem}
 .chk{display:flex;gap:10px;align-items:center;margin:12px 0;min-height:44px}.chk input{width:26px;height:26px}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#172033;color:#fff;padding:12px 18px;border-radius:16px;z-index:70;font-weight:700;max-width:90vw;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,.3);animation:tin .25s}
+.kombo{position:fixed;left:50%;top:70%;transform:translate(-50%,-50%);z-index:70;pointer-events:none;font:900 2.4rem/1 "Baloo 2",system-ui,sans-serif;color:#FFC400;text-shadow:0 3px 0 #B35A00,0 0 18px rgba(255,140,0,.75);animation:kmb 1.5s ease-out forwards;text-align:center;white-space:nowrap}
+.kombo small{display:block;margin-top:4px;font-size:1.1rem;color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.45)}.kombo.orol{color:#FF6FC0;text-shadow:0 3px 0 #8E1A5C,0 0 18px rgba(255,79,176,.75)}.kombo.k2,.kombo.k3{font-size:3.1rem}
+@keyframes kmb{0%{transform:translate(-50%,-50%) scale(.3);opacity:0}18%{transform:translate(-50%,-50%) scale(1.3);opacity:1}30%{transform:translate(-50%,-50%) scale(1)}75%{opacity:1}100%{transform:translate(-50%,-110%) scale(1);opacity:0}}
+.dam{text-align:center}.damdrg{position:relative;display:inline-block}.zzz{position:absolute;right:-6px;top:4px;font-weight:800;color:var(--mut);animation:float 2.4s ease-in-out infinite}
 @keyframes tin{from{opacity:0;transform:translate(-50%,10px)}}
 .scrim{position:fixed;inset:0;background:rgba(5,8,15,.55);z-index:50;display:flex;align-items:flex-end;justify-content:center}
 .sheet{background:var(--card);color:var(--ink);width:100%;max-width:520px;border-radius:24px 24px 0 0;padding:18px 16px 28px;max-height:88vh;overflow:auto;text-align:center}
@@ -1753,7 +1757,7 @@ Object.assign(A, { FAN, ZANJIR, BOSH, DARAJA, gl, BLOK, MANT_KUN, UZUN, XATO, TU
 /* ================= STORE ================= */
 const KEY = 'bj_state_v1'; /* HECH QACHON o'zgarmaydi: yangi versiya eski holatni migrate() bilan yangilaydi */
 const SV = 1;
-function defaults() { return { v: SV, oila: null, pin: null, pinOta: null, sozlama: { ovoz: 0.8, kamEffekt: 'auto', tanaffus: 20, oyinHar: 5, oyinDaq: 3, reyting: true, tjTasdiq: {}, sandiq: { bronza: 40, kumush: 90, oltin: 150, olmos: 220 }, arTasdiq: {}, alifTasdiq: false }, bolalar: {}, tartib: [], joriy: null, duel: {}, oilaTel: {}, qurilma: null, lastBackup: null, seenVer: null, appVer: null }; }
+function defaults() { return { v: SV, oila: null, pin: null, pinOta: null, sozlama: { ovoz: 0.8, kamEffekt: 'auto', tanaffus: 20, oyinHar: 5, oyinDaq: 3, uyqu: '21:00', reyting: true, tjTasdiq: {}, sandiq: { bronza: 40, kumush: 90, oltin: 150, olmos: 220 }, arTasdiq: {}, alifTasdiq: false }, bolalar: {}, tartib: [], joriy: null, duel: {}, oilaTel: {}, qurilma: null, lastBackup: null, seenVer: null, appVer: null }; }
 let S = load(); A.storageOK = true;
 /* Xotira tekshiruvi: brauzer yozishga ruxsat beradimi va ilova begona sayt ichida (sinov havolasi) ochilganmi */
 A.storageProbe = (function () { try { const k = 'bj_probe'; localStorage.setItem(k, String(Date.now())); const ok = !!localStorage.getItem(k); localStorage.removeItem(k); return ok; } catch (e) { return false; } })();
@@ -1789,7 +1793,7 @@ function logMerge(id, k, extra) { const key = logKey(id, k), a = readLog(id, k),
 Object.assign(A, { readLog, pushLog, flushLog, logKeys, pruneLogs, weekLog, logMerge, LOGP });
 addEventListener('pagehide', () => { flushLog(); save(true); });
 /* ================= BOLA ================= */
-function bolaDefaults() { return { id: null, kod: '', laqab: '', avatar: '🦊', daraja: 'g1', arab: 'asosiy', dunyo: null, muxlisga: true, yaratildi: null, boshlandi: null, mavzu: {}, fan: {}, harfK: 2, harfKun: null, harfSt: {}, tugun: {}, takror: [], yulduz: 0, yulduzKun: {}, arenaYulduz: {}, detal: [], kun: {}, wcpm: [], missiya: null, reja: null, shosh: false, me: {}, olqish: [], oqilgan: [], oyin: {}, arDaraja: 1, fokus: '', vazifa: [] }; }
+function bolaDefaults() { return { id: null, kod: '', laqab: '', avatar: '🦊', daraja: 'g1', arab: 'asosiy', dunyo: null, muxlisga: true, yaratildi: null, boshlandi: null, mavzu: {}, fan: {}, harfK: 2, harfKun: null, harfSt: {}, tugun: {}, takror: [], yulduz: 0, yulduzKun: {}, arenaYulduz: {}, detal: [], kun: {}, wcpm: [], missiya: null, reja: null, shosh: false, me: {}, olqish: [], oqilgan: [], oyin: {}, arDaraja: 1, fokus: '', vazifa: [], kunDaq: null, oyinHar: null, oyinDaq: null, qoshDaq: {}, uyquOchiq: 0, komboMax: 0 }; }
 function newBola(o) {
   const b = fixBola(Object.assign(bolaDefaults(), o)); b.id = b.id || 'b' + rid(7).toLowerCase(); b.yaratildi = todayKey();
   if (!b.kod) { const n = Object.keys(S.bolalar).length + 1; b.kod = ({ g0: 'K', g1: 'B', g2: 'I', g3: 'U', g4: 'T' }[b.daraja] || 'B') + n; }
@@ -1956,6 +1960,31 @@ function addStar(b, n, arena) { const k = todayKey(); if (arena) { const a = b.a
 function weekStars(b, wk) { return sum(weekDays(wk || isoWeek()).map(k => b.yulduzKun[k] || 0)); }
 function sandiq(b, wk) { const s = weekStars(b, wk), T = S.sozlama.sandiq; return s >= T.olmos ? { k: 'olmos', ic: '💎', nom: 'Olmos' } : s >= T.oltin ? { k: 'oltin', ic: '🥇', nom: 'Oltin' } : s >= T.kumush ? { k: 'kumush', ic: '🥈', nom: 'Kumush' } : s >= T.bronza ? { k: 'bronza', ic: '🥉', nom: 'Bronza' } : { k: 'yoq', ic: '📦', nom: 'Oddiy' }; }
 Object.assign(A, { addStar, weekStars, sandiq });
+/* ================= 🌙 KUN CHEGARASI, UYQU VAQTI, 🎮 O'YIN SOZLAMASI HAR BOLAGA (0.6.0) =================
+   Asos (1-kun): maktabgacha bola 53 daq faol, 30-savoldan keyin aniqlik 93% → 67%; soat 22 gacha o'ynagan.
+   Qulf emas: boshlangan missiyani tugatishga 15 daq beriladi; ota-ona PIN bilan +10 daq. ?tez=1 da o'chiq (A.damSinov bilan yoqiladi). */
+const KUN_STD = { g0: 25, g1: 35, g2: 35 };
+function kunLimit(b) { const v = b.kunDaq; if (v === 0) return 0; return v > 0 ? v : (KUN_STD[gl(b.daraja)] || 35); }
+const kunQosh = b => (b.qoshDaq && b.qoshDaq[todayKey()]) || 0;
+function qolganSek(b) { const L = kunLimit(b); return L ? (L + kunQosh(b)) * 60 - agg(b).faol : Infinity; }
+function uyquDaq() { const u = S.sozlama.uyqu, m = /^(\d{1,2}):(\d{2})$/.exec(u || ''); return m ? +m[1] * 60 + +m[2] : null; }
+function uyquMi(d) { const u = uyquDaq(); if (u == null) return false; const t = d.getHours() * 60 + d.getMinutes(); return t >= u || t < 300; }
+function uyquBosh(now) { const u = uyquDaq(), x = new Date(now); if (x.getHours() < 5) x.setDate(x.getDate() - 1); x.setHours(Math.floor(u / 60), u % 60, 0, 0); return x.getTime(); }
+function damHolat(b, davom) {
+  if (!b || (A.TEZ && !A.damSinov)) return null;
+  const now = Date.now(), g = davom ? 15 * 60000 : 0;
+  if (uyquMi(new Date(now)) && now > Math.max(b.uyquOchiq || 0, uyquBosh(now) + g)) return { sabab: 'uyqu' };
+  if (qolganSek(b) + g / 1000 <= 0) return { sabab: 'limit', daq: Math.round(agg(b).faol / 60) };
+  return null;
+}
+function damQosh(b, sabab) {
+  if (sabab === 'uyqu') b.uyquOchiq = Date.now() + 10 * 60000;
+  else { const k = todayKey(); b.qoshDaq = b.qoshDaq || {}; b.qoshDaq[k] = (b.qoshDaq[k] || 0) + 10; Object.keys(b.qoshDaq).forEach(x => { if (x < addDays(k, -14)) delete b.qoshDaq[x]; }); }
+  pushLog(b.id, { t: 'dam', ts: Date.now(), bola: b.id, sabab, qosh: 10 }); save(true);
+}
+function oyinCfg(b) { const z = S.sozlama, bh = b && b.oyinHar != null && b.oyinHar !== '', har = bh ? +b.oyinHar : +z.oyinHar, daq = b && b.oyinDaq ? +b.oyinDaq : +z.oyinDaq;
+  return { har: har === 0 ? 0 : clamp(Math.round(har) || 5, 3, 15), daq: clamp(daq || 3, 1, 5) }; }
+Object.assign(A, { KUN_STD, kunLimit, qolganSek, uyquMi, damHolat, damQosh, oyinCfg });
 /* ================= HAFTALIK YIG'INDI, AVTO-REJA (6.5) ================= */
 function weekStats(b, wk) {
   const days = weekDays(wk), log = weekLog(b.id, wk).filter(e => e.t === 'ans'), K = days.map(k => b.kun[k]).filter(Boolean);
@@ -2044,7 +2073,11 @@ function reytingImport(txt) {
 function reytingRoyxat() {
   const wk = isoWeek(), out = bolalar().map(b => Object.assign(reytingSatr(b, wk), { mahalliy: 1 }));
   Object.keys(S.oilaTel || {}).sort((p, q) => S.oilaTel[q].ts - S.oilaTel[p].ts).forEach(q => { const t = S.oilaTel[q]; (t.bolalar || []).forEach(x => { if (out.some(o => o.id === x.id)) return; out.push(Object.assign({}, x, { tel: q, telNom: t.nom, ts: t.ts, eski: t.wk !== wk })); }); });
-  return out.filter(x => !x.eski).sort((p, q) => (q.yulduz - p.yulduz) || (q.kun - p.kun) || (q.osish - p.osish)).concat(out.filter(x => x.eski));
+  /* 0.6.0 ⚖️ adolatli tartib: har bola O'Z darajasidagi kunlik missiyani necha kun bajardi (o'tgan kunlarga nisbatan %).
+     ⭐ yoshga bog'liq (kichikning savoli osonroq) — endi faqat 4-mezon. Yangi maydon yo'q: guruh qoidalari o'zgarmaydi. */
+  const d = Math.max(1, weekDays(wk).indexOf(todayKey()) + 1 || 7);
+  out.forEach(x => { x.kunN = d; x.maqsad = Math.round(100 * Math.min(+x.missiya || 0, d) / d); });
+  return out.filter(x => !x.eski).sort((p, q) => (q.maqsad - p.maqsad) || (q.kun - p.kun) || (q.osish - p.osish) || (q.yulduz - p.yulduz)).concat(out.filter(x => x.eski));
 }
 Object.assign(A, { reytingSatr, reytingKod, reytingImport, reytingRoyxat });
 A.dataNow = () => S;
@@ -2084,6 +2117,8 @@ function render() {
   if (h === 'tanla' || !s.joriy || !s.bolalar[s.joriy]) return screenPicker();
   const b = A.bola(); if (!b.dunyo && h !== 'dunyo') return screenWorld(b);
   if (h === 'dunyo') return screenWorld(b);
+  KOMBO.n = 0;
+  if (/^(missiya|arena|mashq|vazifa-)/.test(h)) { const m0 = b.missiya, dm = A.damHolat(b, h === 'missiya' && m0 && m0.sana === A.todayKey() && !m0.done && m0.si > 0); if (dm) return screenDam(b, dm); }
   if (h === 'missiya') return screenMission(b);
   if (h === 'arena') return screenArena(b);
   if (h === 'natija') return screenResult(b);
@@ -2134,6 +2169,22 @@ function screenWorld(b) {
   $('[data-back]').onclick = () => go('tanla');
   $$('[data-w]').forEach(el => el.onclick = () => { b.dunyo = el.dataset.w; A.save(true); FX.boom(innerWidth / 2, innerHeight / 2, b.dunyo); go('uy'); });
 }
+/* ================= 🌙 DAM EKRANI (0.6.0) ================= */
+function screenDam(b, dm) {
+  theme(b.dunyo); CUR = null; const t = A.agg(b), uyqu = dm.sabab === 'uyqu';
+  app.innerHTML = `<div class="wrap kidw"><div class="top"><button class="ib" data-x aria-label="Uyga">←</button><div class="ttl">${uyqu ? '🌙 Uxlash vaqti' : '😴 Bugunga yetarli'}</div></div>
+  <div class="card dam"><div class="damdrg">${ART.dragon({ dunyo: b.dunyo, scale: 0.85 })}<span class="zzz">${uyqu ? '🌙 z z z' : 'z z z'}</span></div>
+  <h2>${uyqu ? 'Ajdarho ham uxlashga ketdi' : `Bugun ${Math.round(t.faol / 60)} daqiqa zo'r ishlading!`}</h2>
+  <p>${uyqu ? "Uxlaganingda miya bugun o'rganganlarini mustahkamlaydi. Ertaga yangi kuch bilan davom etamiz!" : "Miya ham sportchiga o'xshab charchaydi. Hozir dam olsang, ertaga hammasi osonroq bo'ladi."}</p>
+  <div class="stats"><div><b>⭐ ${t.yulduz}</b><span>bugun</span></div><div><b>✅ ${t.ok1}</b><span>to'g'ri</span></div><div><b>🔥 ${t.komboMax || 0}</b><span>eng uzun kombo</span></div></div>
+  <p class="sm">🚀 Ertaga seni yangi missiya kutyapti!</p>
+  <button class="btn big" data-x>🏠 Uyga</button><button class="btn ghost" data-qosh>👨‍👩‍👧 Ota-ona: +10 daqiqa</button></div></div>`;
+  $$('[data-x]').forEach(x => x.onclick = () => go('uy'));
+  $('[data-qosh]').onclick = () => sheet(`<h2>👨‍👩‍👧 +10 daqiqa</h2><p class="sm">Faqat ota-ona PIN kodi bilan. Ehtiyot bo'ling: charchagan bola o'rganmaydi — faqat bosadi.</p><input id="dp" class="inp mono" type="password" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="PIN"><div class="row"><button class="btn" data-ok>Ruxsat berish</button><button class="btn ghost" data-x>Bekor</button></div>`,
+    el => { $('[data-ok]', el).onclick = () => { const s = A.S(), hh = A.pinHash($('#dp', el).value.trim()); if (hh !== s.pin && !(s.pinOta && hh === s.pinOta)) return toast("PIN noto'g'ri"); A.damQosh(b, dm.sabab); closeSheets(); toast('✅ +10 daqiqa'); render(); }; });
+}
+function vaqtHTML(b) { const L = A.kunLimit(b); if (!L) return ''; const dm = A.damHolat(b), q = Math.max(0, Math.ceil(A.qolganSek(b) / 60));
+  return `<div class="note kn">${dm ? (dm.sabab === 'uyqu' ? '🌙 Uxlash vaqti — ertaga davom etamiz!' : '😴 Bugungi vaqt tugadi — ertaga yana!') : `⏳ Bugun yana <b>${q}</b> daqiqa`}</div>`; }
 /* ================= BOLA UYI ================= */
 function kechagi(b) { const t = A.agg(b), y = b.kun[A.addDays(A.todayKey(), -1)]; if (!y || !y.n) return t.n ? `Bugun ${t.ok1} ta to'g'ri javob — zo'r boshlanish!` : ''; const d = t.ok1 - y.ok1;
   return d > 0 ? `🚀 Kechagi sendan ${d} ta ko'proq to'g'ri javob!` : d === 0 ? '🤝 Kechagi sen bilan tengsan — davom et!' : `Kechagi sen ${y.ok1} ta to'g'ri topgan edi — yetib ol!`; }
@@ -2144,10 +2195,10 @@ A.worldScene = worldScene;
 const qachon = ts => { const h = Math.round((Date.now() - ts) / 3600000); return h < 1 ? 'hozir' : h < 24 ? h + ' soat oldin' : Math.round(h / 24) + ' kun oldin'; };
 function reytingHTML(b) {
   if (A.S().sozlama.reyting === false) return ''; const R = A.reytingRoyxat(); if (R.length < 2) return '';
-  const mx = Math.max(10, ...R.filter(x => !x.eski).map(x => x.yulduz)), med = ['🥇', '🥈', '🥉'];
+  const med = ['🥇', '🥈', '🥉'];
   return `<div class="trek rey"><div class="tl">🏆 Hafta reytingi</div>${R.map((x, i) => `<div class="ry${x.id === b.id ? ' men' : ''}${x.eski ? ' eski' : ''}"><span class="rn">${x.eski ? '⏳' : med[i] || (i + 1)}</span><span class="tav">${esc(x.av)}</span>
-  <div class="rb"><div class="rnm">${esc(x.laqab)}${x.id === b.id ? ' <i>(sen)</i>' : x.tel ? ` <i>· ${esc(qachon(x.ts))}</i>` : ''}</div>${x.eski ? '<div class="sm mut">bu hafta kodi hali kelmadi</div>' : `<div class="tbar"><i style="width:${Math.round(100 * x.yulduz / mx)}%"></i></div>`}</div>
-  <span class="rv">${x.eski ? '' : `⭐ ${x.yulduz}${x.osish ? `<small>🚀 +${x.osish}</small>` : ''}`}</span></div>`).join('')}<div class="sm mut rleg">⭐ — birinchi urinishda topilgan javoblar · 🚀 — bu hafta o'rgangan yangi ko'nikmalar</div></div>`;
+  <div class="rb"><div class="rnm">${esc(x.laqab)}${x.id === b.id ? ' <i>(sen)</i>' : x.tel ? ` <i>· ${esc(qachon(x.ts))}</i>` : ''}</div>${x.eski ? '<div class="sm mut">bu hafta kodi hali kelmadi</div>' : `<div class="tbar"><i style="width:${Math.max(4, x.maqsad || 0)}%"></i></div>`}</div>
+  <span class="rv">${x.eski ? '' : `🎯 ${Math.min(+x.missiya || 0, x.kunN)}/${x.kunN}<small>⭐ ${x.yulduz}${x.osish ? ` · 🚀 +${x.osish}` : ''}</small>`}</span></div>`).join('')}<div class="sm mut rleg">🎯 — bu hafta bajarilgan kunlik missiyalar: har bola o'z darajasida, shuning uchun hamma teng · ⭐ — yulduzlar · 🚀 — yangi ko'nikmalar</div></div>`;
 }
 function screenHome(b) {
   theme(b.dunyo); const t = A.agg(b), m = b.missiya, today = A.todayKey(), done = m && m.sana === today && m.done, going = m && m.sana === today && !m.done, sq = A.sandiq(b);
@@ -2156,7 +2207,7 @@ function screenHome(b) {
   <div class="row cta">${done ? `<button class="btn big alt" data-arena>⚔️ Arena</button>` : `<button class="btn big" data-start>${going ? '▶ Davom etish' : A.isSunday() && A.dayNo(b) >= 3 ? '🏆 Finalni boshlash' : '🚀 Missiyani boshlash'}</button>`}</div>
   <div class="row"><button class="btn ghost" data-mashq>📚 Mashq — fanni o'zing tanla</button></div>${vazifaHTML(b)}
   <div class="stats"><div><b>⭐ ${t.yulduz}</b><span>bugun</span></div><div><b>⏱ ${Math.round(t.faol / 60)}</b><span>daqiqa</span></div><div><b>${b.detal.length}</b><span>${b.dunyo === 'orol' ? 'bezak' : 'detal'}</span></div></div>
-  ${kechagi(b) ? `<div class="note kn">${esc(kechagi(b))}</div>` : ''}
+  ${vaqtHTML(b)}${kechagi(b) ? `<div class="note kn">${esc(kechagi(b))}</div>` : ''}
   ${b.detal.length ? `<div class="coll">${b.detal.slice(-12).map(r => `<span title="${esc(r.nom || '')}">${r.ic || '🔩'}</span>`).join('')}</div>` : ''}
   ${reytingHTML(b)}
   ${installTip()}</div>`;
@@ -2174,6 +2225,17 @@ function stopSpeak() { try { speechSynthesis.cancel(); } catch (e) {} }
 const hasTTS = () => typeof speechSynthesis !== 'undefined';
 A.speak = speak;
 /* ================= MISSIYA PLEYERI ================= */
+/* 💥 KOMBO (0.6.0): ketma-ket birinchi urinishda to'g'ri. 3, 5, 8, 12, 16… da kattalashuvchi portlash; 5+ da bonus ⭐ (1/2/3). Xato — jim nolga. */
+let KOMBO = { id: null, n: 0 };
+const komboMarra = n => n === 3 || n === 5 || (n >= 8 && n % 4 === 0);
+function komboFX(b, n, x, y, arena) {
+  const lv = n >= 12 ? 3 : n >= 8 ? 2 : n >= 5 ? 1 : 0, bonus = lv ? A.addStar(b, lv, arena) : 0;
+  if (!FX.low) { FX.burst(x, y, { tema: b.dunyo, n: 50 + lv * 30, max: 10 + lv * 3 }); FX.shake(260 + lv * 80, 5 + lv * 3); }
+  FX.vibrate([30, 40, 60]); FX.play(b.dunyo === 'orol' ? 'kristall' : 'boom', 0.6);
+  const d = document.createElement('div'); d.className = 'kombo k' + lv + ' ' + (b.dunyo || ''); d.innerHTML = `🔥 ${n} KOMBO!<small>${['ketma-ket!', '×2', '×3', 'MEGA!'][lv]}${bonus ? ` +${bonus} ⭐` : ''}</small>`;
+  document.body.appendChild(d); setTimeout(() => d.remove(), 1500);
+  A.pushLog(b.id, { t: 'kombo', ts: Date.now(), bola: b.id, n, bonus });
+}
 const PRAISE1 = ["Ko'p urinding — yo'lini topding!", 'Ikkinchi urinishda topding — mana bu harakat!', "To'xtamading — barakalla!"];
 const PRAISE0 = ["Zo'r! Diqqat bilan qarading.", 'Yaxshi o\'yladi miyang!', "O'ylab javob berding — shunisi muhim."];
 const pickA = a => a[Math.floor(Math.random() * a.length)];
@@ -2457,7 +2519,8 @@ function onAnswer(b, m, st, it, st0, r) {
   if (m) m.cur = null; A.save(true);
   const next = () => { if (CUR && CUR.k === 'missiya') missionNext(b, m); else if (CUR && CUR.k === 'arena') arenaNext(b); else if (CUR && CUR.k === 'mashq') mashqNext(b); };
   if (it.tur === 'dars' && fin.togri) setTimeout(() => toast("🎓 Barakalla! Darsdan keyin o'zing yechding!"), 250);
-  if (fin.togri_1) { const el = r.el || $('#body'); const bb = el.getBoundingClientRect(); const t0 = performance.now(); FX.boom(bb.left + bb.width / 2, bb.top + Math.min(bb.height / 2, 160), b.dunyo).then(() => { A.agg(b).fx += Math.round(performance.now() - t0); if (ev === 'ozl') toast('🟢 Yangi ko\'nikma o\'zlashtirildi!'); next(); }); return; }
+  if (it.tur !== 'dars') { if (KOMBO.id !== b.id) KOMBO = { id: b.id, n: 0 }; KOMBO.n = fin.togri_1 ? KOMBO.n + 1 : 0; const dd = A.agg(b); if (KOMBO.n > (dd.komboMax || 0)) dd.komboMax = KOMBO.n; if (KOMBO.n > (b.komboMax || 0)) b.komboMax = KOMBO.n; }
+  if (fin.togri_1) { const el = r.el || $('#body'); const bb = el.getBoundingClientRect(); const t0 = performance.now(); if (it.tur !== 'dars' && komboMarra(KOMBO.n)) komboFX(b, KOMBO.n, bb.left + bb.width / 2, bb.top + Math.min(bb.height / 2, 160), ctx.k === 'arena' || ctx.k === 'mashq'); FX.boom(bb.left + bb.width / 2, bb.top + Math.min(bb.height / 2, 160), b.dunyo).then(() => { A.agg(b).fx += Math.round(performance.now() - t0); if (ev === 'ozl') toast('🟢 Yangi ko\'nikma o\'zlashtirildi!'); next(); }); return; }
   if (fin.togri) { FX.play('ding'); $('#fb').innerHTML = `<div class="good">✅ ${esc(pickA(PRAISE1))}</div>`; setTimeout(next, A.TEZ ? 200 : 1300); return; }
   /* 0.2.0: 2-xatoda javob shunchaki ko'rsatilmaydi — kichik dars → egizak savol */
   if (darsMumkin(it, r)) return darsFlow(b, m, st, it, next);
@@ -2471,11 +2534,12 @@ function onAnswer(b, m, st, it, st0, r) {
    «Charchadim» bolani o'yinga emas, BOSHQA FANGA o'tkazadi: joriy blok yakundan oldinga suriladi va keyin AYNAN shu savoldan davom etadi.
    Har blok faqat bir marta keyinga qoldiriladi — tugma qiyin savoldan qochish yo'li bo'lmasin. */
 function oyinKerak(b, m) {
-  const har = +(A.S().sozlama.oyinHar) || 0; if (!har || !A.oyin || (m.oyinN || 0) < har) return false;
+  const har = A.oyinCfg(b).har; if (!har || !A.oyin || (m.oyinN || 0) < har) return false;
   if (stepTotal(m) - stepDone(m) <= 1) { m.oyinN = 0; return false; } /* faqat yakun poygasi qoldi — o'yinsiz tugatamiz */
   return true;
 }
 function missionNext(b, m) {
+  { const dm = A.damHolat(b, true); if (dm) { endSession(b); A.save(true); return screenDam(b, dm); } }
   if (oyinKerak(b, m)) { m.oyinN = 0; m.oyinSoni = (m.oyinSoni || 0) + 1; A.save(true); return A.oyin.boshla(b, m, () => { CUR = { k: 'missiya', b, m }; theme(b.dunyo); stepRun(b, m); }); }
   stepRun(b, m);
 }
@@ -2732,7 +2796,7 @@ function arenaPick(b) {
 }
 function screenArena(b) { CUR = { k: 'arena', b }; startSession(b, 'arena'); theme(b.dunyo); arenaNext(b); }
 function arenaNext(b, given) {
-  if (!CUR || CUR.k !== 'arena') return; const it = given || A.makeItem(b, arenaPick(b)), ay = b.arenaYulduz[A.todayKey()] || 0, st0 = { shown: Date.now(), first: null, urinish: 1, maslahat: 0, ovoz: 0, lock: b.shosh ? Date.now() + 1500 : 0 };
+  if (!CUR || CUR.k !== 'arena') return; if (!given) { const dm = A.damHolat(b); if (dm) { endSession(b); return screenDam(b, dm); } } const it = given || A.makeItem(b, arenaPick(b)), ay = b.arenaYulduz[A.todayKey()] || 0, st0 = { shown: Date.now(), first: null, urinish: 1, maslahat: 0, ovoz: 0, lock: b.shosh ? Date.now() + 1500 : 0 };
   CUR.it = it; CUR.st = st0; CUR.fan = it.fan;
   app.innerHTML = `<div class="wrap play"><div class="top"><button class="ib" data-x aria-label="Chiqish">✕</button><div class="ttl">⚔️ Arena</div><span class="sp"></span><span class="pill">⭐ ${ay}/20</span></div><div class="item t-${it.t}">${headHTML(b, it)}<div id="body"></div><div id="fb"></div>${otaTip(b, it)}</div></div>`;
   $('[data-x]').onclick = () => { endSession(b); go('uy'); };
@@ -2784,7 +2848,8 @@ function mashqItem(b, C) {
 function mashqNext(b, given) {
   const C = CUR; if (!C || C.k !== 'mashq') return;
   if (!given && C.vz && C.vz.qildi >= C.vz.n) return vazifaDone(b, C);
-  const har = +(A.S().sozlama.oyinHar) || 0;
+  if (!given) { const dm = A.damHolat(b); if (dm) { endSession(b); return screenDam(b, dm); } }
+  const har = A.oyinCfg(b).har;
   if (!given && har && A.oyin && C.oyinN >= har) { C.oyinN = 0; return A.oyin.boshla(b, C, () => { CUR = C; theme(b.dunyo); mashqNext(b); }); }
   const it = given || mashqItem(b, C);
   if (!it) { app.innerHTML = `<div class="wrap kidw"><div class="card"><h2>🔒 Hali ochilmagan</h2><p>Bu bo'lim uchun oyisi 👨‍👩‍👧 → 🕌 Arab so'zlari bo'limida so'zlar yoki tajvid misollarini tasdiqlashi kerak.</p><button class="btn big" data-back>← Orqaga</button></div></div>`; $('[data-back]').onclick = () => go('mashq'); return; }
@@ -2818,7 +2883,8 @@ function endSession(b) { if (!b.sessiya) return; A.pushLog(b.id, { t: 'sessiya',
 setInterval(() => {
   if (!CUR || !CUR.b || document.visibilityState !== 'visible') return; const b = CUR.b, d = A.agg(b), now = Date.now(), effect = !!$('.fxlayer');
   if (now - lastAct > 60000 && !effect) { if (!pauseFlag) { pauseFlag = true; d.pauza++; } return; }
-  d.faol++; const f = CUR.fan || 'boshqa'; d.fan[f] = (d.fan[f] || 0) + 1; const h = new Date().getHours(); d.soat[h] = (d.soat[h] || 0) + 1; if (CUR.k === 'arena') d.arena = (d.arena || 0) + 1;
+  d.faol++; if (/^(missiya|arena|mashq)$/.test(CUR.k)) { const q = A.qolganSek(b); if (q === 180 && CUR.k !== 'missiya') toast('⏳ Bugun 3 daqiqa qoldi'); else if (q === 0) toast(CUR.k === 'missiya' ? '⏰ Bugungi vaqt tugadi — missiyani tugatib olamiz!' : '⏰ Vaqt tugadi — shu savoldan keyin dam olamiz'); }
+  const f = CUR.fan || 'boshqa'; d.fan[f] = (d.fan[f] || 0) + 1; const h = new Date().getHours(); d.soat[h] = (d.soat[h] || 0) + 1; if (CUR.k === 'arena') d.arena = (d.arena || 0) + 1;
   const s = d.sess.find(x => x.id === b.sessiya); if (s) { s.e = now; s.faol++; }
   contSec++; if (contSec >= A.S().sozlama.tanaffus * 60 && !$('.scrim') && !effect && CUR.k !== 'oyin') { contSec = 0; d.tanaffus++; breakSheet(); }
   if (d.faol % 5 === 0) A.save();
@@ -2848,7 +2914,7 @@ const OYIN = {
 };
 const turlar = b => A.gl(b.daraja) === 'g0' ? ['poyga'] : ['pazl', 'kozgu'];
 const nomi = (tur, b) => tur === 'poyga' && b.dunyo === 'orol' ? '🦄 Parvoz poygasi' : OYIN[tur].ic + ' ' + OYIN[tur].nom;
-function cfg() { const z = A.S().sozlama, har = +z.oyinHar, daq = +z.oyinDaq; return { har: har === 0 ? 0 : A.clamp(Math.round(har) || 5, 3, 15), daq: A.clamp(daq || 3, 1, 5) }; }
+function cfg(b) { return A.oyinCfg(b || (SES && SES.b)); } /* 0.6.0: har bola uchun alohida (bo'sh bo'lsa — oila sozlamasi) */
 function yay(el, n) { if (FX.low || !el || !SES) return; const r = el.getBoundingClientRect(); FX.burst(r.left + r.width / 2, r.top + r.height / 2, { tema: SES.b.dunyo, n: n || 24, max: 6 }); }
 const prog = (b, k) => { b.oyin = b.oyin || {}; return b.oyin[k] || 0; };
 const progUp = (b, k) => { b.oyin = b.oyin || {}; b.oyin[k] = (b.oyin[k] || 0) + 1; };
@@ -2857,7 +2923,7 @@ const progUp = (b, k) => { b.oyin = b.oyin || {}; b.oyin[k] = (b.oyin[k] || 0) +
 let SES = null;
 function boshla(b, m, done) {
   const tl = turlar(b);
-  SES = { b, m, done, tl, sek: A.TEZ ? 8 : Math.round(cfg().daq * 60), t0: 0, end: 0, tur: null, ok: 0, xato: 0, raund: 0, tugadi: false, game: null };
+  SES = { b, m, done, tl, sek: A.TEZ ? 8 : Math.round(cfg(b).daq * 60), t0: 0, end: 0, tur: null, ok: 0, xato: 0, raund: 0, tugadi: false, game: null };
   A.setCur({ k: 'oyin', b, m, fan: 'oyin' }); A.theme(b.dunyo); FX.play('fanfar');
   if (tl.length === 1) return run(tl[0]);
   pickScreen(SES);
@@ -3455,6 +3521,11 @@ function childForm(b) {
   <label class="lb">🕌 Arab darajasi (bemalol o'qiydigan bola uchun)</label><select id="fq" class="inp">${[[1, 'Endi boshlagan (bir necha oy)'], [2, "1 yildan ortiq o'qigan"], [3, 'Juda yaxshi biladi']].map(([k, t]) => `<option value="${k}" ${(v.arDaraja || 1) === k ? 'selected' : ''}>${t}</option>`).join('')}</select>
   <label class="lb">🎯 Fokus fan — ko'proq shug'ullanadi</label><select id="ff" class="inp"><option value="">Yo'q — hamma fan teng</option>${['ar', 'mat', 'til', 'en', 'mant', 'yoz'].map(f => `<option value="${f}" ${v.fokus === f ? 'selected' : ''}>${A.FAN[f].ic} ${A.FAN[f].nom}</option>`).join('')}</select>
   <p class="sm mut">Fokus fan bloki missiyada ikki barobar uzun bo'ladi (ertangi missiyadan). Arab tanlansa — qo'shimcha «o'qish · yozish · tajvid» bloki ham qo'shiladi. Arab savollari sinfga emas, arab darajasiga qarab beriladi.</p>
+  <label class="lb">⏳ Kunlik vaqt chegarasi</label><select id="fz" class="inp"><option value="">Standart (maktabgacha ${A.KUN_STD.g0} daq, maktab ${A.KUN_STD.g1} daq)</option>${[15, 20, 25, 30, 35, 40, 45, 60].map(n => `<option value="${n}" ${v.kunDaq === n ? 'selected' : ''}>${n} daqiqa</option>`).join('')}<option value="0" ${v.kunDaq === 0 ? 'selected' : ''}>Cheklanmagan</option></select>
+  <p class="sm mut">Vaqt tugaganda ilova qulflanmaydi: boshlangan missiyani tugatishga 15 daqiqa beriladi, keyin «ertaga davom». Ota-ona PIN bilan +10 daqiqa qo'sha oladi. Uxlash vaqti — ⚙️ Sozlamalar'da.</p>
+  <label class="lb">🎮 Dam olish o'yini — shu bola uchun</label><select id="fo" class="inp"><option value="">Oila sozlamasi</option>${[0, 3, 4, 5, 6, 8, 10].map(n => `<option value="${n}" ${v.oyinHar === n ? 'selected' : ''}>${n ? `Har ${n} ta savoldan keyin` : "O'chiq"}</option>`).join('')}</select>
+  <label class="lb">⏱ O'yin davomiyligi — shu bola uchun</label><select id="fp" class="inp"><option value="">Oila sozlamasi</option>${[1, 2, 3, 4, 5].map(n => `<option value="${n}" ${v.oyinDaq === n ? 'selected' : ''}>${n} daqiqa</option>`).join('')}</select>
+  <p class="sm mut">Tavsiya: maktabgacha bolaga dam har 3–4 savolda, maktab o'quvchisiga har 6–8 savolda.</p>
   <label class="lb">Dunyo</label><select id="fw" class="inp"><option value="">Bolaning o'zi tanlaydi</option><option value="garaj" ${v.dunyo === 'garaj' ? 'selected' : ''}>🏎️ Turbo garaj</option><option value="orol" ${v.dunyo === 'orol' ? 'selected' : ''}>🦄 Pushti uchar ot oroli</option></select>
   <label class="lb">Qisqa kod — Claude hisobotida ism o'rniga (masalan Q2). Bo'sh qolsa, ilova o'zi beradi</label><input id="fk" class="inp mono" maxlength="6" value="${esc(v.kod)}" autocomplete="off">
   <label class="chk"><input type="checkbox" id="fm" ${v.muxlisga ? 'checked' : ''}> Muxlislarga (qarindoshlarga) ko'rinsin — 2-bosqichda</label>
@@ -3463,7 +3534,7 @@ function childForm(b) {
   ${!nw ? `<details class="danger"><summary>⚠️ Xavfli amallar</summary><button class="btn ghost" data-rk>↺ Kalibrlashni qayta boshlash</button><button class="btn danger" data-del>🗑 Bolani va uning ma'lumotini o'chirish</button></details>` : ''}</div></div>`;
   bindTop(); let av = v.avatar;
   $$('[data-a]').forEach(x => x.onclick = () => { av = x.dataset.a; $$('.avb').forEach(y => y.classList.toggle('on', y === x)); });
-  $('[data-save]').onclick = () => { const laqab = $('#fl').value.trim(); if (!laqab) return toast('Laqab yozing'); const o = { laqab, avatar: av, daraja: $('#fd').value, arab: $('#fa').value, arDaraja: +$('#fq').value || 1, fokus: $('#ff').value, dunyo: $('#fw').value || null, kod: $('#fk').value.trim().toUpperCase(), muxlisga: $('#fm').checked };
+  $('[data-save]').onclick = () => { const laqab = $('#fl').value.trim(); if (!laqab) return toast('Laqab yozing'); const o = { laqab, avatar: av, daraja: $('#fd').value, arab: $('#fa').value, arDaraja: +$('#fq').value || 1, fokus: $('#ff').value, kunDaq: $('#fz').value === '' ? null : +$('#fz').value, oyinHar: $('#fo').value === '' ? null : +$('#fo').value, oyinDaq: $('#fp').value === '' ? null : +$('#fp').value, dunyo: $('#fw').value || null, kod: $('#fk').value.trim().toUpperCase(), muxlisga: $('#fm').checked };
     if (nw) { const nb = A.newBola(o); toast('✓ ' + nb.laqab + ' qo\'shildi'); } else { const ch = o.daraja !== b.daraja || o.arab !== b.arab; Object.assign(b, o); if (ch) A.initFan(b); A.save(true); toast('Saqlandi ✓'); } A.go('ota'); };
   const nm = $('[data-namuna]'); if (nm) nm.onclick = () => { NAMUNA.forEach(o => A.newBola(Object.assign({}, o))); toast('5 bola qo\'shildi — laqablarini tahrirlang'); A.go('ota'); };
   const rk = $('[data-rk]'); if (rk) rk.onclick = () => { b.boshlandi = null; b.fan = {}; A.initFan(b); A.save(true); toast('Kalibrlash qayta boshlanadi (D1–D2)'); };
@@ -3508,6 +3579,8 @@ function settings() {
   <label class="lb">✨ Effektlar</label><select id="ke" class="inp"><option value="auto" ${z.kamEffekt === 'auto' ? 'selected' : ''}>Avtomatik (sekin telefonda «kam effekt»)${z.kamAuto ? ' — hozir yoqilgan' : ''}</option><option value="on" ${z.kamEffekt === 'on' ? 'selected' : ''}>Kam effekt</option><option value="off" ${z.kamEffekt === 'off' ? 'selected' : ''}>To'liq effekt</option></select>
   <label class="lb">🎮 Dam olish o'yini</label><select id="oh" class="inp">${[0, 3, 4, 5, 6, 8, 10].map(n => `<option value="${n}" ${+z.oyinHar === n ? 'selected' : ''}>${n ? `Har ${n} ta savoldan keyin` : "O'chiq"}</option>`).join('')}</select>
   <label class="lb">⏱ O'yin davomiyligi</label><select id="od" class="inp">${[1, 2, 3, 4, 5].map(n => `<option value="${n}" ${+z.oyinDaq === n ? 'selected' : ''}>${n} daqiqa</option>`).join('')}</select>
+  <label class="lb">🌙 Uxlash vaqti (shundan keyin ilova «ertaga davom» deydi)</label><select id="uq" class="inp"><option value="" ${!z.uyqu ? 'selected' : ''}>O'chiq</option>${['19:30', '20:00', '20:30', '21:00', '21:30', '22:00'].map(t => `<option value="${t}" ${z.uyqu === t ? 'selected' : ''}>${t}</option>`).join('')}</select>
+  <p class="sm mut">Har bolaning kunlik vaqti va o'yin chastotasi — 👶 bola tahririda (✏️).</p>
   <p class="sm mut">Maktabgacha — 🏎️ poyga (shakl, rang, son, naqsh). 1-sinf va kattalar — 🧩 pazl yoki 🎨 ko'zgu rasm. O'yin faqat savollar ishlangandan keyin ochiladi va yulduz bermaydi. Missiyadagi «😴 Charchadim» bolani o'yinga emas, boshqa fanga o'tkazadi.</p>
   <label class="chk"><input type="checkbox" id="rk" ${z.reyting !== false ? 'checked' : ''}> 🏆 Bolalar o'z ekranida hafta reytingini ko'rsin</label>
   ${ad ? `<label class="lb">☕ Tanaffus eslatmasi (daqiqa)</label><input id="tn" class="inp" type="number" min="10" max="40" value="${z.tanaffus}">
@@ -3519,7 +3592,7 @@ function settings() {
   ${ad ? `<details class="danger"><summary>⚠️ Hamma ma'lumotni o'chirish</summary><p class="sm">Shu telefondagi oila, bolalar va hamma natija o'chadi. Avval 💾 Zaxira qiling.</p><button class="btn danger" data-wipe>🗑 Hammasini o'chirish</button></details>` : ''}</div></div>`;
   bindTop(); $('#vol').oninput = e => { $('#vv').textContent = e.target.value + '%'; FX.setVol(e.target.value / 100); };
   $('[data-test]').onclick = () => FX.boom(innerWidth / 2, innerHeight / 3, 'garaj');
-  $('[data-save]').onclick = () => { z.ovoz = $('#vol').value / 100; z.kamEffekt = $('#ke').value; if (z.kamEffekt !== 'auto') z.kamAuto = null; z.oyinHar = +$('#oh').value; z.oyinDaq = +$('#od').value; z.reyting = $('#rk').checked;
+  $('[data-save]').onclick = () => { z.ovoz = $('#vol').value / 100; z.kamEffekt = $('#ke').value; if (z.kamEffekt !== 'auto') z.kamAuto = null; z.oyinHar = +$('#oh').value; z.oyinDaq = +$('#od').value; z.uyqu = $('#uq').value; z.reyting = $('#rk').checked;
     if (ad) { z.tanaffus = Math.max(10, Math.min(40, +$('#tn').value || 20)); $$('[data-sq]').forEach(i => { z.sandiq[i.dataset.sq] = Math.max(1, +i.value || 1); }); s.oila.nom = $('#onm').value.trim() || s.oila.nom; const po = $('#po').value.trim(), pa = $('#pa').value.trim(); if (po) { if (!/^\d{4}$/.test(po)) return toast('PIN — 4 raqam'); s.pinOta = A.pinHash(po); } if (pa) { if (!/^\d{4}$/.test(pa)) return toast('PIN — 4 raqam'); s.pin = A.pinHash(pa); } }
     A.applyFX(); A.save(true); toast('Saqlandi ✓'); A.go('ota'); };
   const w = $('[data-wipe]'); if (w) w.onclick = () => sheet(`<h2>⚠️ Hammasini o'chirish</h2><input id="cf" class="inp" placeholder="Tasdiqlash: OCHIR" autocomplete="off"><div class="row"><button class="btn danger" data-ok>O'chirish</button><button class="btn ghost" data-x>Bekor</button></div>`, el => { $('[data-ok]', el).onclick = () => { if ($('#cf', el).value.trim().toUpperCase() !== 'OCHIR') return toast('OCHIR deb yozing'); A.logKeys().forEach(k => localStorage.removeItem(k)); localStorage.removeItem(A.KEY); location.hash = ''; location.reload(); }; });
