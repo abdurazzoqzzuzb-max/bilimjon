@@ -108,6 +108,9 @@ body.th-orol .road{background:rgba(255,255,255,.18)}
 .ustun{display:inline-block;font-size:2rem;font-weight:800;padding:4px 14px;color:#172033}.ustun .ur{display:flex;justify-content:flex-end}.ustun .ur span{width:1.3em;text-align:center}.ustun .uo{width:1.1em!important;color:#E65100}.ustun .ul{border-top:3px solid #172033;margin:2px 0}
 .say{align-self:center}
 .opts{display:grid;gap:10px;margin-top:6px}.opts.grid2{grid-template-columns:1fr 1fr}.opts.col{grid-template-columns:1fr}
+.opts.g3{grid-template-columns:repeat(3,1fr)}.opts.g4{grid-template-columns:repeat(4,1fr);gap:8px}.opts.g4 .opt{min-width:0;min-height:66px;font-size:1.6rem;padding:4px}.opts.g3.short .opt{min-width:0;font-size:1.8rem}
+.ovg{display:grid;gap:8px;margin:6px auto 0;max-width:360px}.ovc{aspect-ratio:1;border-radius:16px;border:3px solid var(--optline);background:var(--opt);color:var(--optink);font-size:1.9rem;font-weight:800;box-shadow:0 4px 0 var(--optline);padding:0;font-family:inherit;min-width:0}.ovc i{font-style:normal;display:inline-block}.ovc.ok{border-color:var(--ok);background:#E7F7EA;box-shadow:0 4px 0 var(--ok)}.ovc.no{border-color:var(--no);background:#FDECEC;animation:shk .35s}.ovc.blink{animation:blink .4s 4}.ovn{text-align:center;margin-top:8px}
+.hqator{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:4px 0}.hqator span{min-width:46px;height:56px;padding:0 6px;display:grid;place-items:center;background:#fff;color:#172033;border:2px solid #D5DCE8;border-radius:12px;font-size:1.9rem;font-weight:800}.hqator i{font-style:normal;display:inline-block}
 .opt{position:relative;min-height:72px;min-width:56px;background:var(--opt);color:var(--optink);border:3px solid var(--optline);border-radius:20px;padding:8px;font-weight:800;font-size:1.25rem;box-shadow:0 5px 0 var(--optline);display:flex;align-items:center;justify-content:center;text-align:center;transition:transform .06s}
 .opt:active{transform:translateY(3px);box-shadow:0 2px 0 var(--optline)}
 .opts.short .opt{font-size:2rem;min-height:84px}.opts.pic .opt{min-height:110px}
@@ -237,6 +240,7 @@ body.th-orol .road{background:rgba(255,255,255,.18)}
 .sq{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.sq label{display:flex;flex-direction:column;align-items:center;font-size:1.3rem}
 details.danger{margin-top:18px;border:1px solid var(--no);border-radius:14px;padding:10px}details.danger summary{font-weight:800;color:var(--no);min-height:32px;cursor:pointer}details.danger .btn{width:100%;margin-top:8px}
 .arw{display:grid;grid-template-columns:32px 1fr 40px 1fr;align-items:center;gap:8px;min-height:52px;border-bottom:1px solid var(--line)}.arw input{width:26px;height:26px}.arw .arab{font-size:1.7rem;text-align:right}.arw .e{font-size:1.6rem;text-align:center}
+.ht .htl{font-size:5.5rem;font-weight:800;text-align:center;line-height:1.1;margin:10px 0}.ht .htl small{font-size:2.6rem;color:var(--mut);margin-left:10px}
 .pinc{text-align:center}.pind{font-size:2rem;letter-spacing:.2em;margin:10px 0}.pinpad{display:grid;grid-template-columns:repeat(3,76px);gap:10px;justify-content:center}.pk{width:76px;height:68px;border-radius:18px;border:2px solid var(--line);background:var(--card);font-size:1.6rem;font-weight:800}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important}}
 /* 0.6.0 — realistik ikonkalar, 🔧 garaj, 🤖 kod-yo'l */
@@ -1005,18 +1009,60 @@ const canRead = (w, h) => tok(w).every(x => h.includes(x));
 const PIC = B.uz.filter(x => x.e);
 const OXSHASH = { b: ['d', 'p'], d: ['b', 'q'], p: ['q', 'b'], q: ['p', 'g'], n: ['m', 'u'], m: ['n', 'w'], u: ['n', 'v'], i: ['l', 'j'], l: ['i', 't'], o: ["o'", 'a'], "o'": ['o', 'u'], g: ["g'", 'q'], "g'": ['g', 'q'], s: ['sh', 'z'], sh: ['s', 'ch'], ch: ['sh', 'j'], e: ['a', 'i'], a: ['o', 'e'], h: ['x', 'n'], x: ['h', 'k'], k: ['q', 'x'], t: ['f', 'l'], f: ['t', 'v'], v: ['f', 'u'], y: ['v', 'j'], z: ['s', 'r'], r: ['l', 'z'], j: ['y', 'ch'], ng: ['n', 'g'], "'": ['o', 'g'] };
 const UP = h => h === "'" ? "ʼ (tutuq)" : h.length === 2 && h[1] !== "'" ? h[0].toUpperCase() + h[1] : h.toUpperCase();
-/* Harfni tanish (H0.1 unlilar · H0.2 M N L S T · H0.5 qolganlari · H1.1 hammasi) */
+/* Harfni tanish (H0.1 unlilar · H0.2 M N L S T · H0.5 qolganlari · H1.1 hammasi).
+   0.6.0 🔤 bitta harfga 6 format (c.fmt yoki tasodifiy; c.harf — aniq harf):
+   top — «A» harfini top · tovush — rasm bilan birinchi tovush · ovchi — 🔍 panjarada hamma «A» larni bos · boshqa — o'xshashlar ichidan boshqachasi ·
+   juft — katta ↔ kichik · nechta — «nechta A bor?». Qiyinlik q: 1 → 3 variant, oddiy harflar · 2 → 4 variant + o'xshash harf, rang ·
+   3 → 6 variant, o'xshashlar, katta-kichik aralash, har xil shrift/rang/burilish. */
+const HFMT = ['top', 'tovush', 'ovchi', 'boshqa', 'juft', 'nechta'];
+const lo = h => h === "'" ? 'ʼ' : h;
+const STIL = ['font-family:Georgia,"Times New Roman",serif', 'font-family:"Courier New",monospace', 'font-family:"Comic Sans MS","Chalkboard SE","Marker Felt",cursive', 'font-weight:500', 'font-style:italic', ''];
+const RANGH = ['#D32F2F', '#1565C0', '#2E7D32', '#E65100', '#6A1B9A', '#00838F', '#172033'];
+function stil(q, bur) { if (q < 2) return ''; const s = ['color:' + pick(RANGH)]; if (q >= 3) { s.push(pick(STIL)); if (bur !== false) s.push(`display:inline-block;transform:rotate(${ri(-14, 14)}deg)`); } return s.filter(Boolean).join(';'); }
+const nOpt = q => q === 1 ? 3 : q === 2 ? 4 : 6;
+const ocOf = n => n >= 6 ? 'g3 short' : '';
+/* Chalg'ituvchilar: q1 — o'xshamaydigan (bola bilgan) harflar; q2 — 1 ta o'xshash; q3 — 2 ta o'xshash */
+function chalg(tgt, q, c, n) {
+  const sim = (OXSHASH[tgt] || []).filter(x => x !== tgt && x !== "'"), kn = known(c).filter(x => x !== tgt && !sim.includes(x) && x !== "'");
+  const far = shuf(kn).concat(shuf(TARTIB.filter(x => x !== tgt && !sim.includes(x) && !kn.includes(x) && x !== "'")));
+  return shuf(sim).slice(0, q === 1 ? 0 : q === 2 ? 1 : 2).map(v => ({ v, x: 'oxshash_harf' })).concat(far.slice(0, n + 2).map(v => ({ v, x: 'harf_adashdi' })));
+}
+const hasPic = tgt => PIC.some(x => tok(x.w)[0] === tgt);
+function harfFmt(tgt, q) { if (tgt === "'") return ['top']; const L = ['top', 'ovchi', 'boshqa', 'juft']; if (hasPic(tgt)) L.push('tovush'); if (q >= 2) L.push('nechta'); return L; }
+const FMT = {
+  top(tgt, q, c) { const n = nOpt(q), kichik = q === 3 && tgt !== "'" && R.f() < 0.5, o = opts(tgt, chalg(tgt, q, c, n), n); o.forEach(x => { x.h = kichik ? lo(x.v) : UP(x.v); x.st = stil(q); });
+    return { sav: `«${kichik ? lo(tgt) : UP(tgt)}» harfini top`, o, a: tgt, k: 'h' + tgt + kichik, sig: 'h' + tgt + kichik + o.map(x => x.v).join(), big: 1, oc: ocOf(n), ota: `Harfni tovushi bilan ayting (masalan «mmm»), nomi bilan emas.` }; },
+  tovush(tgt, q, c) { const words = PIC.filter(x => tok(x.w)[0] === tgt); if (!words.length) return null; const w = pick(words), n = nOpt(q), o = opts(tgt, chalg(tgt, q, c, n), n); o.forEach(x => { x.h = q === 3 ? lo(x.v) : UP(x.v); x.st = stil(Math.min(q, 2)); });
+    return { sav: `«${w.w}» qaysi harf bilan boshlanadi?`, vis: { k: 'emoji', e: w.e }, o, a: tgt, k: 'b' + tgt + w.w, sig: 'b' + tgt + w.w + o.map(x => x.v).join(), oc: ocOf(n), ota: `So'zni cho'zib ayting: «${w.w}». Birinchi tovushni eshitsin.` }; },
+  ovchi(tgt, q, c) { const N = q === 1 ? 9 : 16, nT = q === 1 ? ri(2, 3) : q === 2 ? ri(3, 4) : ri(4, 5), aral = q === 3 && tgt !== "'" && UP(tgt) !== lo(tgt), ds = chalg(tgt, q, c, 5).map(d => d.v);
+    const cells = shuf(Array.from({ length: N }, (_, i) => i < nT ? tgt : ds[(i - nT) % ds.length])).map((v, i) => ({ v, h: aral && (v === tgt ? i % 2 : R.f() < 0.5) ? lo(v) : UP(v), st: stil(q) }));
+    if (aral && cells.filter(x => x.v === tgt).every(x => x.h === UP(tgt))) cells.find(x => x.v === tgt).h = lo(tgt);
+    return { t: 'ovchi', sav: aral ? `🔍 Katta va kichik «${UP(tgt)}» — hammasini top!` : `🔍 Hamma «${UP(tgt)}» harflarini top!`, cells, nT, c: q === 1 ? 3 : 4, a: tgt, k: 'v' + tgt + q, sig: 'v' + tgt + cells.map(x => x.v).join(), ota: `Harfni tovushi bilan ayting. Hamma «${UP(tgt)}» larni bola o'zi topsin — ko'rsatmang.` }; },
+  boshqa(tgt, q, c) { if (tgt === "'") return null; const n = q === 1 ? 5 : q === 2 ? 6 : 8, sim = (OXSHASH[tgt] || []).filter(x => x !== "'"), far = chalg(tgt, 1, c, 3).map(d => d.v);
+    const odd = q >= 2 && sim.length ? pick(sim) : pick(far), pos = ri(0, n - 1), kichik = q === 3 && R.f() < 0.5, sh = x => kichik ? lo(x) : UP(x), st = stil(q, false);
+    const o = Array.from({ length: n }, (_, i) => ({ v: String(i), h: sh(i === pos ? odd : tgt), st, x: q >= 2 ? 'oxshash_harf' : 'harf_adashdi' }));
+    return { sav: '🤔 Qaysi biri boshqacha?', o, a: String(pos), k: 'x' + tgt + odd, sig: 'x' + tgt + odd + pos + n, oc: n >= 8 ? 'g4 short' : 'g3 short', ex: { odd }, ota: `Hammasi «${sh(tgt)}», bittasi boshqa harf. Bola o'zi topsin — har birini barmog'i bilan ko'rsatib chiqsin.` }; },
+  juft(tgt, q, c) { if (tgt === "'" || UP(tgt) === lo(tgt)) return null; const n = nOpt(q), tes = q >= 2 && R.f() < 0.5, o = opts(tgt, chalg(tgt, q, c, n), n); o.forEach(x => { x.h = tes ? UP(x.v) : lo(x.v); x.st = stil(Math.min(q, 2)); });
+    return { sav: tes ? `«${lo(tgt)}» ning katta harfi qaysi?` : `«${UP(tgt)}» ning kichik harfi qaysi?`, o, a: tgt, k: 'j' + tgt + tes, sig: 'j' + tgt + tes + o.map(x => x.v).join(), big: 1, oc: ocOf(n), ota: `Katta va kichik harf — bitta tovush: «${UP(tgt)}» va «${lo(tgt)}». Ikkalasini ko'rsatib, bir xil aytilishini ayting.` }; },
+  nechta(tgt, q, c) { const L = q === 1 ? 5 : q === 2 ? 7 : 9, nT = ri(1, q === 1 ? 3 : 4), aral = q === 3 && tgt !== "'" && UP(tgt) !== lo(tgt), ds = chalg(tgt, q, c, 4).map(d => d.v);
+    const row = shuf(Array.from({ length: L }, (_, i) => i < nT ? tgt : ds[(i - nT) % ds.length]));
+    const o = opts(String(nT), [{ v: nT + 1, x: 'bittaga_kop' }, { v: nT - 1, x: 'bittaga_kam' }, { v: nT + 2, x: 'sanashda_xato' }], q === 1 ? 3 : 4, () => ri(1, 6)); o.forEach(x => { x.h = x.v; });
+    return { sav: aral ? `Nechta «${UP(tgt)}» bor? (katta ham, kichik ham)` : `Nechta «${UP(tgt)}» bor?`, vis: { k: 'harflar', s: row.map(v => ({ h: aral && R.f() < 0.45 ? lo(v) : UP(v), st: stil(q) })) }, o, a: String(nT), k: 'n' + tgt + nT, sig: 'n' + tgt + row.join(''), ex: { row, h: tgt }, ota: `Bola barmog'i bilan bittalab sanasin. «${UP(tgt)}» ni tovushi bilan ayting.` }; }
+};
 function harfGen(guruh) {
   return function (q, c) {
-    const h = known(c), pool = guruh ? guruh.filter(x => h.includes(x) || !c.harflar) : h; const tgt = pick(pool.length ? pool : guruh || TARTIB);
-    const ds = (OXSHASH[tgt] || []).map(v => ({ v, x: 'oxshash_harf' })).concat(sample(TARTIB.filter(x => x !== tgt), 4).map(v => ({ v, x: 'harf_adashdi' })));
-    const words = PIC.filter(x => tok(x.w)[0] === tgt);
-    if (q >= 2 && words.length && R.f() < 0.5) { const w = pick(words); const o = opts(tgt, ds, 4); o.forEach(x => { x.h = q === 3 ? x.v : UP(x.v); }); return { sav: `«${w.w}» qaysi harf bilan boshlanadi?`, vis: { k: 'emoji', e: w.e }, o, a: tgt, k: 'b' + tgt, sig: 'b' + tgt + w.w + o.map(x => x.v).join(), ota: `So'zni cho'zib ayting: «${w.w}». Birinchi tovushni eshitsin.`, harf: tgt }; }
-    const o = opts(tgt, ds, q === 1 ? 3 : 4); const kichik = q === 3 && R.f() < 0.5; o.forEach(x => { x.h = kichik ? x.v : UP(x.v); });
-    return { sav: kichik ? `«${UP(tgt)}» ning kichik harfini top` : `«${UP(tgt)}» harfini top`, o, a: tgt, k: 'h' + tgt + kichik, sig: 'h' + tgt + kichik + o.map(x => x.v).join(), big: 1, ota: `Harfni tovushi bilan ayting (masalan «mmm»), nomi bilan emas.`, harf: tgt };
+    const h = known(c); let tgt = c.harf && (!guruh || guruh.includes(c.harf)) ? c.harf : null;
+    if (!tgt) { const pool = guruh ? guruh.filter(x => h.includes(x) || !c.harflar) : h; tgt = pick(pool.length ? pool : guruh || TARTIB); }
+    const L = harfFmt(tgt, q), f = c.fmt && L.includes(c.fmt) ? c.fmt : pick(L);
+    let it = FMT[f](tgt, q, c), fm = f; if (!it) { it = FMT.top(tgt, q, c); fm = 'top'; }
+    it.harf = tgt; it.fmt = fm; return it;
   };
 }
-const chkHarf = it => it.o.some(o => o.v === it.a) || 'harf';
+const chkHarf = it => it.fmt === 'ovchi' ? (it.cells.filter(x => x.v === it.a).length === it.nT && it.nT >= 2 || 'ovchi')
+  : it.fmt === 'nechta' ? (it.ex.row.filter(v => v === it.ex.h).length === +it.a || 'nechta')
+  : it.fmt === 'boshqa' ? ((it.o.filter(o => o.h === it.o[+it.a].h).length === 1 && new Set(it.o.map(o => o.h)).size === 2) || 'boshqa')
+  : (it.o.some(o => o.v === it.a) || 'harf');
+BJ.uz.harfFmt = harfFmt; BJ.uz.HFMT = HFMT;
 add('H0.1', { fan: 'til', nom: 'Unli harflar', me: 6, gen: harfGen(UNLI), chk: chkHarf });
 add('H0.2', { fan: 'til', nom: 'M, N, L, S, T', me: 6, gen: harfGen(['m', 'n', 'l', 's', 't']), chk: chkHarf });
 /* Ochiq bo'g'in: undosh + unli (ma, no, li …) */
@@ -1837,6 +1883,7 @@ function vis(v) {
     case 'raqam': return `<div class="raqam">${v.n}</div>`;
     case 'qator': return `<div class="qator">${v.s.map(e => `<span>${e}</span>`).join('')}<span class="q">❓</span></div>`;
     case 'emoji': return `<div class="bigemo">${v.e}</div>`;
+    case 'harflar': return `<div class="hqator">${v.s.map(x => `<span><i style="${x.st || ''}">${String(x.h).replace(/[<>&"]/g, '')}</i></span>`).join('')}</div>`;
     case 'arab': return `<div class="arab big${String(v.t).length > 9 ? ' uzun' : ''}" dir="rtl" lang="ar">${esc(v.t)}</div>`;
     case 'taroz': return `<svg viewBox="0 0 200 80" class="vis"><path d="M100 70 L100 20 M40 24 L160 16" stroke="#5D4037" stroke-width="4"/><path d="M90 74 h20" stroke="#5D4037" stroke-width="6"/><path d="M20 30 h44 l-6 10 h-32z M136 22 h44 l-6 10 h-32z" fill="#FFCC80" stroke="#5D4037"/>${Array.from({ length: v.m }, (_, i) => emo(30 + i * 13, 24, v.e1, 12)).join('')}${emo(158, 16, v.e2, 14)}</svg>`;
     case 'katak': { let s = ''; for (let i = 0; i <= v.m; i++) s += `<path d="M${10 + i * 80 / v.m} 10 v80 M10 ${10 + i * 80 / v.m} h80" stroke="#37474F" stroke-width="2"/>`; return `<svg viewBox="0 0 100 100" class="vis" style="max-width:150px">${s}</svg>`; }
@@ -1912,7 +1959,7 @@ const BLOK = { g0: [['til', 5], ['yoz', 3], ['mat', 4], ['en', 2], ['mant', 3]],
 const MANT_KUN = { g0: [['L.3'], ['L.4'], ['L.5'], ['L.6'], ['L.8'], ['L.10'], ['L.1'], ['L.11'], ['L.2']], g1: [['L.1', 'L.2'], ['L.6'], ['L.8'], ['L.7'], ['L.3'], ['L.5', 'L.9'], ['L.11'], ['L.4']], g2: [['L.1', 'L.7'], ['L.7', 'L.2'], ['L.6', 'L.8'], ['L.1'], ['L.7'], ['L.9', 'L.4'], ['L.5', 'L.10'], ['L.11', 'L.9']] };
 const UZUN = { 'L.4': 1, 'L.6': 1, 'L.7': 1, 'L.8': 1, 'L.10': 1, 'L.11': 1 };
 const XATO = { birga_xato: "1 ga adashdi", xona_almashdi: 'xonalar almashdi (47→74)', nol_tushib_qoldi: 'nol tushib qoldi (305→35)', nol_ortiqcha: 'ortiqcha nol (47→407)', onlik_xato: "o'nlikda adashdi", yuzlik_xato: 'yuzlikda adashdi', qarzni_unutdi: "qarzni unutdi (52−17=45)", eslab_qolishni_unutdi: "o'nlikni eslab qolmadi (38+27=55)", amal_almashdi: 'amalni almashtirdi (+ ↔ −)', belgi_teskari: '< > belgisini teskari qo\'ydi', taqqoslash_xato: 'taqqoslashda adashdi', kattalik_aldandi: "katta narsalar «ko'p» ko'rindi", sanashda_xato: 'sanashda adashdi', faqat_bittasi: "faqat bitta guruhni oldi", qavs_etiborsiz: "qavsga e'tibor bermadi", tartib_xato: 'amallar tartibi', natijani_yozdi: "natijani javob deb oldi", shakl_adashdi: 'shakl nomida adashdi', rang_adashdi: 'rangda adashdi', saralash_xato: 'saralashda adashdi', raqam_adashdi: 'raqamni tanimadi', birlik_xato: "o'lchov birligida adashdi", perimetr_yarim: 'perimetrda 2 tomonni qo\'shdi', tomon_tushdi: 'bir tomonni unutdi', soat_almashdi: 'soat va daqiqa millari almashdi', daqiqa_xato: 'daqiqada adashdi', soat_daqiqa_adashdi: 'soat bilan daqiqani aralashtirdi', qadam_xato: 'qadamda adashdi', naqsh_xato: 'naqshni topmadi', oxshash_harf: "o'xshash harfni tanladi (b/d)", harf_adashdi: 'harfda adashdi', tartib_almashdi: "harflar tartibi almashdi (ma→am)", unli_xato: 'unlida adashdi', undosh_xato: 'undoshda adashdi', birinchi_harfga_qaradi: "faqat birinchi harfga qarab taxmin qildi", soz_adashdi: "so'zda adashdi", manoga_mos_emas: "ma'noga mos emas", bogin_xato: "bo'g'inga noto'g'ri bo'ldi", harf_tushdi: 'harf tushib qoldi', tutuq_tushdi: 'tutuq belgisi tushib qoldi', tutuq_joyi: "tutuq noto'g'ri joyda", tutuq_ortiqcha: 'ortiqcha tutuq', qosh_undosh_tushdi: "qo'sh undoshdan biri tushdi", qosh_undosh_ortiqcha: 'ortiqcha undosh', kochirish_xato: "ko'chirish qoidasi", manodoshni_tanladi: "zid o'rniga ma'nodosh", zidni_tanladi: "ma'nodosh o'rniga zid", soz_manosi: "so'z ma'nosi", matnni_tushunmadi: 'matnni tushunmadi', yozuv_xato: 'yozishda adashdi', guruhni_tushunmadi: 'guruhni topmadi', juft_xato: 'juftni topmadi', teskari_tushundi: 'shartni teskari tushundi', ortadagini_tanladi: "o'rtadagini tanladi", shartni_unutdi: 'shartni unutdi', mavzu_adashdi: 'boshqa mavzudagi so\'z', ibora_adashdi: 'iborada adashdi', arab_soz_adashdi: "arab so'zida adashdi", arab_mavzu_adashdi: 'arabcha: boshqa mavzu', harakat_xato: 'harakatda adashdi (a/i/u)', shakl_adashdi_ar: 'harf shaklida adashdi', yonalish_xato: "yo'nalishda adashdi", kashfiyot_xato: 'kashfiyot savolida adashdi', hisob_xato: 'hisobda adashdi', boshqa: 'boshqa', xato_bosish: "noto'g'ri joyni bosdi", devorga_urildi: 'labirintda devorga urildi', iz_chetda: 'iz chiziqdan chiqdi', notogri_qism: "qismni noto'g'ri joyga qo'ydi", kod_xato: "kod-yo'lda dastur xato (devor/to'siq)", bittaga_kop: 'bittaga ko\'p sanadi', bittaga_kam: 'bittaga kam sanadi', ikki_marta_sanadi: "o'zini ikki marta sanadi", boshlarni_sanadi: 'oyoq o\'rniga boshlarni sanadi', yarim_hisob: 'faqat yarmini hisobladi', oxirgi_qadamni_unutdi: 'oxirgi qadamni unutdi', ikkiga_bolmadi: 'ikkiga bo\'lmadi', imlo_xato: 'arabcha imloda adashdi', tajvid_xato: 'tajvid qoidasida adashdi', belgi_xato: 'harakat/belgida adashdi' };
-const TUR_IC = { arharf: '🔤', daftar: '📓', tanla: '👆', yoz: '⌨️', tartib: '🔢', farq: '🔍', labirint: '🧭', sudoku: '🔲', xotira: '🃏', iz: '✍️', yigish: '🧩', oqish: '⏱', matn: '📄', kodyol: '🤖' };
+const TUR_IC = { arharf: '🔤', daftar: '📓', tanla: '👆', yoz: '⌨️', tartib: '🔢', farq: '🔍', labirint: '🧭', sudoku: '🔲', xotira: '🃏', iz: '✍️', yigish: '🧩', oqish: '⏱', matn: '📄', kodyol: '🤖', ovchi: '🎯' };
 Object.assign(A, { FAN, ZANJIR, BOSH, DARAJA, gl, BLOK, MANT_KUN, UZUN, XATO, TUR_IC });
 /* ================= STORE ================= */
 const KEY = 'bj_state_v1'; /* HECH QACHON o'zgarmaydi: yangi versiya eski holatni migrate() bilan yangilaydi */
@@ -2058,20 +2105,33 @@ function arPick(b, bolim) {
 function mantQ(b, id) { const L = gl(b.daraja), base = L === 'g0' ? 1 : L === 'g1' ? 1 : 2; const t = nodeSt(b, id); return t.n ? t.q : base; }
 /* Maktabgacha harflar: yangi harf (kuniga ≤1 ta qo'shiladi) → bo'g'in → so'z */
 function letterNode(h) { return BJ.uz.UNLI.includes(h) ? 'H0.1' : ['m', 'n', 'l', 's', 't'].includes(h) ? 'H0.2' : 'H0.5'; }
+/* 0.6.0 🔤: harf tanlash — 50% eng yangi 2 harf, 30% zaif eski harflar (aniqlik < 80%), 20% vaqti kelgan eski harflar (oraliq takror: 1→2→4→8→16 kun).
+   Ketma-ket bir xil harf va bir xil format chiqmaydi; qiyinlik — shu harfni qanchalik bilishiga qarab (harfDaraja). */
+function harfDaraja(b, h) { const s = b.harfSt[h]; if (!s || s.n < 5 || !s.o.length) return 1; const acc = sum(s.o) / s.o.length; return s.n >= 12 && acc >= 0.9 ? 3 : acc >= 0.7 ? 2 : 1; }
+function harfTanla(b, K) {
+  const T = todayKey(), last = b.harfOxirgi || {}, newest = K.slice(-2), eski = K.filter(h => !newest.includes(h)), st = h => b.harfSt[h];
+  const zaif = eski.filter(h => st(h) && st(h).o.length >= 3 && sum(st(h).o) / st(h).o.length < 0.8), due = eski.filter(h => !st(h) || !st(h).due || st(h).due <= T);
+  const R = Math.random(); let pool = R < 0.5 || !eski.length ? newest : R < 0.8 && zaif.length ? zaif : due.length ? due : zaif.length ? zaif : newest;
+  let p2 = pool.filter(h => h !== last.h); if (!p2.length) p2 = K.filter(h => h !== last.h); if (!p2.length) p2 = pool;
+  return p2[Math.floor(Math.random() * p2.length)];
+}
 function pickLetters(b) {
-  const K = knownLetters(b), R = Math.random(), V = K.filter(x => BJ.uz.UNLI.includes(x)), C = K.filter(x => !BJ.uz.UNLI.includes(x) && x !== "'");
-  if (R < 0.45 || !C.length) { const newest = K.slice(-2), h = Math.random() < 0.75 ? newest[Math.floor(Math.random() * newest.length)] : K[Math.floor(Math.random() * K.length)]; return { tugun: letterNode(h), q: 1, tur: 'missiya', harf: h }; }
+  const K = knownLetters(b), R = Math.random(), C = K.filter(x => !BJ.uz.UNLI.includes(x) && x !== "'");
+  if (R < 0.45 || !C.length) { const h = harfTanla(b, K), q = harfDaraja(b, h), last = b.harfOxirgi || {}, L = (BJ.uz.harfFmt ? BJ.uz.harfFmt(h, q) : ['top']), L2 = L.filter(f => f !== last.f), f = (L2.length ? L2 : L)[Math.floor(Math.random() * (L2.length ? L2 : L).length)];
+    b.harfOxirgi = { h, f }; return { tugun: letterNode(h), q, tur: 'missiya', harf: h, fmt: f }; }
   if (R < 0.8 || K.length < 5) return { tugun: 'H0.3', q: nodeSt(b, 'H0.3').q, tur: 'missiya' };
   return { tugun: K.length >= 8 ? 'H0.6' : 'H0.4', q: 1, tur: 'missiya' };
 }
+/* Yangi harf: eng yangi harfda kamida 6 urinish va ≥85% → kuniga 2 tagacha. Oraliq takror: to'g'ri (vaqti kelganda) — oraliq ×2, xato — ertaga. */
 function letterProgress(b, it, ok) {
-  if (!it.harf) return; const s = b.harfSt[it.harf] || (b.harfSt[it.harf] = { n: 0, ok: 0, o: [] }); s.n++; if (ok) s.ok++; s.o.push(ok ? 1 : 0); if (s.o.length > 10) s.o.shift();
-  const K = knownLetters(b); if (!K) return; const newest = K[K.length - 1], ns = b.harfSt[newest];
-  if (ns && ns.o.length >= (A.TEZ ? 2 : 8) && sum(ns.o) / ns.o.length >= 0.85 && b.harfKun !== todayKey() && b.harfK < BJ.harfTartib.length) { b.harfK++; b.harfKun = todayKey(); return BJ.harfTartib[b.harfK - 1]; }
+  if (!it.harf) return; const T = todayKey(), s = b.harfSt[it.harf] || (b.harfSt[it.harf] = { n: 0, ok: 0, o: [] }); s.n++; if (ok) s.ok++; s.o.push(ok ? 1 : 0); if (s.o.length > 10) s.o.shift();
+  s.last = T; if (!ok) { s.iv = 1; s.due = addDays(T, 1); } else if (!s.due || s.due <= T) { s.iv = Math.min(16, (s.iv || 1) * 2); s.due = addDays(T, s.iv); }
+  const K = knownLetters(b); if (!K) return; const newest = K[K.length - 1], ns = b.harfSt[newest], bugun = b.harfKun === T ? (b.harfKunN || 1) : 0;
+  if (ns && ns.o.length >= (A.TEZ ? 2 : 6) && sum(ns.o) / ns.o.length >= 0.85 && bugun < 2 && b.harfK < BJ.harfTartib.length) { b.harfK++; b.harfKun = T; b.harfKunN = bugun + 1; return BJ.harfTartib[b.harfK - 1]; }
 }
 /* Topshiriq yaratish (bola konteksti bilan) */
 function makeItem(b, sel) {
-  const t = nodeSt(b, sel.tugun), ctx = { dunyo: b.dunyo, harflar: knownLetters(b), oldin: t.oldin.slice(-40), arTasdiq: S.sozlama.arTasdiq, tjTasdiq: S.sozlama.tjTasdiq, g0: gl(b.daraja) === 'g0', kashfId: sel.kashfId, kashfSavol: sel.kashfSavol };
+  const t = nodeSt(b, sel.tugun), ctx = { dunyo: b.dunyo, harflar: knownLetters(b), harf: sel.harf || null, fmt: sel.fmt || null, oldin: t.oldin.slice(-40), arTasdiq: S.sozlama.arTasdiq, tjTasdiq: S.sozlama.tjTasdiq, g0: gl(b.daraja) === 'g0', kashfId: sel.kashfId, kashfSavol: sel.kashfSavol };
   let it; try { it = gen.make(sel.tugun, sel.q || t.q, ctx); if (sel.harf && it.harf && it.harf !== sel.harf) { for (let i = 0; i < 12 && it.harf !== sel.harf; i++) it = gen.make(sel.tugun, sel.q || t.q, ctx); } }
   catch (e) { it = gen.make('M1.1', 1, {}); }
   const v = gen.valid(it); if (v !== true) { console.warn('topshiriq yaroqsiz', sel.tugun, v); it = gen.make('M0.3', 1, ctx); }
@@ -2114,7 +2174,7 @@ function buildFinal(b) {
 }
 /* Yakshanba finali uchun hafta tugunlari */
 function weekNodes(b) { const days = weekDays(isoWeek()); const ids = Object.keys(b.tugun).filter(id => days.some(d => b.tugun[id].kun[d]) && gen.reg[id] && !['KASHF', 'OL'].includes(id) && gen.reg[id].fan !== 'ar'); return ids.length ? ids : Object.keys(b.tugun).filter(id => gen.reg[id] && gen.reg[id].fan === 'mat'); }
-Object.assign(A, { kechaCharch, arPick, arMavjud, buildMission, buildFinal, pickNode, makeItem, letterProgress, knownLetters, dueReview, duelWords, kashfOfDay, isSunday, weekNodes, letterNode });
+Object.assign(A, { kechaCharch, arPick, arMavjud, buildMission, buildFinal, pickNode, makeItem, letterProgress, knownLetters, harfDaraja, harfTanla, pickLetters, dueReview, duelWords, kashfOfDay, isSunday, weekNodes, letterNode });
 /* ================= MUKOFOT, YULDUZ, SANDIQ ================= */
 function addStar(b, n, arena) { const k = todayKey(); if (arena) { const a = b.arenaYulduz[k] || 0; n = Math.max(0, Math.min(n, 20 - a)); b.arenaYulduz[k] = a + n; } if (!n) return 0; b.yulduz += n; b.yulduzKun[k] = (b.yulduzKun[k] || 0) + n; agg(b).yulduz += n; return n; }
 function weekStars(b, wk) { return sum(weekDays(wk || isoWeek()).map(k => b.yulduzKun[k] || 0)); }
@@ -2298,7 +2358,7 @@ function render() {
   if (h === 'mashq') return screenMashq(b);
   if ((m = h.match(/^mashq-([a-z]+)(?:-([a-z]+))?$/))) return mashqStart(b, m[1], m[2]);
   if ((m = h.match(/^vazifa-(\w+)$/))) return vazifaStart(b, m[1]);
-  if (A.TEZ && (m = h.match(/^sinov-([A-Za-z0-9.]+)-(\d)$/))) return screenSinov(b, m[1], +m[2]);
+  if (A.TEZ && (m = h.match(/^sinov-([A-Za-z0-9.]+)-(\d)(?:-([a-z]+))?$/))) return screenSinov(b, m[1], +m[2], m[3]);
   return screenHome(b);
 }
 A.render = render;
@@ -2655,7 +2715,7 @@ function javobHTML(it) {
 }
 function twinItem(b, it, n) {
   const q = Math.max(1, (it.q || 1) - (n >= 2 ? 1 : 0));
-  const tw = A.makeItem(b, { tugun: it.tugun, q, tur: 'dars', harf: it.harf });
+  const tw = A.makeItem(b, { tugun: it.tugun, q, tur: 'dars', harf: it.harf, fmt: it.fmt });
   tw.tur = 'dars'; tw.dars = n; return tw;
 }
 function darsFlow(b, m, st, it, next) {
@@ -2767,10 +2827,10 @@ function optInner(o, it) {
   if (o.vis) return `<span class="ov">${ART.vis(o.vis)}</span>`;
   if (it.rasmEmoji) return `<span class="oe">${o.h || '❓'}</span>`;
   if (o.ar) return `<span class="arab${String(o.h).length > 8 ? ' uz' : ''}" dir="rtl" lang="ar">${esc(o.h)}</span>`;
-  return `<span class="ot">${esc(o.h != null ? o.h : o.v)}</span>`;
+  return `<span class="ot"${o.st ? ` style="${esc(o.st)}"` : ''}>${esc(o.h != null ? o.h : o.v)}</span>`;
 }
 RENDER.tanla = (el, it, b, done, st0) => {
-  const n = it.o.length, cls = it.o.some(o => o.vis) || it.rasmEmoji ? 'grid2 pic' : (it.o.every(o => String(o.h || o.v).length <= 4) ? 'grid2 short' : 'col');
+  const n = it.o.length, cls = it.oc || (it.o.some(o => o.vis) || it.rasmEmoji ? 'grid2 pic' : (it.o.every(o => String(o.h || o.v).length <= 4) ? 'grid2 short' : 'col'));
   el.innerHTML = `<div class="opts ${cls} n${n}">${it.o.map((o, i) => `<button class="opt" data-i="${i}" data-v="${esc(o.v)}">${optInner(o, it)}</button>`).join('')}</div>`;
   $$('.opt', el).forEach(btn => btn.onclick = () => {
     if (locked(st0) || btn.disabled) return; firstTap(st0); FX.play('bosish'); const o = it.o[+btn.dataset.i], ok = o.v === String(it.a);
@@ -2808,6 +2868,16 @@ RENDER.farq = (el, it, b, done, st0) => {
   $$('[data-r]', el).forEach(c => c.onclick = () => { firstTap(st0); const i = +c.dataset.r; if (found.has(i)) return;
     if (it.diff.includes(i)) { found.add(i); c.classList.add('ok'); $(`[data-l="${i}"]`, el).classList.add('ok'); FX.play('ding'); $('#fn', el).textContent = found.size; if (found.size === it.diff.length) done({ togri: true, javob: 'farq', xato_soni: err, xato_turi: err ? 'xato_bosish' : null, maslahat: st0.maslahat, yakuniy: 1, el }); }
     else { err++; c.classList.add('no'); setTimeout(() => c.classList.remove('no'), 450); if (err === 3) { st0.maslahat = 1; const u = it.diff.find(d => !found.has(d)); const h = $(`[data-r="${u}"]`, el); h.classList.add('blink'); setTimeout(() => h.classList.remove('blink'), 1600); } } });
+};
+/* 0.6.0 🔍 Harf ovchisi: panjaradagi hamma kerakli harflarni bos. 3 xatoda bittasi yonib-o'chadi (maslahat). */
+RENDER.ovchi = (el, it, b, done, st0) => {
+  const found = new Set(); let err = 0, fin = false;
+  el.innerHTML = `<div class="ovg" style="grid-template-columns:repeat(${it.c},1fr)">${it.cells.map((x, i) => `<button class="ovc" data-i="${i}"><i style="${esc(x.st || '')}">${esc(x.h)}</i></button>`).join('')}</div><div class="sm ovn">Topildi: <b id="ovn">0</b> / ${it.nT}</div>`;
+  $$('.ovc', el).forEach(c => c.onclick = () => { if (fin || locked(st0)) return; firstTap(st0); const i = +c.dataset.i; if (found.has(i)) return;
+    if (it.cells[i].v === it.a) { found.add(i); c.classList.add('ok'); FX.play('ding'); $('#ovn', el).textContent = found.size;
+      if (found.size === it.nT) { fin = true; done({ togri: err < 2, javob: 'ovchi', xato_soni: err, xato_turi: err ? (it.q >= 2 ? 'oxshash_harf' : 'harf_adashdi') : null, maslahat: st0.maslahat, yakuniy: 1, el }); } }
+    else { err++; c.classList.add('no'); FX.play('yumshoq'); FX.vibrate(20); setTimeout(() => c.classList.remove('no'), 450);
+      if (err === 3) { st0.maslahat = 1; const u = it.cells.findIndex((x, j) => x.v === it.a && !found.has(j)); const hb = $(`.ovc[data-i="${u}"]`, el); if (hb) { hb.classList.add('blink'); setTimeout(() => hb.classList.remove('blink'), 1600); } } } });
 };
 /* Labirint */
 RENDER.labirint = (el, it, b, done, st0) => {
@@ -3094,7 +3164,7 @@ function vazifaDone(b, C) {
 }
 A.mashqStart = mashqStart;
 /* Sinov ekrani (faqat ?tez=1): bitta tugunning topshirig'ini ko'rsatadi — avtomatik sinov va ko'z bilan tekshirish uchun */
-function screenSinov(b, id, q) { CUR = { k: 'arena', b }; theme(b.dunyo); const it = A.makeItem(b, { tugun: id, q, tur: 'arena' }), st0 = { shown: Date.now(), first: null, urinish: 1, maslahat: 0, ovoz: 0 }; CUR.it = it; CUR.st = st0; CUR.fan = it.fan;
+function screenSinov(b, id, q, fmt) { CUR = { k: 'arena', b }; theme(b.dunyo); const it = A.makeItem(b, { tugun: id, q, tur: 'arena', fmt: fmt || null }), st0 = { shown: Date.now(), first: null, urinish: 1, maslahat: 0, ovoz: 0 }; CUR.it = it; CUR.st = st0; CUR.fan = it.fan;
   app.innerHTML = `<div class="wrap play"><div class="top"><button class="ib" data-x aria-label="Chiqish">✕</button><div class="ttl">🧪 ${esc(id)} q${q}</div></div><div class="item t-${it.t}">${headHTML(b, it)}<div id="body"></div><div id="fb"></div>${otaTip(b, it)}</div></div>`;
   $('[data-x]').onclick = () => go('uy'); (RENDER[it.t] || RENDER.tanla)($('#body'), it, b, r => { CUR.sinovNatija = r; onAnswer(b, null, null, it, st0, r); }, st0); }
 /* ================= SESSIYA va TAYMERLAR (6.1, 6.2) ================= */
@@ -3810,6 +3880,7 @@ A.screenOta = function (h) {
   if ((m = h.match(/^ota-bola-(\w+)$/))) return childPage(A.bola(m[1]));
   if ((m = h.match(/^ota-oqish-(\w+)$/))) return oqishPanel(A.bola(m[1]));
   if ((m = h.match(/^ota-mavzu-(\w+)$/))) return mavzuPanel(A.bola(m[1]));
+  if ((m = h.match(/^ota-harf-(\w+)$/))) return harfTest(A.bola(m[1]));
   if (h === 'ota-sozlama') return settings();
   if (h === 'ota-arab') return arabPanel();
   if (h === 'ota-qiyin') { QKUN = null; return qiyinPanel(); }
@@ -3833,6 +3904,27 @@ function pinScreen(h) {
   $('[data-back]').onclick = () => A.go(S().joriy ? 'uy' : 'tanla');
   $$('[data-k]').forEach(k => k.onclick = () => { const d = k.dataset.k; if (d === '⌫') v = v.slice(0, -1); else if (v.length < 4) v += d; $('#pd').textContent = '●'.repeat(v.length) + ' ○'.repeat(4 - v.length).trim().replace(/^ /, ''); $('#pd').textContent = Array.from({ length: 4 }, (_, i) => i < v.length ? '●' : '○').join(' ');
     if (v.length === 4) { const hsh = A.pinHash(v), s = S(); if (hsh === s.pin) { A.otaOk = { rol: 'admin', t: Date.now() }; A.screenOta(h); } else if (s.pinOta && hsh === s.pinOta) { A.otaOk = { rol: 'ota', t: Date.now() }; A.screenOta(h); } else { toast('PIN noto\'g\'ri'); v = ''; $('#pd').textContent = '○ ○ ○ ○'; FX.vibrate(80); } } });
+}
+/* ================= 🔤 BILGAN HARFLARI TESTI (0.6.0, ~3 daqiqa) =================
+   Maktabgacha bola harflarni allaqachon bilsa, ilova uni A, O dan boshlab sudramasin: kattalar harfni ko'rsatadi, bola tovushini aytadi → ✅ / ❌.
+   Tartib — darslik tartibi (BJ.harfTartib), joriy harfdan boshlanadi. 2 ta ketma-ket ❌ yoki 3 daqiqa → tugaydi; birinchi ❌ gacha bo'lganlari «biladi». */
+function harfTest(b) {
+  if (!b) return A.go('ota'); const T = BJ.harfTartib, K0 = Math.max(2, b.harfK || 2); let i = K0, ket = 0, bildi = [], t0 = Date.now(), tm = null, birinchiX = null;
+  const UPh = h => h === "'" ? 'ʼ' : h.length === 2 && h[1] !== "'" ? h[0].toUpperCase() + h[1] : h.toUpperCase();
+  const fin = () => { clearInterval(tm); const yangiK = Math.max(K0, birinchiX == null ? i : birinchiX);
+    app.innerHTML = `<div class="wrap ota">${top('🔤 Bilgan harflari', 'ota-bola-' + b.id)}<div class="card"><h3>Natija</h3><p>Hozir ilovada ochiq: <b>${K0}</b> ta harf. Test bo'yicha: <b>${yangiK}</b> ta (${T.slice(0, yangiK).map(UPh).join(' ')}).</p>
+    ${bildi.length ? `<p class="sm">✅ Bildi: ${bildi.map(UPh).join(' ')}</p>` : ''}<p class="sm mut">Saqlansa, yangi ochilgan harflar ham oraliq takrorga qo'shiladi — ilova ularni vaqti-vaqti bilan tekshirib turadi.</p>
+    <div class="row">${yangiK > K0 ? `<button class="btn" data-sv>💾 Saqlash (${yangiK} ta)</button>` : ''}<button class="btn ghost" data-x>Yopish</button></div></div></div>`;
+    bindTop(); $('[data-x]').onclick = () => A.go('ota-bola-' + b.id);
+    const sv = $('[data-sv]'); if (sv) sv.onclick = () => { const tk = A.todayKey(); for (let j = K0; j < yangiK; j++) { const h = T[j]; if (!b.harfSt[h]) b.harfSt[h] = { n: 2, ok: 2, o: [1, 1], last: tk, iv: 1, due: A.addDays(tk, 1) }; }
+      b.harfK = yangiK; A.pushLog(b.id, { t: 'harfTest', ts: Date.now(), bola: b.id, oldin: K0, keyin: yangiK }); A.save(true); toast(`✅ ${yangiK} ta harf ochildi`); A.go('ota-bola-' + b.id); }; };
+  const draw = () => { if (i >= T.length || ket >= 2 || Date.now() - t0 > (A.TEZ ? 20000 : 180000)) return fin(); const q = Math.max(0, Math.ceil(((A.TEZ ? 20000 : 180000) - (Date.now() - t0)) / 1000));
+    app.innerHTML = `<div class="wrap ota">${top('🔤 Bilgan harflari testi', 'ota-bola-' + b.id)}<div class="card ht"><p class="sm">${esc(b.avatar + ' ' + b.laqab)}ga harfni ko'rsating. U <b>tovushini</b> aytdimi (masalan «mmm», nomini emas)? Yordam bermang.</p>
+    <div class="htl">${esc(UPh(T[i]))} <small>${esc(T[i] === "'" ? 'ʼ' : T[i])}</small></div><div class="row"><button class="btn big" data-ha>✅ Aytdi</button><button class="btn big ghost" data-yoq>❌ Aytmadi</button></div>
+    <p class="sm mut">⏳ <span id="htq">${Math.floor(q / 60)}:${String(q % 60).padStart(2, '0')}</span> · ${i - K0 + 1}-harf · 2 ta ketma-ket ❌ bo'lsa tugaydi</p></div></div>`;
+    bindTop(); $('[data-ha]').onclick = () => { bildi.push(T[i]); ket = 0; i++; FX.play('ding'); draw(); }; $('[data-yoq]').onclick = () => { if (birinchiX == null) birinchiX = i; ket++; i++; draw(); }; };
+  tm = setInterval(() => { const e = $('#htq'); if (!e) return clearInterval(tm); const q = Math.max(0, Math.ceil(((A.TEZ ? 20000 : 180000) - (Date.now() - t0)) / 1000)); e.textContent = Math.floor(q / 60) + ':' + String(q % 60).padStart(2, '0'); if (!q) fin(); }, 1000);
+  draw();
 }
 /* ================= 🎁 SOVG'ALAR PANELI (0.6.0) ================= */
 function rasmSiq(file) { return new Promise((res, rej) => { const r = new FileReader(); r.onerror = rej; r.onload = () => { const im = new Image(); im.onerror = rej; im.onload = () => {
@@ -3938,7 +4030,7 @@ function childPage(b) {
   app.innerHTML = `<div class="wrap ota">${top(b.avatar + ' ' + b.laqab, 'ota')}
   <div class="card"><div class="sm">${A.DARAJA[b.daraja]} · kod ${esc(b.kod)} · ${b.dunyo === 'orol' ? '🦄 orol' : b.dunyo === 'garaj' ? '🏎️ garaj' : 'dunyo tanlanmagan'} · arab: ${b.arab === 'asosiy' ? 'asosiy liga' : 'alifbo ' + esc(b.arab)} · D${A.dayNo(b)}</div>
    <div class="kgrid"><div><b class="mono">${A.fmtHMS(s.faol)}</b><span>faol (s:daq:son)</span></div><div><b>${s.kunlar}/7</b><span>kun</span></div><div><b>${s.n ? s.acc1 + '%' : '—'}</b><span>1-urinish</span></div><div><b>${s.missiya}</b><span>missiya</span></div><div><b>${s.charchash}</b><span>charchash</span></div><div><b>${s.shosh}%</b><span>shoshilish</span></div></div>
-   <div class="row wrapr"><button class="btn sm" data-go="ota-oqish-${b.id}">📖 O'qish tezligi</button><button class="btn sm" data-go="ota-mavzu-${b.id}">🎯 Darslikdagi mavzu</button>${isAdmin() ? `<button class="btn sm ghost" data-go="ota-tahrir-${b.id}">✏️ Tahrirlash</button>` : ''}</div></div>
+   <div class="row wrapr"><button class="btn sm" data-go="ota-oqish-${b.id}">📖 O'qish tezligi</button><button class="btn sm" data-go="ota-mavzu-${b.id}">🎯 Darslikdagi mavzu</button>${A.gl(b.daraja) === 'g0' ? `<button class="btn sm" data-go="ota-harf-${b.id}">🔤 Bilgan harflari testi</button>` : ''}${isAdmin() ? `<button class="btn sm ghost" data-go="ota-tahrir-${b.id}">✏️ Tahrirlash</button>` : ''}</div></div>
   <div class="wkbar"><button class="ib" data-wk="-1" aria-label="Oldingi hafta">‹</button><b>${WK}</b><button class="ib" data-wk="1" aria-label="Keyingi hafta">›</button></div>
   <div class="card"><h3>📅 Kunlar × fanlar (daq:son)</h3>${tbl}</div>
   <div class="card"><h3>🗺 Ko'nikmalar xaritasi</h3><div class="sm mut">🟢 o'zlashtirildi · 🟡 mashq · 🔴 qiyin · ⚪ boshlanmagan</div>${map}</div>
