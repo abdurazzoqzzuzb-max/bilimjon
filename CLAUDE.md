@@ -4,12 +4,12 @@ Yangi chat shu fayldan davom etadi. Javoblar o'zbekcha. Repo PUBLIC: bu yerga is
 
 ## Loyiha
 - Oilaviy o'yin-darslik (PWA). Sayt: https://abdurazzoqzzuzb-max.github.io/bilimjon/ (GitHub Pages, main / root).
-- Fayllar: `index.html` (butun ilova, ichida 15 ta `<script>` moduli), `sw.js` (network-first kesh), `manifest.webmanifest`, `icon.svg`, `icon-192.png`, `icon-512.png`.
+- Fayllar: `index.html` (butun ilova, ichida 16 ta `<script>` moduli), `sw.js` (network-first kesh; Firebase SDK cache-first), `manifest.webmanifest`, `icon.svg`, `icon-192.png`, `icon-512.png`, `firestore.rules` (konsoldagi qoidalar nusxasi), `sinov/bulut/` (soxta Firebase bilan sinov).
 - **Haqiqat manbai — shu repo.** Kompyuterdagi `Desktop\Claude outputs\Bilimjon` (ko'p faylli manba va v0.1.1 ZIP) ESKI, ishlatilmaydi.
-- Hamma oilalar uchun bitta umumiy versiya. Yangilanish telefonga o'zi keladi (ilovani yopib qayta ochganda), natijalar telefonda (localStorage) qoladi.
+- Hamma oilalar uchun bitta umumiy versiya. Yangilanish telefonga o'zi keladi (ilovani yopib qayta ochganda), natijalar telefonda (localStorage) qoladi; ☁️ akkaunt ulangan oilada Firestore'da ham.
 
 ## Versiya
-- Hozir: **0.4.1** (05.11.2026).
+- Hozir: **0.5.0** (05.11.2026).
 - Har chiqarishda ikkalasi birga oshiriladi: `index.html` → `VER = 'x.y.z'`, `sw.js` → `const V = 'bj-vx.y.z'`.
 
 ## Modullar xaritasi (index.html, tartib bilan)
@@ -18,7 +18,8 @@ Yangi chat shu fayldan davom etadi. Javoblar o'zbekcha. Repo PUBLIC: bu yerga is
 3. Core (`BJ.A`): holat `A.S()`, log `A.pushLog/readLog`, rejalash `makeItem`, `buildMission`, `pickNode`, `recordAnswer`.
 4. Bola tomoni: router, `screenMission → stepRun → showItem → onAnswer → missionNext`, `RENDER.{tanla,yoz,tartib,farq,labirint,sudoku,xotira,iz,yigish,arharf,daftar}`, **📚 Mashq** (`screenMashq`, `mashqStart/mashqNext`, `CUR.k='mashq'`), **📝 Uyga vazifa** (`vazifaHTML`, `vazifaStart`, `vazifaDone`), Arena (`arenaNext(b, given)`), **KICHIK DARS**, **😴 CHARCHADIM**, `reytingHTML`.
 5. **O'yinlar** (`A.oyin`): `boshla(b, m, done)`, `poyga`, `pazl`, `kozgu`, `pgTask(lv)`, `KZ` rasmlari, `pzRasm`.
-6. Ota-ona paneli (`ota-*` yo'nalishlari), `exportPanel` (BJW2), `qiyinPanel`, `reytingPanel` (`ota-reyting`), `vazifaPanel` (`ota-vazifa`), `arabPanel` (so'z, ibora, tajvid tasdig'i), zaxira, `start()`.
+6. **☁️ Bulut** (`BJ.bulut`, 0.5.0): `A.bulutPanel(top, bindTop)` (`#ota-bulut`, akkauntsiz yangi telefonda `#bulut`), `A.guruhHTML/guruhBind` (reyting paneliga karta), `A.bulutStart` (start() da), core'da `A.logMerge`.
+7. Ota-ona paneli (`ota-*` yo'nalishlari), `exportPanel` (BJW2), `qiyinPanel`, `reytingPanel` (`ota-reyting`), `vazifaPanel` (`ota-vazifa`), `arabPanel` (so'z, ibora, tajvid tasdig'i), zaxira, `start()`.
 
 ## 0.2.0 — KICHIK DARS (bajarildi)
 - `onAnswer`: 1-xato → maslahat. 2-xato → `darsMumkin(it, r)` (faqat `t` = tanla | yoz; KASHF va duel emas) → `darsFlow` → `showLesson`: qoida (`DARS[tugun]` yoki `DARS_FAN[fan]`) + shu savolning namuna yechimi (`DARS_QADAM[tugun]` yoki `mathSteps(ex)`) + javob → «Men tayyorman» (5 s) → `twinItem`: o'xshash yangi savol, `tur: 'dars'`.
@@ -67,13 +68,18 @@ Yangi chat shu fayldan davom etadi. Javoblar o'zbekcha. Repo PUBLIC: bu yerga is
 - Maktabgacha bola: hamma arab 2 savolida `ota` maslahati («Savolni o'qib bering»), `AQ.3` belgi savolida belgining rasmi.
 - Charchash: oxirgi 3 kundagi missiyada 2-yarmida aniqlik 15+ punkt tushgan bo'lsa → `b.qisqaKun` = bugun → `blokSoni` ×0,75 (endi 16 chegarasidan KEYIN qo'llanadi, `reja.qisqa` ham shunday). Ota-ona kartochkasida 😴 yozuvi.
 
-## KEYINGI: v0.5.0 — ☁️ Oila akkaunti va 🏆 Reyting guruhi (foydalanuvchi tasdiqlagan)
-- Talab: bolalar ikkala telefonda (dadasi va oyisi) o'ynaydi, qayerda to'xtasa, ikkinchi telefonda aynan o'sha joydan davom etadi; dadasi hammasini ko'radi.
-- Yechim: **Firebase** (Auth + Firestore, bepul Spark tarifi). Kirish — **har oila o'z Google akkaunti** (zaxira: email + parol, chunki iPhone PWA'da Google popup ba'zan qotadi). Bitta akkauntni ko'p oila bilan bo'lishish — RAD ETILDI (xavfli).
-- Ma'lumot: `oila/{uid}` (sozlama), `oila/{uid}/bolalar/{bid}` (bola holati, missiya — oxirgi yozuv ustun), `oila/{uid}/log/{bid}_{kun}` (arrayUnion). Qoidalar: faqat `request.auth.uid == uid`.
-- **🏆 Reyting guruhi** (foydalanuvchi 2-variantni tanladi): oila guruh kodini kiritadi → `guruh/{kod}/azo/{bid}` ga faqat haftalik xulosa (laqab, avatar, ⭐, kun, 🚀). Guruh a'zolarigina o'qiydi. Ism-familiya yo'q.
-- Firebase loyihasini foydalanuvchining kompyuterida brauzerda Claude ochadi (foydalanuvchi kuzatadi; shartlarni qabul qilishdan oldin ruxsat so'raladi). Config (ochiq kalitlar) repoga yoziladi.
-- 0.3.0 dagi kod bilan «📲 Oila reytingi» akkauntsiz oilalar uchun qoladi.
+## 0.5.0 — ☁️ Oila akkaunti va 🏆 Reyting guruhi (bajarildi)
+- Firebase loyihasi: **bilimjon-4c008** (Spark, bepul), egasi — oilaning Google akkaunti. Analytics va Gemini o'chiq. Web ilova «Bilimjon PWA», config `index.html` dagi `CFG` (ochiq kalitlar — xavfsizlik qoidalarda).
+- Auth: Google + Email/Parol yoqilgan. Ruxsat etilgan domenlar: localhost, bilimjon-4c008.firebaseapp.com, **abdurazzoqzzuzb-max.github.io**.
+- Firestore: Standard, **eur3**, production mode; qoidalar = `firestore.rules` (o'zgartirsangiz — konsolga ham qo'ying).
+- SDK `https://www.gstatic.com/firebasejs/13.2.0/` dan dinamik `import()`; faqat `localStorage.bj_bulut_v1` (uid, email, sync izlari) bor telefonda yoki ☁️ ekran ochilganda yuklanadi. Akkauntsiz oila — avvalgidek serversiz.
+- Ma'lumot: `oila/{uid}` {j: umumiy S (bolalar, joriy, qurilma, lastBackup, seenVer, appVer va `G:` reyting yozuvlarisiz), ts, q} · `oila/{uid}/bolalar/{bid}` {j: bola JSON, ts, q} · `oila/{uid}/log/{bid}_{kun}` {bid, kun, e: arrayUnion(JSON satr)}.
+- Sinxron: har 6 s (va sahifa yashirilganda) hash bilan o'zgargan qism yuboriladi. Qabul — `onSnapshot`. Qoida: boshqa telefon yangiroq yozgan va bu telefonda o'zgarmagan bo'lsa olinadi; ikkalasida o'zgargan bo'lsa — shu (ishlatilayotgan) telefon ustun. Bola missiya/arena/mashq/vazifa ekranida bo'lsa yangilanish `pending` da kutadi, ekrandan chiqqach qo'llanadi. Bola o'chirilishi ham sinxron. Log ikki telefondan birlashadi (takrorsiz), ochilganda oxirgi 7 kun olinadi.
+- Birinchi kirish: bulut bo'sh → shu telefon yuklanadi; telefonda oila yo'q → bulutdagi olinadi (PIN ham); ikkalasida bor → so'raladi: «☁️ Bulutdagini olish» (eski holat `bj_oldin_bulut` da) yoki «➕ Birlashtirish» (bir xil id — ko'proq javobi bori).
+- 🏆 Reyting guruhi: kod 10 belgi (`A-Z2-9`). `guruh/{kod}` {yaratdi, ts}, `guruh/{kod}/oilalar/{uid}`, `guruh/{kod}/azo/{bid}` {uid, oila, av, laqab, daraja, yulduz, kun, osish, detal, missiya, wk, ts}. Qabul qilingan a'zolar `S.oilaTel['G:'+uid]` ga yoziladi — eski reyting ro'yxati (`reytingRoyxat`) o'zgarishsiz ishlaydi. `S.guruh = {kod}` oila darajasida sinxron (oyisining telefoni ham avtomatik qo'shiladi).
+- Akkauntsiz oilalar uchun 0.3.0 dagi «📲 kod almashish» qoladi.
+- Sinov: `python3 sinov/bulut/sinov_bulut.py` — Playwright, gstatic so'rovlari soxta modullarga (`sinov/bulut/fs.js`, `auth.js`) yo'naltiriladi, ombor Python'da; 3 telefon (dadasi, oyisi, boshqa oila), 21 tekshiruv. Haqiqiy Firebase faqat saytda, foydalanuvchi kirgandan keyin tekshiriladi.
+- Xavf/eslatma: bitta akkauntni bir nechta oila bilan bo'lishmaslik (ekranda ogohlantirish bor). Tavsiya: Google Cloud'da API kalitini `abdurazzoqzzuzb-max.github.io/*` referrer bilan cheklash.
 
 ## KEYINGI (g'oyalar, foydalanuvchi tasdig'isiz qilinmaydi)
 - O'yin sozlamasini har bola uchun alohida qilish (hozir oila uchun bitta).
