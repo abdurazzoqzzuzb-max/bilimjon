@@ -239,6 +239,25 @@ details.danger{margin-top:18px;border:1px solid var(--no);border-radius:14px;pad
 .arw{display:grid;grid-template-columns:32px 1fr 40px 1fr;align-items:center;gap:8px;min-height:52px;border-bottom:1px solid var(--line)}.arw input{width:26px;height:26px}.arw .arab{font-size:1.7rem;text-align:right}.arw .e{font-size:1.6rem;text-align:center}
 .pinc{text-align:center}.pind{font-size:2rem;letter-spacing:.2em;margin:10px 0}.pinpad{display:grid;grid-template-columns:repeat(3,76px);gap:10px;justify-content:center}.pk{width:76px;height:68px;border-radius:18px;border:2px solid var(--line);background:var(--card);font-size:1.6rem;font-weight:800}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important}}
+/* 0.6.0 — realistik ikonkalar, 🔧 garaj, 🤖 kod-yo'l */
+.ico{display:inline-block;vertical-align:middle}.coll span{display:inline-flex}.rv-i .ico{filter:drop-shadow(0 6px 10px rgba(0,0,0,.35))}
+.rcar.svgc{transform:none;top:-14px;font-size:0;line-height:0}body.th-orol .rcar.svgc{top:-10px}.rflag .ico{display:block}
+.garajb{display:flex;align-items:center;justify-content:center;gap:8px;width:100%}.garajb.pulse{border-color:var(--acc);animation:kur 1.4s ease-in-out infinite}
+.gcard h2{margin:2px 0 6px}.gveh{position:relative;display:flex;justify-content:center;align-items:flex-end;min-height:130px;background:radial-gradient(ellipse at 50% 100%,rgba(255,196,0,.18),transparent 70%);border-radius:14px;margin:6px 0}
+.gbo{position:absolute;left:0;right:0;top:40%;text-align:center;color:var(--mut);font-weight:700}
+.gqs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:10px 0}.gq{background:rgba(255,255,255,.04);border:2px dashed var(--line);border-radius:12px;padding:6px 2px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:76px}
+.gq span{font-size:1.6rem;font-weight:900;color:var(--mut)}.gq small{font-size:.62rem;line-height:1.15;color:var(--mut)}.gq.bor{border-style:solid;border-color:var(--acc);background:rgba(255,196,0,.08)}.gq.bor small{color:var(--ink)}
+.gtay{display:grid;grid-template-columns:1fr 1fr;gap:8px}.gt{background:rgba(255,255,255,.04);border-radius:12px;padding:8px;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center}.gt .btn{width:100%;padding:8px 6px;font-size:.9rem}.gt.buz .veh{filter:grayscale(.7) brightness(.75)}
+.yboard{background:repeating-linear-gradient(0deg,rgba(64,196,255,.09) 0 1px,transparent 1px 16px),repeating-linear-gradient(90deg,rgba(64,196,255,.09) 0 1px,transparent 1px 16px),#0F1A2B;border:2px solid #1E3A5F;border-radius:16px;padding:10px 6px;margin:8px 0}
+.ybp{position:relative;width:100%;aspect-ratio:208/112}.yslot{position:absolute}.yslot svg{width:100%;height:100%;display:block;filter:brightness(0) invert(.8) opacity(.3)}.yslot.on svg{filter:none;animation:pop .3s}
+.ytray{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;min-height:84px}.ypart{background:#1E2533;border:2px solid #2E3748;border-radius:12px;padding:6px;display:flex;flex-direction:column;align-items:center;gap:2px;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab}
+.ypart small{font-size:.62rem;color:var(--mut)}.ypart.sel{border-color:var(--acc);box-shadow:0 0 0 3px rgba(255,196,0,.25)}.ypart.drag{position:relative;z-index:50;box-shadow:0 12px 26px rgba(0,0,0,.5)}
+.ky{background:#fff;border-radius:18px;padding:6px}body.th-garaj .ky{background:#161B26}.kyb{width:100%;height:auto;max-height:44vh;display:block}.kyb .k1{fill:#E6EBF1}.kyb .k2{fill:#F2F5F8}
+body.th-garaj .kyb .k1{fill:#2A3141}body.th-garaj .kyb .k2{fill:#232A38}body.th-orol .kyb .k1{fill:#FBD9EC}body.th-orol .kyb .k2{fill:#FFE9F4}.ky.bump,.kprog.bump{animation:shk .25s}
+.kslot{text-align:center;margin-top:6px}.kprog{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-items:center;min-height:52px;margin:8px 0 0;padding:6px;border-radius:14px;background:rgba(0,0,0,.14)}
+.kyc{min-width:46px;height:40px;padding:0 4px;border-radius:10px;background:var(--card);border:2px solid var(--acc);display:inline-flex;align-items:center;justify-content:center;gap:2px;font-size:1.25rem}.kyc i{font-style:normal;font-size:.95rem;font-weight:900;color:var(--acc)}
+.kyc.bo{border-style:dashed;border-color:var(--line);background:transparent}.kyc.on{background:var(--acc);transform:scale(1.08)}.kyc.on i{color:var(--onacc)}
+.kpad{margin-top:8px}.ktk{display:flex;gap:8px;justify-content:center;margin:8px 0 0}.ktk .btn{min-width:64px;font-weight:900}.kctl{margin-top:8px}
 </style>
 </head>
 <body class="th-neutral">
@@ -823,7 +842,7 @@ G.BJ.MAT = { noCarryAdd, noBorrowSub, hasCarry, hasBorrow, soz };
 
 </script>
 <script>
-/* Bilimjon — mantiq generatorlari L.1–L.10. Maxsus turlar: farq, tartib, labirint, sudoku, xotira, yigish. */
+/* Bilimjon — mantiq generatorlari L.1–L.11. Maxsus turlar: farq, tartib, labirint, sudoku, xotira, yigish, kodyol. */
 (function (G) {
 'use strict';
 const BJ = G.BJ, g = BJ.gen, { ri, pick, shuf, sample, opts, add, R } = g;
@@ -933,6 +952,33 @@ add('L.10', { fan: 'mant', nom: "Shakl yig'ish", me: 30, gen(q, c) {
   const ortiq = q === 3 ? [{ id: 'x0', sh: pick(['doira', 'uch', 'tk']), w: 14, h: 14, ortiq: 1, rang: '#999' }] : [];
   return { t: 'yigish', sav: `${f.nom}ni yig'! Qismlarni joyiga sudra`, fig: k, qism, ortiq, a: 'yigildi', k, sig: k + qism.map(x => x.rang).join('') + g.rid(), ota: "Shakllarning nomini aytib, joyiga qo'ysin: «uchburchak — tom»." };
 }, chk: it => it.qism.length >= 2 || 'qism' });
+/* L.11 Kod-yo'l (0.6.0): strelkalardan dastur tuzib mashinani marraga olib borish. q1 — 3–5 qadam, takrorsiz; q2–q3 — «×N» takror va cheklangan buyruq joyi.
+   Har qanday to'g'ri dastur qabul qilinadi (yo'l bitta emas). it.runs — namunaviy yechim [[yo'nalish, n]…], yo'nalish: 0 ⬆ 1 ➡ 2 ⬇ 3 ⬅ */
+const DX = [0, 1, 0, -1], DY = [-1, 0, 1, 0];
+function kodRun(it, prog) { let x = it.start % it.w, y = (it.start / it.w) | 0; const cells = [it.start];
+  for (const [d, n] of prog) for (let i = 0; i < n; i++) { x += DX[d]; y += DY[d]; const c = y * it.w + x; if (x < 0 || y < 0 || x >= it.w || y >= it.h || it.tos.indexOf(c) >= 0) return { ok: false, crash: true, cells, at: c, x, y }; cells.push(c); if (c === it.goal) return { ok: true, cells }; }
+  return { ok: false, crash: false, cells }; }
+BJ.kodRun = kodRun;
+add('L.11', { fan: 'mant', nom: "Kod-yo'l", me: 40, gen(q) {
+  const C = q === 1 ? { w: 4, h: 4, min: 3, max: 5, rn: [2, 3], rmax: 2 } : q === 2 ? { w: 5, h: 5, min: 5, max: 8, rn: [2, 3], rmax: 4 } : { w: 6, h: 6, min: 7, max: 11, rn: [3, 4], rmax: 4 };
+  let best = null;
+  for (let tr = 0; tr < 400 && !best; tr++) {
+    const nr = ri(C.rn[0], C.rn[1]); let x = ri(0, C.w - 1), y = ri(0, C.h - 1); const start = y * C.w + x, path = [start], runs = []; let prev = -1, ok = true;
+    for (let r = 0; r < nr && ok; r++) { let placed = false;
+      for (const d of shuf([0, 1, 2, 3].filter(d => d !== prev && d !== (prev + 2) % 4))) { const n = ri(q > 1 ? 2 : 1, C.rmax); let xx = x, yy = y, good = true; const cs = [];
+        for (let i = 0; i < n; i++) { xx += DX[d]; yy += DY[d]; const c = yy * C.w + xx; if (xx < 0 || yy < 0 || xx >= C.w || yy >= C.h || path.indexOf(c) >= 0) { good = false; break; } cs.push(c); }
+        if (!good) continue; path.push(...cs); x = xx; y = yy; runs.push([d, n]); prev = d; placed = true; break; }
+      ok = placed; }
+    const tot = runs.reduce((a, r) => a + r[1], 0);
+    if (ok && tot >= C.min && tot <= C.max) best = { start, goal: y * C.w + x, runs, path };
+  }
+  if (!best) best = { start: 0, goal: 3, runs: [[1, 3]], path: [0, 1, 2, 3] };
+  const free = []; for (let i = 0; i < C.w * C.h; i++) if (best.path.indexOf(i) < 0) free.push(i);
+  const tos = sample(free, Math.round(free.length * (q === 1 ? 0.3 : 0.36))), slot = q === 1 ? 0 : best.runs.length + (q === 2 ? 1 : 0);
+  return { t: 'kodyol', sav: q === 1 ? "Mashinani marraga olib bor: strelkalarni tartib bilan bos, keyin ▶ Yurgiz" : `Dastur tuz: ko'pi bilan ${slot} ta buyruq! Bir xil yo'nalish uchun «×» takrorni ishlat`,
+    w: C.w, h: C.h, start: best.start, goal: best.goal, tos, runs: best.runs, slot, takror: q > 1, a: 'yetdi', k: best.runs.map(r => r.join('')).join('-'), sig: best.start + ':' + best.goal + ':' + tos.join(','),
+    ota: "Avval barmog'i bilan yo'lni ko'rsatsin va «o'ngga 2, pastga 1» deb aytsin, keyin buyruqlarni tersin.", ex: { path: best.path } };
+}, chk: it => { const r = kodRun(it, it.runs); return (r.ok && (!it.slot || it.runs.length <= it.slot) && it.tos.indexOf(it.goal) < 0 && it.tos.indexOf(it.start) < 0) || 'kodyol'; } });
 BJ.KAT = KAT;
 })(typeof window !== 'undefined' ? window : globalThis);
 
@@ -1593,26 +1639,138 @@ function dragon(o) {
   <circle cx="49" cy="42" r="7.5" fill="#fff"/><circle cx="71" cy="42" r="7.5" fill="#fff"/><circle cx="50" cy="43" r="4.2" fill="#1B2430"/><circle cx="70" cy="43" r="4.2" fill="#1B2430"/><circle cx="51.5" cy="41.5" r="1.5" fill="#fff"/><circle cx="71.5" cy="41.5" r="1.5" fill="#fff"/>
   <circle cx="40" cy="52" r="4" fill="#FF8FB1" opacity=".55"/><circle cx="80" cy="52" r="4" fill="#FF8FB1" opacity=".55"/>${mouth}${helmet}${tool}</svg>`;
 }
-/* ---------- MASHINA ---------- */
+/* ---------- MASHINA (0.6.0: realistik — metall bo'yoq, oyna aksi, shina + disk + tormoz, fara nuri) ---------- */
 const RANGLAR = ['#2F7BEA', '#FF5722', '#00C853', '#FFC400', '#AA00FF', '#FF1744'];
+function shade(h, p) { const n = parseInt(String(h).slice(1), 16), f = p < 0 ? 0 : 255, k = Math.abs(p); const c = s => Math.round(s + (f - s) * k); return '#' + ((1 << 24) | (c(n >> 16 & 255) << 16) | (c(n >> 8 & 255) << 8) | c(n & 255)).toString(16).slice(1); }
+/* kuzov darajalari: silueti, oynasi, g'ildiraklar, orqa qopqoq (deck) va fara balandligi */
+const KZ = [
+  { body: 'M16 84 L11 72 Q9 60 18 55 L44 50 Q58 34 78 30 L114 29 Q127 29 137 38 L150 49 Q174 51 187 56 Q196 60 196 69 L195 79 Q194 84 187 84 Z', glass: 'M49 50 Q61 37 79 34 L112 33 Q123 33 131 40 L142 49 Z', pil: 'M99 33 L101 50', d1: 98, d2: 141, wr: 18, wy: 77, dk: 54, ly: 58, mx: 139, my: 47, rx: 96, ry: 29 },
+  { body: 'M14 84 L10 71 Q9 58 20 54 L50 50 Q70 32 96 30 L118 30 Q134 31 146 44 L156 50 Q178 51 190 57 Q197 61 196 70 L195 79 Q194 84 187 84 Z', glass: 'M58 50 Q74 36 96 34 L117 34 Q130 35 140 45 L146 50 Z', pil: 'M110 34 L112 50', d1: 104, d2: 146, wr: 19, wy: 77, dk: 53, ly: 59, mx: 145, my: 48, rx: 106, ry: 30 },
+  { body: 'M12 84 L9 70 Q10 59 22 57 L58 54 Q78 38 102 36 Q124 36 140 48 L158 54 Q182 55 193 61 Q198 64 197 72 L196 80 Q195 84 188 84 Z', glass: 'M66 54 Q82 41 102 40 Q120 40 134 50 L140 54 Z', pil: '', d1: 100, d2: 146, wr: 21, wy: 78, dk: 57, ly: 62, mx: 138, my: 52, hav: 1, rx: 103, ry: 36 },
+  { body: 'M10 84 L8 70 Q9 60 22 58 L60 55 Q80 37 106 35 Q130 36 146 50 L162 55 Q186 56 195 62 Q199 66 198 74 L197 80 Q196 84 189 84 Z', glass: 'M68 55 Q84 40 106 39 Q126 40 140 51 L144 55 Z', pil: '', d1: 102, d2: 150, wr: 21, wy: 78, dk: 58, ly: 63, mx: 142, my: 53, hav: 1, fin: 1, rx: 106, ry: 35 }
+];
 function car(d, o) {
-  d = d || {}; o = o || {}; const id = uid('c'), t = k => d[k] || 0, col = RANGLAR[t('rang') % RANGLAR.length];
-  const kz = t('kuzov'), wr = kz >= 2 ? 21 : 18, wy = kz >= 2 ? 78 : 76;
-  const body = [`M12 72 L16 52 L58 48 L80 32 L128 32 L150 48 L186 52 L190 72 Z`, `M12 72 Q14 54 38 50 L78 46 Q96 28 126 28 Q148 30 160 46 L184 52 Q192 58 190 72 Z`, `M10 74 Q12 60 36 58 L84 54 Q100 38 124 38 Q144 40 154 54 L186 58 Q194 64 192 74 Z`, `M8 74 Q10 58 34 56 L84 52 Q100 34 126 34 Q146 36 156 52 L188 58 Q196 64 194 74 Z`][Math.min(3, kz)];
-  const win = [`M84 36 L126 36 L142 48 L66 50 Z`, `M86 33 Q100 32 124 32 Q142 34 152 46 L70 48 Z`, `M92 42 Q106 40 122 42 Q138 44 146 54 L84 55 Z`, `M92 38 Q106 36 124 38 Q140 40 148 52 L84 53 Z`][Math.min(3, kz)];
-  const fin = kz >= 3 ? `<path d="M20 58 L6 36 L30 54Z" fill="${col}" stroke="#111" stroke-width="2"/>` : '';
-  const wheel = x => { const g = t('gildirak'); const tire = `<circle cx="${x}" cy="${wy}" r="${wr}" fill="#1B1B1B"/>` + (g >= 2 ? `<circle cx="${x}" cy="${wy}" r="${wr - 1}" fill="none" stroke="#3a3a3a" stroke-width="4" stroke-dasharray="4 3"/>` : '');
-    const rim = g === 0 ? `<circle cx="${x}" cy="${wy}" r="${wr * 0.45}" fill="#9E9E9E"/>` : g === 1 ? `<circle cx="${x}" cy="${wy}" r="${wr * 0.55}" fill="#CFD8DC"/>` + [0, 72, 144, 216, 288].map(a => `<line x1="${x}" y1="${wy}" x2="${x + Math.cos(a * Math.PI / 180) * wr * 0.55}" y2="${wy + Math.sin(a * Math.PI / 180) * wr * 0.55}" stroke="#607D8B" stroke-width="3"/>`).join('') : g === 2 ? `<circle cx="${x}" cy="${wy}" r="${wr * 0.5}" fill="#FFC400" stroke="#333" stroke-width="2"/>` : `<circle cx="${x}" cy="${wy}" r="${wr * 0.6}" fill="#0D1B2A" stroke="#18FFFF" stroke-width="3"/><circle cx="${x}" cy="${wy}" r="${wr * 0.25}" fill="#18FFFF"/>`;
-    return `<g class="wheel">${tire}${rim}<circle cx="${x}" cy="${wy}" r="3" fill="#333"/></g>`; };
-  const m = t('motor'), motor = m ? `<rect x="22" y="${kz >= 2 ? 42 : 38}" width="${20 + m * 4}" height="14" rx="3" fill="#78909C" stroke="#263238" stroke-width="2"/><rect x="26" y="${kz >= 2 ? 36 : 32}" width="${8 + m * 3}" height="7" rx="2" fill="#B0BEC5" stroke="#263238"/>` + (m >= 2 ? `<path d="M14 62 h-8 M14 66 h-10" stroke="#B0BEC5" stroke-width="4" stroke-linecap="round"/>` : '') + (m >= 3 ? `<path d="M6 60 q-8 3 -2 6 q-10 2 0 6" fill="#FF6D00"/>` : '') : '';
-  const n = t('nitro'), nitro = n ? `<rect x="40" y="56" width="${10 + n * 3}" height="9" rx="4" fill="#00B0FF" stroke="#01579B" stroke-width="2"/>` + `<path d="M4 64 Q-6 ${60 - n * 2} 4 ${58 - n} Q0 64 10 66 Z" fill="#40C4FF" opacity=".9"/>` : '';
-  const sp = t('spoyler'), spoyler = sp ? `<rect x="${8 - sp}" y="${kz >= 2 ? 36 : 30}" width="${30 + sp * 4}" height="6" rx="3" fill="#212121"/><path d="M22 ${kz >= 2 ? 42 : 36} l0 12 M30 ${kz >= 2 ? 42 : 36} l0 12" stroke="#212121" stroke-width="3"/>` : '';
-  const f = t('fara'), fara = `<ellipse cx="185" cy="59" rx="4" ry="3.5" fill="${f ? '#FFF59D' : '#FFE082'}" stroke="#333"/>` + (f ? `<path d="M188 56 L${210 + f * 10} 48 L${210 + f * 10} 70 L188 62 Z" fill="url(#${id}b)" opacity=".8"/>` : '');
-  const st = t('stiker'), stiker = st === 0 ? '' : st === 1 ? `<path d="M96 52 l-8 10 h7 l-5 9 l14 -13 h-7 l5 -6z" fill="#FFEB3B" stroke="#111" stroke-width="1"/>` : st === 2 ? `<path d="M100 54 l3 7 7 1 -5 5 1 7 -6 -4 -6 4 1 -7 -5 -5 7 -1z" fill="#fff" stroke="#111"/>` : `<path d="M80 66 q10 -14 14 -6 q4 -12 12 -4 q6 -10 12 4 z" fill="#FF6D00" stroke="#111"/><circle cx="140" cy="62" r="8" fill="#fff" stroke="#111" stroke-width="2"/><text x="140" y="66" font-size="11" font-weight="900" text-anchor="middle" fill="#111">1</text>`;
-  const w = o.w || 200;
-  return `<svg class="car" viewBox="-12 0 ${f ? 236 : 212} 104" style="width:${w}px;max-width:100%" aria-label="Poyga mashinasi"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".45"/><stop offset=".35" stop-color="${col}" stop-opacity="0"/></linearGradient><linearGradient id="${id}w" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E1F5FE"/><stop offset="1" stop-color="#4FC3F7"/></linearGradient><linearGradient id="${id}b" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFF59D"/><stop offset="1" stop-color="#FFF59D" stop-opacity="0"/></linearGradient></defs>
-  <ellipse cx="100" cy="98" rx="92" ry="5" fill="#000" opacity=".25"/>${nitro}${fin}${spoyler}<path d="${body}" fill="${col}" stroke="#111" stroke-width="2.5" stroke-linejoin="round"/><path d="${body}" fill="url(#${id})"/><path d="${win}" fill="url(#${id}w)" stroke="#111" stroke-width="2"/>${motor}${stiker}${fara}${wheel(48)}${wheel(152)}</svg>`;
+  d = d || {}; o = o || {}; const id = uid('c'), t = k => d[k] || 0, col = RANGLAR[t('rang') % RANGLAR.length], K = KZ[Math.min(3, t('kuzov'))];
+  const { wr, wy, dk, ly } = K, dark = shade(col, -0.45), u = s => `url(#${id}${s})`;
+  const defs = `<defs>
+  <linearGradient id="${id}p" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${shade(col, 0.5)}"/><stop offset=".3" stop-color="${shade(col, 0.12)}"/><stop offset=".55" stop-color="${col}"/><stop offset=".82" stop-color="${shade(col, -0.3)}"/><stop offset="1" stop-color="${shade(col, -0.6)}"/></linearGradient>
+  <linearGradient id="${id}s" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".55" stop-color="#fff" stop-opacity=".22"/><stop offset=".7" stop-color="#fff" stop-opacity="0"/></linearGradient>
+  <linearGradient id="${id}g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#A9D3F2"/><stop offset=".45" stop-color="#4C7398"/><stop offset="1" stop-color="#15212F"/></linearGradient>
+  <linearGradient id="${id}c" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".45" stop-color="#C9D1D8"/><stop offset=".55" stop-color="#7D8790"/><stop offset="1" stop-color="#E6EBEF"/></linearGradient>
+  <linearGradient id="${id}o" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF3B0"/><stop offset=".5" stop-color="#E8B923"/><stop offset="1" stop-color="#8A6508"/></linearGradient>
+  <linearGradient id="${id}k" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4A4F57"/><stop offset=".4" stop-color="#1E2126"/><stop offset="1" stop-color="#0A0B0D"/></linearGradient>
+  <radialGradient id="${id}t" cx=".5" cy=".5" r=".5"><stop offset=".6" stop-color="#2A2A2A"/><stop offset=".86" stop-color="#151515"/><stop offset="1" stop-color="#050505"/></radialGradient>
+  <radialGradient id="${id}h" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  <radialGradient id="${id}l" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFFDE7"/><stop offset=".5" stop-color="#FFF59D" stop-opacity=".6"/><stop offset="1" stop-color="#FFF59D" stop-opacity="0"/></radialGradient>
+  <radialGradient id="${id}r" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FF8A80"/><stop offset=".5" stop-color="#FF1744" stop-opacity=".5"/><stop offset="1" stop-color="#FF1744" stop-opacity="0"/></radialGradient>
+  <linearGradient id="${id}b" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFF8C4" stop-opacity=".9"/><stop offset="1" stop-color="#FFF59D" stop-opacity="0"/></linearGradient>
+  <linearGradient id="${id}n" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#80D8FF"/><stop offset=".5" stop-color="#0091EA"/><stop offset="1" stop-color="#01579B"/></linearGradient>
+  <linearGradient id="${id}f" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#FFF59D"/><stop offset=".35" stop-color="#FF9100"/><stop offset="1" stop-color="#DD2C00" stop-opacity="0"/></linearGradient>
+  <linearGradient id="${id}q" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#E1F5FE"/><stop offset=".35" stop-color="#40C4FF"/><stop offset="1" stop-color="#2962FF" stop-opacity="0"/></linearGradient>
+  <clipPath id="${id}x"><path d="${K.body}"/></clipPath><clipPath id="${id}y"><path d="${K.glass}"/></clipPath></defs>`;
+  /* g'ildirak: shina (yon devor, protektor) + tormoz diski va supporti + disk turi */
+  const wheel = x => { const g = t('gildirak'), r = wr, rr = r * (g >= 2 ? 0.66 : 0.6), P = (a, rad) => [x + Math.cos(a) * rad, wy + Math.sin(a) * rad];
+    let s = `<circle cx="${x}" cy="${wy}" r="${r}" fill="${u('t')}"/><circle cx="${x}" cy="${wy}" r="${r * 0.84}" fill="none" stroke="#2F2F2F" stroke-width="${r * 0.08}"/>`;
+    if (g >= 2) s += `<circle cx="${x}" cy="${wy}" r="${r - 1.2}" fill="none" stroke="#3B3B3B" stroke-width="2" stroke-dasharray="2.6 2.2"/>`;
+    s += `<path d="M${x - r * 0.62} ${wy - r * 0.62} A${r * 0.88} ${r * 0.88} 0 0 1 ${x + r * 0.2} ${wy - r * 0.86}" stroke="#fff" stroke-opacity=".16" stroke-width="1.6" fill="none"/>`;
+    if (g >= 1) { s += `<circle cx="${x}" cy="${wy}" r="${rr * 0.86}" fill="#6E747A" stroke="#4A4F55" stroke-width="1"/>` + [0, 1, 2, 3, 4, 5, 6, 7].map(i => { const [a, b2] = P(i * Math.PI / 4, rr * 0.6); return `<circle cx="${a}" cy="${b2}" r="${rr * 0.06}" fill="#3B3F44"/>`; }).join('');
+      const [c1, c2] = P(-0.95, rr * 0.72); s += `<rect x="${c1 - rr * 0.2}" y="${c2 - rr * 0.34}" width="${rr * 0.4}" height="${rr * 0.68}" rx="${rr * 0.14}" fill="${g >= 3 ? '#00B0FF' : '#E53935'}" stroke="#1A1A1A" stroke-width=".8" transform="rotate(${-0.95 * 57.3 + 90} ${c1} ${c2})"/>`; }
+    if (g === 0) { s += `<circle cx="${x}" cy="${wy}" r="${rr}" fill="${u('c')}" stroke="#5F6B76" stroke-width="1.2"/><circle cx="${x}" cy="${wy}" r="${rr * 0.72}" fill="none" stroke="#8C969F" stroke-width="1"/>` + [0, 1, 2, 3, 4].map(i => { const [a, b2] = P(i * 1.2566 - 1.57, rr * 0.52); return `<circle cx="${a}" cy="${b2}" r="${rr * 0.13}" fill="#2A2E33"/>`; }).join(''); }
+    else if (g === 1) { s += `<circle cx="${x}" cy="${wy}" r="${rr}" fill="none" stroke="${u('c')}" stroke-width="${rr * 0.18}"/>` + [0, 1, 2, 3, 4].map(i => { const [a1, b1] = P(i * 1.2566 - 1.57, rr * 0.2), [a2, b2] = P(i * 1.2566 - 1.57, rr * 0.92); return `<line x1="${a1}" y1="${b1}" x2="${a2}" y2="${b2}" stroke="#4A525A" stroke-width="${rr * 0.3}" stroke-linecap="round"/><line x1="${a1}" y1="${b1}" x2="${a2}" y2="${b2}" stroke="${u('c')}" stroke-width="${rr * 0.22}" stroke-linecap="round"/>`; }).join(''); }
+    else if (g === 2) { s += `<circle cx="${x}" cy="${wy}" r="${rr}" fill="none" stroke="${u('o')}" stroke-width="${rr * 0.14}"/>` + Array.from({ length: 10 }, (_, i) => { const [a1, b1] = P(i * 0.6283, rr * 0.18), [a2, b2] = P(i * 0.6283 + 0.12, rr * 0.94); return `<line x1="${a1}" y1="${b1}" x2="${a2}" y2="${b2}" stroke="${u('o')}" stroke-width="${rr * 0.11}" stroke-linecap="round"/>`; }).join(''); }
+    else { s += `<circle cx="${x}" cy="${wy}" r="${rr + 1.4}" fill="none" stroke="#18FFFF" stroke-opacity=".35" stroke-width="3"/><circle cx="${x}" cy="${wy}" r="${rr}" fill="none" stroke="#0D1117" stroke-width="${rr * 0.18}"/><circle cx="${x}" cy="${wy}" r="${rr}" fill="none" stroke="#18FFFF" stroke-width="1"/>` + Array.from({ length: 6 }, (_, i) => { const a = i * 1.0472, [a1, b1] = P(a, rr * 0.2), [m1, m2] = P(a, rr * 0.6), [e1, e2] = P(a - 0.22, rr * 0.95), [f1, f2] = P(a + 0.22, rr * 0.95); return `<path d="M${a1} ${b1} L${m1} ${m2} L${e1} ${e2} M${m1} ${m2} L${f1} ${f2}" stroke="#0D1117" stroke-width="${rr * 0.16}" stroke-linecap="round" fill="none"/><path d="M${a1} ${b1} L${m1} ${m2}" stroke="#18FFFF" stroke-width=".8"/>`; }).join(''); }
+    s += `<circle cx="${x}" cy="${wy}" r="${rr * 0.24}" fill="${g === 3 ? '#0D1117' : g === 2 ? u('o') : u('c')}" stroke="#333" stroke-width=".8"/><circle cx="${x}" cy="${wy}" r="${rr * 0.09}" fill="${g === 3 ? '#18FFFF' : '#444'}"/><circle cx="${x - rr * 0.08}" cy="${wy - rr * 0.1}" r="${rr * 0.06}" fill="#fff" opacity=".8"/>`;
+    return `<g class="wheel">${s}</g>`; };
+  const arch = x => `<circle cx="${x}" cy="${wy}" r="${wr + 3.5}" fill="#0B0C0E"/><path d="M${x - wr - 5} ${wy + 2} A${wr + 5} ${wr + 5} 0 0 1 ${x + wr + 5} ${wy + 2}" fill="none" stroke="${dark}" stroke-width="2.2"/>`;
+  /* motor: orqa qopqoqda xrom havo filtri → kompressor; qo'sh xrom quvur; 3-darajada olov */
+  const m = t('motor'), n = t('nitro'), ex = m >= 2 ? [77, 81] : [79];
+  const motor = m ? `<g>${m >= 3 ? `<rect x="24" y="${dk - 15}" width="18" height="11" rx="2" fill="${u('c')}" stroke="#3C4248" stroke-width=".8"/><path d="M26 ${dk - 15} v-5 h14 v5" fill="#212121"/><path d="M27 ${dk - 12} h12 M27 ${dk - 9} h12" stroke="#5E666E" stroke-width="1"/>` : m >= 2 ? `<path d="M26 ${dk - 3} l2 -8 h4 l1 8 M34 ${dk - 3} l2 -8 h4 l1 8" fill="${u('c')}" stroke="#3C4248" stroke-width=".8"/>` : `<ellipse cx="32" cy="${dk - 4}" rx="9" ry="3.6" fill="${u('c')}" stroke="#3C4248" stroke-width=".8"/>`}</g>` : '';
+  const pipes = ex.map(y => `<rect x="2" y="${y - 1.6}" width="12" height="3.2" rx="1.6" fill="${u('c')}" stroke="#4A525A" stroke-width=".6"/><ellipse cx="2.5" cy="${y}" rx="1.3" ry="1.6" fill="#1A1A1A"/>`).join('');
+  const flame = (m >= 3 ? ex.map(y => `<path d="M2 ${y - 2.4} Q-8 ${y - 4} -12 ${y} Q-8 ${y + 4} 2 ${y + 2.4} Z" fill="${u('f')}"/>`).join('') : '') + (n ? ex.map(y => `<path d="M2 ${y - 2} Q${-6 - n * 3} ${y - 3} ${-10 - n * 3} ${y} Q${-6 - n * 3} ${y + 3} 2 ${y + 2} Z" fill="${u('q')}"/>`).join('') : '');
+  const nitro = n ? `<g><rect x="${44 - n}" y="${dk - 8}" width="${12 + n * 3}" height="7" rx="3.5" fill="${u('n')}" stroke="#01579B" stroke-width=".8"/><rect x="${55 + n * 2}" y="${dk - 7}" width="3" height="5" rx="1" fill="${u('c')}"/><path d="M${46 - n} ${dk - 6.5} h${8 + n * 2}" stroke="#fff" stroke-opacity=".55" stroke-width="1.2" stroke-linecap="round"/></g>` : '';
+  /* spoyler: karbon qanot ustunlarda; 2-darajadan qizil yon plastinalar, 3-da qo'sh qanot */
+  const sp = t('spoyler'), wyS = dk - 13 - sp * 2;
+  const wing = y => `<path d="M${4 - sp} ${y} Q22 ${y - 4} ${40 + sp * 3} ${y} L${40 + sp * 3} ${y + 4.5} Q22 ${y + 2} ${4 - sp} ${y + 4.5} Z" fill="${u('k')}" stroke="#000" stroke-width=".6"/><path d="M${6 - sp} ${y + 0.6} Q22 ${y - 3} ${38 + sp * 3} ${y + 0.6}" stroke="#fff" stroke-opacity=".35" stroke-width=".8" fill="none"/>`;
+  const spoyler = sp ? `<g><path d="M20 ${dk - 1} L18 ${wyS + 3} M32 ${dk - 2} L32 ${wyS + 3}" stroke="#1A1A1A" stroke-width="2.6"/>${wing(wyS)}${sp >= 3 ? wing(wyS - 7) : ''}${sp >= 2 ? `<rect x="${2 - sp}" y="${wyS - (sp >= 3 ? 9 : 3)}" width="3" height="${sp >= 3 ? 17 : 11}" rx="1" fill="#D50000"/>` : ''}</g>` : '';
+  /* faralar, chiroqlar, bamper */
+  const f = t('fara'), fy = ly;
+  const lights = `<path d="M182 ${fy - 1} Q190 ${fy} 195.5 ${fy + 3.5} L194.5 ${fy + 5.5} Q188 ${fy + 4.5} 181 ${fy + 2.5} Z" fill="${f ? '#FFFDE7' : '#E8EEF2'}" stroke="#2B2B2B" stroke-width=".8"/><path d="M184 ${fy + 1} L193 ${fy + 3.6}" stroke="${f ? '#FFF176' : '#90A4AE'}" stroke-width="1.2"/>`
+    + (f ? `<ellipse cx="191" cy="${fy + 2}" rx="${10 + f * 2}" ry="${6 + f}" fill="${u('l')}"/><path d="M195 ${fy} L${214 + f * 9} ${fy - 8 - f * 2} L${214 + f * 9} ${fy + 14 + f * 2} L195 ${fy + 6} Z" fill="${u('b')}"/>` : '')
+    + `<path d="M184 ${fy + 10} L196 ${fy + 10} L195 ${fy + 17} L186 ${fy + 17} Z" fill="#101114"/><path d="M186 ${fy + 12.5} h9 M186 ${fy + 15} h9" stroke="#3A3D42" stroke-width=".8"/>`
+    + (f >= 2 ? `<circle cx="189" cy="${fy + 13.5}" r="2.2" fill="#FFEE58" stroke="#5D4037" stroke-width=".5"/><circle cx="189" cy="${fy + 13.5}" r="6" fill="${u('l')}"/>` : '')
+    + `<path d="M10.5 ${K.dk + 4} Q12 ${K.dk + 1} 19 ${K.dk + 1} L19 ${K.dk + 7} L11 ${K.dk + 8} Z" fill="#D50000" stroke="#4A0000" stroke-width=".7"/><ellipse cx="14" cy="${K.dk + 4.5}" rx="8" ry="6" fill="${u('r')}"/>`;
+  const bar = f >= 3 ? `<rect x="${K.rx - 14}" y="${K.ry - 4.2}" width="28" height="4" rx="2" fill="#212121"/><rect x="${K.rx - 12}" y="${K.ry - 3.6}" width="24" height="2.4" rx="1.2" fill="#FFFDE7"/><ellipse cx="${K.rx}" cy="${K.ry - 3}" rx="18" ry="5" fill="${u('l')}"/>` : '';
+  /* stikerlar: chaqmoq · poyga chiziqlari · alanga + raqam */
+  const st = t('stiker'), mid = (K.d1 + K.d2) / 2;
+  const stiker = st === 0 ? '' : st === 1 ? `<path d="M${mid + 4} 59 l-8 9 h6 l-5 9 l13 -12 h-6 l5 -6z" fill="#FFEB3B" stroke="#1A1A1A" stroke-width=".8"/>`
+    : st === 2 ? `<g clip-path="url(#${id}x)" opacity=".92"><path d="M0 63 L200 63 L200 66 L0 66Z M0 68 L200 68 L200 70 L0 70Z" fill="#FFFFFF"/></g>`
+    : `<g clip-path="url(#${id}x)"><path d="M150 72 q10 -12 16 -5 q4 -10 12 -3 q5 -7 12 4 L190 80 L150 80Z" fill="#FF6D00" stroke="#1A1A1A" stroke-width=".7"/><path d="M156 76 q8 -8 12 -3 q5 -6 10 0 L180 80 L156 80Z" fill="#FFD600"/></g><circle cx="${mid}" cy="66" r="7.5" fill="#fff" stroke="#1A1A1A" stroke-width="1.4"/><text x="${mid}" y="69.8" font-size="11" font-weight="900" text-anchor="middle" fill="#1A1A1A" font-family="system-ui,sans-serif">1</text>`;
+  const fin = K.fin ? `<path d="M22 ${dk + 1} L9 ${dk - 22} Q15 ${dk - 23} 36 ${dk - 1}Z" fill="${u('p')}" stroke="${dark}" stroke-width="1"/>` : '';
+  const kz = Math.min(3, t('kuzov')), sk1 = 48 + wr + 6, sk2 = 152 - wr - 6, w = o.w || 200;
+  return `<svg class="car" viewBox="-12 0 ${f ? 236 : 212} 104" style="width:${w}px;max-width:100%" aria-label="Poyga mashinasi">${defs}
+  <ellipse cx="100" cy="96" rx="100" ry="7" fill="${u('h')}"/>${flame}${pipes}${fin}${nitro}${motor}${spoyler}
+  <path d="${K.body}" fill="${u('p')}"/><g clip-path="url(#${id}x)">${arch(48)}${arch(152)}<path d="M0 30 L210 30 L210 60 L0 60Z" fill="${u('s')}"/>
+  <path d="M10 82 L200 82 L200 86 L10 86Z" fill="#000" opacity=".35"/><path d="M${sk1} 79 L${sk2} 79 L${sk2} 85 L${sk1} 85Z" fill="#141518"/>
+  ${K.hav ? `<path d="M${K.d1 - 30} 67 Q${K.d1 - 20} 62 ${K.d1 - 8} 63 L${K.d1 - 10} 71 Q${K.d1 - 20} 71 ${K.d1 - 28} 73Z" fill="#0E0F12"/><path d="M${K.d1 - 26} 67.5 h14 M${K.d1 - 26} 70 h13" stroke="#30343A" stroke-width=".7"/>` : ''}
+  <path d="M18 ${dk + 3} Q100 ${dk - 2} 186 ${ly}" stroke="#fff" stroke-opacity=".5" stroke-width="1.3" fill="none"/><path d="M22 71 Q100 68 186 71" stroke="${dark}" stroke-opacity=".55" stroke-width="1.2" fill="none"/>
+  <path d="M${K.d1} ${dk - 2} L${K.d1 + 1} 81 M${K.d2} ${dk - 4} Q${K.d2 + 2} 66 ${K.d2 - 1} 81" stroke="${dark}" stroke-width=".9" fill="none" opacity=".7"/>
+  <rect x="${K.d2 - 17}" y="61" width="10" height="2.8" rx="1.4" fill="${dark}"/><path d="M${K.d2 - 16} 61.6 h8" stroke="#fff" stroke-opacity=".5" stroke-width=".7"/>${stiker}</g>
+  <path d="${K.body}" fill="none" stroke="#111" stroke-width="1.4" stroke-linejoin="round"/>
+  <path d="${K.glass}" fill="${u('g')}" stroke="#0E141B" stroke-width="1.4"/><g clip-path="url(#${id}y)"><path d="M${K.d1 - 30} 20 L${K.d1 - 18} 20 L${K.d1 - 38} 60 L${K.d1 - 50} 60Z M${K.d1 - 12} 20 L${K.d1 - 7} 20 L${K.d1 - 27} 60 L${K.d1 - 32} 60Z" fill="#fff" opacity=".32"/></g>${K.pil ? `<path d="${K.pil}" stroke="#0E141B" stroke-width="3"/>` : ''}
+  <path d="M${K.mx} ${K.my} q6 -5 11 -1.5 l-1 4.5 q-6 1 -10 -3z" fill="${u('p')}" stroke="#111" stroke-width=".8"/>${bar}${lights}
+  ${wheel(48)}${wheel(152)}</svg>`;
 }
+/* ---------- 🎨 IKONKALAR (0.6.0): emoji o'rniga o'zimiz chizgan realistik belgilar — hamma telefonda bir xil ko'rinadi ----------
+   icon(k, o): o.s — o'lcham (px), o.x/o.y — boshqa SVG ichiga joylash uchun, o.rot — burish (gradus). Noma'lum kalit → ''. */
+const IC = {
+  gildirak: u => `<circle cx="32" cy="32" r="27" fill="${u('t')}"/><circle cx="32" cy="32" r="23" fill="none" stroke="#333" stroke-width="2.4"/><circle cx="32" cy="32" r="26" fill="none" stroke="#3a3a3a" stroke-width="2.2" stroke-dasharray="3.4 2.6"/><circle cx="32" cy="32" r="16" fill="#6E747A"/>${[0, 1, 2, 3, 4].map(i => { const a = i * 1.2566 - 1.57; return `<line x1="${32 + Math.cos(a) * 3}" y1="${32 + Math.sin(a) * 3}" x2="${32 + Math.cos(a) * 15}" y2="${32 + Math.sin(a) * 15}" stroke="#4A525A" stroke-width="6" stroke-linecap="round"/><line x1="${32 + Math.cos(a) * 3}" y1="${32 + Math.sin(a) * 3}" x2="${32 + Math.cos(a) * 15}" y2="${32 + Math.sin(a) * 15}" stroke="${u('c')}" stroke-width="4.4" stroke-linecap="round"/>`; }).join('')}<circle cx="32" cy="32" r="16" fill="none" stroke="${u('c')}" stroke-width="3"/><rect x="38" y="16" width="6" height="11" rx="2" fill="#E53935" stroke="#1A1A1A" stroke-width=".8" transform="rotate(35 41 21)"/><circle cx="32" cy="32" r="4" fill="${u('c')}" stroke="#333"/><path d="M14 20 A22 22 0 0 1 30 9" stroke="#fff" stroke-opacity=".25" stroke-width="2.4" fill="none"/>`,
+  kuzov: u => `<path d="M5 44 L4 37 Q4 31 10 30 L22 28 Q29 18 39 17 L46 17 Q52 18 56 25 L59 29 Q61 33 60 40 L59 44Z" fill="${u('p')}" stroke="#111" stroke-width="1.2"/><path d="M24 28 Q30 21 39 20 L45 20 Q50 21 53 27 L54 28Z" fill="${u('g')}" stroke="#111" stroke-width="1"/><path d="M33 22 L28 28 M36 20 L34 22" stroke="#fff" stroke-opacity=".5" stroke-width="2"/><path d="M8 34 Q32 31 58 34" stroke="#fff" stroke-opacity=".55" stroke-width="1" fill="none"/><circle cx="17" cy="44" r="7" fill="#151515"/><circle cx="17" cy="44" r="3.4" fill="${u('c')}"/><circle cx="49" cy="44" r="7" fill="#151515"/><circle cx="49" cy="44" r="3.4" fill="${u('c')}"/>`,
+  motor: u => `<rect x="12" y="26" width="40" height="24" rx="3" fill="${u('k')}" stroke="#111"/><path d="M14 26 L20 14 H44 L50 26Z" fill="${u('c')}" stroke="#3C4248"/>${[22, 30, 38].map(x => `<rect x="${x}" y="8" width="5" height="8" rx="1.5" fill="${u('c')}" stroke="#3C4248" stroke-width=".8"/>`).join('')}<path d="M16 32 h32 M16 38 h32 M16 44 h32" stroke="#3A3F46" stroke-width="2"/><circle cx="8" cy="38" r="5" fill="${u('c')}" stroke="#3C4248"/><path d="M52 34 h7 v8 h-7" fill="none" stroke="${u('c')}" stroke-width="3"/><rect x="26" y="18" width="12" height="5" rx="1" fill="#D50000"/><path d="M27 20.5 h10" stroke="#fff" stroke-width="1"/>`,
+  fara: u => `<path d="M36 24 L63 10 L63 54 L36 40Z" fill="${u('b')}"/><ellipse cx="32" cy="32" rx="22" ry="18" fill="${u('l')}"/><path d="M4 24 Q6 14 20 14 L36 18 Q44 22 44 32 Q44 42 36 46 L20 50 Q6 50 4 40Z" fill="${u('k')}" stroke="#111"/><path d="M8 25 Q10 18 20 18 L34 21 Q40 25 40 32 Q40 39 34 43 L20 46 Q10 46 8 39Z" fill="${u('c')}"/><circle cx="25" cy="31" r="9.5" fill="#FFFDE7" stroke="#90A4AE" stroke-width="1.2"/><circle cx="25" cy="31" r="5.5" fill="#FFF59D"/><circle cx="22" cy="28" r="2.4" fill="#fff"/><path d="M11 41 Q22 45 35 41" stroke="#E1F5FE" stroke-width="2.6" stroke-linecap="round" fill="none"/><path d="M10 20 Q20 16 32 19" stroke="#fff" stroke-opacity=".5" stroke-width="1.4" fill="none"/>`,
+  spoyler: u => `<path d="M20 44 L18 30 M44 44 L46 30" stroke="#1A1A1A" stroke-width="4"/><path d="M4 26 Q32 18 60 26 L60 33 Q32 27 4 33Z" fill="${u('k')}" stroke="#000"/><path d="M6 27 Q32 20 58 27" stroke="#fff" stroke-opacity=".4" stroke-width="1.2" fill="none"/><rect x="2" y="20" width="5" height="17" rx="1.5" fill="#D50000"/><rect x="57" y="20" width="5" height="17" rx="1.5" fill="#D50000"/><path d="M8 44 Q32 40 56 44 L56 50 L8 50Z" fill="${u('p')}" stroke="#111"/>`,
+  nitro: u => `<ellipse cx="32" cy="58" rx="16" ry="4" fill="#000" opacity=".25"/><rect x="18" y="12" width="28" height="44" rx="12" fill="${u('n')}" stroke="#01579B" stroke-width="1.2"/><rect x="26" y="4" width="12" height="9" rx="2" fill="${u('c')}" stroke="#3C4248"/><rect x="29" y="1" width="6" height="4" rx="1" fill="#D50000"/><path d="M38 7 Q50 6 52 16" stroke="#9E9E9E" stroke-width="2.4" fill="none"/><path d="M23 20 Q24 36 23 50" stroke="#fff" stroke-opacity=".6" stroke-width="3" stroke-linecap="round" fill="none"/><rect x="18" y="28" width="28" height="12" fill="#fff" opacity=".92"/><text x="32" y="37.6" font-size="10" font-weight="900" text-anchor="middle" fill="#0D47A1" font-family="system-ui,sans-serif">NOS</text>`,
+  rang: u => `<rect x="20" y="20" width="24" height="38" rx="5" fill="${u('p')}" stroke="#111"/><path d="M20 26 h24" stroke="#111" stroke-width="1"/><rect x="24" y="10" width="16" height="11" rx="3" fill="${u('c')}" stroke="#3C4248"/><rect x="28" y="5" width="8" height="6" rx="1.5" fill="#212121"/><path d="M36 7 Q46 4 54 8" stroke="#FF5722" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="1 3.2" fill="none"/><circle cx="56" cy="10" r="3" fill="#FF5722"/><circle cx="58" cy="4" r="2" fill="#FFC400"/><circle cx="52" cy="2.5" r="1.6" fill="#00C853"/><path d="M25 30 Q26 44 25 54" stroke="#fff" stroke-opacity=".55" stroke-width="2.6" stroke-linecap="round" fill="none"/>`,
+  stiker: u => `<path d="M10 10 H48 L54 16 V54 H10Z" fill="#212121" stroke="#111"/><path d="M48 10 V16 H54Z" fill="#9E9E9E"/><path d="M34 14 L18 34 H29 L22 52 L44 28 H33 L40 14Z" fill="#FFEB3B" stroke="#E65100" stroke-width="1.2" stroke-linejoin="round"/><path d="M33 17 L22 31" stroke="#fff" stroke-opacity=".7" stroke-width="1.4"/>`,
+  yol: u => `${['#FF5252', '#FFAB40', '#FFEE58', '#69F0AE', '#40C4FF', '#B388FF'].map((c, i) => `<path d="M${6 + i * 3} 58 Q32 ${8 + i * 3} ${58 - i * 3} 58" stroke="${c}" stroke-width="3.4" fill="none"/>`).join('')}<ellipse cx="14" cy="56" rx="10" ry="5" fill="#fff" opacity=".9"/><ellipse cx="50" cy="56" rx="10" ry="5" fill="#fff" opacity=".9"/>`,
+  qanot: u => `<path d="M8 56 Q4 30 22 14 Q32 5 48 4 Q42 12 48 17 Q40 21 54 27 Q44 31 58 39 Q44 45 32 50 Q20 56 8 56Z" fill="${u('z')}" stroke="#9FA8DA" stroke-width="1.2"/>${[[48, 4, 16, 44], [54, 27, 20, 50], [58, 39, 26, 52]].map(([x1, y1, x2, y2]) => `<path d="M${x1} ${y1} Q${(x1 + x2) / 2 - 4} ${(y1 + y2) / 2 - 6} ${x2} ${y2}" stroke="#7986CB" stroke-opacity=".55" stroke-width="1.2" fill="none"/>`).join('')}<path d="M12 50 Q10 30 24 18" stroke="#fff" stroke-opacity=".85" stroke-width="2.2" stroke-linecap="round" fill="none"/>${[[48, 4, 5], [54, 27, 4], [58, 39, 4], [30, 30, 3]].map(([x, y, r]) => `<path d="M${x} ${y - r} L${x + r * 0.35} ${y - r * 0.35} L${x + r} ${y} L${x + r * 0.35} ${y + r * 0.35} L${x} ${y + r} L${x - r * 0.35} ${y + r * 0.35} L${x - r} ${y} L${x - r * 0.35} ${y - r * 0.35}Z" fill="#fff"/>`).join('')}`,
+  toj: u => `<path d="M8 46 L6 18 L20 30 L32 10 L44 30 L58 18 L56 46Z" fill="${u('o')}" stroke="#8A6508" stroke-width="1.4" stroke-linejoin="round"/><rect x="8" y="44" width="48" height="8" rx="2" fill="${u('o')}" stroke="#8A6508" stroke-width="1.2"/><circle cx="32" cy="34" r="4.5" fill="#E91E63" stroke="#880E4F"/><circle cx="18" cy="38" r="3" fill="#29B6F6" stroke="#01579B"/><circle cx="46" cy="38" r="3" fill="#00E676" stroke="#1B5E20"/><circle cx="31" cy="32.6" r="1.4" fill="#fff"/><path d="M12 24 L14 40" stroke="#fff" stroke-opacity=".6" stroke-width="1.6"/>`,
+  daraxt: u => `<ellipse cx="32" cy="59" rx="16" ry="3.5" fill="#000" opacity=".2"/><path d="M29 46 L28 58 H36 L35 46Z" fill="#8D6E63" stroke="#5D4037"/>${[[8, 48, 24], [14, 34, 18], [20, 20, 12]].map(([w, y, h], i) => `<path d="M32 ${y - h} L${32 + w + 8} ${y} L32 ${y + 4} L${32 - w - 8} ${y}Z" fill="${['#B39DDB', '#CE93D8', '#F8BBD0'][i]}" stroke="#7E57C2" stroke-width="1"/><path d="M32 ${y - h} L${32 + w + 8} ${y} L32 ${y + 4}Z" fill="#fff" opacity=".28"/>`).join('')}<path d="M32 2 l2 5 5 1 -4 3 1 5 -4 -3 -4 3 1 -5 -4 -3 5 -1z" fill="#FFD54F" stroke="#FF8F00" stroke-width=".8"/>`,
+  kopri: u => `<rect x="2" y="44" width="60" height="14" rx="3" fill="#4FC3F7"/><path d="M2 48 h60" stroke="#fff" stroke-opacity=".5" stroke-width="1.4" stroke-dasharray="6 5"/>${['#FF5252', '#FFEE58', '#69F0AE', '#40C4FF', '#B388FF'].map((c, i) => `<path d="M6 46 Q32 ${8 + i * 4} 58 46" stroke="${c}" stroke-width="3.4" fill="none"/>`).join('')}<rect x="4" y="40" width="6" height="8" fill="#B0BEC5"/><rect x="54" y="40" width="6" height="8" fill="#B0BEC5"/>`,
+  qasr: u => `<rect x="12" y="24" width="40" height="34" fill="#F8BBD0" stroke="#AD1457" stroke-width="1.2"/><rect x="4" y="16" width="12" height="42" fill="#F48FB1" stroke="#AD1457" stroke-width="1.2"/><rect x="48" y="16" width="12" height="42" fill="#F48FB1" stroke="#AD1457" stroke-width="1.2"/><path d="M4 16 L10 4 L16 16Z M48 16 L54 4 L60 16Z M26 24 L32 10 L38 24Z" fill="#7E57C2" stroke="#4527A0" stroke-width="1"/><path d="M27 58 V46 a5 5 0 0 1 10 0 V58Z" fill="#AD1457"/><rect x="8" y="26" width="4" height="6" rx="2" fill="#4A148C"/><rect x="52" y="26" width="4" height="6" rx="2" fill="#4A148C"/><path d="M14 26 V56" stroke="#fff" stroke-opacity=".5" stroke-width="1.6"/>`,
+  yulduz: u => `<rect x="2" y="2" width="60" height="60" rx="14" fill="#2A1B5E"/>${[[14, 14, 1.4], [46, 12, 1], [52, 30, 1.6], [12, 44, 1], [24, 52, 1.3], [50, 50, 1]].map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#fff"/>`).join('')}<path d="M32 12 L37 26 L52 26 L40 35 L44 50 L32 41 L20 50 L24 35 L12 26 L27 26Z" fill="${u('o')}" stroke="#8A6508" stroke-width="1.2" stroke-linejoin="round"/><path d="M30 18 L28 26" stroke="#fff" stroke-width="1.6"/>`,
+  favvora: u => `<ellipse cx="32" cy="54" rx="26" ry="7" fill="#80DEEA" stroke="#00838F"/><ellipse cx="32" cy="52" rx="20" ry="4" fill="#4DD0E1"/><rect x="28" y="30" width="8" height="22" fill="#CFD8DC" stroke="#78909C"/><path d="M32 30 Q18 8 10 40 M32 30 Q46 8 54 40 M32 30 Q32 10 32 4" stroke="#B2EBF2" stroke-width="3" fill="none" stroke-linecap="round"/>${[[10, 42], [54, 42], [32, 4]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="2.4" fill="#E0F7FA"/>`).join('')}`,
+  /* o'yin va labirint buyumlari */
+  mashinaTop: u => `<ellipse cx="32" cy="34" rx="16" ry="27" fill="#000" opacity=".25"/><rect x="11" y="10" width="7" height="13" rx="2.5" fill="#151515"/><rect x="46" y="10" width="7" height="13" rx="2.5" fill="#151515"/><rect x="11" y="42" width="7" height="14" rx="2.5" fill="#151515"/><rect x="46" y="42" width="7" height="14" rx="2.5" fill="#151515"/><path d="M18 8 Q32 2 46 8 L48 30 L47 56 Q32 62 17 56 L16 30Z" fill="${u('p')}" stroke="#111" stroke-width="1.2"/><path d="M20 20 Q32 15 44 20 L42 30 Q32 27 22 30Z" fill="${u('g')}" stroke="#111" stroke-width=".8"/><path d="M22 44 Q32 46 42 44 L43 50 Q32 53 21 50Z" fill="${u('g')}" stroke="#111" stroke-width=".8"/><rect x="29" y="4" width="6" height="56" fill="#fff" opacity=".85"/><path d="M19 7 h5 M40 7 h5" stroke="#FFF59D" stroke-width="2.4" stroke-linecap="round"/><path d="M19 58 h5 M40 58 h5" stroke="#FF1744" stroke-width="2.4" stroke-linecap="round"/>`,
+  marra: u => `<rect x="10" y="4" width="4" height="58" rx="2" fill="${u('c')}" stroke="#3C4248"/><clipPath id="{C}"><path d="M14 6 Q30 2 40 8 Q50 13 60 8 L60 36 Q50 41 40 36 Q30 30 14 34Z"/></clipPath><path d="M14 6 Q30 2 40 8 Q50 13 60 8 L60 36 Q50 41 40 36 Q30 30 14 34Z" fill="#fff"/><g clip-path="url(#{C})">${[0, 1, 2, 3, 4, 5].map(r => [0, 1, 2, 3, 4].map(c => (r + c) % 2 ? '' : `<rect x="${14 + c * 9.2}" y="${2 + r * 7 + (c % 2) * 1.5}" width="9.2" height="7" fill="#111"/>`).join('')).join('')}</g><path d="M14 6 Q30 2 40 8 Q50 13 60 8 L60 36 Q50 41 40 36 Q30 30 14 34Z" fill="none" stroke="#111" stroke-width="1.2"/><path d="M16 8 Q30 4 40 10" stroke="#fff" stroke-opacity=".5" stroke-width="1.4" fill="none"/>`,
+  konus: u => `<ellipse cx="32" cy="56" rx="22" ry="5" fill="#000" opacity=".25"/><rect x="10" y="50" width="44" height="6" rx="2" fill="#E65100"/><path d="M24 8 Q32 4 40 8 L50 50 H14Z" fill="#FF6D00" stroke="#BF360C" stroke-width="1"/><path d="M20 26 H44 L46 34 H18Z M16 42 H48 L49 47 H15Z" fill="#fff"/><path d="M27 10 L20 48" stroke="#fff" stroke-opacity=".35" stroke-width="2.4"/>`,
+  devor: u => `${[0, 1, 2, 3, 4].map(r => [0, 1, 2].map(c => `<rect x="${(r % 2 ? -10 : 0) + c * 22 + 2}" y="${4 + r * 12}" width="20" height="10.5" rx="1.5" fill="${(r + c) % 3 ? '#C1502E' : '#A63D1E'}" stroke="#4E1F0F" stroke-width=".8"/>`).join('')).join('')}<path d="M2 6 h60" stroke="#fff" stroke-opacity=".25" stroke-width="1.2"/>`,
+  kalit: u => `<g transform="rotate(45 32 32)"><rect x="28" y="14" width="8" height="34" rx="3" fill="${u('c')}" stroke="#3C4248" stroke-width="1"/><path d="M28 1 L28 8 L36 8 L36 1 A9.85 9.85 0 1 1 28 1 Z" fill="${u('c')}" stroke="#3C4248" stroke-width="1"/><path fill-rule="evenodd" d="M23 54 a9 9 0 1 0 18 0 a9 9 0 1 0 -18 0Z M27.5 54 a4.5 4.5 0 1 0 9 0 a4.5 4.5 0 1 0 -9 0Z" fill="${u('c')}" stroke="#3C4248" stroke-width="1"/><path d="M30 18 V44" stroke="#fff" stroke-opacity=".7" stroke-width="1.4"/></g>`,
+  bolt: u => `<path d="M20 12 L32 6 L44 12 L44 26 L32 32 L20 26Z" fill="${u('c')}" stroke="#3C4248" stroke-width="1.2"/><rect x="27" y="30" width="10" height="28" rx="2" fill="${u('c')}" stroke="#3C4248"/>${[34, 39, 44, 49, 54].map(y => `<path d="M27 ${y} L37 ${y - 3}" stroke="#5F6B76" stroke-width="1.4"/>`).join('')}<path d="M24 14 L32 10" stroke="#fff" stroke-width="1.6"/>`,
+  ot: u => `<path d="M34 14 Q20 14 14 30 Q10 44 14 58 Q18 46 22 42 Q18 54 21 62 Q27 46 31 36 Q31 24 38 16Z" fill="${u('m')}"/><path d="M16 62 Q14 46 22 36 Q26 24 35 17 Q41 13 47 15 Q55 19 59 29 Q61 35 57 39 Q52 41 47 37 Q43 41 41 47 L39 62Z" fill="${u('w')}" stroke="#E57BB3" stroke-width="1.3"/><path d="M36 16 L36 5 L43 14Z" fill="#FFC1E3" stroke="#E57BB3" stroke-width="1"/><path d="M43 13 L51 -3 L47 15Z" fill="${u('o')}" stroke="#8A6508" stroke-width=".8"/><path d="M44.5 10 l4 -1.5 M46 6 l3.5 -1.4 M47.5 2 l2.6 -1" stroke="#8A6508" stroke-width=".8"/><path d="M31 18 Q24 26 26 40 Q30 28 36 22Z" fill="${u('m')}"/><ellipse cx="45" cy="25" rx="2.6" ry="3.3" fill="#3A1A4A"/><circle cx="45.8" cy="23.8" r="1" fill="#fff"/><path d="M41.5 22 l-2 -2 M43 21 l-1 -2.6" stroke="#3A1A4A" stroke-width=".9"/><circle cx="50" cy="32" r="3.4" fill="#FF8CC6" opacity=".5"/><ellipse cx="56" cy="34" rx="1.5" ry="1" fill="#C2185B"/><path d="M52 38 Q55 39 57 37.5" stroke="#C2185B" stroke-width=".9" fill="none"/><path d="M20 56 Q20 44 26 36" stroke="#fff" stroke-opacity=".7" stroke-width="1.6" fill="none"/>`
+};
+function gdefs(id, col) {
+  col = col || '#2F7BEA';
+  return `<defs><radialGradient id="${id}t" cx=".5" cy=".5" r=".5"><stop offset=".55" stop-color="#2E2E2E"/><stop offset=".9" stop-color="#141414"/><stop offset="1" stop-color="#050505"/></radialGradient>
+  <linearGradient id="${id}c" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".45" stop-color="#C9D1D8"/><stop offset=".55" stop-color="#7D8790"/><stop offset="1" stop-color="#E6EBEF"/></linearGradient>
+  <linearGradient id="${id}p" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${shade(col, 0.5)}"/><stop offset=".45" stop-color="${col}"/><stop offset="1" stop-color="${shade(col, -0.55)}"/></linearGradient>
+  <linearGradient id="${id}g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#A9D3F2"/><stop offset="1" stop-color="#15212F"/></linearGradient>
+  <linearGradient id="${id}k" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4A4F57"/><stop offset=".4" stop-color="#1E2126"/><stop offset="1" stop-color="#0A0B0D"/></linearGradient>
+  <linearGradient id="${id}o" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF3B0"/><stop offset=".5" stop-color="#E8B923"/><stop offset="1" stop-color="#8A6508"/></linearGradient>
+  <linearGradient id="${id}n" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#01579B"/><stop offset=".35" stop-color="#40C4FF"/><stop offset=".6" stop-color="#0091EA"/><stop offset="1" stop-color="#01579B"/></linearGradient>
+  <linearGradient id="${id}q" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E1F5FE"/><stop offset="1" stop-color="#2962FF" stop-opacity="0"/></linearGradient>
+  <linearGradient id="${id}z" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E1F5FE"/><stop offset=".5" stop-color="#F8BBD0"/><stop offset="1" stop-color="#D1C4E9"/></linearGradient>
+  <linearGradient id="${id}m" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E040A0"/><stop offset=".5" stop-color="#B388FF"/><stop offset="1" stop-color="#40C4FF"/></linearGradient><linearGradient id="${id}w" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#FFC1E3"/></linearGradient>
+  <radialGradient id="${id}l" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFFDE7"/><stop offset=".5" stop-color="#FFF59D" stop-opacity=".55"/><stop offset="1" stop-color="#FFF59D" stop-opacity="0"/></radialGradient>
+  <linearGradient id="${id}b" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFF8C4" stop-opacity=".95"/><stop offset="1" stop-color="#FFF59D" stop-opacity="0"/></linearGradient></defs>`;
+}
+function icon(k, o) {
+  const f = IC[k]; if (!f) return ''; o = o || {}; const id = uid('ic'), s = o.s || 40, col = o.rang || '#2F7BEA';
+  const u = x => `url(#${id}${x})`, body = f(u).split('{C}').join(id + 'C');
+  const defs = gdefs(id, col);
+  const pos = o.x != null ? ` x="${o.x}" y="${o.y}"` : '', rot = o.rot ? `<g transform="rotate(${o.rot} 32 32)">` : '<g>';
+  return `<svg class="ico" viewBox="0 0 64 64" width="${s}" height="${s}"${pos} aria-hidden="true" style="overflow:visible">${defs}${rot}${body}</g></svg>`;
+}
+const ICON_KEYS = Object.keys(IC);
 /* ---------- PUSHTI UCHAR OT ---------- */
 const YOL = [['#E040A0', '#C2185B'], ['#B388FF', '#FF4FB0'], ['#FF5252', '#FFD740', '#69F0AE', '#40C4FF', '#B388FF'], ['#FFD54F', '#FFF8E1']];
 function pegasus(d, o) {
@@ -1710,7 +1868,7 @@ function race(dunyo, d, opts) {
     if (t > 5200) { c.save(); c.globalAlpha = Math.min(1, (t - 5200) / 400); c.font = `900 ${Math.round(W * 0.09)}px system-ui, sans-serif`; c.textAlign = 'center'; c.fillStyle = '#fff'; c.strokeStyle = '#1A1A1A'; c.lineWidth = 5; c.strokeText(opts.txt || "G'ALABA!", W / 2, H * 0.55); c.fillText(opts.txt || "G'ALABA!", W / 2, H * 0.55); c.restore(); }
   });
 }
-BJ.art = { dragon, car, pegasus, island, vis, shapeSvg, race, nextReward, decor, DETAL, SH, svgImg, RANGLAR };
+BJ.art = { dragon, car, pegasus, island, vis, shapeSvg, race, nextReward, decor, DETAL, SH, svgImg, RANGLAR, icon, ICON_KEYS, shade, KZ, gdefs };
 BJ.vis = vis;
 })(typeof window !== 'undefined' ? window : globalThis);
 
@@ -1751,10 +1909,10 @@ const BOSH = { mat: { g0: 'M0.1', g1: 'M1.1', g2: 'M2.1' }, til: { g0: 'H0.1', g
 const DARAJA = { g0: 'Maktabgacha', g1: '1-sinf', g2: '2-sinf', g3: '3-sinf', g4: '4-sinf' };
 const gl = d => d === 'g0' ? 'g0' : d === 'g1' ? 'g1' : 'g2';
 const BLOK = { g0: [['til', 5], ['yoz', 3], ['mat', 4], ['en', 2], ['mant', 3]], g1: [['mat', 7], ['til', 7], ['en', 3], ['mant', 4]], g2: [['mat', 8], ['til', 7], ['en', 4], ['mant', 5]] };
-const MANT_KUN = { g0: [['L.3'], ['L.4'], ['L.5'], ['L.6'], ['L.8'], ['L.10'], ['L.1'], ['L.2']], g1: [['L.1', 'L.2'], ['L.6'], ['L.8'], ['L.7'], ['L.3'], ['L.5', 'L.9'], ['L.4']], g2: [['L.1', 'L.7'], ['L.7', 'L.2'], ['L.6', 'L.8'], ['L.1'], ['L.7'], ['L.9', 'L.4'], ['L.5', 'L.10']] };
-const UZUN = { 'L.4': 1, 'L.6': 1, 'L.7': 1, 'L.8': 1, 'L.10': 1 };
-const XATO = { birga_xato: "1 ga adashdi", xona_almashdi: 'xonalar almashdi (47→74)', nol_tushib_qoldi: 'nol tushib qoldi (305→35)', nol_ortiqcha: 'ortiqcha nol (47→407)', onlik_xato: "o'nlikda adashdi", yuzlik_xato: 'yuzlikda adashdi', qarzni_unutdi: "qarzni unutdi (52−17=45)", eslab_qolishni_unutdi: "o'nlikni eslab qolmadi (38+27=55)", amal_almashdi: 'amalni almashtirdi (+ ↔ −)', belgi_teskari: '< > belgisini teskari qo\'ydi', taqqoslash_xato: 'taqqoslashda adashdi', kattalik_aldandi: "katta narsalar «ko'p» ko'rindi", sanashda_xato: 'sanashda adashdi', faqat_bittasi: "faqat bitta guruhni oldi", qavs_etiborsiz: "qavsga e'tibor bermadi", tartib_xato: 'amallar tartibi', natijani_yozdi: "natijani javob deb oldi", shakl_adashdi: 'shakl nomida adashdi', rang_adashdi: 'rangda adashdi', saralash_xato: 'saralashda adashdi', raqam_adashdi: 'raqamni tanimadi', birlik_xato: "o'lchov birligida adashdi", perimetr_yarim: 'perimetrda 2 tomonni qo\'shdi', tomon_tushdi: 'bir tomonni unutdi', soat_almashdi: 'soat va daqiqa millari almashdi', daqiqa_xato: 'daqiqada adashdi', soat_daqiqa_adashdi: 'soat bilan daqiqani aralashtirdi', qadam_xato: 'qadamda adashdi', naqsh_xato: 'naqshni topmadi', oxshash_harf: "o'xshash harfni tanladi (b/d)", harf_adashdi: 'harfda adashdi', tartib_almashdi: "harflar tartibi almashdi (ma→am)", unli_xato: 'unlida adashdi', undosh_xato: 'undoshda adashdi', birinchi_harfga_qaradi: "faqat birinchi harfga qarab taxmin qildi", soz_adashdi: "so'zda adashdi", manoga_mos_emas: "ma'noga mos emas", bogin_xato: "bo'g'inga noto'g'ri bo'ldi", harf_tushdi: 'harf tushib qoldi', tutuq_tushdi: 'tutuq belgisi tushib qoldi', tutuq_joyi: "tutuq noto'g'ri joyda", tutuq_ortiqcha: 'ortiqcha tutuq', qosh_undosh_tushdi: "qo'sh undoshdan biri tushdi", qosh_undosh_ortiqcha: 'ortiqcha undosh', kochirish_xato: "ko'chirish qoidasi", manodoshni_tanladi: "zid o'rniga ma'nodosh", zidni_tanladi: "ma'nodosh o'rniga zid", soz_manosi: "so'z ma'nosi", matnni_tushunmadi: 'matnni tushunmadi', yozuv_xato: 'yozishda adashdi', guruhni_tushunmadi: 'guruhni topmadi', juft_xato: 'juftni topmadi', teskari_tushundi: 'shartni teskari tushundi', ortadagini_tanladi: "o'rtadagini tanladi", shartni_unutdi: 'shartni unutdi', mavzu_adashdi: 'boshqa mavzudagi so\'z', ibora_adashdi: 'iborada adashdi', arab_soz_adashdi: "arab so'zida adashdi", arab_mavzu_adashdi: 'arabcha: boshqa mavzu', harakat_xato: 'harakatda adashdi (a/i/u)', shakl_adashdi_ar: 'harf shaklida adashdi', yonalish_xato: "yo'nalishda adashdi", kashfiyot_xato: 'kashfiyot savolida adashdi', hisob_xato: 'hisobda adashdi', boshqa: 'boshqa', xato_bosish: "noto'g'ri joyni bosdi", devorga_urildi: 'labirintda devorga urildi', iz_chetda: 'iz chiziqdan chiqdi', notogri_qism: "qismni noto'g'ri joyga qo'ydi", bittaga_kop: 'bittaga ko\'p sanadi', bittaga_kam: 'bittaga kam sanadi', ikki_marta_sanadi: "o'zini ikki marta sanadi", boshlarni_sanadi: 'oyoq o\'rniga boshlarni sanadi', yarim_hisob: 'faqat yarmini hisobladi', oxirgi_qadamni_unutdi: 'oxirgi qadamni unutdi', ikkiga_bolmadi: 'ikkiga bo\'lmadi', imlo_xato: 'arabcha imloda adashdi', tajvid_xato: 'tajvid qoidasida adashdi', belgi_xato: 'harakat/belgida adashdi' };
-const TUR_IC = { arharf: '🔤', daftar: '📓', tanla: '👆', yoz: '⌨️', tartib: '🔢', farq: '🔍', labirint: '🧭', sudoku: '🔲', xotira: '🃏', iz: '✍️', yigish: '🧩', oqish: '⏱', matn: '📄' };
+const MANT_KUN = { g0: [['L.3'], ['L.4'], ['L.5'], ['L.6'], ['L.8'], ['L.10'], ['L.1'], ['L.11'], ['L.2']], g1: [['L.1', 'L.2'], ['L.6'], ['L.8'], ['L.7'], ['L.3'], ['L.5', 'L.9'], ['L.11'], ['L.4']], g2: [['L.1', 'L.7'], ['L.7', 'L.2'], ['L.6', 'L.8'], ['L.1'], ['L.7'], ['L.9', 'L.4'], ['L.5', 'L.10'], ['L.11', 'L.9']] };
+const UZUN = { 'L.4': 1, 'L.6': 1, 'L.7': 1, 'L.8': 1, 'L.10': 1, 'L.11': 1 };
+const XATO = { birga_xato: "1 ga adashdi", xona_almashdi: 'xonalar almashdi (47→74)', nol_tushib_qoldi: 'nol tushib qoldi (305→35)', nol_ortiqcha: 'ortiqcha nol (47→407)', onlik_xato: "o'nlikda adashdi", yuzlik_xato: 'yuzlikda adashdi', qarzni_unutdi: "qarzni unutdi (52−17=45)", eslab_qolishni_unutdi: "o'nlikni eslab qolmadi (38+27=55)", amal_almashdi: 'amalni almashtirdi (+ ↔ −)', belgi_teskari: '< > belgisini teskari qo\'ydi', taqqoslash_xato: 'taqqoslashda adashdi', kattalik_aldandi: "katta narsalar «ko'p» ko'rindi", sanashda_xato: 'sanashda adashdi', faqat_bittasi: "faqat bitta guruhni oldi", qavs_etiborsiz: "qavsga e'tibor bermadi", tartib_xato: 'amallar tartibi', natijani_yozdi: "natijani javob deb oldi", shakl_adashdi: 'shakl nomida adashdi', rang_adashdi: 'rangda adashdi', saralash_xato: 'saralashda adashdi', raqam_adashdi: 'raqamni tanimadi', birlik_xato: "o'lchov birligida adashdi", perimetr_yarim: 'perimetrda 2 tomonni qo\'shdi', tomon_tushdi: 'bir tomonni unutdi', soat_almashdi: 'soat va daqiqa millari almashdi', daqiqa_xato: 'daqiqada adashdi', soat_daqiqa_adashdi: 'soat bilan daqiqani aralashtirdi', qadam_xato: 'qadamda adashdi', naqsh_xato: 'naqshni topmadi', oxshash_harf: "o'xshash harfni tanladi (b/d)", harf_adashdi: 'harfda adashdi', tartib_almashdi: "harflar tartibi almashdi (ma→am)", unli_xato: 'unlida adashdi', undosh_xato: 'undoshda adashdi', birinchi_harfga_qaradi: "faqat birinchi harfga qarab taxmin qildi", soz_adashdi: "so'zda adashdi", manoga_mos_emas: "ma'noga mos emas", bogin_xato: "bo'g'inga noto'g'ri bo'ldi", harf_tushdi: 'harf tushib qoldi', tutuq_tushdi: 'tutuq belgisi tushib qoldi', tutuq_joyi: "tutuq noto'g'ri joyda", tutuq_ortiqcha: 'ortiqcha tutuq', qosh_undosh_tushdi: "qo'sh undoshdan biri tushdi", qosh_undosh_ortiqcha: 'ortiqcha undosh', kochirish_xato: "ko'chirish qoidasi", manodoshni_tanladi: "zid o'rniga ma'nodosh", zidni_tanladi: "ma'nodosh o'rniga zid", soz_manosi: "so'z ma'nosi", matnni_tushunmadi: 'matnni tushunmadi', yozuv_xato: 'yozishda adashdi', guruhni_tushunmadi: 'guruhni topmadi', juft_xato: 'juftni topmadi', teskari_tushundi: 'shartni teskari tushundi', ortadagini_tanladi: "o'rtadagini tanladi", shartni_unutdi: 'shartni unutdi', mavzu_adashdi: 'boshqa mavzudagi so\'z', ibora_adashdi: 'iborada adashdi', arab_soz_adashdi: "arab so'zida adashdi", arab_mavzu_adashdi: 'arabcha: boshqa mavzu', harakat_xato: 'harakatda adashdi (a/i/u)', shakl_adashdi_ar: 'harf shaklida adashdi', yonalish_xato: "yo'nalishda adashdi", kashfiyot_xato: 'kashfiyot savolida adashdi', hisob_xato: 'hisobda adashdi', boshqa: 'boshqa', xato_bosish: "noto'g'ri joyni bosdi", devorga_urildi: 'labirintda devorga urildi', iz_chetda: 'iz chiziqdan chiqdi', notogri_qism: "qismni noto'g'ri joyga qo'ydi", kod_xato: "kod-yo'lda dastur xato (devor/to'siq)", bittaga_kop: 'bittaga ko\'p sanadi', bittaga_kam: 'bittaga kam sanadi', ikki_marta_sanadi: "o'zini ikki marta sanadi", boshlarni_sanadi: 'oyoq o\'rniga boshlarni sanadi', yarim_hisob: 'faqat yarmini hisobladi', oxirgi_qadamni_unutdi: 'oxirgi qadamni unutdi', ikkiga_bolmadi: 'ikkiga bo\'lmadi', imlo_xato: 'arabcha imloda adashdi', tajvid_xato: 'tajvid qoidasida adashdi', belgi_xato: 'harakat/belgida adashdi' };
+const TUR_IC = { arharf: '🔤', daftar: '📓', tanla: '👆', yoz: '⌨️', tartib: '🔢', farq: '🔍', labirint: '🧭', sudoku: '🔲', xotira: '🃏', iz: '✍️', yigish: '🧩', oqish: '⏱', matn: '📄', kodyol: '🤖' };
 Object.assign(A, { FAN, ZANJIR, BOSH, DARAJA, gl, BLOK, MANT_KUN, UZUN, XATO, TUR_IC });
 /* ================= STORE ================= */
 const KEY = 'bj_state_v1'; /* HECH QACHON o'zgarmaydi: yangi versiya eski holatni migrate() bilan yangilaydi */
@@ -1795,7 +1953,7 @@ function logMerge(id, k, extra) { const key = logKey(id, k), a = readLog(id, k),
 Object.assign(A, { readLog, pushLog, flushLog, logKeys, pruneLogs, weekLog, logMerge, LOGP });
 addEventListener('pagehide', () => { flushLog(); save(true); });
 /* ================= BOLA ================= */
-function bolaDefaults() { return { id: null, kod: '', laqab: '', avatar: '🦊', daraja: 'g1', arab: 'asosiy', dunyo: null, muxlisga: true, yaratildi: null, boshlandi: null, mavzu: {}, fan: {}, harfK: 2, harfKun: null, harfSt: {}, tugun: {}, takror: [], yulduz: 0, yulduzKun: {}, arenaYulduz: {}, detal: [], kun: {}, wcpm: [], missiya: null, reja: null, shosh: false, me: {}, olqish: [], oqilgan: [], oyin: {}, arDaraja: 1, fokus: '', vazifa: [], kunDaq: null, oyinHar: null, oyinDaq: null, qoshDaq: {}, uyquOchiq: 0, komboMax: 0 }; }
+function bolaDefaults() { return { id: null, kod: '', laqab: '', avatar: '🦊', daraja: 'g1', arab: 'asosiy', dunyo: null, muxlisga: true, yaratildi: null, boshlandi: null, mavzu: {}, fan: {}, harfK: 2, harfKun: null, harfSt: {}, tugun: {}, takror: [], yulduz: 0, yulduzKun: {}, arenaYulduz: {}, detal: [], kun: {}, wcpm: [], missiya: null, reja: null, shosh: false, me: {}, olqish: [], oqilgan: [], oyin: {}, arDaraja: 1, fokus: '', vazifa: [], kunDaq: null, oyinHar: null, oyinDaq: null, qoshDaq: {}, uyquOchiq: 0, komboMax: 0, kons: null }; }
 function newBola(o) {
   const b = fixBola(Object.assign(bolaDefaults(), o)); b.id = b.id || 'b' + rid(7).toLowerCase(); b.yaratildi = todayKey();
   if (!b.kod) { const n = Object.keys(S.bolalar).length + 1; b.kod = ({ g0: 'K', g1: 'B', g2: 'I', g3: 'U', g4: 'T' }[b.daraja] || 'B') + n; }
@@ -2132,10 +2290,11 @@ function render() {
   const b = A.bola(); if (!b.dunyo && h !== 'dunyo') return screenWorld(b);
   if (h === 'dunyo') return screenWorld(b);
   KOMBO.n = 0;
-  if (/^(missiya|arena|mashq|vazifa-)/.test(h)) { const m0 = b.missiya, dm = A.damHolat(b, h === 'missiya' && m0 && m0.sana === A.todayKey() && !m0.done && m0.si > 0); if (dm) return screenDam(b, dm); }
+  if (/^(missiya|arena|mashq|vazifa-|garaj)/.test(h)) { const m0 = b.missiya, dm = A.damHolat(b, h === 'missiya' && m0 && m0.sana === A.todayKey() && !m0.done && m0.si > 0); if (dm) return screenDam(b, dm); }
   if (h === 'missiya') return screenMission(b);
   if (h === 'arena') return screenArena(b);
   if (h === 'natija') return screenResult(b);
+  if (h === 'garaj') return b.dunyo === 'garaj' && A.screenGaraj ? A.screenGaraj(b) : screenHome(b);
   if (h === 'mashq') return screenMashq(b);
   if ((m = h.match(/^mashq-([a-z]+)(?:-([a-z]+))?$/))) return mashqStart(b, m[1], m[2]);
   if ((m = h.match(/^vazifa-(\w+)$/))) return vazifaStart(b, m[1]);
@@ -2213,6 +2372,10 @@ function sovgaBayram(b) {
 /* ================= BOLA UYI ================= */
 function kechagi(b) { const t = A.agg(b), y = b.kun[A.addDays(A.todayKey(), -1)]; if (!y || !y.n) return t.n ? `Bugun ${t.ok1} ta to'g'ri javob — zo'r boshlanish!` : ''; const d = t.ok1 - y.ok1;
   return d > 0 ? `🚀 Kechagi sendan ${d} ta ko'proq to'g'ri javob!` : d === 0 ? '🤝 Kechagi sen bilan tengsan — davom et!' : `Kechagi sen ${y.ok1} ta to'g'ri topgan edi — yetib ol!`; }
+const carRang = b => ART.RANGLAR[(ART.decor(b.detal).rang || 0) % ART.RANGLAR.length];
+/* 0.6.0: yo'l chizig'idagi qahramon — o'z mashinasi (realistik) yoki uchar ot */
+const roadHero = b => b.dunyo === 'orol' ? ART.icon('ot', { s: 34 }) : ART.car(ART.decor(b.detal), { w: 52 });
+A.roadHero = roadHero; A.carRang = carRang;
 function worldScene(b, big) { const d = ART.decor(b.detal); if (b.dunyo === 'orol') return `<div class="scene orol">${ART.island(d)}<div class="peg">${ART.pegasus(d, { w: big ? 230 : 170 })}</div><div class="drg">${ART.dragon({ dunyo: 'orol', scale: 0.75 })}</div></div>`;
   return `<div class="scene garaj"><div class="lift"></div><div class="carw">${ART.car(d, { w: big ? 280 : 230 })}</div><div class="drg">${ART.dragon({ dunyo: 'garaj', scale: 0.75 })}</div></div>`; }
 A.worldScene = worldScene;
@@ -2230,10 +2393,10 @@ function screenHome(b) {
   app.innerHTML = `<div class="wrap kidw"><div class="top"><button class="ib av" data-tanla aria-label="Bola almashtirish">${b.avatar}</button><div class="ttl">${esc(b.laqab)}</div><span class="sp"></span><span class="pill">⭐ ${b.yulduz}</span><span class="pill">${sq.ic}</span><button class="ib" data-ota aria-label="Ota-ona paneli">👨‍👩‍👧</button></div>
   ${worldScene(b, true)}<div class="bubble">${esc(done ? 'Bugungi missiya bajarildi! Arenada mashq qilsang ham bo\'ladi.' : going ? 'Missiya kutib turibdi — davom etamiz!' : A.isSunday() && A.dayNo(b) >= 3 ? 'Bugun yakshanba — KATTA FINAL!' : 'Salom! Bugungi missiyaga tayyormisan?')}</div>
   <div class="row cta">${done ? `<button class="btn big alt" data-arena>⚔️ Arena</button>` : `<button class="btn big" data-start>${going ? '▶ Davom etish' : A.isSunday() && A.dayNo(b) >= 3 ? '🏆 Finalni boshlash' : '🚀 Missiyani boshlash'}</button>`}</div>
-  <div class="row"><button class="btn ghost" data-mashq>📚 Mashq — fanni o'zing tanla</button></div>${sovgaHTML(b)}${vazifaHTML(b)}
+  <div class="row"><button class="btn ghost" data-mashq>📚 Mashq — fanni o'zing tanla</button></div>${A.garajTugma ? `<div class="row">${A.garajTugma(b)}</div>` : ''}${sovgaHTML(b)}${vazifaHTML(b)}
   <div class="stats"><div><b>⭐ ${t.yulduz}</b><span>bugun</span></div><div><b>⏱ ${Math.round(t.faol / 60)}</b><span>daqiqa</span></div><div><b>${b.detal.length}</b><span>${b.dunyo === 'orol' ? 'bezak' : 'detal'}</span></div></div>
   ${vaqtHTML(b)}${kechagi(b) ? `<div class="note kn">${esc(kechagi(b))}</div>` : ''}
-  ${b.detal.length ? `<div class="coll">${b.detal.slice(-12).map(r => `<span title="${esc(r.nom || '')}">${r.ic || '🔩'}</span>`).join('')}</div>` : ''}
+  ${b.detal.length ? `<div class="coll">${b.detal.slice(-12).map(r => `<span title="${esc(r.nom || '')}">${ART.icon(r.k, { s: 34, rang: carRang(b) }) || r.ic || '🔩'}</span>`).join('')}</div>` : ''}
   ${reytingHTML(b)}
   ${installTip()}</div>`;
   sovgaBayram(b);
@@ -2241,6 +2404,7 @@ function screenHome(b) {
   const ar = $('[data-arena]'); if (ar) ar.onclick = () => go('arena');
   $('[data-tanla]').onclick = () => go('tanla'); $('[data-ota]').onclick = () => go('ota');
   $('[data-mashq]').onclick = () => go('mashq');
+  const gb = $('[data-garaj]'); if (gb) gb.onclick = () => go('garaj');
   $$('[data-vz]').forEach(x => x.onclick = () => go('vazifa-' + x.dataset.vz));
   $$('[data-vzok]').forEach(x => x.onclick = () => { const v = (b.vazifa || []).find(y => y.id === x.dataset.vzok); if (!v) return; v.done = true; v.qolda = 1; v.doneTs = Date.now(); v.doneSana = A.todayKey(); A.addStar(b, 2); A.pushLog(b.id, { t: 'vazifa', ts: Date.now(), bola: b.id, id: v.id, fan: v.fan, n: 0, qolda: 1 }); A.save(true); FX.play('ding'); toast('✅ Barakalla! +2 ⭐'); screenHome(b); });
 }
@@ -2276,7 +2440,7 @@ function stepDone(m) { let d = 0; m.steps.forEach((x, i) => { if (i < m.si) d +=
 function frame(b, m, title, body) {
   const p = Math.min(1, stepDone(m) / Math.max(1, stepTotal(m))), icon = b.dunyo === 'orol' ? '🦄' : '🏎️';
   app.innerHTML = `<div class="wrap play"><div class="top"><button class="ib" data-pause aria-label="To'xtatish">⏸</button><div class="ttl">${title}</div><span class="sp"></span><span class="pill">⭐ ${A.agg(b).yulduz}</span></div>
-  <div class="road"><div class="rfill" style="width:${Math.round(p * 100)}%"></div><span class="rcar" style="left:calc(${Math.round(p * 100)}% - 18px)">${icon}</span><span class="rflag">🏁</span></div><div id="stage">${body}</div></div>`;
+  <div class="road"><div class="rfill" style="width:${Math.round(p * 100)}%"></div><span class="rcar svgc" style="left:calc(${Math.round(p * 100)}% - 26px)">${roadHero(b)}</span><span class="rflag">${ART.icon(b.dunyo === 'orol' ? 'qasr' : 'marra', { s: 26 })}</span></div><div id="stage">${body}</div></div>`;
   $('[data-pause]').onclick = () => { endSession(b); go('uy'); };
 }
 function stepTitle(st) { if (st.arBolim) return "🕌 Arab: o'qish · yozish · tajvid"; const F = A.FAN[st.fan]; return ({ isinish: '🔥 Isinish', qayta: "💥 Qayta yig'", oqish: "⏱ 1 daqiqa o'qish", duel: '⚔️ Arab dueli', kashf: '🌍 Kun kashfiyoti', final15: '🏆 Yakshanba finali', turnir: '🧠 Olimpiada turniri', viktorina: '🌍 Hafta viktorinasi', yakun: '🏁 Final poyga' })[st.k] || (F ? F.ic + ' ' + F.nom : st.k); }
@@ -2545,7 +2709,7 @@ function onAnswer(b, m, st, it, st0, r) {
   if (m) m.cur = null; A.save(true);
   const next = () => { if (CUR && CUR.k === 'missiya') missionNext(b, m); else if (CUR && CUR.k === 'arena') arenaNext(b); else if (CUR && CUR.k === 'mashq') mashqNext(b); };
   if (it.tur === 'dars' && fin.togri) setTimeout(() => toast("🎓 Barakalla! Darsdan keyin o'zing yechding!"), 250);
-  if (it.tur !== 'dars') { if (KOMBO.id !== b.id) KOMBO = { id: b.id, n: 0 }; KOMBO.n = fin.togri_1 ? KOMBO.n + 1 : 0; const dd = A.agg(b); if (KOMBO.n > (dd.komboMax || 0)) dd.komboMax = KOMBO.n; if (KOMBO.n > (b.komboMax || 0)) b.komboMax = KOMBO.n; }
+  if (it.tur !== 'dars') { if (KOMBO.id !== b.id) KOMBO = { id: b.id, n: 0 }; KOMBO.n = fin.togri_1 ? KOMBO.n + 1 : 0; const dd = A.agg(b); if (KOMBO.n > (dd.komboMax || 0)) dd.komboMax = KOMBO.n; if (KOMBO.n > (b.komboMax || 0)) b.komboMax = KOMBO.n; if (fin.togri_1 && A.konsJavob) A.konsJavob(b); }
   if (fin.togri_1) { const el = r.el || $('#body'); const bb = el.getBoundingClientRect(); const t0 = performance.now(); if (it.tur !== 'dars' && komboMarra(KOMBO.n)) komboFX(b, KOMBO.n, bb.left + bb.width / 2, bb.top + Math.min(bb.height / 2, 160), ctx.k === 'arena' || ctx.k === 'mashq'); FX.boom(bb.left + bb.width / 2, bb.top + Math.min(bb.height / 2, 160), b.dunyo).then(() => { A.agg(b).fx += Math.round(performance.now() - t0); if (ev === 'ozl') toast('🟢 Yangi ko\'nikma o\'zlashtirildi!'); next(); }); return; }
   if (fin.togri) { FX.play('ding'); $('#fb').innerHTML = `<div class="good">✅ ${esc(pickA(PRAISE1))}</div>`; setTimeout(next, A.TEZ ? 200 : 1300); return; }
   /* 0.2.0: 2-xatoda javob shunchaki ko'rsatilmaydi — kichik dars → egizak savol */
@@ -2647,15 +2811,47 @@ RENDER.farq = (el, it, b, done, st0) => {
 };
 /* Labirint */
 RENDER.labirint = (el, it, b, done, st0) => {
-  const { w, h, cell } = it; let p = 0, bumps = 0, fin = false; const me = b.dunyo === 'orol' ? '🦄' : '🏎️', goal = b.dunyo === 'orol' ? '🏰' : '🏁', S = 30;
+  const { w, h, cell } = it; let p = 0, bumps = 0, fin = false, yon = 1; const S = 30;
   const svg = () => { let s = `<svg viewBox="-2 -2 ${w * S + 4} ${h * S + 4}" class="maze">`; for (let i = 0; i < w * h; i++) { const x = (i % w) * S, y = Math.floor(i / w) * S, c = cell[i]; if (c & 1) s += `<line x1="${x}" y1="${y}" x2="${x + S}" y2="${y}"/>`; if (c & 2) s += `<line x1="${x + S}" y1="${y}" x2="${x + S}" y2="${y + S}"/>`; if (c & 4) s += `<line x1="${x}" y1="${y + S}" x2="${x + S}" y2="${y + S}"/>`; if (c & 8) s += `<line x1="${x}" y1="${y}" x2="${x}" y2="${y + S}"/>`; }
     if (st0.yol) st0.yol.forEach(i => { s += `<circle cx="${(i % w) * S + S / 2}" cy="${Math.floor(i / w) * S + S / 2}" r="3" fill="#FFC400"/>`; });
-    s += `<text x="${(w - 1) * S + S / 2}" y="${(h - 1) * S + S / 2}" font-size="20" text-anchor="middle" dominant-baseline="central">${goal}</text><text x="${(p % w) * S + S / 2}" y="${Math.floor(p / w) * S + S / 2}" font-size="20" text-anchor="middle" dominant-baseline="central">${me}</text></svg>`; return s; };
+    s += ART.icon(b.dunyo === 'orol' ? 'qasr' : 'marra', { s: S - 4, x: (w - 1) * S + 2, y: (h - 1) * S + 2 }) + (b.dunyo === 'orol' ? ART.icon('ot', { s: S - 2, x: (p % w) * S + 1, y: Math.floor(p / w) * S + 1 }) : ART.icon('mashinaTop', { s: S - 2, x: (p % w) * S + 1, y: Math.floor(p / w) * S + 1, rot: [0, 90, 180, 270][yon], rang: carRang(b) })) + '</svg>'; return s; };
   el.innerHTML = `<div class="mz">${svg()}</div><div class="pad"><span></span><button class="pb" data-d="0">⬆️</button><span></span><button class="pb" data-d="3">⬅️</button><button class="pb" data-d="2">⬇️</button><button class="pb" data-d="1">➡️</button></div>`;
-  const mv = d => { if (fin) return; firstTap(st0); const bit = [1, 2, 4, 8][d], dd = [-w, 1, w, -1][d]; if (cell[p] & bit) { bumps++; FX.vibrate(20); FX.play('yumshoq'); const mz = $('.mz', el); mz.classList.add('bump'); setTimeout(() => mz.classList.remove('bump'), 250); if (bumps === 6) { st0.maslahat = 1; st0.yol = BJ.mazePath(it); setTimeout(() => { st0.yol = null; $('.mz', el).innerHTML = svg(); }, 2500); } }
+  const mv = d => { if (fin) return; firstTap(st0); yon = d; const bit = [1, 2, 4, 8][d], dd = [-w, 1, w, -1][d]; if (cell[p] & bit) { bumps++; FX.vibrate(20); FX.play('yumshoq'); const mz = $('.mz', el); mz.classList.add('bump'); setTimeout(() => mz.classList.remove('bump'), 250); if (bumps === 6) { st0.maslahat = 1; st0.yol = BJ.mazePath(it); setTimeout(() => { st0.yol = null; $('.mz', el).innerHTML = svg(); }, 2500); } }
     else { p += dd; FX.play('bosish'); } $('.mz', el).innerHTML = svg(); if (p === w * h - 1) { fin = true; done({ togri: true, javob: 'yetdi', xato_soni: bumps > 2 ? 1 : 0, xato_turi: bumps > 2 ? 'devorga_urildi' : null, maslahat: st0.maslahat, yakuniy: 1, el }); } };
   $$('[data-d]', el).forEach(bt => bt.onclick = () => mv(+bt.dataset.d));
   let sx = 0, sy = 0; const mz = $('.mz', el); mz.addEventListener('pointerdown', e => { sx = e.clientX; sy = e.clientY; }); mz.addEventListener('pointerup', e => { const dx = e.clientX - sx, dy = e.clientY - sy; if (Math.max(Math.abs(dx), Math.abs(dy)) < 24) return; mv(Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 1 : 3) : (dy > 0 ? 2 : 0)); });
+};
+/* 0.6.0 🤖 Kod-yo'l: strelkalardan dastur → ▶ Yurgiz → mashina qadam-baqadam yuradi; to'siqqa urilsa — kichik portlash va boshiga qaytadi (dastur saqlanadi) */
+RENDER.kodyol = (el, it, b, done, st0) => {
+  const { w, h } = it, S = 44, orol = b.dunyo === 'orol', prog = [], MAX = it.slot || 10; let err = 0, busy = false, pos = it.start, yon = 1, hint = 0, fin = false, cur = -1;
+  const xy = c => [(c % w) * S, Math.floor(c / w) * S], AR = ['⬆️', '➡️', '⬇️', '⬅️'];
+  const svg = () => { let s = `<svg viewBox="0 0 ${w * S} ${h * S}" class="kyb">`;
+    for (let i = 0; i < w * h; i++) { const [x, y] = xy(i); s += `<rect x="${x + 1.5}" y="${y + 1.5}" width="${S - 3}" height="${S - 3}" rx="7" class="${(i % w + Math.floor(i / w)) % 2 ? 'k1' : 'k2'}"/>`; }
+    if (hint) it.ex.path.slice(0, hint === 1 ? 1 + it.runs[0][1] : 99).forEach(c => { const [x, y] = xy(c); s += `<circle cx="${x + S / 2}" cy="${y + S / 2}" r="5.5" fill="#FFC400" opacity=".85"/>`; });
+    it.tos.forEach(c => { const [x, y] = xy(c); s += ART.icon(orol ? 'daraxt' : 'konus', { s: S - 8, x: x + 4, y: y + 4 }); });
+    { const [x, y] = xy(it.goal); s += ART.icon(orol ? 'qasr' : 'marra', { s: S - 6, x: x + 3, y: y + 3 }); }
+    { const [x, y] = xy(pos); s += orol ? ART.icon('ot', { s: S - 4, x: x + 2, y: y + 2 }) : ART.icon('mashinaTop', { s: S - 4, x: x + 2, y: y + 2, rot: [0, 90, 180, 270][yon], rang: carRang(b) }); }
+    return s + '</svg>'; };
+  const progHTML = () => { let s = prog.map((c, i) => `<span class="kyc${i === cur ? ' on' : ''}">${AR[c[0]]}${c[1] > 1 ? `<i>×${c[1]}</i>` : ''}</span>`).join('');
+    if (it.slot) for (let i = prog.length; i < it.slot; i++) s += '<span class="kyc bo"></span>'; else if (!prog.length) s += `<span class="sm mut">Strelkalarni bos — dastur shu yerda yig'iladi</span>`; return s; };
+  el.innerHTML = `<div class="ky">${svg()}</div>${it.slot ? `<div class="sm mut kslot">🧩 Buyruq joyi: ${it.slot} ta</div>` : ''}<div class="kprog">${progHTML()}</div>
+  <div class="pad kpad"><span></span><button class="pb" data-d="0">⬆️</button><span></span><button class="pb" data-d="3">⬅️</button><button class="pb" data-d="2">⬇️</button><button class="pb" data-d="1">➡️</button></div>
+  ${it.takror ? `<div class="ktk">${[2, 3, 4].map(n => `<button class="btn ghost" data-n="${n}">×${n}</button>`).join('')}</div>` : ''}
+  <div class="row kctl"><button class="btn ghost" data-del aria-label="Oxirgi buyruqni o'chirish">⌫</button><button class="btn big" data-run>▶ Yurgiz</button></div>`;
+  const ky = $('.ky', el), pg = $('.kprog', el), draw = () => { ky.innerHTML = svg(); pg.innerHTML = progHTML(); };
+  const reset = () => { pos = it.start; yon = 1; cur = -1; busy = false; draw(); };
+  const xato = msg => { err++; $('#fb').innerHTML = `<div class="hint">${msg}</div>`; if (err === 2) { hint = 1; } if (err >= 3) { hint = 2; st0.maslahat = 1; $('#fb').insertAdjacentHTML('beforeend', `<div class="hint">💡 Sariq nuqtalar — yo'l. Har burilishda yangi strelka kerak.</div>`); } setTimeout(reset, A.TEZ ? 50 : 900); };
+  $$('[data-d]', el).forEach(bt => bt.onclick = () => { if (busy || fin) return; firstTap(st0); if (prog.length >= MAX) { FX.play('yumshoq'); pg.classList.add('bump'); setTimeout(() => pg.classList.remove('bump'), 250); return toast(it.takror ? "Joy qolmadi — «×» bilan qisqartir!" : "Dastur juda uzun"); } prog.push([+bt.dataset.d, 1]); FX.play('bosish'); draw(); });
+  $$('[data-n]', el).forEach(bt => bt.onclick = () => { if (busy || fin || !prog.length) return; firstTap(st0); const l = prog[prog.length - 1], n = +bt.dataset.n; l[1] = l[1] === n ? 1 : n; FX.play('bosish'); draw(); });
+  $('[data-del]', el).onclick = () => { if (busy || fin) return; prog.pop(); draw(); };
+  $('[data-run]', el).onclick = () => { if (busy || fin) return; if (!prog.length) return toast('Avval strelkalarni bos'); firstTap(st0); busy = true; $('#fb').innerHTML = '';
+    const steps = []; prog.forEach((c, i) => { for (let k = 0; k < c[1]; k++) steps.push([c[0], i]); }); let si = 0;
+    const tick = () => { if (si >= steps.length) return xato("🛑 Mashina yo'lda to'xtadi — dasturga yana buyruq qo'sh."); const [d, ci] = steps[si++]; yon = d; cur = ci;
+      const x = pos % w + [0, 1, 0, -1][d], y = Math.floor(pos / w) + [-1, 0, 1, 0][d], c = y * w + x;
+      if (x < 0 || y < 0 || x >= w || y >= h || it.tos.indexOf(c) >= 0) { draw(); const r = ky.getBoundingClientRect(), k = r.width / (w * S), [px, py] = xy(pos); FX.burst(r.left + (px + S / 2 + [0, 1, 0, -1][d] * S / 2) * k, r.top + (py + S / 2 + [-1, 0, 1, 0][d] * S / 2) * k, { tema: b.dunyo, n: 26, max: 6 }); FX.play(orol ? 'kristall' : 'boom', 0.35); FX.vibrate(40); ky.classList.add('bump'); setTimeout(() => ky.classList.remove('bump'), 260); return xato(orol ? "💥 Ot daraxtga urildi! Dasturni tuzat va yana ▶ bos." : "💥 Bum! Mashina to'siqqa urildi. Dasturni tuzat va yana ▶ bos."); }
+      pos = c; FX.play('bosish'); draw(); if (pos === it.goal) { fin = true; cur = -1; setTimeout(() => done({ togri: true, javob: 'yetdi', xato_soni: err > 1 ? 1 : 0, xato_turi: err > 1 ? 'kod_xato' : null, maslahat: st0.maslahat, yakuniy: 1, el: ky }), A.TEZ ? 10 : 250); return; }
+      setTimeout(tick, A.TEZ ? 20 : 330); };
+    setTimeout(tick, A.TEZ ? 10 : 200); };
 };
 /* Sudoku */
 RENDER.sudoku = (el, it, b, done, st0) => {
@@ -2799,7 +2995,7 @@ function stepYakun(b, m, st) {
   if (m.steps.some(x => x.k === 'duel') && !m.duelSaved) { const di = m.steps.findIndex(x => x.k === 'duel'); const r = m.res[di] || []; if (r.length) { const s = A.S(), sana = A.todayKey(); s.duel[sana] = s.duel[sana] || {}; s.duel[sana][b.id] = { togri: A.sum(r.map(x => x.ok)), ms: A.sum(r.map(x => x.ms)), ball: A.sum(r.map(x => x.ball)), ts: Date.now(), final: m.final ? 1 : 0 }; } m.duelSaved = 1; }
   if (!m.mukofot) { const r = ART.nextReward(b.dunyo, b.detal); b.detal.push({ k: r.k, t: r.t, nom: r.nom, ic: r.ic, ts: Date.now() }); m.mukofot = r; A.agg(b).missiya = 1; A.save(true); }
   const r = m.mukofot;
-  frame(b, m, stepTitle(st), `<div class="reveal"><div class="rv-t">🎁 Yangi ${b.dunyo === 'orol' ? 'bezak' : 'detal'}!</div><div class="rv-i">${r.ic}</div><b>${esc(r.nom)}</b>${A.worldScene(b, false)}<button class="btn big" data-go>${b.dunyo === 'orol' ? '🦄 Parvozga!' : '🏁 Poygaga!'}</button></div>`);
+  frame(b, m, stepTitle(st), `<div class="reveal"><div class="rv-t">🎁 Yangi ${b.dunyo === 'orol' ? 'bezak' : 'detal'}!</div><div class="rv-i">${ART.icon(r.k, { s: 92, rang: carRang(b) }) || r.ic}</div><b>${esc(r.nom)}</b>${A.worldScene(b, false)}<button class="btn big" data-go>${b.dunyo === 'orol' ? '🦄 Parvozga!' : '🏁 Poygaga!'}</button></div>`);
   FX.burst(innerWidth / 2, innerHeight * 0.3, { tema: b.dunyo, n: 50 }); FX.play('fanfar');
   $('[data-go]').onclick = () => { const t0 = performance.now(); ART.race(b.dunyo, ART.decor(b.detal), { txt: m.final ? 'CHEMPION!' : "G'ALABA!" }).then(() => { A.agg(b).fx += Math.round(performance.now() - t0); m.si++; m.done = true; A.save(true); endSession(b); go('natija'); }); };
 }
@@ -2882,7 +3078,7 @@ function mashqNext(b, given) {
   const st0 = { shown: Date.now(), first: null, urinish: 1, maslahat: 0, ovoz: 0, lock: b.shosh ? Date.now() + 1500 : 0 }; C.it = it; C.st = st0;
   const ay = b.arenaYulduz[A.todayKey()] || 0, ttl = C.vz ? vzNom(C.vz) : C.fan === 'ar' && C.bolim && BJ.arab ? '🕌 ' + BJ.arab.BOLIM[C.bolim].nom : '📚 ' + A.FAN[C.fan].nom, p = C.vz ? Math.min(1, C.vz.qildi / Math.max(1, C.vz.n)) : 0;
   app.innerHTML = `<div class="wrap play"><div class="top"><button class="ib" data-x aria-label="Chiqish">✕</button><div class="ttl">${esc(ttl)}</div><span class="sp"></span>${C.vz ? `<span class="pill">📝 ${C.vz.qildi}/${C.vz.n}</span>` : `<span class="pill">✅ ${C.n}</span><span class="pill">⭐ ${ay}/20</span>`}</div>
-  ${C.vz ? `<div class="road"><div class="rfill" style="width:${Math.round(p * 100)}%"></div><span class="rcar" style="left:calc(${Math.round(p * 100)}% - 18px)">${b.dunyo === 'orol' ? '🦄' : '🏎️'}</span><span class="rflag">🏁</span></div>` : ''}
+  ${C.vz ? `<div class="road"><div class="rfill" style="width:${Math.round(p * 100)}%"></div><span class="rcar svgc" style="left:calc(${Math.round(p * 100)}% - 26px)">${A.roadHero(b)}</span><span class="rflag">${ART.icon(b.dunyo === 'orol' ? 'qasr' : 'marra', { s: 26 })}</span></div>` : ''}
   <div class="item t-${it.t}">${headHTML(b, it)}<div id="body"></div><div id="fb"></div>${otaTip(b, it)}</div></div>`;
   $('[data-x]').onclick = () => { endSession(b); A.save(true); if (C.n && !C.vz) toast(`📚 ${C.n} ta savol · ${C.ok} tasi birinchi urinishda ✅`); go('uy'); };
   const say = $('[data-say]'); if (say) say.onclick = () => { st0.ovoz++; speak(it.tts); };
@@ -3165,6 +3361,171 @@ A.oyin = { boshla, cfg, turlar, pgTask, KZ, KR, PZ, pzRasm, OYIN, finish: () => 
 if (A.TEZ) G.__bjOyin = () => SES; /* faqat ?tez=1 avtomatik sinov uchun */
 })(window);
 
+</script>
+<script>
+/* Bilimjon — 🔧 GARAJ: konstruktor + krash-test (0.6.0, 3-bosqich). Faqat 🏎️ garaj dunyosidagi bolalar.
+   Har 10–15 ta birinchi urinishdagi to'g'ri javobga — joriy loyihaning keyingi qismi (b.kons.q). Hamma qism yig'ilsa → 🔧 yig'ish (qismlarni sudrab joyiga)
+   → mashina tayyor (b.kons.tayyor[]) → 💥 krash-test: devorga urilib parchalanadi → 🔧 qayta yig'ish → yana krash. Loyihalar: bolid → monster-trak → raketa-mashina → (2-avlod…).
+   Log: { t: 'kons', q } (qism olindi) · { t: 'garaj', hodisa: 'yigdi'|'krash', li }. Vaqt — 🎮 o'yin vaqtiga (kun chegarasi amal qiladi). */
+(function (G) {
+'use strict';
+const BJ = G.BJ, A = BJ.A, FX = BJ.fx, ART = BJ.art;
+const { $, $$, esc, toast, app } = A;
+const rnd = (a, b) => a + Math.random() * (b - a), ri = (a, b) => Math.floor(rnd(a, b + 1));
+const QNOM = { rama: 'Rama (shassi)', motor: 'Motor', kuzov: 'Kuzov', gOld: "Old g'ildirak", gOrqa: "Orqa g'ildirak", spoyler: 'Spoyler', amort: 'Amortizatorlar', fara: 'Faralar', raketa: 'Raketa dvigateli', qanot: 'Qanot', nitro: 'Nitro ballonlar' };
+const QIC = { rama: 'bolt', motor: 'motor', kuzov: 'kuzov', gOld: 'gildirak', gOrqa: 'gildirak', spoyler: 'spoyler', amort: 'bolt', fara: 'fara', raketa: 'nitro', qanot: 'qanot', nitro: 'nitro' };
+/* Qismlar mashina koordinatasida (0..200 × 0..110): [x, y, w, h] — yig'ish uyasi ham shu */
+const LOY = [
+  { id: 'bolid', nom: 'Poyga bolidi', q: ['rama', 'gOrqa', 'motor', 'kuzov', 'gOld', 'spoyler'],
+    box: { spoyler: [4, 20, 44, 46], motor: [26, 36, 70, 34], rama: [10, 66, 190, 22], kuzov: [76, 40, 116, 34], gOrqa: [27, 57, 42, 42], gOld: [144, 66, 32, 32] }, w: { gOrqa: [48, 78, 20], gOld: [160, 82, 15] } },
+  { id: 'trak', nom: 'Monster-trak', q: ['rama', 'gOrqa', 'gOld', 'amort', 'kuzov', 'motor', 'fara'],
+    box: { rama: [22, 62, 158, 16], amort: [40, 56, 122, 32], kuzov: [14, 18, 176, 48], motor: [146, 12, 32, 30], fara: [84, 10, 46, 12], gOrqa: [25, 57, 54, 54], gOld: [123, 57, 54, 54] }, w: { gOrqa: [52, 84, 26], gOld: [150, 84, 26] } },
+  { id: 'raketa', nom: 'Raketa-mashina', q: ['rama', 'gOrqa', 'gOld', 'kuzov', 'raketa', 'qanot', 'nitro', 'fara'],
+    box: { qanot: [18, 8, 48, 42], raketa: [0, 34, 52, 28], rama: [16, 62, 172, 16], kuzov: [26, 30, 172, 40], nitro: [64, 24, 44, 16], fara: [172, 50, 24, 14], gOrqa: [42, 62, 36, 36], gOld: [140, 62, 36, 36] }, w: { gOrqa: [60, 80, 17], gOld: [158, 80, 17] } }
+];
+const ORDER = ['spoyler', 'qanot', 'raketa', 'motor', 'rama', 'amort', 'kuzov', 'nitro', 'gOrqa', 'gOld', 'fara'];
+function loy(li) { const L = LOY[li % LOY.length], av = Math.floor(li / LOY.length) + 1; return Object.assign({}, L, { li, av, rang: ART.RANGLAR[(li + (L.id === 'trak' ? 1 : 0)) % ART.RANGLAR.length], nomi: L.nom + (av > 1 ? ` · ${av}-avlod` : '') }); }
+/* ---------- qism rasmlari (realistik: bo'yoq, xrom, karbon, shina) ---------- */
+function wheelMk(cx, cy, r, u, monster) { let s = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${u('t')}"/>`;
+  if (monster) s += Array.from({ length: 16 }, (_, i) => { const a = i * Math.PI / 8; return `<rect x="${cx - 3}" y="${cy - r - 2}" width="6" height="6" rx="1" fill="#1C1C1C" transform="rotate(${a * 57.3} ${cx} ${cy})"/>`; }).join('');
+  else s += `<circle cx="${cx}" cy="${cy}" r="${r - 1}" fill="none" stroke="#3B3B3B" stroke-width="1.6" stroke-dasharray="2.4 2"/>`;
+  const rr = r * (monster ? 0.5 : 0.62);
+  s += `<circle cx="${cx}" cy="${cy}" r="${rr}" fill="#6E747A"/>` + [0, 1, 2, 3, 4].map(i => { const a = i * 1.2566 - 1.57, x1 = cx + Math.cos(a) * rr * 0.2, y1 = cy + Math.sin(a) * rr * 0.2, x2 = cx + Math.cos(a) * rr * 0.92, y2 = cy + Math.sin(a) * rr * 0.92; return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#4A525A" stroke-width="${rr * 0.3}" stroke-linecap="round"/><line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${u('c')}" stroke-width="${rr * 0.22}" stroke-linecap="round"/>`; }).join('');
+  return s + `<circle cx="${cx}" cy="${cy}" r="${rr}" fill="none" stroke="${u('c')}" stroke-width="${rr * 0.16}"/><circle cx="${cx}" cy="${cy}" r="${rr * 0.24}" fill="${u('c')}" stroke="#333" stroke-width=".8"/><path d="M${cx - r * 0.6} ${cy - r * 0.6} A${r * 0.86} ${r * 0.86} 0 0 1 ${cx + r * 0.2} ${cy - r * 0.84}" stroke="#fff" stroke-opacity=".16" stroke-width="1.6" fill="none"/>`; }
+const ART_Q = {
+  bolid: {
+    rama: u => `<path d="M14 70 L150 70 L188 74 Q193 76 188 78 L150 80 L14 80Z" fill="${u('k')}" stroke="#000" stroke-width=".8"/><path d="M172 80 L198 80 L198 86 L170 86Z" fill="${u('p')}" stroke="#111" stroke-width=".8"/><path d="M16 72 H150" stroke="#fff" stroke-opacity=".25" stroke-width="1"/>`,
+    gOrqa: u => wheelMk(48, 78, 20, u), gOld: u => wheelMk(160, 82, 15, u),
+    motor: u => `<path d="M40 68 L44 46 Q52 38 66 40 L90 54 L94 68Z" fill="${u('p')}" stroke="#111" stroke-width="1"/><path d="M48 44 Q56 40 64 42" stroke="#fff" stroke-opacity=".55" stroke-width="1.4" fill="none"/><rect x="28" y="58" width="16" height="5" rx="2.5" fill="${u('c')}" stroke="#4A525A" stroke-width=".6"/><path d="M58 56 h22 M60 61 h20" stroke="#111" stroke-width="1.6" opacity=".6"/>`,
+    kuzov: u => `<path d="M80 72 L90 52 Q110 44 126 48 L178 64 Q190 68 184 72Z" fill="${u('p')}" stroke="#111" stroke-width="1"/><path d="M100 50 Q112 44 122 49 L118 55 Q108 52 102 56Z" fill="#101317"/><circle cx="110" cy="50" r="5.5" fill="${u('o')}" stroke="#111" stroke-width=".8"/><path d="M96 52 Q112 40 128 50" stroke="#2B2B2B" stroke-width="2.2" fill="none"/><path d="M92 56 Q140 54 178 66" stroke="#fff" stroke-opacity=".5" stroke-width="1.2" fill="none"/><circle cx="148" cy="64" r="6" fill="#fff" stroke="#111"/><text x="148" y="67.4" font-size="8.5" font-weight="900" text-anchor="middle" fill="#111" font-family="system-ui,sans-serif">7</text>`,
+    spoyler: u => `<path d="M30 40 L34 64" stroke="#1A1A1A" stroke-width="4"/><path d="M6 28 L46 24 L46 33 L6 37Z" fill="${u('k')}" stroke="#000" stroke-width=".8"/><path d="M8 29.5 L44 25.5" stroke="#fff" stroke-opacity=".35" stroke-width="1"/><rect x="4" y="22" width="5" height="18" rx="1.5" fill="#D50000"/><rect x="43" y="20" width="5" height="18" rx="1.5" fill="#D50000"/>`
+  },
+  trak: {
+    rama: u => `<rect x="24" y="66" width="154" height="8" rx="2" fill="${u('k')}" stroke="#000" stroke-width=".8"/>${[40, 76, 112, 150].map(x => `<rect x="${x}" y="63" width="6" height="14" rx="1" fill="#33373D"/>`).join('')}<path d="M26 67.5 H176" stroke="#fff" stroke-opacity=".2" stroke-width="1"/>`,
+    gOrqa: u => wheelMk(52, 84, 26, u, 1), gOld: u => wheelMk(150, 84, 26, u, 1),
+    amort: u => [[66, 60, 52, 84], [136, 60, 150, 84]].map(([x1, y1, x2, y2]) => { const n = 7, pts = []; for (let i = 0; i <= n; i++) { const t = i / n, x = x1 + (x2 - x1) * t, y = y1 + (y2 - y1) * t, o = (i % 2 ? 1 : -1) * 6; pts.push(`${x + o} ${y}`); } return `<path d="M${x1} ${y1} L${x2} ${y2}" stroke="${u('c')}" stroke-width="4"/><path d="M${pts.join(' L')}" stroke="#E53935" stroke-width="3" fill="none" stroke-linejoin="round"/>`; }).join(''),
+    kuzov: u => `<path d="M16 64 L18 42 L70 40 L86 22 L130 22 L146 40 L182 44 Q188 46 188 54 L188 64Z" fill="${u('p')}" stroke="#111" stroke-width="1.2"/><path d="M90 26 L126 26 L138 40 L78 40Z" fill="${u('g')}" stroke="#111" stroke-width="1"/><path d="M108 26 V40" stroke="#111" stroke-width="2.4"/><path d="M98 26 L90 40 M104 26 L96 40" stroke="#fff" stroke-opacity=".35" stroke-width="2"/><path d="M20 46 L182 48" stroke="#fff" stroke-opacity=".5" stroke-width="1.3"/><path d="M18 56 L186 56" stroke="#000" stroke-opacity=".3" stroke-width="1.2"/><rect x="18" y="58" width="168" height="6" fill="#1A1A1A" opacity=".55"/><path d="M182 48 L188 50 L188 54 L182 54Z" fill="#FFFDE7"/><path d="M16 46 L22 46 L22 52 L16 52Z" fill="#D50000"/>`,
+    motor: u => `<rect x="152" y="26" width="22" height="14" rx="2" fill="${u('c')}" stroke="#3C4248" stroke-width=".8"/><path d="M156 30 h14 M156 34 h14" stroke="#5E666E" stroke-width="1"/><path d="M150 26 L152 14 L174 14 L176 26Z" fill="#212121"/><path d="M154 16 h18" stroke="#FFC400" stroke-width="2"/>`,
+    fara: u => `<rect x="86" y="14" width="42" height="6" rx="3" fill="#212121"/>${[90, 100, 110, 120].map(x => `<circle cx="${x + 3}" cy="17" r="2.6" fill="#FFFDE7" stroke="#FFC400" stroke-width=".6"/>`).join('')}`
+  },
+  raketa: {
+    rama: u => `<rect x="18" y="66" width="168" height="8" rx="3" fill="${u('k')}" stroke="#000" stroke-width=".8"/><path d="M20 67.5 H184" stroke="#fff" stroke-opacity=".2" stroke-width="1"/>`,
+    gOrqa: u => wheelMk(60, 80, 17, u), gOld: u => wheelMk(158, 80, 17, u),
+    kuzov: u => `<path d="M30 68 L40 46 L96 40 Q120 32 142 42 L192 58 Q198 62 192 68Z" fill="${u('p')}" stroke="#111" stroke-width="1.1"/><path d="M98 42 Q118 34 136 44 L126 48 Q114 42 104 46Z" fill="${u('g')}" stroke="#111" stroke-width=".9"/><path d="M110 40 L104 46" stroke="#fff" stroke-opacity=".5" stroke-width="2"/><path d="M42 48 L98 43 Q140 40 190 60" stroke="#fff" stroke-opacity=".5" stroke-width="1.2" fill="none"/><path d="M60 58 L170 60" stroke="#FFC400" stroke-width="3"/>`,
+    raketa: u => `<rect x="10" y="38" width="40" height="20" rx="6" fill="${u('c')}" stroke="#3C4248" stroke-width="1"/><path d="M10 40 L2 36 L2 60 L10 56Z" fill="#37474F" stroke="#1A1A1A" stroke-width=".8"/><path d="M14 42 h32" stroke="#fff" stroke-opacity=".7" stroke-width="1.4"/><rect x="24" y="38" width="6" height="20" fill="#D50000"/>`,
+    qanot: u => `<path d="M40 48 L22 12 L42 12 L64 44Z" fill="${u('p')}" stroke="#111" stroke-width="1"/><path d="M26 14 L42 44" stroke="#fff" stroke-opacity=".5" stroke-width="1.2"/><path d="M24 12 L42 12 L44 18 L27 18Z" fill="#111"/>`,
+    nitro: u => `<rect x="66" y="26" width="40" height="6" rx="3" fill="${u('n')}" stroke="#01579B" stroke-width=".7"/><rect x="66" y="33" width="40" height="6" rx="3" fill="${u('n')}" stroke="#01579B" stroke-width=".7"/><path d="M70 27.5 h30 M70 34.5 h30" stroke="#fff" stroke-opacity=".55" stroke-width="1"/>`,
+    fara: u => `<ellipse cx="184" cy="57" rx="10" ry="6" fill="${u('l')}"/><path d="M176 53 L192 56 L190 60 L176 59Z" fill="#FFFDE7" stroke="#2B2B2B" stroke-width=".8"/>`
+  }
+};
+function qismSvg(L, k, o) { o = o || {}; const id = A.rid ? 'q' + A.rid(6) : 'q' + Math.random().toString(36).slice(2, 8), u = x => `url(#${id}${x})`, [x, y, w, h] = L.box[k];
+  return `<svg viewBox="${x} ${y} ${w} ${h}" width="${o.w || w}" height="${o.h || h}" class="qsv" aria-hidden="true" style="overflow:visible">${ART.gdefs(id, L.rang)}${ART_Q[L.id][k](u)}</svg>`; }
+function vehSvg(L, o) { o = o || {}; const id = 'v' + Math.random().toString(36).slice(2, 8), u = x => `url(#${id}${x})`, ks = ORDER.filter(k => L.q.includes(k) && (!o.faqat || o.faqat.includes(k)));
+  return `<svg viewBox="-4 4 208 112" class="veh" style="width:${o.w || 260}px;max-width:100%" aria-label="${esc(L.nomi)}">${ART.gdefs(id, L.rang)}<ellipse cx="100" cy="${L.id === 'trak' ? 110 : 99}" rx="96" ry="5" fill="#000" opacity=".3"/>${ks.map(k => ART_Q[L.id][k](u)).join('')}</svg>`; }
+/* ---------- holat ---------- */
+function kons(b) { if (!b.kons) b.kons = { n: 0, kerak: A.TEZ ? 2 : ri(10, 15), li: 0, q: [], tayyor: [] }; return b.kons; }
+function joriy(b) { const k = kons(b); return loy(k.li); }
+/* Har birinchi urinishdagi to'g'ri javobda chaqiriladi (onAnswer). Qism berilsa — uning kaliti. */
+function javob(b) {
+  if (!b || b.dunyo !== 'garaj') return null; const k = kons(b), L = loy(k.li); if (k.q.length >= L.q.length) return null;
+  k.n++; if (k.n < k.kerak) return null;
+  const q = L.q[k.q.length]; k.q.push(q); k.n = 0; k.kerak = A.TEZ ? 2 : ri(10, 15); A.save(true);
+  A.pushLog(b.id, { t: 'kons', ts: Date.now(), bola: b.id, li: k.li, q });
+  setTimeout(() => { FX.play('ding'); toast(`🔧 Yangi qism: ${QNOM[q]}! Garajda kutyapti (${k.q.length}/${L.q.length})`); }, 700);
+  return q;
+}
+function garajTugma(b) { if (b.dunyo !== 'garaj') return ''; const k = kons(b), L = loy(k.li), tayyor = k.q.length >= L.q.length, buzuq = k.tayyor.some(v => v.holat === 'buzuq');
+  return `<button class="btn ghost garajb${tayyor ? ' pulse' : ''}" data-garaj>${ART.icon('kalit', { s: 26 })} Garaj — ${tayyor ? "yig'ishga tayyor! 🔧" : `${esc(L.nom)}: ${k.q.length}/${L.q.length} qism`}${buzuq && !tayyor ? ' · 💥' : ''}</button>`; }
+/* ---------- 🔧 GARAJ ekrani ---------- */
+function screenGaraj(b) {
+  A.setCur({ k: 'garaj', b, fan: 'oyin' }); A.startSession(b, 'garaj'); A.theme(b.dunyo);
+  const k = kons(b), L = loy(k.li), qoldi = Math.max(0, k.kerak - k.n), tayyor = k.q.length >= L.q.length;
+  const qs = L.q.map(q => { const bor = k.q.includes(q); return `<div class="gq${bor ? ' bor' : ''}">${bor ? qismSvg(L, q, { w: 54, h: 40 }) : '<span>?</span>'}<small>${esc(QNOM[q])}</small></div>`; }).join('');
+  app.innerHTML = `<div class="wrap kidw garaj"><div class="top"><button class="ib" data-x aria-label="Uyga">←</button><div class="ttl">🔧 Garaj</div></div>
+  <div class="card gcard"><div class="sm mut">Yangi loyiha</div><h2>${esc(L.nomi)}</h2><div class="gveh">${vehSvg(L, { w: 280, faqat: k.q })}${k.q.length ? '' : '<div class="gbo">Hali qism yo\'q</div>'}</div>
+  <div class="tbar"><i style="width:${Math.max(4, Math.round(k.q.length / L.q.length * 100))}%"></i></div><div class="sm">${tayyor ? "✅ Hamma qism bor — yig'ish vaqti!" : `🔩 ${k.q.length}/${L.q.length} qism · keyingisi uchun yana <b>${qoldi}</b> ta to'g'ri javob`}</div>
+  <div class="gqs">${qs}</div>${tayyor ? `<button class="btn big" data-yig>🔧 Yig'ishni boshlash</button>` : `<div class="note kn">💡 Har 10–15 ta birinchi urinishda to'g'ri javobga 1 ta qism beriladi.</div>`}</div>
+  ${k.tayyor.length ? `<div class="card"><h3>🏁 Yig'ilgan mashinalarim</h3><div class="gtay">${k.tayyor.map((v, i) => { const V = loy(v.li); return `<div class="gt${v.holat === 'buzuq' ? ' buz' : ''}">${vehSvg(V, { w: 150 })}<b>${esc(V.nomi)}</b><span class="sm mut">💥 ${v.krash || 0} marta krash</span>${v.holat === 'buzuq' ? `<button class="btn" data-qy="${i}">🔧 Qayta yig'</button>` : `<button class="btn alt" data-kr="${i}">💥 Krash-test</button>`}</div>`; }).join('')}</div></div>` : ''}</div>`;
+  $('[data-x]').onclick = () => { A.endSession(b); A.go('uy'); };
+  const y = $('[data-yig]'); if (y) y.onclick = () => yigish(b, -1);
+  $$('[data-kr]').forEach(x => x.onclick = () => krashTest(b, +x.dataset.kr));
+  $$('[data-qy]').forEach(x => x.onclick = () => yigish(b, +x.dataset.qy));
+}
+/* ---------- 🔧 YIG'ISH: qismlarni sudrab (yoki bosib) joyiga ---------- */
+function yigish(b, ti) {
+  const k = kons(b), V = ti >= 0 ? k.tayyor[ti] : null, L = loy(V ? V.li : k.li), slots = ORDER.filter(q => L.q.includes(q)), placed = {}, used = {};
+  let sel = null, err = 0; const t0 = Date.now();
+  app.innerHTML = `<div class="wrap kidw garaj"><div class="top"><button class="ib" data-x aria-label="Garajga">←</button><div class="ttl">🔧 ${esc(L.nomi)}</div></div>
+  <div class="note kn">${V ? "💥 Krashdan keyin parchalanib ketdi — qismlarni joyiga qaytar!" : "Qismlarni sudrab soyasiga olib bor (yoki qismni bos, keyin joyini bos)."}</div>
+  <div class="yboard"><div class="ybp">${slots.map(q => { const [x, y, w, h] = L.box[q]; return `<div class="yslot" data-s="${q}" style="left:${(x + 4) / 208 * 100}%;top:${(y - 4) / 112 * 100}%;width:${w / 208 * 100}%;height:${h / 112 * 100}%">${qismSvg(L, q, { w: '100%', h: '100%' })}</div>`; }).join('')}</div></div>
+  <div class="ytray"></div><div id="fb"></div></div>`;
+  $('[data-x]').onclick = () => screenGaraj(b);
+  const board = $('.ybp'), tray = $('.ytray');
+  const tray0 = slots.slice().sort(() => Math.random() - 0.5);
+  const fits = (q, s) => q === s || (/^g/.test(q) && /^g/.test(s) && L.w[q][2] === L.w[s][2]);
+  function draw() { tray.innerHTML = tray0.filter(q => !used[q]).map(q => `<div class="ypart${sel === q ? ' sel' : ''}" data-p="${q}">${qismSvg(L, q, { w: 64, h: 52 })}<small>${esc(QNOM[q])}</small></div>`).join(''); bind(); }
+  function put(q, s) { placed[s] = q; used[q] = 1; const el = $(`.yslot[data-s="${s}"]`, board); el.classList.add('on'); if (q !== s) { el.innerHTML = qismSvg(L, s, { w: '100%', h: '100%' }); }
+    const r = el.getBoundingClientRect(); FX.play('ding'); FX.burst(r.left + r.width / 2, r.top + r.height / 2, { tema: 'garaj', n: 14, max: 5 }); FX.vibrate(15); sel = null;
+    if (slots.every(x => placed[x])) return finish(); draw(); }
+  function miss() { err++; FX.play('yumshoq'); FX.vibrate(30); if (err === 3) $('#fb').innerHTML = `<div class="hint">💡 Shakliga qara: g'ildirak — dumaloq soyaga, spoyler — orqadagi baland soyaga.</div>`; }
+  /* nuqtaga mos uya: shu qism sig'adigan bo'sh uyalardan — nuqta ichida bo'lsa eng kichigi, bo'lmasa eng yaqin markaz */
+  function slotAt(q, cx, cy) { let inn = null, ia = 1e12, near = null, bd = 1e9; $$('.yslot', board).forEach(el => { const sl = el.dataset.s; if (placed[sl] || !fits(q, sl)) return; const r = el.getBoundingClientRect(), pad = 14;
+    if (cx >= r.left - pad && cx <= r.right + pad && cy >= r.top - pad && cy <= r.bottom + pad && r.width * r.height < ia) { ia = r.width * r.height; inn = sl; }
+    const d = Math.hypot(r.left + r.width / 2 - cx, r.top + r.height / 2 - cy), lim = Math.max(30, Math.min(r.width, r.height) * 0.75); if (d < lim && d < bd) { bd = d; near = sl; } }); return inn || near; }
+  function bind() { $$('.ypart', tray).forEach(pe => { const q = pe.dataset.p; let dr = null;
+    pe.addEventListener('pointerdown', e => { e.preventDefault(); dr = { x: e.clientX, y: e.clientY, m: false }; try { pe.setPointerCapture(e.pointerId); } catch (er) {} });
+    pe.addEventListener('pointermove', e => { if (!dr) return; const dx = e.clientX - dr.x, dy = e.clientY - dr.y; if (Math.hypot(dx, dy) > 6) dr.m = true; if (dr.m) { pe.style.transform = `translate(${dx}px,${dy}px) scale(1.1)`; pe.classList.add('drag'); } });
+    pe.addEventListener('pointerup', e => { if (!dr) return; const m = dr.m; dr = null; pe.style.transform = ''; pe.classList.remove('drag');
+      if (!m) { sel = sel === q ? null : q; draw(); return; } const s = slotAt(q, e.clientX, e.clientY); if (s) put(q, s); else miss(); }); }); }
+  board.addEventListener('click', e => { if (!sel) return; const s = slotAt(sel, e.clientX, e.clientY); if (s) put(sel, s); else { miss(); sel = null; draw(); } });
+  function finish() {
+    const sek = Math.round((Date.now() - t0) / 1000); let v;
+    if (V) { V.holat = 'butun'; V.yig = (V.yig || 0) + 1; v = V; } else { v = { li: k.li, holat: 'butun', krash: 0, yig: 1, ts: Date.now() }; k.tayyor.push(v); k.li++; k.q = []; }
+    A.pushLog(b.id, { t: 'garaj', ts: Date.now(), bola: b.id, hodisa: 'yigdi', li: v.li, sek, xato: err }); A.save(true);
+    FX.boom(innerWidth / 2, innerHeight / 2.6, 'garaj'); FX.play('fanfar');
+    const ti2 = k.tayyor.indexOf(v);
+    app.innerHTML = `<div class="wrap kidw garaj"><div class="oyfin"><h2>✅ ${esc(L.nomi)} tayyor!</h2>${vehSvg(L, { w: 300 })}<p>${sek} soniyada yig'ding${err ? '' : " — birorta ham adashmasdan!"} 💪</p>
+    <button class="btn big alt" data-kr>💥 Krash-test!</button><button class="btn ghost" data-g>🔧 Garajga</button></div></div>`;
+    $('[data-kr]').onclick = () => krashTest(b, ti2); $('[data-g]').onclick = () => screenGaraj(b);
+  }
+  requestAnimationFrame(draw);
+}
+/* ---------- 💥 KRASH-TEST: tezlanish → devor → parchalanish (fizika) → «Qayta yig'!» (≤8 s, o'tkaziladi) ---------- */
+function krashTest(b, ti) {
+  const k = kons(b), V = k.tayyor[ti]; if (!V || V.holat !== 'butun') return screenGaraj(b);
+  const L = loy(V.li), ks = ORDER.filter(q => L.q.includes(q)), imgs = {};
+  ks.forEach(q => { const [x, y, w, h] = L.box[q]; imgs[q] = ART.svgImg(qismSvg(L, q, { w: w * 3, h: h * 3 })); });
+  const T1 = 1900, T = A.TEZ ? 3000 : 7400; let hit = false, P = [], BR = [], fw = 0;
+  FX.play('motor', 2.2);
+  return FX.bigScene('krash', T, (c, t, f, W, H) => {
+    const gy = H * 0.74, s = Math.min(W * 0.5, 320) / 200, vw = 200 * s, wallX = W * 0.8;
+    const g = c.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#0B1020'); g.addColorStop(0.72, '#1C2333'); g.addColorStop(1, '#0E1119'); c.fillStyle = g; c.fillRect(0, 0, W, H);
+    for (let i = 0; i < 5; i++) { const lx = W * (0.1 + i * 0.2); const lg = c.createRadialGradient(lx, 0, 0, lx, 0, H * 0.5); lg.addColorStop(0, 'rgba(255,214,0,.14)'); lg.addColorStop(1, 'rgba(255,214,0,0)'); c.fillStyle = lg; c.fillRect(lx - H * 0.5, 0, H, H * 0.5); }
+    c.fillStyle = '#2A2D33'; c.fillRect(0, gy, W, H - gy); c.fillStyle = '#FFC400'; for (let x = 0; x < W; x += 56) c.fillRect(x, gy + 20, 28, 4);
+    c.fillStyle = 'rgba(255,255,255,.08)'; c.fillRect(0, gy, W, 3);
+    const bw = 30, bh = 18;
+    if (!hit) { for (let r = 0; r < 9; r++) for (let q = 0; q < 3; q++) { const x = wallX + q * bw + (r % 2 ? bw / 2 : 0) - bw / 2, y = gy - (r + 1) * bh; c.fillStyle = (r + q) % 3 ? '#C1502E' : '#A63D1E'; c.fillRect(x, y, bw - 2, bh - 2); c.fillStyle = 'rgba(255,255,255,.12)'; c.fillRect(x, y, bw - 2, 2); } }
+    if (t < T1) { const k1 = Math.pow(t / T1, 1.7), x0 = -vw + (wallX - vw * 0.92 + vw) * k1, y0 = gy - 104 * s, ang = (x0 + vw) / (8 * s);
+      ks.forEach(q => { const [x, y, w, h] = L.box[q], im = imgs[q]; if (!im.complete) return; const cx = x0 + (x + w / 2) * s, cy = y0 + (y + h / 2) * s; c.save(); c.translate(cx, cy); if (/^g/.test(q)) c.rotate(ang); c.drawImage(im, -w * s / 2, -h * s / 2, w * s, h * s); c.restore(); });
+      if (t > 300) { c.fillStyle = 'rgba(180,180,180,.25)'; for (let i = 0; i < 4; i++) { c.beginPath(); c.arc(x0 + rnd(-20, 10), gy - rnd(4, 18), rnd(4, 10) * (1 + k1), 0, 7); c.fill(); } }
+    }
+    if (!hit && t >= T1) { hit = true; const x0 = wallX - vw * 0.92, y0 = gy - 104 * s;
+      P = ks.map(q => { const [x, y, w, h] = L.box[q], wh = /^g/.test(q); return { q, w: w * s, h: h * s, x: x0 + (x + w / 2) * s, y: y0 + (y + h / 2) * s, vx: wh ? rnd(-6, 7) : rnd(-9, 3), vy: rnd(-13, -5), a: 0, va: rnd(-0.25, 0.25) * (wh ? 2 : 1), wh }; });
+      for (let r = 0; r < 9; r++) for (let q = 0; q < 3; q++) BR.push({ x: wallX + q * bw + (r % 2 ? bw / 2 : 0) - bw / 2, y: gy - (r + 1) * bh, vx: rnd(1, 9) + (9 - r) * 0.3, vy: rnd(-10, -2), a: 0, va: rnd(-0.2, 0.2), c: (r + q) % 3 ? '#C1502E' : '#A63D1E' });
+      FX.burst(wallX, gy - 80, { tema: 'garaj', n: 110, max: 15, smax: 12, life: 90 }); FX.flash(wallX, gy - 80, 260, '#FFD54F'); FX.shake(600, 12); FX.vibrate([80, 40, 120]); FX.play('boom', 1.1); FX.timeScale = 0.3; setTimeout(() => { FX.timeScale = 1; }, 1300); }
+    if (hit) {
+      BR.forEach(r => { r.vy += 0.5 * f; r.x += r.vx * f; r.y += r.vy * f; r.a += r.va * f; if (r.y > gy - bh) { r.y = gy - bh; r.vy *= -0.3; r.vx *= 0.7; r.va *= 0.6; } c.save(); c.translate(r.x + bw / 2, r.y + bh / 2); c.rotate(r.a); c.fillStyle = r.c; c.fillRect(-bw / 2, -bh / 2, bw - 2, bh - 2); c.restore(); });
+      P.forEach(p => { p.vy += 0.55 * f; p.x += p.vx * f; p.y += p.vy * f; p.a += p.va * f; const half = p.wh ? p.h / 2 : Math.min(p.w, p.h) / 2.4; if (p.y + half > gy) { p.y = gy - half; p.vy *= -0.38; p.vx *= p.wh ? 0.92 : 0.7; p.va = p.wh ? p.vx / (p.h / 2) : p.va * 0.6; } if (p.x < 10) { p.x = 10; p.vx = Math.abs(p.vx) * 0.5; }
+        const im = imgs[p.q]; if (!im.complete) return; c.save(); c.translate(p.x, p.y); c.rotate(p.a); c.drawImage(im, -p.w / 2, -p.h / 2, p.w, p.h); c.restore(); });
+      if (t < T1 + 1700) { c.save(); c.globalAlpha = Math.max(0, 1 - (t - T1) / 1700); c.font = `900 ${Math.round(W * 0.15)}px system-ui,sans-serif`; c.textAlign = 'center'; c.fillStyle = '#FFD54F'; c.strokeStyle = '#1A1A1A'; c.lineWidth = 7; c.strokeText('KRASH!', W / 2, H * 0.3); c.fillText('KRASH!', W / 2, H * 0.3); c.restore(); }
+      const tq = Math.max(T1 + 1800, T - 2200); if (t > tq) { c.save(); c.globalAlpha = Math.min(1, (t - tq) / 400); c.font = `900 ${Math.round(W * 0.085)}px system-ui,sans-serif`; c.textAlign = 'center'; c.fillStyle = '#fff'; c.strokeStyle = '#1A1A1A'; c.lineWidth = 5; c.strokeText("🔧 Qayta yig'!", W / 2, H * 0.32); c.fillText("🔧 Qayta yig'!", W / 2, H * 0.32); c.restore(); }
+      if (fw < 2 && t > T1 + 700 + fw * 900) { FX.burst(W * (0.3 + fw * 0.35), gy - 30, { tema: 'garaj', n: 30, max: 8, life: 60 }); FX.play('boom', 0.4); fw++; }
+    } else if (t < 1300) { c.save(); c.font = `900 ${Math.round(W * 0.08)}px system-ui,sans-serif`; c.textAlign = 'center'; c.fillStyle = '#fff'; c.strokeStyle = '#1A1A1A'; c.lineWidth = 5; c.strokeText('KRASH-TEST', W / 2, H * 0.28); c.fillText('KRASH-TEST', W / 2, H * 0.28); c.restore(); }
+  }).then(() => { V.holat = 'buzuq'; V.krash = (V.krash || 0) + 1; A.pushLog(b.id, { t: 'garaj', ts: Date.now(), bola: b.id, hodisa: 'krash', li: V.li }); A.save(true); yigish(b, ti); });
+}
+A.garaj = { LOY, loy, kons, javob, screenGaraj, yigish, krashTest, garajTugma, qismSvg, vehSvg, QNOM };
+A.screenGaraj = screenGaraj; A.konsJavob = javob; A.garajTugma = garajTugma;
+})(window);
 </script>
 <script>
 /* Bilimjon — ☁️ OILA AKKAUNTI va 🏆 REYTING GURUHI (0.5.0). Firebase (Auth + Firestore, bepul Spark).
