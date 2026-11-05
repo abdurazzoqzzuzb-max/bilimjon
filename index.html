@@ -57,6 +57,8 @@ textarea.inp{min-height:160px;font-size:.8rem}
 .kombo small{display:block;margin-top:4px;font-size:1.1rem;color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.45)}.kombo.orol{color:#FF6FC0;text-shadow:0 3px 0 #8E1A5C,0 0 18px rgba(255,79,176,.75)}.kombo.k2,.kombo.k3{font-size:3.1rem}
 @keyframes kmb{0%{transform:translate(-50%,-50%) scale(.3);opacity:0}18%{transform:translate(-50%,-50%) scale(1.3);opacity:1}30%{transform:translate(-50%,-50%) scale(1)}75%{opacity:1}100%{transform:translate(-50%,-110%) scale(1);opacity:0}}
 .dam{text-align:center}.damdrg{position:relative;display:inline-block}.zzz{position:absolute;right:-6px;top:4px;font-weight:800;color:var(--mut);animation:float 2.4s ease-in-out infinite}
+.sovga{display:flex;gap:12px;align-items:center}.sgimg{width:84px;height:84px;object-fit:cover;border-radius:16px;flex:none;background:#fff}.sgsir{width:84px;height:84px;border-radius:16px;flex:none;display:grid;place-items:center;font-size:3rem;background:linear-gradient(135deg,var(--acc),var(--acc2));animation:sgw 2.6s ease-in-out infinite}
+@keyframes sgw{50%{transform:rotate(-6deg) scale(1.06)}}.sgb{flex:1;min-width:0}.sgb .tbar{margin:6px 0 4px}.sovga.yetdi{box-shadow:0 0 0 3px var(--warn) inset}.hx .tl{margin:6px 0;padding-left:18px}.hx .tl li{margin:3px 0;font-size:.92rem}
 @keyframes tin{from{opacity:0;transform:translate(-50%,10px)}}
 .scrim{position:fixed;inset:0;background:rgba(5,8,15,.55);z-index:50;display:flex;align-items:flex-end;justify-content:center}
 .sheet{background:var(--card);color:var(--ink);width:100%;max-width:520px;border-radius:24px 24px 0 0;padding:18px 16px 28px;max-height:88vh;overflow:auto;text-align:center}
@@ -1757,7 +1759,7 @@ Object.assign(A, { FAN, ZANJIR, BOSH, DARAJA, gl, BLOK, MANT_KUN, UZUN, XATO, TU
 /* ================= STORE ================= */
 const KEY = 'bj_state_v1'; /* HECH QACHON o'zgarmaydi: yangi versiya eski holatni migrate() bilan yangilaydi */
 const SV = 1;
-function defaults() { return { v: SV, oila: null, pin: null, pinOta: null, sozlama: { ovoz: 0.8, kamEffekt: 'auto', tanaffus: 20, oyinHar: 5, oyinDaq: 3, uyqu: '21:00', reyting: true, tjTasdiq: {}, sandiq: { bronza: 40, kumush: 90, oltin: 150, olmos: 220 }, arTasdiq: {}, alifTasdiq: false }, bolalar: {}, tartib: [], joriy: null, duel: {}, oilaTel: {}, qurilma: null, lastBackup: null, seenVer: null, appVer: null }; }
+function defaults() { return { v: SV, oila: null, pin: null, pinOta: null, sozlama: { ovoz: 0.8, kamEffekt: 'auto', tanaffus: 20, oyinHar: 5, oyinDaq: 3, uyqu: '21:00', reyting: true, tjTasdiq: {}, sandiq: { bronza: 40, kumush: 90, oltin: 150, olmos: 220 }, arTasdiq: {}, alifTasdiq: false }, bolalar: {}, tartib: [], joriy: null, duel: {}, oilaTel: {}, sovga: [], qurilma: null, lastBackup: null, seenVer: null, appVer: null }; }
 let S = load(); A.storageOK = true;
 /* Xotira tekshiruvi: brauzer yozishga ruxsat beradimi va ilova begona sayt ichida (sinov havolasi) ochilganmi */
 A.storageProbe = (function () { try { const k = 'bj_probe'; localStorage.setItem(k, String(Date.now())); const ok = !!localStorage.getItem(k); localStorage.removeItem(k); return ok; } catch (e) { return false; } })();
@@ -1985,6 +1987,18 @@ function damQosh(b, sabab) {
 function oyinCfg(b) { const z = S.sozlama, bh = b && b.oyinHar != null && b.oyinHar !== '', har = bh ? +b.oyinHar : +z.oyinHar, daq = b && b.oyinDaq ? +b.oyinDaq : +z.oyinDaq;
   return { har: har === 0 ? 0 : clamp(Math.round(har) || 5, 3, 15), daq: clamp(daq || 3, 1, 5) }; }
 Object.assign(A, { KUN_STD, kunLimit, qolganSek, uyquMi, damHolat, damQosh, oyinCfg });
+/* ================= 🎁 SOVG'A VITRINASI (0.6.0) =================
+   S.sovga[] (oila darajasi, bulut bilan sinxron): { id, kim: bolaId | 'oila', nom, rasm (JPEG dataURL ≤ 80 KB), n (shu haftada missiya kunlari),
+   sir (bola nom/rasmni sovg'a ochilganda ko'radi), takror (har hafta), hafta, yaratildi, yetdi: {hafta: ts}, berildi: {hafta: sana} }.
+   Pedagogik qoida: sovg'a — muntazamlik uchun (missiya kunlari), tezlik yoki bellashuv uchun emas; oila sovg'asi — hamma bolaning kunlari qo'shiladi. */
+const sovgaHafta = g => g.takror ? isoWeek() : (g.hafta || isoWeek());
+function sovgaHolat(g) {
+  const wk = sovgaHafta(g), days = weekDays(wk), L = g.kim === 'oila' ? bolalar() : [S.bolalar[g.kim]].filter(Boolean), kerak = Math.max(1, +g.n || 5);
+  const bor = L.reduce((a, b) => a + days.filter(k => b.kun[k] && b.kun[k].missiya).length, 0);
+  return { wk, bor: Math.min(bor, kerak), kerak, pct: Math.round(100 * Math.min(bor, kerak) / kerak), yetdi: bor >= kerak, berildi: !!(g.berildi && g.berildi[wk]) };
+}
+function sovgalar(b) { const wk = isoWeek(); return (S.sovga || []).filter(g => (g.kim === 'oila' || (b && g.kim === b.id)) && (g.takror || sovgaHafta(g) === wk || (sovgaHolat(g).yetdi && !sovgaHolat(g).berildi))); }
+Object.assign(A, { sovgaHolat, sovgalar });
 /* ================= HAFTALIK YIG'INDI, AVTO-REJA (6.5) ================= */
 function weekStats(b, wk) {
   const days = weekDays(wk), log = weekLog(b.id, wk).filter(e => e.t === 'ans'), K = days.map(k => b.kun[k]).filter(Boolean);
@@ -2185,6 +2199,17 @@ function screenDam(b, dm) {
 }
 function vaqtHTML(b) { const L = A.kunLimit(b); if (!L) return ''; const dm = A.damHolat(b), q = Math.max(0, Math.ceil(A.qolganSek(b) / 60));
   return `<div class="note kn">${dm ? (dm.sabab === 'uyqu' ? '🌙 Uxlash vaqti — ertaga davom etamiz!' : '😴 Bugungi vaqt tugadi — ertaga yana!') : `⏳ Bugun yana <b>${q}</b> daqiqa`}</div>`; }
+function sovgaHTML(b) {
+  return A.sovgalar(b).map(g => { const h = A.sovgaHolat(g), oila = g.kim === 'oila', yop = g.sir && !h.yetdi;
+    const pic = !yop && g.rasm ? `<img class="sgimg" src="${g.rasm}" alt="">` : `<div class="sgsir">🎁</div>`;
+    return `<div class="card sovga${h.yetdi ? ' yetdi' : ''}">${pic}<div class="sgb"><div class="sm mut">${oila ? "👨‍👩‍👧 Oila sovg'asi — hammangiz birga" : "🎁 Sening sovg'ang"}</div><b>${yop ? "🤫 Sirli sovg'a" : esc(g.nom)}</b><div class="tbar"><i style="width:${Math.max(4, h.pct)}%"></i></div>
+      <div class="sm">${h.berildi ? '✅ Berildi — barakalla!' : h.yetdi ? "🎉 Seniki! Dadang yoki oyingga ko'rsat" : `🎯 ${h.bor}/${h.kerak} kun missiya — yana ${h.kerak - h.bor} kun!`}</div></div></div>`; }).join('');
+}
+function sovgaBayram(b) {
+  A.sovgalar(b).forEach(g => { const h = A.sovgaHolat(g); if (!h.yetdi || h.berildi || (g.yetdi && g.yetdi[h.wk])) return; g.yetdi = g.yetdi || {}; g.yetdi[h.wk] = Date.now(); A.save(true);
+    A.pushLog(b.id, { t: 'sovga', ts: Date.now(), bola: b.id, id: g.id, wk: h.wk });
+    setTimeout(() => { FX.boom(innerWidth / 2, innerHeight / 2.4, b.dunyo); toast(g.sir ? `🎉 Sirli sovg'a ochildi: ${g.nom}!` : "🎉 Sovg'a seniki! Dadang yoki oyingga ko'rsat!"); }, 500); });
+}
 /* ================= BOLA UYI ================= */
 function kechagi(b) { const t = A.agg(b), y = b.kun[A.addDays(A.todayKey(), -1)]; if (!y || !y.n) return t.n ? `Bugun ${t.ok1} ta to'g'ri javob — zo'r boshlanish!` : ''; const d = t.ok1 - y.ok1;
   return d > 0 ? `🚀 Kechagi sendan ${d} ta ko'proq to'g'ri javob!` : d === 0 ? '🤝 Kechagi sen bilan tengsan — davom et!' : `Kechagi sen ${y.ok1} ta to'g'ri topgan edi — yetib ol!`; }
@@ -2205,12 +2230,13 @@ function screenHome(b) {
   app.innerHTML = `<div class="wrap kidw"><div class="top"><button class="ib av" data-tanla aria-label="Bola almashtirish">${b.avatar}</button><div class="ttl">${esc(b.laqab)}</div><span class="sp"></span><span class="pill">⭐ ${b.yulduz}</span><span class="pill">${sq.ic}</span><button class="ib" data-ota aria-label="Ota-ona paneli">👨‍👩‍👧</button></div>
   ${worldScene(b, true)}<div class="bubble">${esc(done ? 'Bugungi missiya bajarildi! Arenada mashq qilsang ham bo\'ladi.' : going ? 'Missiya kutib turibdi — davom etamiz!' : A.isSunday() && A.dayNo(b) >= 3 ? 'Bugun yakshanba — KATTA FINAL!' : 'Salom! Bugungi missiyaga tayyormisan?')}</div>
   <div class="row cta">${done ? `<button class="btn big alt" data-arena>⚔️ Arena</button>` : `<button class="btn big" data-start>${going ? '▶ Davom etish' : A.isSunday() && A.dayNo(b) >= 3 ? '🏆 Finalni boshlash' : '🚀 Missiyani boshlash'}</button>`}</div>
-  <div class="row"><button class="btn ghost" data-mashq>📚 Mashq — fanni o'zing tanla</button></div>${vazifaHTML(b)}
+  <div class="row"><button class="btn ghost" data-mashq>📚 Mashq — fanni o'zing tanla</button></div>${sovgaHTML(b)}${vazifaHTML(b)}
   <div class="stats"><div><b>⭐ ${t.yulduz}</b><span>bugun</span></div><div><b>⏱ ${Math.round(t.faol / 60)}</b><span>daqiqa</span></div><div><b>${b.detal.length}</b><span>${b.dunyo === 'orol' ? 'bezak' : 'detal'}</span></div></div>
   ${vaqtHTML(b)}${kechagi(b) ? `<div class="note kn">${esc(kechagi(b))}</div>` : ''}
   ${b.detal.length ? `<div class="coll">${b.detal.slice(-12).map(r => `<span title="${esc(r.nom || '')}">${r.ic || '🔩'}</span>`).join('')}</div>` : ''}
   ${reytingHTML(b)}
   ${installTip()}</div>`;
+  sovgaBayram(b);
   const st = $('[data-start]'); if (st) st.onclick = () => go('missiya');
   const ar = $('[data-arena]'); if (ar) ar.onclick = () => go('arena');
   $('[data-tanla]').onclick = () => go('tanla'); $('[data-ota]').onclick = () => go('ota');
@@ -3431,6 +3457,8 @@ A.screenOta = function (h) {
   if (h === 'ota-reyting') return reytingPanel();
   if (h === 'ota-bulut') return A.bulutPanel(top, bindTop);
   if (h === 'ota-vazifa') return vazifaPanel();
+  if (h === 'ota-sovga') return sovgaPanel();
+  if (h === 'ota-hisobot') return hisobotPanel();
   return weekPanel();
 };
 const deny = () => { toast('Bu amal faqat admin uchun'); A.go('ota'); };
@@ -3445,6 +3473,72 @@ function pinScreen(h) {
   $$('[data-k]').forEach(k => k.onclick = () => { const d = k.dataset.k; if (d === '⌫') v = v.slice(0, -1); else if (v.length < 4) v += d; $('#pd').textContent = '●'.repeat(v.length) + ' ○'.repeat(4 - v.length).trim().replace(/^ /, ''); $('#pd').textContent = Array.from({ length: 4 }, (_, i) => i < v.length ? '●' : '○').join(' ');
     if (v.length === 4) { const hsh = A.pinHash(v), s = S(); if (hsh === s.pin) { A.otaOk = { rol: 'admin', t: Date.now() }; A.screenOta(h); } else if (s.pinOta && hsh === s.pinOta) { A.otaOk = { rol: 'ota', t: Date.now() }; A.screenOta(h); } else { toast('PIN noto\'g\'ri'); v = ''; $('#pd').textContent = '○ ○ ○ ○'; FX.vibrate(80); } } });
 }
+/* ================= 🎁 SOVG'ALAR PANELI (0.6.0) ================= */
+function rasmSiq(file) { return new Promise((res, rej) => { const r = new FileReader(); r.onerror = rej; r.onload = () => { const im = new Image(); im.onerror = rej; im.onload = () => {
+  const M = 360, k = Math.min(1, M / Math.max(im.width, im.height)), c = document.createElement('canvas'); c.width = Math.max(1, Math.round(im.width * k)); c.height = Math.max(1, Math.round(im.height * k));
+  const x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height); x.drawImage(im, 0, 0, c.width, c.height);
+  let q = 0.75, u = c.toDataURL('image/jpeg', q); while (u.length > 80000 && q > 0.3) { q -= 0.1; u = c.toDataURL('image/jpeg', q); } res(u); }; im.src = r.result; }; r.readAsDataURL(file); }); }
+A.rasmSiq = rasmSiq;
+function sovgaPanel() {
+  const s = S(); s.sovga = s.sovga || []; const L = s.sovga, kids = A.bolalar(); let rasm = '';
+  const kimNom = k => k === 'oila' ? "👨‍👩‍👧 Oila (hammasi birga)" : A.bola(k) ? A.bola(k).avatar + ' ' + esc(A.bola(k).laqab) : '—';
+  app.innerHTML = `<div class="wrap ota">${top("🎁 Sovg'alar", 'ota')}
+  <div class="card"><p class="sm">💡 <b>Pedagog maslahati.</b> Sovg'ani <b>muntazamlik</b> uchun bering (masalan, haftada 5 kun missiya) — tezlik yoki aka-uka bilan bellashuv uchun emas. Ba'zan 🤫 sirli qiling: kutilmagan sovg'a qiziqishni so'ndirmaydi. Bitta 👨‍👩‍👧 oila sovg'asi bolalarni bir-biriga qarshi emas, birga ishlatadi.</p></div>
+  ${L.map(g => { const h = A.sovgaHolat(g); return `<div class="card sovga${h.yetdi ? ' yetdi' : ''}">${g.rasm ? `<img class="sgimg" src="${g.rasm}" alt="">` : '<div class="sgsir">🎁</div>'}<div class="sgb"><b>${esc(g.nom)}</b>${g.sir ? ' <span class="pill">🤫</span>' : ''}
+    <div class="sm">${kimNom(g.kim)} · ${g.takror ? '🔁 har hafta' : h.wk} · ${h.bor}/${h.kerak} kun${h.berildi ? ' · ✅ berildi' : h.yetdi ? ' · 🎉 yetdi' : ''}</div><div class="tbar"><i style="width:${Math.max(4, h.pct)}%"></i></div>
+    <div class="row">${h.yetdi && !h.berildi ? `<button class="btn sm" data-bd="${g.id}">✅ Berildi</button>` : ''}<button class="btn sm ghost" data-sd="${g.id}">🗑 O'chirish</button></div></div></div>`; }).join('')}
+  ${L.length >= 6 ? `<div class="card"><p class="sm">Ko'pi bilan 6 ta sovg'a — eskisini o'chiring.</p></div>` : `<div class="card form"><h3>➕ Yangi sovg'a</h3>
+  <label class="lb">Kimga</label><select id="sk" class="inp">${kids.map(b => `<option value="${b.id}">${b.avatar} ${esc(b.laqab)}</option>`).join('')}${kids.length > 1 ? '<option value="oila">👨‍👩‍👧 Oila — hammasi birga</option>' : ''}</select>
+  <label class="lb">Sovg'a nomi</label><input id="sn" class="inp" maxlength="40" placeholder="Masalan: Lego mashina" autocomplete="off">
+  <label class="lb">📷 Rasmi (ixtiyoriy — bola ekranda ko'rib turadi)</label><input id="sr" class="inp" type="file" accept="image/*"><div id="spv"></div>
+  <label class="lb">Shart: shu haftada necha kun missiya bajarilsin</label><input id="sh" class="inp" type="number" min="1" max="35" value="5">
+  <p class="sm mut" id="shi">7 kundan 5 kun — muntazamlik. Oila sovg'asida hamma bolalarning missiya kunlari qo'shiladi (masalan, 2 bola × 4 kun = 8).</p>
+  <label class="chk"><input type="checkbox" id="ss"> 🤫 Sirli — nomi va rasmi shart bajarilganda ochiladi</label>
+  <label class="chk"><input type="checkbox" id="st"> 🔁 Har hafta qaytadan</label>
+  <button class="btn big" data-sv>🎁 Qo'shish</button></div>`}</div>`;
+  bindTop();
+  const sk = $('#sk'); if (sk) sk.onchange = () => { $('#sh').value = sk.value === 'oila' ? kids.length * 4 : 5; };
+  const sr = $('#sr'); if (sr) sr.onchange = async () => { const f = sr.files && sr.files[0]; if (!f) return; try { rasm = await rasmSiq(f); $('#spv').innerHTML = `<img class="sgimg" src="${rasm}" alt="">`; } catch (e) { rasm = ''; toast("Rasmni o'qib bo'lmadi"); } };
+  const sv = $('[data-sv]'); if (sv) sv.onclick = () => { const nom = $('#sn').value.trim(); if (!nom) return toast("Sovg'a nomini yozing");
+    L.push({ id: A.rid(6), kim: $('#sk').value, nom, rasm, n: Math.max(1, Math.min(35, +$('#sh').value || 5)), sir: $('#ss').checked, takror: $('#st').checked, hafta: A.isoWeek(), yaratildi: Date.now(), yetdi: {}, berildi: {} });
+    A.save(true); toast("🎁 Qo'shildi — bola o'z ekranida ko'radi"); sovgaPanel(); };
+  $$('[data-bd]').forEach(x => x.onclick = () => { const g = L.find(y => y.id === x.dataset.bd); if (!g) return; const h = A.sovgaHolat(g); g.berildi = g.berildi || {}; g.berildi[h.wk] = A.todayKey(); A.save(true); toast('✅ Belgilandi'); sovgaPanel(); });
+  $$('[data-sd]').forEach(x => x.onclick = () => { const i = L.findIndex(y => y.id === x.dataset.sd); if (i >= 0) { L.splice(i, 1); A.save(true); sovgaPanel(); } });
+}
+/* ================= 📊 HAFTA XULOSASI — pedagog tilida (0.6.0) ================= */
+function xulosa(b, wk) {
+  const s = A.weekStats(b, wk), p = A.weekStats(b, A.prevWeek(wk)), lim = A.kunLimit(b), q = [], t = [];
+  const otdi = wk === A.isoWeek() ? Math.max(1, A.weekDays(wk).indexOf(A.todayKey()) + 1) : 7, kunO = s.kunlar ? Math.round(s.faol / 60 / s.kunlar) : 0;
+  q.push(`⏱ ${s.kunlar}/${otdi} kun faol, kuniga o'rtacha ${kunO} daqiqa${lim ? ` (chegara ${lim})` : ''} · 🎯 missiya: ${s.missiya} kun`);
+  if (s.n) q.push(`✅ Birinchi urinishda to'g'ri: ${s.acc1}% (${s.n} ta javob)${p.n >= 10 ? ` · o'tgan hafta ${p.acc1}% (${s.acc1 - p.acc1 >= 0 ? '+' : ''}${s.acc1 - p.acc1})` : ''}`);
+  const tug = Object.keys(s.nodes).map(id => { const n = s.nodes[id]; return { id, n: n.n, a: n.n ? n.ok1 / n.n : 0, nom: (gen.reg[id] && gen.reg[id].nom) || id }; }).filter(x => x.n >= 5);
+  const kuch = tug.filter(x => x.a >= 0.85).sort((x, y) => y.a - x.a || y.n - x.n).slice(0, 2), zaif = tug.filter(x => x.a < 0.7).sort((x, y) => x.a - y.a).slice(0, 2);
+  if (kuch.length) q.push("💪 Kuchli: " + kuch.map(x => `${x.nom} (${Math.round(x.a * 100)}%)`).join(', '));
+  if (zaif.length) q.push("🧩 Qiyin: " + zaif.map(x => `${x.nom} (${Math.round(x.a * 100)}%)`).join(', '));
+  if (s.ozl.length) q.push(`🚀 Yangi o'zlashtirilgan ko'nikmalar: ${s.ozl.length}`);
+  if (s.charchash) q.push(`😴 Missiyaning 2-yarmida aniqlik ${s.charchash > 0 ? '+' : ''}${s.charchash} punkt o'zgargan`);
+  const km = Math.max(0, ...s.days.map(k => (b.kun[k] && b.kun[k].komboMax) || 0)); if (km >= 3) q.push(`🔥 Eng uzun kombo: ${km} ta ketma-ket to'g'ri`);
+  if (s.charchash <= -15) t.push("Oxiriga kelib charchayapti: missiya o'zi qisqaradi, siz esa dam olish o'yinini tez-tez qiling (✏️ bola tahririda — har 3–4 savolda).");
+  if (lim && kunO > lim + 10) t.push(`Kuniga ${kunO} daqiqa — chegaradan ancha ko'p. «+10 daqiqa»ni kamroq bering: charchagan bola o'rganmaydi, shunchaki bosadi.`);
+  if (s.n >= 30 && s.acc1 >= 90) t.push("Aniqlik juda yuqori — savollar oson va zeriktirishi mumkin. 🎯 Fokus fan qo'ying yoki darslikdagi mavzuni oldinga suring.");
+  if (s.n >= 30 && s.acc1 < 65) t.push("Aniqlik past — savollar qiyin. Qiyin mavzuni uyda narsalar bilan ko'rsating (tangalar, cho'plar), 2–3 kun takrorlang.");
+  if (s.missiya < Math.ceil(otdi * 0.6)) t.push("Muntazamlik past. Har kuni bir xil vaqtda (masalan, kechki ovqatdan oldin) 20 daqiqa — odatga aylanadi. 🎁 Sovg'a shartini «haftada 5 kun» qiling.");
+  if (zaif.length) t.push(`Keyingi hafta «${zaif[0].nom}» ko'proq chiqadi (ilova o'zi rejalaydi). Bolani natija uchun emas, harakati uchun maqtang.`);
+  if (!t.length) t.push("Hammasi joyida — shu tartibda davom eting. Bolani natija uchun emas, harakati uchun maqtang.");
+  return { q, t, matn: [`${b.laqab} — ${wk}`, ...q, '👉 Tavsiya:', ...t.map(x => '• ' + x)].join('\n') };
+}
+A.xulosa = xulosa;
+function hisobotPanel() {
+  WK = WK || A.isoWeek(); const L = A.bolalar(), X = L.map(b => ({ b, x: xulosa(b, WK) }));
+  app.innerHTML = `<div class="wrap ota">${top('📊 Hafta xulosasi', 'ota')}
+  <div class="wkbar"><button class="ib" data-wk="-1" aria-label="Oldingi hafta">‹</button><b>${WK}</b><span class="sm mut">${A.weekDays(WK)[0].slice(5)} — ${A.weekDays(WK)[6].slice(5)}</span><button class="ib" data-wk="1" aria-label="Keyingi hafta">›</button></div>
+  ${X.map(({ b, x }) => `<div class="card hx"><div class="kh"><span class="av">${b.avatar}</span><b>${esc(b.laqab)}</b><span class="sm mut">${A.DARAJA[b.daraja]}</span></div><ul class="tl">${x.q.map(l => `<li>${esc(l)}</li>`).join('')}</ul>
+    <div class="note kn"><b>👉 Tavsiya</b><ul class="tl">${x.t.map(l => `<li>${esc(l)}</li>`).join('')}</ul></div></div>`).join('') || '<div class="card">Hali bola yo\'q</div>'}
+  <div class="card"><button class="btn" data-cp>📋 Hammasini nusxalash (Claude'ga yuborish uchun)</button><p class="sm mut">Batafsil raqamlar — 📊 Monitoring va 📤 Eksport (BJW2).</p></div></div>`;
+  bindTop();
+  $$('[data-wk]').forEach(x => x.onclick = () => { const d = +x.dataset.wk; WK = d < 0 ? A.prevWeek(WK) : A.isoWeek(A.addDays(A.weekDays(WK)[6], 1)); hisobotPanel(); });
+  $('[data-cp]').onclick = () => A.copyText(X.map(o => o.x.matn).join('\n\n'));
+}
 /* ================= HAFTA (6.3-1) ================= */
 function levelPct(b) { const L = A.gl(b.daraja), Z = A.ZANJIR.mat, st = Z.indexOf(A.BOSH.mat[L]), en = L === 'g0' ? Z.indexOf('M1.1') : L === 'g1' ? Z.indexOf('M2.1') : Z.length; const cur = Z.indexOf((b.fan.mat || {}).cur); return Math.max(0, Math.min(100, Math.round(100 * (cur - st) / Math.max(1, en - st)))); }
 function weekPanel() {
@@ -3455,7 +3549,7 @@ function weekPanel() {
     <div class="kgrid"><div><b class="mono">${A.fmtHMS(s.faol)}</b><span>faol vaqt</span></div><div><b>${s.kunlar}/7</b><span>kun</span></div><div><b>${s.n ? s.acc1 + '%' : '—'}</b><span>aniqlik</span></div><div><b>${s.med ? (s.med / 1000).toFixed(1) + ' s' : '—'}</b><span>median</span></div><div><b>+${s.ozl.length} 🟢</b><span>o'sish</span></div><div><b>${s.wcpm ? s.wcpm[1] : '—'}</b><span>WCPM</span></div></div>
     <div class="lvl"><span class="sm">O'z darajasida (matematika): ${levelPct(b)}%</span><div class="tbar"><i style="width:${levelPct(b)}%"></i></div></div>${b.qisqaKun === A.todayKey() ? '<div class="sm">😴 Oxirgi missiyada charchadi — bugungisi 25% qisqaroq</div>' : ''}</button>`; }).join('') || '<div class="card">Hali bola yo\'q.</div>'}
   ${noms.length ? `<div class="card"><h3>🏆 Hafta nominatsiyalari (shu telefondagi bolalar)</h3>${noms.map(n => `<div class="nr">${n.ic} <b>${esc(n.nom)}</b>: ${n.bola ? esc(A.bola(n.bola).laqab) : '<span class="mut">sifat sharti bajarilmadi — summa keyingi haftaga</span>'}</div>`).join('')}<p class="sm mut">Boshqa telefonlardagi bolalar bilan solishtirish — 📲 Oila reytingi.</p></div>` : ''}
-  <div class="menu">${isAdmin() ? '<button class="btn" data-go="ota-qosh">➕ Bola qo\'shish</button>' : ''}<button class="btn" data-go="ota-qiyin">📚 Bugungi qiyinlar</button><button class="btn" data-go="ota-vazifa">📝 Uyga vazifa</button><button class="btn" data-go="ota-bulut">☁️ Oila akkaunti</button><button class="btn" data-go="ota-reyting">📲 Oila reytingi</button><button class="btn" data-go="ota-eksport">🤖 Claude uchun hafta</button><button class="btn" data-go="ota-arab">🕌 Arab so'zlari</button><button class="btn" data-go="ota-zaxira">💾 Zaxira</button><button class="btn" data-go="ota-sozlama">⚙️ Sozlamalar</button><button class="btn ghost" data-out>🔒 Paneldan chiqish</button></div>
+  <div class="menu">${isAdmin() ? '<button class="btn" data-go="ota-qosh">➕ Bola qo\'shish</button>' : ''}<button class="btn" data-go="ota-qiyin">📚 Bugungi qiyinlar</button><button class="btn" data-go="ota-hisobot">📊 Hafta xulosasi${A.isoWeek() === WK && new Date().getDay() % 6 === 0 ? ' 🔔' : ''}</button><button class="btn" data-go="ota-sovga">🎁 Sovg'alar</button><button class="btn" data-go="ota-vazifa">📝 Uyga vazifa</button><button class="btn" data-go="ota-bulut">☁️ Oila akkaunti</button><button class="btn" data-go="ota-reyting">📲 Oila reytingi</button><button class="btn" data-go="ota-eksport">🤖 Claude uchun hafta</button><button class="btn" data-go="ota-arab">🕌 Arab so'zlari</button><button class="btn" data-go="ota-zaxira">💾 Zaxira</button><button class="btn" data-go="ota-sozlama">⚙️ Sozlamalar</button><button class="btn ghost" data-out>🔒 Paneldan chiqish</button></div>
   <p class="sm mut">Versiya ${A.VER} · ${A.storageOK ? 'xotira ✓' : '⚠️ xotiraga yozib bo\'lmadi'}</p></div>`;
   bindTop(); $$('[data-wk]').forEach(x => x.onclick = () => { const d = +x.dataset.wk; WK = d < 0 ? A.prevWeek(WK) : A.isoWeek(A.addDays(A.weekDays(WK)[6], 1)); weekPanel(); });
   $$('[data-b]').forEach(x => x.onclick = () => A.go('ota-bola-' + x.dataset.b)); $$('[data-go]').forEach(x => x.onclick = () => A.go(x.dataset.go));
