@@ -119,6 +119,14 @@ Tartib (foydalanuvchi qarori, 05.11):
 4. 🎙️ Ota-ona ovozi.
 5. To'liq sinov → VER 0.7.0 → u «chiqar» desa main.
 
+## 🗺️ Sarguzasht xaritasi — TASDIQLANDI (05.11: 1BC, 2A, 3A; foydalanuvchiga inline namunasi ko'rsatildi)
+- Hafta = 7 bekat (Du…Ya), har hafta yangi xarita. Garaj dunyosi — bolaning o'z mashinasi (`A.roadHero`/`A.bezak`), orol dunyosi — uchar ot + «katta qiz» uslubi (neon-pushti, kamroq multfilm).
+- Missiya bajarildi → bekat ochiladi (yashil), qahramon keyingi bekatga yuradi. Mavjud so'm mukofoti (+2 000, 5-kun +10 000) o'zgarmaydi.
+- 1B: o'tkazilgan kun — kulrang «tuman», jazosiz; qahramon baribir bugungi kunda turadi (orqada qolib ketmaydi).
+- 1C: shanba kuni «🛟 qutqarish missiyasi» — tumanli bekatni qaytarish. Taklif (yasashda tasdiqlatish [?]): har bekatga qisqa 5–8 savol, ko'pi bilan 2 ta bekat; qaytarilgan bekat 5 kun bonusi hisobiga kiradimi — [?].
+- 2A: yakshanba finali — do'stona «dev» (boss): kuch chizig'i, har to'g'ri javobda kamayadi; savollar shu haftaning qiyin tugunlaridan (`qiyin` < 70%); yutsa — hafta sandig'i (`A.sandiq`) + xaritaga kubok; yutolmasa — jazosiz («dev keyingi hafta qaytadi»). Mavjud yakshanba finali (`buildFinal`) asos.
+- 3A: xarita uy ekranida darhol ko'rinadi (worldScene bilan birga yoki o'rnida — yasashda inline namunada ko'rsatib tanlatiladi); 390 px, tepadagi tugmalar ≤ 390.
+
 ## 🧺 Oila bozori — TASDIQLANDI (05.11: 1A — faqat ilova ichida, 2A — cola/chips haftada 1, 3C — xaritadan keyin)
 - Maqsad: «ehtiyoj va xohish», byudjet, qaytim, birlik narxi, «har tanlovning narxi bor».
 - Oila puli — ALOHIDA: ota-ona har topshiriqqa byudjet qo'yadi (masalan 50 000). Bola hamyonidan (`b.pul.h`) hech qachon yechilmaydi, aralashmaydi.
