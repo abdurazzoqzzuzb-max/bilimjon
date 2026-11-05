@@ -210,6 +210,7 @@ body.th-orol .road{background:rgba(255,255,255,.18)}
 .vzr{padding:8px 0;border-bottom:1px solid var(--line);position:relative;padding-right:60px}.vzr .btn{position:absolute;right:0;top:6px}
 .tjd{border:1px solid var(--line);border-radius:12px;padding:8px 10px;margin:8px 0}.tjd summary{cursor:pointer;min-height:32px}
 .tjm{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:4px 0;border-bottom:1px dashed var(--line)}.tjm .arab{font-size:1.5rem;white-space:nowrap}.tjm .sm{text-align:right}
+.dars .btn.ghost{color:#172033;border-color:#C9D2E0;background:#F3F6FB}.dars .arb{font-family:"Geeza Pro","Noto Naskh Arabic","Amiri",serif;font-size:1.25em;font-weight:400}
 /* --- ota-ona --- */
 .ota .card h3{margin-top:0}
 .wkbar{display:flex;align-items:center;justify-content:center;gap:10px;margin:6px 0}
@@ -1274,9 +1275,9 @@ add('AQ.2', { fan: 'ar', nom: 'Arabchasini top', me: 7, gen(q, c) {
   return { sav: `${w.e}  «${w.uz}»`, sav2: 'Arabchasini top', big: 1, o, a: w.w, k: 'r' + w.w, sig: sg('r' + w.w, o), ex: { w: w.w }, tushun: `«${w.uz}» — ${w.w}` };
 }, chk: it => ARW.some(x => x.w === it.a && x.w === it.ex.w) || 'ar' });
 const BELGI = [
-  { k: 'shadda', t: /ّ/, nom: 'shadda (ـّ)', izoh: "Shadda — harf ikki marta o'qiladi: أُمٌّ «umm»." },
-  { k: 'sukun', t: /ْ/, nom: 'sukun (ـْ)', izoh: "Sukun — harf harakatsiz o'qiladi: بَيْتٌ «bayt»." },
-  { k: 'tanvin', t: /[ً-ٍ]/, nom: 'tanvin (ـٌ ـٍ ـً)', izoh: "Tanvin — so'z oxirida «-un, -in, -an» deb o'qiladi: كِتَابٌ «kitaabun»." }];
+  { k: 'shadda', g: 'ـّ', t: /ّ/, nom: 'shadda (ـّ)', izoh: "Shadda — harf ikki marta o'qiladi: أُمٌّ «umm»." },
+  { k: 'sukun', g: 'ـْ', t: /ْ/, nom: 'sukun (ـْ)', izoh: "Sukun — harf harakatsiz o'qiladi: بَيْتٌ «bayt»." },
+  { k: 'tanvin', g: 'ـٌ', t: /[ً-ٍ]/, nom: 'tanvin (ـٌ ـٍ ـً)', izoh: "Tanvin — so'z oxirida «-un, -in, -an» deb o'qiladi: كِتَابٌ «kitaabun»." }];
 function sanash(q, c) {
   const L = sozlar(c), w = pick(L), hs = harflar(w.w), n = hs.length;
   const o = opts(n, [{ v: n + 1, x: 'sanashda_xato' }, { v: n - 1, x: 'sanashda_xato' }, { v: n + 2, x: 'sanashda_xato' }], q === 1 ? 3 : 4);
@@ -1288,7 +1289,7 @@ add('AQ.3', { fan: 'ar', nom: 'Belgilar va harflar', me: 8, gen(q, c) {
   for (let g = 0; g < 12; g++) {
     const Bx = pick(BELGI), pos = L.filter(x => Bx.t.test(x.w)), neg = L.filter(x => !Bx.t.test(x.w)); if (!pos.length || neg.length < 3) continue;
     const w = pick(pos), o = arO(opts(w.w, sample(neg, 3).map(x => ({ v: x.w, x: 'belgi_xato' })), 4));
-    return { sav: `Qaysi so'zda ${Bx.nom} bor?`, o, a: w.w, k: Bx.k + w.w, sig: sg(Bx.k + w.w, o), ex: { w: w.w, b: Bx.k }, tushun: Bx.izoh };
+    return { sav: `Qaysi so'zda ${Bx.nom} bor?`, vis: { k: 'arab', t: Bx.g }, o, a: w.w, k: Bx.k + w.w, sig: sg(Bx.k + w.w, o), ex: { w: w.w, b: Bx.k }, tushun: Bx.izoh };
   }
   return sanash(q, c);
 }, chk: it => it.ex.n != null ? (harflar(it.ex.w).length === +it.a || 'son') : ((BELGI.find(b => b.k === it.ex.b) || { t: /$^/ }).t.test(it.a) || 'belgi') });
@@ -1415,8 +1416,8 @@ add('TJ.6', { fan: 'ar', nom: "Tajvid: g'unna", me: 6, gen(q, c) {
 
 /* ================= Kichik dars qoidalari (o'zbekcha) ================= */
 const DARS = {
-  'AQ.1': ["So'zni harakatlari bilan sekin o'qi, keyin ma'nosini esla. Bir mavzudagi so'zlar bir-biriga yaqin — shoshilma."],
-  'AQ.2': ["Avval so'z qaysi tovush bilan boshlanishini o'yla, keyin variantlarni o'ngdan chapga o'qib chiq."],
+  'AQ.1': ["So'zni harakatlari bilan sekin o'qi, keyin ma'nosini esla. Bir mavzudagi so'zlar bir-biriga yaqin — shoshilma.", "Oxiridagi ة (ta marbuta) — ko'pincha muannas (ayol jinsi) belgisi: جَدٌّ bobo → جَدَّةٌ buvi, أَخٌ aka-uka → أُخْتٌ opa-singil."],
+  'AQ.2': ["Avval so'z qaysi tovush bilan boshlanishini o'yla, keyin variantlarni o'ngdan chapga o'qib chiq.", "O'xshash so'zlarni oxiridan farqla: جَدٌّ bobo — جَدَّةٌ buvi (oxirida ة), أَخٌ aka-uka — أُخْتٌ opa-singil (oxirida ت)."],
   'AQ.3': ["Shadda (ـّ) — harf ikki marta o'qiladi. Sukun (ـْ) — harf harakatsiz.", "Tanvin (ـٌ ـٍ ـً) — oxirida «-un, -in, -an». Harflarni sanaganda harakatlar sanalmaydi."],
   'AQ.4': ["Iborani so'zma-so'z o'qi: har so'zning ma'nosini esla, keyin birga qo'sh."],
   'AY.2': ["Arabchada o'ngdan chapga yoziladi: birinchi harf — eng o'ngda.", "Harflar tartibini saqla, nuqtalarga e'tibor ber."],
@@ -1427,6 +1428,17 @@ const DARS = {
   'TJ.4': ["Qalqala harflari 5 ta: ق ط ب ج د («قُطْبُ جَدٍّ»).", "Ular sukunli bo'lsa, tovush biroz «sakraydi»: يَدْخُلُونَ ، قَدْ."],
   'TJ.5': ["Madd — cho'zib o'qish. Madd harflari: ا (fathadan keyin), و (dammadan keyin), ي (kasradan keyin).", "Madd tabiiy — 2 harakat: قَالَ. Madd lozim — maddan keyin shadda/sukun, 6 harakat: الضَّالِّينَ.", "Muttasil — hamza shu so'zda: جَاءَ. Munfasil — hamza keyingi so'zda: يَا أَيُّهَا (ikkalasi ham ustozingiz o'rgatgan miqdorda cho'ziladi)."],
   'TJ.6': ["Nun va mim shaddali bo'lsa (نّ ، مّ) — g'unna: burunda 2 harakat ushlab turiladi: إِنَّ ، ثُمَّ."]
+};
+/* 0.4.1: namuna yechimlar (kichik dars) — shu savolning so'zi harfma-harf */
+const BN = { 'َ': 'fatha (a)', 'ُ': 'damma (u)', 'ِ': 'kasra (i)', 'ْ': 'sukun', 'ّ': 'shadda', 'ً': 'tanvin (-an)', 'ٌ': 'tanvin (-un)', 'ٍ': 'tanvin (-in)' };
+function bogin(w) { const out = []; let cur = null; for (const ch of String(w)) { if (/[ً-ٰٟ]/.test(ch)) { if (cur) cur.m.push(ch); } else if (/[ء-ي]/.test(ch)) { cur = { h: ch, m: [] }; out.push(cur); } else cur = null; } return out; }
+const tahlil = w => bogin(w).slice(0, 5).map(x => `${x.h}${x.m.join('')} — «${hn(x.h)}»${x.m.length ? ': ' + x.m.map(m => BN[m]).filter(Boolean).join(' + ') : ''}`);
+const muannas = w => /ة/.test(skelet(w)) ? "Oxirida ة (ta marbuta) — muannas (ayol jinsi) belgisi." : '';
+const QADAM = {
+  'AQ.1': it => [`Harflari: ${harflar(it.ex.w).join(' · ')}`, muannas(it.ex.w)].filter(Boolean),
+  'AQ.2': it => { const w = it.ex.w, x = ARW.find(y => y.w === w) || {}, hs = harflar(w); return [`«${x.uz}» ${x.e || ''} → ${w}`, `Harflari: ${hs.join(' · ')} — birinchisi «${hn(hs[0])}».`, muannas(w)].filter(Boolean); },
+  'AQ.3': it => { const w = it.ex.w; if (it.ex.n != null) { const hs = harflar(w); return [`Harflarni birma-bir sana: ${hs.map((h, i) => (i + 1) + ') ' + h).join('   ')}`, `Harakat va belgilar (ـَ ـِ ـُ ـْ ـّ ـٌ) harf emas — sanalmaydi. Jami: ${hs.length} ta harf.`]; } return [`Har harfni belgisi bilan ko'r (${w}):`].concat(tahlil(it.a)); },
+  'TJ.1': it => { const w = it.ex.w, h = harflar(w)[2], t = lomTur(w); return [`1) «ال» ni top: ${w}`, `2) Undan keyingi harf: «${hn(h)}» (${h}).`, t === 'shamsiy' ? `3) «${hn(h)}» — ☀️ shamsiy harf: lom o'qilmaydi, «${hn(h)}» shaddali o'qiladi.` : `3) «${hn(h)}» — 🌙 qamariy harf: lom sukunli, aniq o'qiladi.`]; }
 };
 /* ================= Bo'limlar va mavjudlik ================= */
 const OQ = ['AQ.1', 'AQ.2', 'AQ.3', 'AQ.4'], YZ = ['AY.1', 'AY.2', 'AY.3'], TJ = ['TJ.1', 'TJ.2', 'TJ.3', 'TJ.4', 'TJ.5', 'TJ.6'];
@@ -1441,7 +1453,9 @@ function mavjud(S, ids) {
 const TJ_MISOL = {
   'TJ.1': LOM.map(w => [w, LOMN[lomTur(w)]]), 'TJ.2': NUN.map(d => [d[0], NUNN[nunTur(d[1])]]), 'TJ.3': MIM.map(d => [d[0], MIMN[mimTur(d[1])]]),
   'TJ.4': QPOS.map(w => [w, 'qalqala bor']).concat(QNEG.map(w => [w, "qalqala yo'q"])), 'TJ.5': MADD.map(d => [d[0], MADDN[d[1]]]), 'TJ.6': GPOS.map(w => [w, "g'unna bor"]).concat(GNEG.map(w => [w, "g'unna yo'q"])) };
-BJ.arab = { BOLIM, mavjud, skelet, harflar, hn, yaqin, IBR, DARS, TJ_MISOL, LOM, NUN, MIM, QPOS, QNEG, MADD, GPOS, GNEG, lomTur, nunTur, mimTur, OQ, YZ, TJ };
+/* Maktabgacha bola o'zbekcha savolni o'qiy olmasligi mumkin — har arab savolida kattalarga maslahat */
+OQ.concat(YZ, TJ, ['AY.4']).forEach(id => { const d = gen.reg[id], f0 = d.gen; d.gen = function (q, c) { const it = f0.call(this, q, c); if (c && c.g0 && !it.ota) it.ota = "Savolni o'qib bering — arabchasini bolaning o'zi o'qisin."; return it; }; });
+BJ.arab = { QADAM, BOLIM, mavjud, skelet, harflar, hn, yaqin, IBR, DARS, TJ_MISOL, LOM, NUN, MIM, QPOS, QNEG, MADD, GPOS, GNEG, lomTur, nunTur, mimTur, OQ, YZ, TJ };
 })(typeof window !== 'undefined' ? window : globalThis);
 
 </script>
@@ -1701,7 +1715,7 @@ BJ.vis = vis;
 (function (G) {
 'use strict';
 const BJ = G.BJ, A = BJ.A = {}, gen = BJ.gen, B = BJ.bank;
-A.VER = '0.4.0';
+A.VER = '0.4.1';
 /* ================= UTIL ================= */
 const pad = n => String(n).padStart(2, '0');
 const todayKey = d => { d = d || new Date(); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
@@ -1846,7 +1860,9 @@ function kalibFinish(b, f) {
 Object.assign(A, { kalibAnswer, kalibFinish, kalibNode, kalibNew });
 /* ================= MISSIYA REJASI (4.4) ================= */
 const isSunday = () => new Date().getDay() === 0;
-const blokSoni = (min, me, b) => A.TEZ ? 2 : clamp(Math.round(min * 60 * (b.reja && b.reja.qisqa ? 0.75 : 1) / (me + 5)), 3, 16);
+const blokSoni = (min, me, b) => A.TEZ ? 2 : Math.max(3, Math.round(clamp(Math.round(min * 60 / (me + 5)), 3, 16) * (((b.reja && b.reja.qisqa) || b.qisqaKun === todayKey()) ? 0.75 : 1)));
+/* 0.4.1: oxirgi missiyada 2-yarmida aniqlik 15+ punkt tushgan bo'lsa (charchash) — bugungi missiya qisqaroq */
+function kechaCharch(b) { const t = todayKey(); for (let i = 1; i <= 3; i++) { const d = b.kun[addDays(t, -i)]; if (!d || !d.yarim) continue; const y = d.yarim; if (y[0][0] < 10 || y[1][0] < 10) continue; return pct(y[1][1], y[1][0]) - pct(y[0][1], y[0][0]) <= -15; } return false; }
 function dueReview(b, fan) { const k = todayKey(); const out = []; b.takror.forEach(x => { if (x.due <= k && (!fan || gen.reg[x.tugun] && gen.reg[x.tugun].fan === fan)) out.push({ tugun: x.tugun, q: x.q, tur: 'takror' }); });
   Object.keys(b.tugun).forEach(id => { const t = b.tugun[id]; if (t.srs && t.srs.due <= k && (!fan || gen.reg[id] && gen.reg[id].fan === fan) && !out.some(o => o.tugun === id)) out.push({ tugun: id, q: t.q, tur: 'takror' }); }); return out; }
 function knownLetters(b) { const L = gl(b.daraja); if (L !== 'g0') return null; return BJ.harfTartib.slice(0, clamp(b.harfK || 2, 2, BJ.harfTartib.length)); }
@@ -1907,6 +1923,7 @@ function kashfOfDay(b) { const D = dayNo(b); const list = B.kashf; return list[(
 function buildMission(b) {
   const L = gl(b.daraja), D = dayNo(b), steps = [], final = A.isSunday() && D >= 3;
   if (final) return buildFinal(b);
+  if (kechaCharch(b)) b.qisqaKun = todayKey();
   const rev = dueReview(b); const yest = Object.keys(b.tugun).filter(id => b.tugun[id].kun[addDays(todayKey(), -1)]);
   if (D >= 2 && (rev.length || yest.length)) steps.push({ k: 'isinish', fan: 'isinish', n: A.TEZ ? 2 : 3 });
   BLOK[L].forEach(([fan, min]) => {
@@ -1931,7 +1948,7 @@ function buildFinal(b) {
 }
 /* Yakshanba finali uchun hafta tugunlari */
 function weekNodes(b) { const days = weekDays(isoWeek()); const ids = Object.keys(b.tugun).filter(id => days.some(d => b.tugun[id].kun[d]) && gen.reg[id] && !['KASHF', 'OL'].includes(id) && gen.reg[id].fan !== 'ar'); return ids.length ? ids : Object.keys(b.tugun).filter(id => gen.reg[id] && gen.reg[id].fan === 'mat'); }
-Object.assign(A, { arPick, arMavjud, buildMission, buildFinal, pickNode, makeItem, letterProgress, knownLetters, dueReview, duelWords, kashfOfDay, isSunday, weekNodes, letterNode });
+Object.assign(A, { kechaCharch, arPick, arMavjud, buildMission, buildFinal, pickNode, makeItem, letterProgress, knownLetters, dueReview, duelWords, kashfOfDay, isSunday, weekNodes, letterNode });
 /* ================= MUKOFOT, YULDUZ, SANDIQ ================= */
 function addStar(b, n, arena) { const k = todayKey(); if (arena) { const a = b.arenaYulduz[k] || 0; n = Math.max(0, Math.min(n, 20 - a)); b.arenaYulduz[k] = a + n; } if (!n) return 0; b.yulduz += n; b.yulduzKun[k] = (b.yulduzKun[k] || 0) + n; agg(b).yulduz += n; return n; }
 function weekStars(b, wk) { return sum(weekDays(wk || isoWeek()).map(k => b.yulduzKun[k] || 0)); }
@@ -2323,6 +2340,29 @@ const DARS_QADAM = {
   'M2.4': it => { if (!(it.ex && it.ex.f != null)) return []; const m = String(it.sav).match(/\d+/g); if (!m || m.length < 3) return []; const [a, b, c] = m.map(Number), v = a - b + c; if (v !== +it.ex.f) return [];
     return [`Boshida: ${a} kishi.`, `${b} kishi tushdi — kamaydi: ${a} − ${b} = ${a - b}.`, `${c} kishi chiqdi — ko'paydi: ${a - b} + ${c} = ${v}.`]; }
 };
+/* ================= 0.4.1: kunlik natijalar bo'yicha kuchaytirilgan darslar ================= */
+Object.assign(DARS, {
+  'M1.2': ["O'zbekchada son qanday aytilsa, shunday yoziladi: «o'n to'rt» → avval «o'n» (chapda 1), keyin «to'rt» (o'ngda 4) = 14.", "1 bog'lam tayoqcha = 1 o'nlik = 10 ta. Bog'lam — chapda, yakka tayoqchalar — o'ngda."],
+  'M2.4': ["Masalani 2 marta o'qi: birinchisida nima bo'lganini tushun, ikkinchisida sonlarni top.", "Kalit so'zlar: «yana oldi», «chiqdi», «ko'p» → qo'shamiz (+). «berdi», «tushdi», «kam» → ayiramiz (−). 2 ta amal bo'lsa — ketma-ket."],
+  'EN.ranglar': ["Rangni bir narsa bilan bog'lab esla: red 🍎 olma, blue 🌊 dengiz, yellow 🍌 banan, green 🌿 o't, orange 🍊 apelsin (orange — apelsin ham!), pink 🌸 gul, purple 🍇 uzum, brown 🐻 ayiq, black 🌑 tun, white ❄️ qor."]
+}, (BJ.arab && BJ.arab.DARS) || {});
+Object.assign(DARS_QADAM, (BJ.arab && BJ.arab.QADAM) || {});
+const SON1 = ['', 'bir', 'ikki', 'uch', "to'rt", 'besh', 'olti', 'yetti', 'sakkiz', "to'qqiz"], SON10 = ['', "o'n", 'yigirma', "o'ttiz", 'qirq', 'ellik', 'oltmish', 'yetmish', 'sakson', "to'qson"];
+function teen(it) { let n = +it.a; if (!(n >= 11 && n <= 19)) { const m = String(it.sav).match(/\b1[1-9]\b/); n = m ? +m[0] : it.vis && it.vis.b != null ? 10 + it.vis.b : NaN; } return n >= 11 && n <= 19 ? n : null; }
+DARS_QADAM['M1.2'] = it => { if (it.ex && it.ex.op) return []; const n = teen(it); if (!n) return []; const b = n - 10;
+  return [`${n} = 1 ta o'nlik (10 ta) + ${b} ta birlik.`, `«o'n ${SON1[b]}» — avval «o'n» → chapga 1, keyin «${SON1[b]}» → o'ngga ${b}: ${n} = 10 + ${b}.`].concat(b > 1 ? [`${b}1 emas! ${b}1 — bu «${SON10[b]} bir», butunlay boshqa son.`] : []); };
+const m24bus = DARS_QADAM['M2.4'];
+DARS_QADAM['M2.4'] = it => { const r = m24bus(it); if (r.length) return r; const ex = it.ex || {}, s = String(it.sav); if (ex.a == null || !ex.op) return [];
+  const a = +ex.a, b = +ex.b, v = ex.op === '+' ? a + b : a - b;
+  const kalit = /undan \d+ ta ko'p/.test(s) ? "«undan ko'p»" : /undan \d+ ta kam/.test(s) ? "«undan kam»" : /oldi/.test(s) ? "«yana oldi»" : /berdi/.test(s) ? "«berdi»" : '';
+  return [`Masaladagi sonlar: ${a} va ${b}.`, `${kalit ? "Kalit so'z " + kalit + ' → ' : ''}${ex.op === '+' ? "qo'shamiz (+)" : 'ayiramiz (−)'}.`, `${a} ${ex.op} ${b} = ${v}`]; };
+const ENW = {}; Object.keys(B.en).forEach(t => B.en[t].forEach(w => { ENW[w[0]] = w; }));
+const ENA = { red: '🍎 olma', blue: '🌊 dengiz', yellow: '🍌 banan', green: "🌿 o't", orange: '🍊 apelsin', pink: '🌸 gul', purple: '🍇 uzum', brown: '🐻 ayiq', black: '🌑 tun', white: '❄️ qor' };
+const enQadam = it => { const ex = it.ex || {}; if (ex.ib) { const ib = B.enIbora.find(x => x[0] === ex.ib); return ib ? [`«${ib[0]}» — «${ib[2]}» ${ib[1]}`, 'Iborani 3 marta ovoz chiqarib takrorla 🔊'] : []; }
+  const w = ENW[ex.w]; if (!w) return []; return [`🔊 «${w[0]}» — «${w[2]}» ${w[1]}`].concat(ENA[w[0]] ? [`Esla: ${w[0]} — ${ENA[w[0]]} rangi.`] : [], ["So'zni 3 marta ovoz chiqarib ayt 🔊"]); };
+B.enTartib.forEach(t => { if (!DARS_QADAM['EN.' + t]) DARS_QADAM['EN.' + t] = enQadam; });
+/* Darsda savolning o'zida rasm bo'lmasa — yordamchi rasm */
+const DARS_VIS = { 'M1.2': it => { if (it.ex && it.ex.op) return null; const n = teen(it); return n ? { k: 'tayoq', o: 1, b: n - 10 } : null; } };
 function darsMumkin(it, r) { return !r.yakuniy && !r.final && (it.t === 'tanla' || it.t === 'yoz') && !!(it.tugun && gen.reg[it.tugun]) && it.tugun !== 'KASHF' && it.tur !== 'duel' && it.tur !== 'kashf'; }
 /* Matematik namuna yechim: ifodadagi a, b, amal bo'yicha bosqichma-bosqich */
 function mathSteps(ex) {
@@ -2372,28 +2412,30 @@ function darsFlow(b, m, st, it, next) {
   }
   showLesson(b, m, st, it, n);
 }
+/* O'zbekcha matn ichidagi arabcha bo'laklar o'ngdan chapga, aralashmasdan ko'rinsin */
+const AR_RUN = /[\u0600-\u06FF](?:[\u0600-\u06FF\s·+]*[\u0600-\u06FF])?/g, escB = s => esc(s).replace(AR_RUN, m => `<bdi dir="rtl" class="arb">${m}</bdi>`);
 function showLesson(b, m, st, it, n) {
   FX.play('yumshoq'); FX.vibrate(30);
-  const d = gen.reg[it.tugun] || {}, kat = A.gl(b.daraja) === 'g0', qoida = DARS[it.tugun] || DARS_FAN[it.fan] || [], qad = darsQadam(it);
+  const d = gen.reg[it.tugun] || {}, kat = A.gl(b.daraja) === 'g0', qoida = DARS[it.tugun] || DARS_FAN[it.fan] || [], qad = darsQadam(it), dv = !it.vis && DARS_VIS[it.tugun] ? DARS_VIS[it.tugun](it) : null;
   const html = `<div class="dars" role="region" aria-label="Kichik dars">
   <div class="dh"><span>📖</span><span>Kichik dars${d.nom ? ': ' + esc(d.nom) : ''}</span></div>
   ${kat ? `<div class="dkat">👨‍👩‍👦 Kattalar o'qib bersin</div>` : ''}
-  ${qoida.length ? `<div class="dq">${qoida.map(esc).join('<br>')}</div>` : ''}
-  <div class="dex"><div class="dl">Shu savolni birga yechamiz:</div><div class="dsav">${esc(it.sav)}</div>${it.vis ? `<div class="visw">${ART.vis(it.vis)}</div>` : ''}</div>
-  ${qad.length ? `<ol class="dsteps">${qad.map(s => `<li>${esc(s)}</li>`).join('')}</ol>` : ''}
+  ${qoida.length ? `<div class="dq">${qoida.map(escB).join('<br>')}</div>` : ''}
+  <div class="dex"><div class="dl">Shu savolni birga yechamiz:</div><div class="dsav">${esc(it.sav)}</div>${it.vis ? `<div class="visw">${ART.vis(it.vis)}</div>` : dv ? `<div class="visw">${ART.vis(dv)}</div>` : ''}${it.tts ? `<button class="btn ghost say" data-dsay>🔊 ${esc(it.tts)}</button>` : ''}</div>
+  ${qad.length ? `<ol class="dsteps">${qad.map(s => `<li>${escB(s)}</li>`).join('')}</ol>` : ''}
   ${kat && it.ota ? `<div class="dkat">👨 Kattalarga: ${esc(it.ota)}</div>` : ''}
   <div class="dans">✅ Javob: ${javobHTML(it)}</div>
   <p class="dnext">${n === 1 ? "Endi xuddi shunday savolni o'zing yech! 💪" : "Yana bittasini mashq qilamiz — bu safar osonrog'i."}</p>
   <button class="btn big" data-twin disabled>Men tayyorman ✍️ <span data-c></span></button></div>`;
   const host = $('.item'); if (host) host.outerHTML = html; else { const s = $('#stage') || app; s.innerHTML = html; }
   const chb = $('[data-charch]'); if (chb) chb.remove();
+  const dsy = $('[data-dsay]'); if (dsy) { dsy.onclick = () => speak(it.tts); setTimeout(() => speak(it.tts), 400); }
   const btn = $('[data-twin]'), c = $('[data-c]'); let k = A.TEZ ? 0 : 5;
   const tick = () => { if (!document.body.contains(btn)) return; if (k <= 0) { btn.disabled = false; c.textContent = ''; return; } c.textContent = '(' + k + ')'; k--; setTimeout(tick, 1000); };
   tick();
   btn.onclick = () => { if (btn.disabled) return; const tw = twinItem(b, it, n); if (CUR && CUR.k === 'missiya') showItem(b, m, st, tw); else if (CUR && CUR.k === 'mashq') mashqNext(b, tw); else arenaNext(b, tw); };
   try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) {}
 }
-Object.assign(DARS, (BJ.arab && BJ.arab.DARS) || {});
 A.darsQadam = darsQadam; A.mathSteps = mathSteps; A.DARS = DARS;
 if (A.TEZ) G.__bjCur = () => CUR; /* faqat ?tez=1 avtomatik sinov uchun */
 function onAnswer(b, m, st, it, st0, r) {
@@ -3078,7 +3120,7 @@ function weekPanel() {
   ${A.storageNote()}<div class="wkbar"><button class="ib" data-wk="-1" aria-label="Oldingi hafta">‹</button><b>${WK}</b><span class="sm mut">${A.weekDays(WK)[0].slice(5)} — ${A.weekDays(WK)[6].slice(5)}</span><button class="ib" data-wk="1" aria-label="Keyingi hafta">›</button></div>
   ${L.map(b => { const s = A.weekStats(b, WK), sq = A.sandiq(b, WK); return `<button class="card kc" data-b="${b.id}"><div class="kh"><span class="av">${b.avatar}</span><b>${esc(b.laqab)}</b><span class="sm mut">${A.DARAJA[b.daraja]} · ${esc(b.kod)}</span><span class="sp"></span><span>${sq.ic}</span></div>
     <div class="kgrid"><div><b class="mono">${A.fmtHMS(s.faol)}</b><span>faol vaqt</span></div><div><b>${s.kunlar}/7</b><span>kun</span></div><div><b>${s.n ? s.acc1 + '%' : '—'}</b><span>aniqlik</span></div><div><b>${s.med ? (s.med / 1000).toFixed(1) + ' s' : '—'}</b><span>median</span></div><div><b>+${s.ozl.length} 🟢</b><span>o'sish</span></div><div><b>${s.wcpm ? s.wcpm[1] : '—'}</b><span>WCPM</span></div></div>
-    <div class="lvl"><span class="sm">O'z darajasida (matematika): ${levelPct(b)}%</span><div class="tbar"><i style="width:${levelPct(b)}%"></i></div></div></button>`; }).join('') || '<div class="card">Hali bola yo\'q.</div>'}
+    <div class="lvl"><span class="sm">O'z darajasida (matematika): ${levelPct(b)}%</span><div class="tbar"><i style="width:${levelPct(b)}%"></i></div></div>${b.qisqaKun === A.todayKey() ? '<div class="sm">😴 Oxirgi missiyada charchadi — bugungisi 25% qisqaroq</div>' : ''}</button>`; }).join('') || '<div class="card">Hali bola yo\'q.</div>'}
   ${noms.length ? `<div class="card"><h3>🏆 Hafta nominatsiyalari (shu telefondagi bolalar)</h3>${noms.map(n => `<div class="nr">${n.ic} <b>${esc(n.nom)}</b>: ${n.bola ? esc(A.bola(n.bola).laqab) : '<span class="mut">sifat sharti bajarilmadi — summa keyingi haftaga</span>'}</div>`).join('')}<p class="sm mut">Boshqa telefonlardagi bolalar bilan solishtirish — 📲 Oila reytingi.</p></div>` : ''}
   <div class="menu">${isAdmin() ? '<button class="btn" data-go="ota-qosh">➕ Bola qo\'shish</button>' : ''}<button class="btn" data-go="ota-qiyin">📚 Bugungi qiyinlar</button><button class="btn" data-go="ota-vazifa">📝 Uyga vazifa</button><button class="btn" data-go="ota-reyting">📲 Oila reytingi</button><button class="btn" data-go="ota-eksport">🤖 Claude uchun hafta</button><button class="btn" data-go="ota-arab">🕌 Arab so'zlari</button><button class="btn" data-go="ota-zaxira">💾 Zaxira</button><button class="btn" data-go="ota-sozlama">⚙️ Sozlamalar</button><button class="btn ghost" data-out>🔒 Paneldan chiqish</button></div>
   <p class="sm mut">Versiya ${A.VER} · ${A.storageOK ? 'xotira ✓' : '⚠️ xotiraga yozib bo\'lmadi'}</p></div>`;
@@ -3328,7 +3370,7 @@ function start() {
   if (!G.BJ_BITTA && 'serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')) navigator.serviceWorker.register('sw.js').catch(() => {});
   BJ.debug = { state: () => A.S(), fx: FX.stats, A, gen: BJ.gen };
   A.render();
-  if (oldVer && oldVer !== A.VER) setTimeout(() => toast('🆕 Bilimjon ' + A.VER + ": 🕌 arab o'qish, yozish va tajvid, 📚 Mashq, 📝 Uyga vazifa!"), 900);
+  if (oldVer && oldVer !== A.VER) setTimeout(() => toast('🆕 Bilimjon ' + A.VER + ": kichik darslar kuchaytirildi — xato qilsang, yanada tushunarli tushuntiramiz!"), 900);
 }
 start();
 })(window);

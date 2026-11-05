@@ -9,7 +9,7 @@ Yangi chat shu fayldan davom etadi. Javoblar o'zbekcha. Repo PUBLIC: bu yerga is
 - Hamma oilalar uchun bitta umumiy versiya. Yangilanish telefonga o'zi keladi (ilovani yopib qayta ochganda), natijalar telefonda (localStorage) qoladi.
 
 ## Versiya
-- Hozir: **0.4.0** (04.11.2026).
+- Hozir: **0.4.1** (05.11.2026).
 - Har chiqarishda ikkalasi birga oshiriladi: `index.html` → `VER = 'x.y.z'`, `sw.js` → `const V = 'bj-vx.y.z'`.
 
 ## Modullar xaritasi (index.html, tartib bilan)
@@ -60,6 +60,12 @@ Yangi chat shu fayldan davom etadi. Javoblar o'zbekcha. Repo PUBLIC: bu yerga is
 - **📚 Mashq** (bola uyi → `#mashq`): fan tanlash, arabda bo'lim tanlash → `#mashq-<fan>[-<bolim>]`. Cheksiz savol, kichik dars, har `oyinHar` savolda o'yin, yulduz arena bilan umumiy kunlik 20 chegarasida (`tur: 'mashq'`).
 - **📝 Uyga vazifa** (`b.vazifa[]`: `{ id, berildi, muddat, fan, bolim, n, izoh, qildi, ok, done, doneSana, qolda }`): ota-ona → 📝 Uyga vazifa (bir nechta bolaga birdan). Bola uyida karta → `#vazifa-<id>` (`tur: 'vazifa'`, yulduz chegarasiz) → tugasa +5 ⭐. Faqat matnli vazifa (`fan: 'izoh'`) → bola «✅ Bajardim» (+2 ⭐). «📚 Bugungi qiyinlar» → `VZ|fan=…|bolim=…|n|qildi|ok|holat`.
 - Sinov: arab matnlarida bitta harfda ko'pi bilan bitta harakat; lom/nun/mim hukmi hal qiluvchi harfdan mustaqil tekshiriladi; qalqala, g'unna, madd evristikalari; 14 tugun × 3 qiyinlik × g0/katta generatorlari `gen.valid`.
+
+## 0.4.1 — 1-kun natijalari bo'yicha (bajarildi)
+- Kuchaytirilgan darslar: `M1.2` (o'nlik-birlik; o'zbekcha aytilish tartibi = yozilish tartibi, «14 ≠ 41», tayoqcha rasmi `DARS_VIS`), `M2.4` (kalit so'zlar, q1–q2 uchun namuna yechim), `EN.*` (hamma mavzuga `enQadam`, ranglar uchun eslab qolish bog'lamlari), arab `AQ.1–3`, `TJ.1` (`BJ.arab.QADAM`: harfma-harf tahlil, ta marbuta = muannas).
+- Darsda: arabcha bo'laklar `<bdi dir=rtl>` (`escB`) — aralashmaydi; `it.tts` bo'lsa 🔊 tugma va avtomatik ovoz.
+- Maktabgacha bola: hamma arab 2 savolida `ota` maslahati («Savolni o'qib bering»), `AQ.3` belgi savolida belgining rasmi.
+- Charchash: oxirgi 3 kundagi missiyada 2-yarmida aniqlik 15+ punkt tushgan bo'lsa → `b.qisqaKun` = bugun → `blokSoni` ×0,75 (endi 16 chegarasidan KEYIN qo'llanadi, `reja.qisqa` ham shunday). Ota-ona kartochkasida 😴 yozuvi.
 
 ## KEYINGI: v0.5.0 — ☁️ Oila akkaunti va 🏆 Reyting guruhi (foydalanuvchi tasdiqlagan)
 - Talab: bolalar ikkala telefonda (dadasi va oyisi) o'ynaydi, qayerda to'xtasa, ikkinchi telefonda aynan o'sha joydan davom etadi; dadasi hammasini ko'radi.
