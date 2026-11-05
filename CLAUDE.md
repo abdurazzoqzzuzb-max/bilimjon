@@ -85,6 +85,26 @@ Yangi chat shu fayldan davom etadi. Javoblar o'zbekcha. Repo PUBLIC: bu yerga is
 - iPhone uy ekranidagi PWA'da `signInWithPopup` Google oynasidan javob qaytmaydi (foydalanuvchi sinab ko'rdi: hisob tanlanadi, «Продолжить», lekin ilovaga kirmaydi). Redirect ham ishlamaydi (authDomain boshqa domen, Safari storage ajratishi). Yechim: email + parol asosiy usul; iOS'da (`IOS`) Google tugmasi yashirilgan, boshqa qurilmalarda ikkinchi o'rinda + «bitta oila, bitta usul» ogohlantirishi; Google bosilib 40 s javob bo'lmasa toast.
 - Oila qarori: hamma telefonda email + parol (Google bilan aralashtirmaslik — Firebase tasdiqlanmagan email-parolni Google bilan almashtirib yuborishi mumkin).
 
+## 0.6.0 — REJA (05.11.2026, foydalanuvchi tasdiqladi; tarmoq `v0.6.0`, saytga faqat «chiqar» deganda)
+Asos — 1-kun ma'lumoti: maktabgacha bola 53 daq faol (18–22 soat), 30-savoldan keyin aniqlik 93% → 67%; 2-sinf bolasi 13 daq, 87%, missiya tugatilmagan, 2× «charchadim»; ⭐ reyting yoshlar orasida adolatsiz (69 ga 13).
+Pedagogik qoidalar: sovg'a — muntazamlik uchun (tezlik uchun emas), oila umumiy sovg'asi; solishtirish — o'z maqsadi % bilan; katta effekt — har javobda emas, kombo/marrada.
+- [x] Sinxron: soat farqi (hash bo'yicha qabul), log yo'qolishi, ko'p kun oflayn — `sinov/bulut/sinov_chekka.py` (10 tekshiruv).
+- [ ] 1. 🌙 Kun chegarasi (`b.kunDaq`, standart g0 25 / boshqa 35) + uyqu vaqti (`sozlama.uyqu`, '21:00'); yetganda — ajdarho «ertaga davom», ota-ona PIN bilan +10 daq. Qulf emas.
+- [ ] 1. 🎮 O'yin sozlamasi har bolaga (`b.oyinHar`, `b.oyinDaq`; bo'sh bo'lsa oila sozlamasi).
+- [ ] 1. ⚖️ Adolatli reyting: tartib — hafta «kun maqsadi %» (har kun maqsad = `b.kunDaq` faol daqiqa yoki missiya), keyin 🚀 o'sish; ⭐ faqat ko'rsatiladi.
+- [ ] 1. 💥 Kombo: ketma-ket birinchi urinishda to'g'ri — 3/5/8 da kattalashuvchi effekt, ×2 ×3 belgisi.
+- [ ] 2. 🎁 Sovg'a vitrinasi: ota-ona sovg'a nomi + rasmi (kamera, siqilgan JPEG), shart (masalan 7 kundan 5 kun maqsad); bola uyida «sovg'agacha N%»; oila umumiy sovg'asi.
+- [ ] 2. 📊 Hafta hisoboti (ota-ona): vaqt, aniqlik fan bo'yicha, charchash, eng zaif/kuchli ko'nikma, keyingi hafta tavsiyasi.
+- [ ] 3. 🔧 Konstruktor + krash-test (garaj): detal 10–15 to'g'ri javobda 1 ta; yig'ish → devorga urish → parchalanish → qayta yig'ish.
+- [ ] 3. 🤖 Kod-yo'l: strelkalar ketma-ketligi bilan labirint (g0 3–5 qadam, g1+ «×N» takror).
+- [ ] 4. 🗺️ Sarguzasht xaritasi: hafta = 7 bekat, yakshanba — boss/final.
+- [ ] 4. 💖 «Katta qiz» uslubi (orol uchun ixtiyoriy tema: neon-pushti, kamroq multfilm).
+- [ ] 5. 🌍 Kun kashfiyoti: 1 fakt + 1 savol + uyda topshiriq.
+- [ ] 5. 📖 O'qish tezligi: 1 matn 3 marta, so'z/daq o'sishi.
+- [ ] 5. 🕌 Arab: ra (tafxim/tarqiq), vaqf belgilari — yangi TJ tugunlari, DARS, tasdiq.
+- [ ] 6. 🎙️ Ota-ona ovozi: MediaRecorder, 3–5 s qisqa yozuv, Firestore'da (Storage — faqat Blaze tarif!), iPhone↔Android ijro sinovi.
+- [ ] 7. To'liq sinov, VER 0.6.0, push main faqat «chiqar» bilan.
+
 ## KEYINGI (g'oyalar, foydalanuvchi tasdig'isiz qilinmaydi)
-- O'yin sozlamasini har bola uchun alohida qilish (hozir oila uchun bitta).
-- Arab: tajvid misollarini oyisi/ustoz izohi bilan kengaytirish; ra (tafxim/tarqiq), vaqf belgilari.
+- ⚔️ Jonli duel (ikki oila, videoqo'ng'iroqda) — 0.6.0 ga kirmadi.
+- Arab: tajvid misollarini oyisi/ustoz izohi bilan kengaytirish.
