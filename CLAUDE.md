@@ -111,6 +111,23 @@ Pedagogik qoidalar: sovg'a — muntazamlik uchun (tezlik uchun emas), oila umumi
 - [x] 7. To'liq sinov (194), VER 0.6.0, main ga push («chiqar», 05.11).
 - Sinovlar: `sinov/v060/sinov_bosqich1.py` (21), `sinov/v060/sinov_bosqich2.py` (13), `sinov/v060/sinov_bosqich3.py` (35), `sinov/v060/sinov_bosqich4.py` (36, harflar), `sinov/v060/sinov_bosqich5.py` (62, so'm + versiya belgisi), `sinov/bulut/sinov_bulut.py` (21), `sinov/bulut/sinov_chekka.py` (10).
 
+## 0.7.0 — REJA («v7»; tarmoq `v0.7.0`, har bosqich shu tarmoqqa push, saytga faqat «chiqar» bilan)
+Tartib (foydalanuvchi qarori, 05.11):
+1. 🗺️ Sarguzasht xaritasi (hafta = 7 bekat, yakshanba — boss/final) + 💖 «katta qiz» uslubi.
+2. 🧺 Oila bozori — xaritadan KEYIN (pastdagi bo'lim).
+3. 🌍 Kun kashfiyoti · 📖 o'qish tezligi · 🕌 arab ra (tafxim/tarqiq) va vaqf.
+4. 🎙️ Ota-ona ovozi.
+5. To'liq sinov → VER 0.7.0 → u «chiqar» desa main.
+
+## 🧺 Oila bozori — TASDIQLANDI (05.11: 1A — faqat ilova ichida, 2A — cola/chips haftada 1, 3C — xaritadan keyin)
+- Maqsad: «ehtiyoj va xohish», byudjet, qaytim, birlik narxi, «har tanlovning narxi bor».
+- Oila puli — ALOHIDA: ota-ona har topshiriqqa byudjet qo'yadi (masalan 50 000). Bola hamyonidan (`b.pul.h`) hech qachon yechilmaydi, aralashmaydi.
+- Ro'yxat (ota-ona tuzadi): narsa, miqdor (qat'iy — 2 kg = 2 kg), har biriga 2–3 variant narx (arzon / o'rta / qimmat). Narxni ota-ona kiritadi (yoki Claude so'ralganda internetdan, manba va sana bilan).
+- Tartib: avval ro'yxat (ehtiyoj) to'liq olinadi → keyin qolgan puldan xohish javoni (cola, chips; ota-ona meva/muzqaymoq ham qo'sha oladi). Xohish haftada ≤ 1 marta, sozlamada o'chiriladi.
+- Tejash: qolgan pulning 50% bola hamyoniga, haftasiga ≤ 5 000·k (`k` — byudjet koeffitsienti, `A.pul.MUK` kabi). Ekranda: «chips = N so'm + M so'mlik tejash mukofotidan voz kechish».
+- Yosh bo'yicha: g0 — rasmli 3 narsa, sanash, to'lov avtomatik · g1 — 4–5 narsa, kupyura, «yetadimi?» · g2+ — 6–8 narsa, byudjet, qaytim savoli, «1 kg yoki 2 × 500 g — qaysi arzon?». To'lov — mavjud `A.pul.tolov`.
+- Ochiq [?]: aka-uka jamoa rejimi (biri kassir, biri savatchi); «oilaga hissa» (o'z pulidan ixtiyoriy, ota-ona ×2, 🏅 nishon) — foydalanuvchi hali tasdiqlamagan. Haqiqiy bozor kuni (naqd pul bilan) — rad etildi (1A).
+
 ## 💰 So'm iqtisodi — BAJARILDI va ULANDI (05.11; qoralama papkasi o'chirildi, modul `index.html` da bulutdan oldin)
 - Uy ekranining tepasida 💵 yo'q (390 px da 👨‍👩‍👧 tugmasi chiqib ketardi) — summa «🛒 Do'kon · 💵 N» tugmasida; missiya/do'kon tepasida `A.pul.pill`. Sinov: tepadagi tugmalar o'ng cheki ≤ 390.
 - Ulashda qo'shimcha: `#dokon` ham kun chegarasi/uyqu tekshiruvida (garaj kabi); konstruktor kartasi `b.kons` bo'lmasa ham chiqadi (`A.garaj.qismBer`, log `dokon:1`); missiya mukofoti `m.pulM` (reveal'da `.rvpul`), vazifa `C.pulV`; kid modulda `bzk(b)` = `A.bezak` zaxirasi bilan. Firestore qoidalari o'zgarmadi (pul — bola JSON ichida, `S.dokon` — `umumiy()` da). Xavf: `S.sovga` (6×≤80 KB) + `S.dokon` (6×≤40 KB) rasmlari bitta hujjatda ~720 KB — 1 MB chegarasiga yaqin; rasm hajmini oshirmang.
