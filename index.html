@@ -3091,6 +3091,7 @@ const CFG = { apiKey: 'AIzaSyCPmq6Bx4R5TQSaCbj_zxCBEmpX6VnvTYs', authDomain: 'bi
 const LK = 'bj_bulut_v1', TICK = 6000, KOD_ALF = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 const MAHALLIY = ['bolalar', 'joriy', 'qurilma', 'lastBackup', 'seenVer', 'appVer'];
 const FAOL = /^(missiya|arena|natija|mashq|vazifa-|sinov-|dunyo)/;
+const logV = {};
 let fb = null, auth = null, db = null, user = null, loading = null, unsub = [], gUnsub = null, tickT = null, band = false, pending = {}, xato = '', yuklanmadi = false, birinchiBand = false;
 let L = lget();
 function lget() { try { return JSON.parse(localStorage.getItem(LK) || 'null'); } catch (e) { return null; } }
@@ -3119,19 +3120,19 @@ function xabar(e) {
 }
 /* ---------- UMUMIY (oila darajasi) ---------- */
 function umumiy() { const s = S(), o = {}; Object.keys(s).forEach(k => { if (!MAHALLIY.includes(k)) o[k] = s[k]; }); o.oilaTel = {}; Object.keys(s.oilaTel || {}).forEach(q => { if (q.indexOf('G:') !== 0) o.oilaTel[q] = s.oilaTel[q]; }); return o; }
-function umumiyQabul(o) {
+function umumiyQabul(o, rh) {
   const s = S(), g = {}; Object.keys(s.oilaTel || {}).forEach(q => { if (q.indexOf('G:') === 0) g[q] = s.oilaTel[q]; });
   const eskiG = s.guruh && s.guruh.kod;
   const ns = Object.assign({}, s, o); MAHALLIY.forEach(k => { ns[k] = s[k]; }); ns.oilaTel = Object.assign({}, o.oilaTel || {}, g);
   ns.tartib = (ns.tartib || []).filter(id => ns.bolalar[id]); Object.keys(ns.bolalar).forEach(id => { if (!ns.tartib.includes(id)) ns.tartib.push(id); });
-  A.setS(ns); L.sync.s = { h: hsh(JSON.stringify(umumiy())), ts: Date.now() }; lsave();
+  A.setS(ns); L.sync.s = { h: hsh(JSON.stringify(umumiy())), ts: Date.now(), r: rh || '' }; lsave();
   if (((S().guruh || {}).kod || null) !== (eskiG || null)) guruhObuna();
 }
 /* ---------- BOLA ---------- */
 function bolaQabul(bid, d) {
   let b; try { b = JSON.parse(d.j); } catch (e) { return false; }
   const s = S(); b.id = bid; s.bolalar[bid] = b; if (!s.tartib.includes(bid)) s.tartib.push(bid);
-  A.setS(s); L.sync.b[bid] = { h: hsh(JSON.stringify(S().bolalar[bid])), ts: d.ts || Date.now() }; lsave(); return true;
+  A.setS(s); L.sync.b[bid] = { h: hsh(JSON.stringify(S().bolalar[bid])), ts: d.ts || Date.now(), r: hsh(d.j) }; lsave(); return true;
 }
 const ozgargan = bid => { const b = S().bolalar[bid], r = L.sync.b[bid]; return !!b && (!r || r.h !== hsh(JSON.stringify(b))); };
 const faolMi = bid => S().joriy === bid && FAOL.test(location.hash.slice(1));
@@ -3140,7 +3141,10 @@ function pendingQabul() { let n = 0; Object.keys(pending).forEach(bid => { if (f
 addEventListener('hashchange', () => { if (user) setTimeout(pendingQabul, 50); });
 /* ---------- LOG ---------- */
 function logKalitlar(hammasi) {
-  const s = S(), kun = A.todayKey(), kunlar = [kun, A.addDays(kun, -1)], out = [];
+  const s = S(), kun = A.todayKey(), out = [], kunlar = [];
+  /* 0.6.0: telefon bir necha kun internetsiz qolsa — oxirgi sinxrondan beri o'tgan hamma kun (oldin faqat bugun va kecha) */
+  const nk = L && L.oxirgi ? Math.min(42, Math.max(2, Math.ceil((Date.now() - L.oxirgi) / 864e5) + 1)) : 2;
+  for (let i = 0; i < nk; i++) kunlar.push(A.addDays(kun, -i));
   if (hammasi) { A.logKeys().forEach(k => { const p = k.split('|'); if (s.bolalar[p[1]]) out.push({ key: k, bid: p[1], kun: p[2] }); }); return out; }
   Object.keys(s.bolalar).forEach(bid => kunlar.forEach(k => out.push({ key: A.LOGP + bid + '|' + k, bid, kun: k })));
   return out;
@@ -3150,7 +3154,7 @@ async function logOl(kunOldin) {
   const { collection, query, where, getDocs } = fb.fs, since = A.addDays(A.todayKey(), -(kunOldin || 7));
   const snap = await getDocs(query(collection(db, 'oila', user.uid, 'log'), where('kun', '>=', since)));
   let n = 0; snap.forEach(d => { const x = d.data(); if (!x || !S().bolalar[x.bid] || !Array.isArray(x.e)) return; const arr = []; x.e.forEach(t => { try { arr.push(JSON.parse(t)); } catch (e) {} });
-    const k = A.logMerge(x.bid, x.kun, arr); if (k) { n += k; L.sync.log[A.LOGP + x.bid + '|' + x.kun] = 0; } });
+    const k = A.logMerge(x.bid, x.kun, arr); if (k) { n += k; const lk = A.LOGP + x.bid + '|' + x.kun; L.sync.log[lk] = 0; logV[lk] = (logV[lk] || 0) + 1; } });
   lsave(); return n;
 }
 /* ---------- YUBORISH (har 6 s, sahifa yashirilganda darhol) ---------- */
@@ -3159,14 +3163,15 @@ async function tick() {
   try {
     A.flushLog(); const { doc, setDoc, deleteDoc, arrayUnion } = fb.fs, s = S(), sy = L.sync, now = Date.now(), ish = [];
     const uj = JSON.stringify(umumiy()), uh = hsh(uj);
-    if (uh !== sy.s.h) ish.push(setDoc(doc(db, 'oila', user.uid), { j: uj, ts: now, q: qid(), v: A.VER }).then(() => { sy.s = { h: uh, ts: now }; }));
+    if (uh !== sy.s.h) ish.push(setDoc(doc(db, 'oila', user.uid), { j: uj, ts: now, q: qid(), v: A.VER }).then(() => { sy.s = { h: uh, ts: now, r: uh }; }));
     Object.keys(s.bolalar).forEach(bid => { if (pending[bid]) return; const j = JSON.stringify(s.bolalar[bid]), h = hsh(j), r = sy.b[bid]; if (r && r.h === h) return;
       if (j.length > 950000) { xato = '⚠️ Bola ma\'lumoti juda katta — zaxira faylga saqlang'; return; }
-      ish.push(setDoc(doc(db, 'oila', user.uid, 'bolalar', bid), { j, ts: now, q: qid() }).then(() => { sy.b[bid] = { h, ts: now }; })); });
+      ish.push(setDoc(doc(db, 'oila', user.uid, 'bolalar', bid), { j, ts: now, q: qid() }).then(() => { sy.b[bid] = { h, ts: now, r: h }; })); });
     Object.keys(sy.b).forEach(bid => { if (!s.bolalar[bid]) ish.push(deleteDoc(doc(db, 'oila', user.uid, 'bolalar', bid)).then(() => { delete sy.b[bid]; })); });
-    logKalitlar(sy.logHammasi).forEach(x => { const a = A.readLog(x.bid, x.kun), n = sy.log[x.key] || 0; if (a.length <= n) return; const yangi = a.slice(n).map(e => JSON.stringify(e)), m = a.length;
-      for (let i = 0; i < yangi.length; i += 400) ish.push(setDoc(doc(db, 'oila', user.uid, 'log', x.bid + '_' + x.kun), { bid: x.bid, kun: x.kun, e: arrayUnion(...yangi.slice(i, i + 400)) }, { merge: true }));
-      ish.push(Promise.resolve().then(() => { sy.log[x.key] = m; })); });
+    logKalitlar(sy.logHammasi).forEach(x => { const a = A.readLog(x.bid, x.kun), n = sy.log[x.key] || 0; if (a.length <= n) return; const yangi = a.slice(n).map(e => JSON.stringify(e)), m = a.length, v0 = logV[x.key] || 0, qism = [];
+      for (let i = 0; i < yangi.length; i += 400) qism.push(setDoc(doc(db, 'oila', user.uid, 'log', x.bid + '_' + x.kun), { bid: x.bid, kun: x.kun, e: arrayUnion(...yangi.slice(i, i + 400)) }, { merge: true }));
+      /* 0.6.0: «yuborildi» belgisi faqat server qabul qilgandan keyin (oldin xato bo'lsa ham qo'yilardi — log yo'qolardi) */
+      ish.push(Promise.all(qism).then(() => { if ((logV[x.key] || 0) === v0) sy.log[x.key] = m; })); });
     const g = s.guruh && s.guruh.kod; if (g) guruhYuborIsh(g, ish);
     if (ish.length) { await Promise.all(ish); sy.logHammasi = false; L.oxirgi = Date.now(); xato = ''; lsave(); }
     else if (!L.oxirgi) { L.oxirgi = Date.now(); lsave(); }
@@ -3180,13 +3185,15 @@ addEventListener('online', () => { if (user) tick(); });
 function obuna() {
   unsub.forEach(f => { try { f(); } catch (e) {} }); unsub = [];
   const { doc, collection, onSnapshot } = fb.fs, my = qid();
-  unsub.push(onSnapshot(doc(db, 'oila', user.uid), d => { if (!d.exists() || d.metadata.hasPendingWrites) return; const x = d.data(); if (!x || x.q === my || !(x.ts > L.sync.s.ts)) return;
+  unsub.push(onSnapshot(doc(db, 'oila', user.uid), d => { if (!d.exists() || d.metadata.hasPendingWrites) return; const x = d.data(); if (!x || x.q === my || typeof x.j !== 'string') return;
+    /* 0.6.0: vaqt (ts) solishtirilmaydi — telefon soatlari farq qilsa yangilanish yo'qolardi. Mazmun hashi: shu holat allaqachon bormi? */
+    const rh = hsh(x.j); if (rh === L.sync.s.r) return;
     if (hsh(JSON.stringify(umumiy())) !== L.sync.s.h) return; /* bu telefonda ham o'zgargan — o'zimiznikini yuboramiz */
-    try { umumiyQabul(JSON.parse(x.j)); qaytaChiz(); } catch (e) {} }, e => { xato = xabar(e); }));
+    try { umumiyQabul(JSON.parse(x.j), rh); qaytaChiz(); } catch (e) {} }, e => { xato = xabar(e); }));
   unsub.push(onSnapshot(collection(db, 'oila', user.uid, 'bolalar'), snap => { let n = 0;
     snap.docChanges().forEach(ch => { const d = ch.doc, bid = d.id; if (d.metadata.hasPendingWrites) return;
       if (ch.type === 'removed') { if (L.sync.b[bid] && !ozgargan(bid) && S().bolalar[bid] && !faolMi(bid)) { delete L.sync.b[bid]; lsave(); A.delBola(bid); n++; } return; }
-      const x = d.data(); if (!x || x.q === my) return; const r = L.sync.b[bid]; if (r && !(x.ts > r.ts)) return;
+      const x = d.data(); if (!x || x.q === my || typeof x.j !== 'string') return; const r = L.sync.b[bid]; if (r && r.r === hsh(x.j)) return; /* 0.6.0: soatga emas, mazmunga qarab */
       if (S().bolalar[bid] && ozgargan(bid)) return; /* ikkala telefonda o'zgargan — shu telefon (ishlatilayotgan) ustun */
       if (faolMi(bid)) { pending[bid] = x; return; }
       if (bolaQabul(bid, x)) n++; });
@@ -3214,7 +3221,7 @@ async function birinchi() {
     let tanlov = 'bulut';
     if (nL && s.oila) tanlov = await sorash(nB, nL);
     if (tanlov === 'bulut') { try { localStorage.setItem('bj_oldin_bulut', JSON.stringify({ saved: new Date().toISOString(), state: s })); } catch (e) {} Object.keys(s.bolalar).forEach(bid => { if (!bulut[bid]) A.delBola(bid); }); }
-    if (od.exists()) { try { umumiyQabul(JSON.parse(od.data().j)); } catch (e) {} }
+    if (od.exists()) { try { umumiyQabul(JSON.parse(od.data().j), hsh(od.data().j)); } catch (e) {} }
     Object.keys(bulut).forEach(bid => { const x = bulut[bid], loc = S().bolalar[bid]; if (tanlov === 'birlashtir' && loc) { let rb = null; try { rb = JSON.parse(x.j); } catch (e) {} if (rb && ball(loc) >= ball(rb)) return; } bolaQabul(bid, x); });
     if (tanlov === 'bulut') L.sync.logHammasi = false;
     lsave(); await logOl(42).catch(() => 0);
@@ -3299,7 +3306,7 @@ A.bulutPanel = function (top, bindTop) {
   on('[data-in]', () => { const [e, p] = ep(); ish(() => fb.au.signInWithEmailAndPassword(auth, e, p)); });
   on('[data-up]', () => { const [e, p] = ep(); ish(() => fb.au.createUserWithEmailAndPassword(auth, e, p)); });
   on('[data-reset]', () => { const [e] = ep(); if (!e) return toast('Avval emailni yozing'); ish(() => fb.au.sendPasswordResetEmail(auth, e), '✉️ Parolni tiklash xati yuborildi'); });
-  on('[data-sync]', () => ish(async () => { await logOl(7); await tick(); if (xato) throw new Error(xato); }, '✓ Sinxronlandi'));
+  on('[data-sync]', () => ish(async () => { if (band) throw new Error('⏳ Oldingi yuborish hali tugamadi — internet sekin, o\'zi davom etadi'); await logOl(7); await tick(); if (xato) throw new Error(xato); }, '✓ Sinxronlandi'));
   on('[data-out]', () => sheet(`<h2>🚪 Akkauntdan chiqish</h2><p>Natijalar shu telefonda qoladi, lekin ikkinchi telefon bilan sinxron to'xtaydi.</p><div class="row"><button class="btn danger" data-ok>Chiqish</button><button class="btn ghost" data-x>Bekor</button></div>`, el => { $('[data-ok]', el).onclick = async () => { closeSheets(); await tick(); L = null; lsave(); pending = {}; await fb.au.signOut(auth).catch(() => {}); toast('Chiqildi'); qayta(); }; }));
 };
 /* ---------- REYTING PANELIGA: 🏆 Reyting guruhi kartasi ---------- */
@@ -3325,7 +3332,7 @@ A.guruhBind = function (redraw) {
 };
 /* ---------- ISHGA TUSHIRISH: faqat akkaunt ulangan telefonda SDK yuklanadi ---------- */
 A.bulutStart = function () { if (L && L.uid) yukla().catch(() => {}); };
-A.bulutHolat = () => ({ ulangan: !!user, email: user && user.email, oxirgi: L && L.oxirgi, xato, yuklandi: !!fb });
+A.bulutHolat = () => ({ ulangan: !!user, email: user && user.email, oxirgi: L && L.oxirgi, xato, yuklandi: !!fb, band });
 BJ.bulut = { yukla, tick, logOl, holat: A.bulutHolat };
 })(window);
 </script>
