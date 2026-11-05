@@ -55,7 +55,9 @@ with sync_playwright() as p:
     ok(r == [6000, 30, 6000, 0], f"40 ta javobdan faqat 30 tasiga pul (6 000), javob puli logni to'ldirmaydi {r}")
     # ---- uy ekrani: hamyon pill, do'kon tugmasi
     NAV(pg, 'uy', 400)
-    ok(pg.locator('.top [data-pul]').count() == 1 and '200' in pg.inner_text('.top [data-pul]'), "Uyda yuqorida 💵 hamyon (200)")
+    ok('200' in pg.inner_text('[data-dokon]'), "Uyda do'kon tugmasida hamyon summasi (💵 200)")
+    ok(pg.locator('.top .verb').inner_text() == 'v6' and pg.locator('.top .verb').is_visible(), "Uyda tepada oddiy versiya belgisi «v6» ko'rinadi")
+    bb = ev("(()=>{const r=document.querySelector('.top [data-ota]').getBoundingClientRect(); return r.right})()"); ok(bb <= 390, f"Uy tepasidagi 👨‍👩‍👧 tugmasi ekrandan chiqmaydi (o'ng chet {bb})")
     ok(pg.locator('[data-dokon]').count() == 1, "Uyda «🛒 Do'kon» tugmasi")
     # ---- missiya mukofoti + 5 kun bonusi + o'rnatilgan detal tanlovi yangisiga bo'shaydi
     NAV(pg, 'missiya', 500)
@@ -163,7 +165,10 @@ with sync_playwright() as p:
     ok(ev("document.documentElement.scrollWidth") <= 390, "Tuning ekrani 390 px da surilmaydi")
     NAV(pg, 'missiya', 600)
     ok('#FF4FB0' in pg.inner_html('.road .rcar') and '#37474F' in pg.inner_html('.road .rcar'), "Missiya yo'lidagi mashinada pushti neon va grafit rang")
-    ok(pg.locator('.top [data-pul]').count() == 1, "Missiya ekranida ham 💵 hamyon")
+    ok(pg.locator('.top [data-pul]').count() == 1, "Missiya ekranida tepada 💵 hamyon")
+    ev(f"(()=>{{const b=BJ.A.S().bolalar['{K}']; BJ.A.pul.st(b).h=1234500; b.yulduz=1234; BJ.A.save(true)}})()"); NAV(pg, 'uy', 400)
+    bb = ev("(()=>{const r=document.querySelector('.top [data-ota]').getBoundingClientRect(); return r.right})()"); ok(bb <= 390, f"Katta summa va ko'p yulduzda ham 👨‍👩‍👧 tugmasi ekranda (o'ng chet {bb})")
+    NAV(pg, 'missiya', 500); bb = ev("(()=>{const r=document.querySelector('.top [data-pul]').getBoundingClientRect(); return r.right})()"); ok(bb <= 390, f"Missiyada katta summali hamyon ekranga sig'adi (o'ng chet {bb})")
     # ---- rasmlar: yangi tuning qismlari to'g'ri SVG, id takrorlanmaydi
     r = ev("""(()=>{const A=BJ.art, out={}; const svg=A.car({gildirak:3,kuzov:3,motor:3,spoyler:3,nitro:3,rang:7,stiker:3,fara:3,shina:2,bamper:3,neon:3},{w:200});
       out.bm=['bm1','bm2','bm3'].every(c=>svg.includes(c)); out.shina=svg.includes('oqyoz'); out.neon=svg.includes('#76FF03')&&svg.includes('feGaussianBlur'); out.oq=svg.includes('ECEFF1')||/#ecef/i.test(svg);

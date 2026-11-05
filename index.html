@@ -274,6 +274,7 @@ body.th-garaj .kyb .k1{fill:#2A3141}body.th-garaj .kyb .k2{fill:#232A38}body.th-
 .dcar{display:flex;justify-content:center;padding:14px 0 6px;background:radial-gradient(ellipse at 50% 85%,rgba(255,255,255,.12),transparent 65%);border-radius:20px}.dcar .car{width:300px;max-width:100%}.scene.dprev{height:210px}
 .dgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:6px 0}.dk{display:flex;flex-direction:column;gap:2px;align-items:flex-start;text-align:left;min-height:64px;padding:8px 10px;border-radius:14px;border:2px solid var(--line);background:var(--card);color:var(--ink)}.dk b{font-size:.92rem}.dk .nx{font-size:.8rem;color:var(--mut);font-weight:700}.dk.ega .nx{color:var(--ok)}.dk.on{border-color:var(--acc);box-shadow:0 0 0 3px rgba(255,196,0,.25)}
 .dact{margin:8px 0}.dact .btn{width:100%}.dokb{width:100%}.maqsad .tbar{margin:6px 0 4px}.warn{color:var(--no);font-weight:800}.rvpul{display:inline-block;margin:6px 0;padding:4px 14px;border-radius:999px;background:#C8F7C5;color:#14532D;font-weight:900;font-size:1.15rem;animation:pop .5s}
+.verb{display:inline-block;margin-top:2px;padding:1px 8px;border-radius:999px;font-size:.72rem;font-weight:900;background:var(--acc);color:var(--onacc);line-height:1.35;vertical-align:top}.top .ttl{line-height:1.15}
 </style>
 </head>
 <body class="th-neutral">
@@ -1949,6 +1950,9 @@ BJ.vis = vis;
 'use strict';
 const BJ = G.BJ, A = BJ.A = {}, gen = BJ.gen, B = BJ.bank;
 A.VER = '0.6.0';
+/* Oddiy versiya nomi (foydalanuvchi so'rovi, 05.11): 0.6.0 → «6», 0.6.1 → «6.1», 1.2.0 → «1.2». Ekranda shu ko'rinadi, ichkarida A.VER qoladi. */
+A.VERK = (() => { const p = A.VER.split('.').map(Number); return p[0] ? p[0] + '.' + p[1] : p[1] + (p[2] ? '.' + p[2] : ''); })();
+A.verBadge = () => `<span class="verb" title="Versiya ${A.VER}">v${A.VERK}</span>`;
 /* ================= UTIL ================= */
 const pad = n => String(n).padStart(2, '0');
 const todayKey = d => { d = d || new Date(); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
@@ -2399,7 +2403,7 @@ function screenOnboard() {
 /* ================= BOLA TANLASH ================= */
 function screenPicker() {
   theme('neutral'); const s = S(), L = A.bolalar();
-  app.innerHTML = `<div class="wrap"><div class="top"><div class="ttl">${esc(s.oila.nom)}</div><span class="sp"></span><button class="ib" data-ota aria-label="Ota-ona paneli">👨‍👩‍👧</button></div>
+  app.innerHTML = `<div class="wrap"><div class="top"><div class="ttl">${esc(s.oila.nom)}<br>${A.verBadge()}</div><span class="sp"></span><button class="ib" data-ota aria-label="Ota-ona paneli">👨‍👩‍👧</button></div>
   <div class="hero sm">${ART.dragon({ scale: 0.9, mood: 'wow' })}<h1>Kim o'ynaydi?</h1></div>
   <div class="pick">${L.map(b => `<button class="kid" data-id="${b.id}"><span class="av">${b.avatar}</span><b>${esc(b.laqab)}</b><span class="sm mut">${A.DARAJA[b.daraja]}${b.missiya && b.missiya.sana === A.todayKey() && b.missiya.done ? ' · ✅' : ''}</span></button>`).join('')}</div>
   ${L.length ? '' : `<div class="card"><p>Hali bola qo'shilmagan.</p><button class="btn" data-ota>➕ Bola qo'shish (ota-ona)</button></div>`}
@@ -2474,7 +2478,7 @@ function reytingHTML(b) {
 }
 function screenHome(b) {
   theme(b.dunyo); const t = A.agg(b), m = b.missiya, today = A.todayKey(), done = m && m.sana === today && m.done, going = m && m.sana === today && !m.done, sq = A.sandiq(b);
-  app.innerHTML = `<div class="wrap kidw"><div class="top"><button class="ib av" data-tanla aria-label="Bola almashtirish">${b.avatar}</button><div class="ttl">${esc(b.laqab)}</div><span class="sp"></span><span class="pill">⭐ ${b.yulduz}</span>${A.pul ? A.pul.pill(b) : ''}<span class="pill">${sq.ic}</span><button class="ib" data-ota aria-label="Ota-ona paneli">👨‍👩‍👧</button></div>
+  app.innerHTML = `<div class="wrap kidw"><div class="top"><button class="ib av" data-tanla aria-label="Bola almashtirish">${b.avatar}</button><div class="ttl">${esc(b.laqab)}<br>${A.verBadge()}</div><span class="sp"></span><span class="pill">⭐ ${b.yulduz}</span><span class="pill">${sq.ic}</span><button class="ib" data-ota aria-label="Ota-ona paneli">👨‍👩‍👧</button></div>
   ${worldScene(b, true)}<div class="bubble">${esc(done ? 'Bugungi missiya bajarildi! Arenada mashq qilsang ham bo\'ladi.' : going ? 'Missiya kutib turibdi — davom etamiz!' : A.isSunday() && A.dayNo(b) >= 3 ? 'Bugun yakshanba — KATTA FINAL!' : 'Salom! Bugungi missiyaga tayyormisan?')}</div>
   <div class="row cta">${done ? `<button class="btn big alt" data-arena>⚔️ Arena</button>` : `<button class="btn big" data-start>${going ? '▶ Davom etish' : A.isSunday() && A.dayNo(b) >= 3 ? '🏆 Finalni boshlash' : '🚀 Missiyani boshlash'}</button>`}</div>
   <div class="row"><button class="btn ghost" data-mashq>📚 Mashq — fanni o'zing tanla</button></div>${A.garajTugma ? `<div class="row">${A.garajTugma(b)}</div>` : ''}${A.pul ? A.pul.uyHTML(b) : ''}${sovgaHTML(b)}${vazifaHTML(b)}
@@ -4269,7 +4273,7 @@ function weekPanel() {
     <div class="lvl"><span class="sm">O'z darajasida (matematika): ${levelPct(b)}%</span><div class="tbar"><i style="width:${levelPct(b)}%"></i></div></div>${b.qisqaKun === A.todayKey() ? '<div class="sm">😴 Oxirgi missiyada charchadi — bugungisi 25% qisqaroq</div>' : ''}</button>`; }).join('') || '<div class="card">Hali bola yo\'q.</div>'}
   ${noms.length ? `<div class="card"><h3>🏆 Hafta nominatsiyalari (shu telefondagi bolalar)</h3>${noms.map(n => `<div class="nr">${n.ic} <b>${esc(n.nom)}</b>: ${n.bola ? esc(A.bola(n.bola).laqab) : '<span class="mut">sifat sharti bajarilmadi — summa keyingi haftaga</span>'}</div>`).join('')}<p class="sm mut">Boshqa telefonlardagi bolalar bilan solishtirish — 📲 Oila reytingi.</p></div>` : ''}
   <div class="menu">${isAdmin() ? '<button class="btn" data-go="ota-qosh">➕ Bola qo\'shish</button>' : ''}<button class="btn" data-go="ota-qiyin">📚 Bugungi qiyinlar</button><button class="btn" data-go="ota-hisobot">📊 Hafta xulosasi${A.isoWeek() === WK && new Date().getDay() % 6 === 0 ? ' 🔔' : ''}</button><button class="btn" data-go="ota-sovga">🎁 Sovg'alar</button><button class="btn" data-go="ota-pul">💰 Pul va do'kon${A.pul && A.pul.kutHisob() ? ' 🔔 ' + A.pul.kutHisob() : ''}</button><button class="btn" data-go="ota-vazifa">📝 Uyga vazifa</button><button class="btn" data-go="ota-bulut">☁️ Oila akkaunti</button><button class="btn" data-go="ota-reyting">📲 Oila reytingi</button><button class="btn" data-go="ota-eksport">🤖 Claude uchun hafta</button><button class="btn" data-go="ota-arab">🕌 Arab so'zlari</button><button class="btn" data-go="ota-zaxira">💾 Zaxira</button><button class="btn" data-go="ota-sozlama">⚙️ Sozlamalar</button><button class="btn ghost" data-out>🔒 Paneldan chiqish</button></div>
-  <p class="sm mut">Versiya ${A.VER} · ${A.storageOK ? 'xotira ✓' : '⚠️ xotiraga yozib bo\'lmadi'}</p></div>`;
+  <p class="sm mut">Versiya ${A.VERK} · ${A.storageOK ? 'xotira ✓' : '⚠️ xotiraga yozib bo\'lmadi'}</p></div>`;
   bindTop(); $$('[data-wk]').forEach(x => x.onclick = () => { const d = +x.dataset.wk; WK = d < 0 ? A.prevWeek(WK) : A.isoWeek(A.addDays(A.weekDays(WK)[6], 1)); weekPanel(); });
   $$('[data-b]').forEach(x => x.onclick = () => A.go('ota-bola-' + x.dataset.b)); $$('[data-go]').forEach(x => x.onclick = () => A.go(x.dataset.go));
   $('[data-out]').onclick = () => { A.otaOk = null; A.go(S().joriy ? 'uy' : 'tanla'); };
