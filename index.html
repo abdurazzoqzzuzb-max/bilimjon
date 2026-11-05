@@ -1715,7 +1715,7 @@ BJ.vis = vis;
 (function (G) {
 'use strict';
 const BJ = G.BJ, A = BJ.A = {}, gen = BJ.gen, B = BJ.bank;
-A.VER = '0.5.0';
+A.VER = '0.5.1';
 /* ================= UTIL ================= */
 const pad = n => String(n).padStart(2, '0');
 const todayKey = d => { d = d || new Date(); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
@@ -3101,6 +3101,8 @@ function qid() { const s = S(); if (!s.qurilma) { s.qurilma = { id: A.rid(8), ya
 const tozala = x => String(x == null ? '' : x).replace(/[|\r\n\t]/g, ' ').trim().slice(0, 24);
 const num = (x, mx) => Math.max(0, Math.min(mx || 99999, Math.round(+x || 0)));
 const online = () => navigator.onLine !== false;
+/* iPhone/iPad (iPadOS ham Mac bo'lib ko'rinadi): Google popup PWA'da javob qaytarmaydi */
+const IOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 /* ---------- SDK ---------- */
 function yukla() {
   if (loading) return loading;
@@ -3112,7 +3114,7 @@ function yukla() {
   return loading;
 }
 function xabar(e) {
-  const c = (e && e.code) || '', M = { 'auth/invalid-credential': "Email yoki parol noto'g'ri", 'auth/wrong-password': "Parol noto'g'ri", 'auth/user-not-found': 'Bunday akkaunt yo\'q — «Ro\'yxatdan o\'tish» ni bosing', 'auth/email-already-in-use': 'Bu email bilan akkaunt bor — «Kirish» ni bosing', 'auth/weak-password': 'Parol kamida 6 belgi bo\'lsin', 'auth/invalid-email': "Email noto'g'ri yozilgan", 'auth/popup-closed-by-user': 'Google oynasi yopildi', 'auth/cancelled-popup-request': 'Google oynasi yopildi', 'auth/popup-blocked': 'Telefon Google oynasini to\'sdi — email bilan kiring', 'auth/network-request-failed': "Internet yo'q", 'auth/unauthorized-domain': 'Bu sayt Firebase\'da ruxsat etilmagan (sozlash kerak)', 'auth/too-many-requests': "Juda ko'p urinish — birozdan keyin", 'permission-denied': "Ruxsat yo'q (kod noto'g'ri yoki akkaunt boshqa)", unavailable: "Internet yo'q — keyin o'zi sinxronlanadi" };
+  const c = (e && e.code) || '', M = { 'auth/invalid-credential': "Email yoki parol noto'g'ri", 'auth/wrong-password': "Parol noto'g'ri", 'auth/user-not-found': 'Bunday akkaunt yo\'q — «Ro\'yxatdan o\'tish» ni bosing', 'auth/email-already-in-use': 'Bu email bilan akkaunt bor — «Kirish» ni bosing', 'auth/weak-password': 'Parol kamida 6 belgi bo\'lsin', 'auth/invalid-email': "Email noto'g'ri yozilgan", 'auth/popup-closed-by-user': 'Google oynasi yopildi', 'auth/cancelled-popup-request': 'Google oynasi yopildi', 'auth/popup-blocked': 'Telefon Google oynasini to\'sdi — email bilan kiring', 'auth/network-request-failed': "Internet yo'q", 'auth/unauthorized-domain': 'Bu sayt Firebase\'da ruxsat etilmagan (sozlash kerak)', 'auth/too-many-requests': "Juda ko'p urinish — birozdan keyin", 'auth/account-exists-with-different-credential': 'Bu email boshqa usul bilan ochilgan — email + parol bilan kiring', 'auth/missing-password': 'Parolni yozing', 'permission-denied': "Ruxsat yo'q (kod noto'g'ri yoki akkaunt boshqa)", unavailable: "Internet yo'q — keyin o'zi sinxronlanadi" };
   return M[c] || (c ? 'Xato: ' + c : String((e && e.message) || e || 'Xato'));
 }
 /* ---------- UMUMIY (oila darajasi) ---------- */
@@ -3276,10 +3278,12 @@ A.bulutPanel = function (top, bindTop) {
   let body;
   if (!fb && !yuklanmadi) { body = '<div class="card"><p>⏳ Yuklanmoqda…</p></div>'; yukla().then(qayta, qayta); }
   else if (!fb) body = `<div class="card"><p>⚠️ Bulut xizmati yuklanmadi — internetni tekshiring.</p><button class="btn" data-retry>🔄 Qayta urinish</button></div>`;
-  else if (!user) body = `<div class="card"><p class="sm">Akkaunt bilan bolalar <b>dadasi va oyisining telefonida</b> o'ynaydi: qayerda to'xtasa, ikkinchi telefonda aynan o'sha joydan davom etadi. Natijalar bulutda ham saqlanadi.</p>
-    <button class="btn big" data-google>🇬 Google bilan kirish</button><p class="sm mut">iPhone'da Google oynasi qotsa — pastdagi email bilan kiring.</p></div>
-    <div class="card"><h3>✉️ Email va parol</h3><input id="be" class="inp" type="email" autocomplete="username" placeholder="email@gmail.com"><input id="bp" class="inp" type="password" autocomplete="current-password" placeholder="Parol (kamida 6 belgi)">
+  else if (!user) body = `<div class="card"><p class="sm">Akkaunt bilan bolalar <b>dadasi va oyisining telefonida</b> o'ynaydi: qayerda to'xtasa, ikkinchi telefonda aynan o'sha joydan davom etadi. Natijalar bulutda ham saqlanadi.</p></div>
+    <div class="card"><h3>✉️ Email va parol <span class="sm mut">(tavsiya)</span></h3><input id="be" class="inp" type="email" autocomplete="username" inputmode="email" autocapitalize="off" placeholder="email@gmail.com"><input id="bp" class="inp" type="password" autocomplete="current-password" placeholder="Parol (kamida 6 belgi)">
+    <p class="sm mut">Birinchi marta — «Ro'yxatdan o'tish» (parolni o'zingiz o'ylab topasiz, bu Gmail paroli emas). Boshqa telefonlarda — xuddi shu email va parol bilan «Kirish».</p>
     <div class="row"><button class="btn" data-in>Kirish</button><button class="btn ghost" data-up>Ro'yxatdan o'tish</button></div><button class="btn sm ghost" data-reset>Parolni unutdim</button></div>
+    ${IOS ? `<div class="card"><p class="sm mut">📱 iPhone'da Google orqali kirish ishlamaydi (Apple cheklovi: Google oynasi javobni ilovaga qaytarmaydi) — yuqoridagi email bilan kiring.</p></div>`
+      : `<div class="card"><button class="btn ghost" data-google>🇬 Google bilan kirish</button><p class="sm mut">Oilada iPhone bo'lsa — hamma telefonda email + parol ishlating: bitta oila, bitta usul.</p></div>`}
     <div class="card"><p class="sm mut">⚠️ Har oila — o'z akkaunti. Bitta akkauntni boshqa oila bilan bo'lishmang: ular sizning bolalaringiz natijasini ko'radi va o'zgartira oladi.</p></div>`;
   else { const s = S(), n = Object.keys(s.bolalar).length;
     body = `<div class="card"><h3>✅ Ulangan</h3><p><b>${esc(user.email || L.email || 'Google akkaunt')}</b></p><p class="sm">Bolalar: ${n} · Oxirgi sinxron: <b>${vaqt(L && L.oxirgi)}</b>${online() ? '' : ' · 📴 internet yo\'q'}</p>${xato ? `<p class="sm">⚠️ ${esc(xato)}</p>` : ''}
@@ -3290,7 +3294,7 @@ A.bulutPanel = function (top, bindTop) {
   const on = (sel, fn) => { const el = $(sel); if (el) el.onclick = fn; };
   const ish = async (p, ok) => { try { await p(); if (ok) toast(ok); } catch (e) { toast('⚠️ ' + (e && e.code === 'kod' ? "Kod 10 ta harf-raqam bo'lsin" : xabar(e))); } qayta(); };
   on('[data-retry]', () => { yuklanmadi = false; A.bulutPanel(top, bindTop); });
-  on('[data-google]', () => ish(() => fb.au.signInWithPopup(auth, new fb.au.GoogleAuthProvider())));
+  on('[data-google]', () => { const tm = setTimeout(() => { if (!user) toast('Google oynasi javob bermadi — email + parol bilan kiring'); }, 40000); ish(() => fb.au.signInWithPopup(auth, new fb.au.GoogleAuthProvider()).finally(() => clearTimeout(tm))); });
   const ep = () => [$('#be').value.trim(), $('#bp').value];
   on('[data-in]', () => { const [e, p] = ep(); ish(() => fb.au.signInWithEmailAndPassword(auth, e, p)); });
   on('[data-up]', () => { const [e, p] = ep(); ish(() => fb.au.createUserWithEmailAndPassword(auth, e, p)); });
@@ -3628,7 +3632,7 @@ function start() {
   BJ.debug = { state: () => A.S(), fx: FX.stats, A, gen: BJ.gen };
   A.render();
   try { if (A.bulutStart) A.bulutStart(); } catch (e) { console.warn(e); }
-  if (oldVer && oldVer !== A.VER) setTimeout(() => toast('🆕 Bilimjon ' + A.VER + ": ☁️ Oila akkaunti — ikki telefonda bir joydan davom etish, 🏆 reyting guruhi!"), 900);
+  if (oldVer && oldVer !== A.VER) setTimeout(() => toast('🆕 Bilimjon ' + A.VER + ": ☁️ Oila akkaunti (email + parol bilan) — ikki telefonda bir joydan davom etish, 🏆 reyting guruhi!"), 900);
 }
 start();
 })(window);

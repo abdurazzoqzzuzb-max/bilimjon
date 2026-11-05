@@ -9,7 +9,7 @@ Yangi chat shu fayldan davom etadi. Javoblar o'zbekcha. Repo PUBLIC: bu yerga is
 - Hamma oilalar uchun bitta umumiy versiya. Yangilanish telefonga o'zi keladi (ilovani yopib qayta ochganda), natijalar telefonda (localStorage) qoladi; ☁️ akkaunt ulangan oilada Firestore'da ham.
 
 ## Versiya
-- Hozir: **0.5.0** (05.11.2026).
+- Hozir: **0.5.1** (05.11.2026).
 - Har chiqarishda ikkalasi birga oshiriladi: `index.html` → `VER = 'x.y.z'`, `sw.js` → `const V = 'bj-vx.y.z'`.
 
 ## Modullar xaritasi (index.html, tartib bilan)
@@ -80,6 +80,10 @@ Yangi chat shu fayldan davom etadi. Javoblar o'zbekcha. Repo PUBLIC: bu yerga is
 - Akkauntsiz oilalar uchun 0.3.0 dagi «📲 kod almashish» qoladi.
 - Sinov: `python3 sinov/bulut/sinov_bulut.py` — Playwright, gstatic so'rovlari soxta modullarga (`sinov/bulut/fs.js`, `auth.js`) yo'naltiriladi, ombor Python'da; 3 telefon (dadasi, oyisi, boshqa oila), 21 tekshiruv. Haqiqiy Firebase faqat saytda, foydalanuvchi kirgandan keyin tekshiriladi.
 - Xavf/eslatma: bitta akkauntni bir nechta oila bilan bo'lishmaslik (ekranda ogohlantirish bor). Tavsiya: Google Cloud'da API kalitini `abdurazzoqzzuzb-max.github.io/*` referrer bilan cheklash.
+
+## 0.5.1 — iPhone kirish tuzatishi (bajarildi)
+- iPhone uy ekranidagi PWA'da `signInWithPopup` Google oynasidan javob qaytmaydi (foydalanuvchi sinab ko'rdi: hisob tanlanadi, «Продолжить», lekin ilovaga kirmaydi). Redirect ham ishlamaydi (authDomain boshqa domen, Safari storage ajratishi). Yechim: email + parol asosiy usul; iOS'da (`IOS`) Google tugmasi yashirilgan, boshqa qurilmalarda ikkinchi o'rinda + «bitta oila, bitta usul» ogohlantirishi; Google bosilib 40 s javob bo'lmasa toast.
+- Oila qarori: hamma telefonda email + parol (Google bilan aralashtirmaslik — Firebase tasdiqlanmagan email-parolni Google bilan almashtirib yuborishi mumkin).
 
 ## KEYINGI (g'oyalar, foydalanuvchi tasdig'isiz qilinmaydi)
 - O'yin sozlamasini har bola uchun alohida qilish (hozir oila uchun bitta).
