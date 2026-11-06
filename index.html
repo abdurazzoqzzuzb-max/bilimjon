@@ -13,7 +13,7 @@
 <meta name="apple-mobile-web-app-title" content="Bilimjon">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Exo+2:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#F3F5FA;--card:#FFFFFF;--ink:#172033;--mut:#5B6478;--line:#E1E6EF;--acc:#2F7BEA;--acc2:#1C55B0;--onacc:#fff;--ok:#2E9E44;--no:#D93838;--warn:#F2A900;--opt:#fff;--optink:#172033;--optline:#D5DCE8;--q:#172033;--r:22px;color-scheme:light}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1320;--card:#171E2E;--ink:#E8ECF5;--mut:#9AA4B8;--line:#2A3348;--acc:#4C8DF6;--acc2:#2A5FB8;--q:#E8ECF5;color-scheme:dark}}
@@ -22,7 +22,7 @@ body.th-garaj{--bg:#12161F;--card:#1E2533;--ink:#F5F7FA;--mut:#A9B3C4;--line:#2E
 body.th-orol{--bg:#3B1E6E;--card:rgba(255,255,255,.14);--ink:#FFFFFF;--mut:#F3D3F0;--line:rgba(255,255,255,.25);--acc:#FF4FB0;--acc2:#B81F78;--onacc:#fff;--q:#FFFFFF;color-scheme:dark}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;padding:0;overflow-x:hidden}
-body{background:var(--bg);color:var(--ink);font-family:"Baloo 2","Nunito",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:17px;line-height:1.35;min-height:100vh;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--ink);font-family:"Inter",-apple-system,"SF Pro Text",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:17px;line-height:1.35;min-height:100vh;-webkit-font-smoothing:antialiased}
 body.th-garaj{background:radial-gradient(ellipse at 50% -10%,rgba(255,196,0,.18),transparent 55%),linear-gradient(#141925,#0E1119)}
 body.th-orol{background:linear-gradient(170deg,#3B1E6E 0%,#7A2E92 45%,#C2408F 100%) fixed}
 #app{max-width:520px;margin:0 auto;min-height:100vh}
@@ -53,7 +53,7 @@ textarea.inp{min-height:160px;font-size:.8rem}
 .lb{display:block;font-weight:800;margin-top:12px;font-size:.95rem}
 .chk{display:flex;gap:10px;align-items:center;margin:12px 0;min-height:44px}.chk input{width:26px;height:26px}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#172033;color:#fff;padding:12px 18px;border-radius:16px;z-index:70;font-weight:700;max-width:90vw;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,.3);animation:tin .25s}
-.kombo{position:fixed;left:50%;top:70%;transform:translate(-50%,-50%);z-index:70;pointer-events:none;font:900 2.4rem/1 "Baloo 2",system-ui,sans-serif;color:#FFC400;text-shadow:0 3px 0 #B35A00,0 0 18px rgba(255,140,0,.75);animation:kmb 1.5s ease-out forwards;text-align:center;white-space:nowrap}
+.kombo{position:fixed;left:50%;top:70%;transform:translate(-50%,-50%);z-index:70;pointer-events:none;font:800 2.4rem/1 "Exo 2",system-ui,sans-serif;color:#FFC400;text-shadow:0 3px 0 #B35A00,0 0 18px rgba(255,140,0,.75);animation:kmb 1.5s ease-out forwards;text-align:center;white-space:nowrap}
 .kombo small{display:block;margin-top:4px;font-size:1.1rem;color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.45)}.kombo.orol{color:#FF6FC0;text-shadow:0 3px 0 #8E1A5C,0 0 18px rgba(255,79,176,.75)}.kombo.k2,.kombo.k3{font-size:3.1rem}
 @keyframes kmb{0%{transform:translate(-50%,-50%) scale(.3);opacity:0}18%{transform:translate(-50%,-50%) scale(1.3);opacity:1}30%{transform:translate(-50%,-50%) scale(1)}75%{opacity:1}100%{transform:translate(-50%,-110%) scale(1);opacity:0}}
 .dam{text-align:center}.damdrg{position:relative;display:inline-block}.zzz{position:absolute;right:-6px;top:4px;font-weight:800;color:var(--mut);animation:float 2.4s ease-in-out infinite}
@@ -308,6 +308,67 @@ body.th-orol.katta .btn{background:linear-gradient(100deg,#FF2EA6,#8E2DE2);box-s
 body.th-orol.katta .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);box-shadow:none}
 body.th-orol.katta .bubble{background:rgba(255,255,255,.07);color:var(--ink);border:1px solid var(--line);margin-left:0;font-weight:600}body.th-orol.katta .bubble:before,body.th-orol.katta .bubble:after{display:none}
 body.th-orol.katta .drg,body.th-orol.katta .dragon{display:none}body.th-orol.katta .pill{background:rgba(255,46,166,.12);border:1px solid var(--line)}
+/* 0.7.0 — 🎬 rasmli kichik dars */
+.kino{background:linear-gradient(180deg,#FFFFFF,#F3F6FA);color:#172033;border-radius:20px;padding:10px 12px 12px;margin:8px 0;box-shadow:0 6px 18px rgba(0,0,0,.18),inset 0 0 0 1px rgba(0,0,0,.05)}
+.kino.mini{padding:8px;margin:6px 0}.kino.mini .kst{min-height:90px}.kino.mini .knav{display:none}
+.khd{display:flex;align-items:center;justify-content:space-between}.kdots{display:flex;gap:6px}.kdots i{width:22px;height:6px;border-radius:4px;background:#CFD8DC}.kdots i.on{background:#FF9100}.kdots i.ok{background:#00C853}
+.kbtn{border:0;background:#ECEFF1;color:#263238;border-radius:12px;min-width:44px;min-height:40px;font-weight:800;font-size:1rem}.kbtn.big{flex:1;background:#1E88E5;color:#fff;box-shadow:0 4px 0 #0D47A1}
+.kcap{font-weight:900;font-size:1.25rem;text-align:center;margin:6px 0 4px;min-height:1.6em}
+.kst{min-height:150px;display:flex;align-items:center;justify-content:center}
+.ksc{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px;width:100%}.kgr{display:flex;flex-wrap:wrap;justify-content:center;gap:3px;max-width:100%;align-items:flex-end}
+.kpl{font-size:2rem;font-weight:900;color:#E65100;margin:0 4px}
+.ko{position:relative;display:inline-flex;flex-direction:column;align-items:center;width:32px}.ko em{font-style:normal;font-size:26px;line-height:1.1;filter:drop-shadow(0 2px 2px rgba(0,0,0,.25))}.ko b{font-size:11px;color:#546E7A;font-weight:800;min-height:13px}
+.ko.yangi em{filter:drop-shadow(0 0 4px #FF9100)}.ko.yangi b{color:#E65100}
+.ko.in,.kcu.in,.kr.in{animation:kpop .45s cubic-bezier(.3,1.6,.5,1) both}@keyframes kpop{from{transform:scale(0);opacity:0}}
+.ko.kel,.kcu.kel,.kr.kel{animation:kkel .6s cubic-bezier(.2,1.2,.4,1) both}@keyframes kkel{from{transform:translateX(120px);opacity:0}}
+.ko.ket,.kcu.ket,.kr.ket{animation:kket .7s ease-in both}@keyframes kket{to{transform:translate(70px,-20px) rotate(20deg);opacity:.12}}
+.ko.sana em,.kcu.sana,.kr.sana{animation:ksana .5s ease both}.ko.sana b{animation:ksanab .5s ease both;animation-delay:inherit}@keyframes ksana{0%{transform:scale(1)}40%{transform:scale(1.35)}100%{transform:scale(1)}}@keyframes ksanab{from{opacity:0}to{opacity:1;color:#1565C0}}
+.ko.oxir em{transform:scale(1.3);display:inline-block}.ko.oxir b{color:#00A651;font-size:13px}
+.ko.sir em{filter:grayscale(1);opacity:.6}
+.kr{display:inline-flex;flex-direction:column;gap:1px;padding:2px;border-radius:4px;background:#BF360C;margin:0 2px;box-shadow:0 2px 3px rgba(0,0,0,.3)}.kr i{display:block;width:14px;height:9px;border-radius:2px;background:linear-gradient(135deg,#FFCC80,#FB8C00)}
+.kcu{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:3px;background:linear-gradient(135deg,#90CAF9,#1E88E5);box-shadow:0 2px 2px rgba(0,0,0,.3);margin:1px}.kcu b{font-size:9px;color:#fff}
+.kcu.yig{animation:kyig 1s ease-in-out both}@keyframes kyig{50%{transform:translateY(-10px);box-shadow:0 0 0 2px #FF9100}100%{background:linear-gradient(135deg,#FFCC80,#FB8C00)}}
+.kfor{text-align:center;font-weight:900;font-size:1.5rem;letter-spacing:.5px;min-height:1.4em;color:#263238}.kfor.top{font-size:2rem;color:#00A651;animation:kpop .5s both}
+.kraq .kt{color:#BF360C}.kraq .ku{color:#1565C0}.kraq{font-size:2.4rem}
+.knav{display:flex;gap:8px;margin-top:8px}
+.kjuft{display:flex;flex-direction:column;align-items:center;gap:2px}.kjr{display:flex;gap:4px}.kjl{display:flex;gap:4px;height:14px}.kjl i{width:32px;border-left:2px dashed #90A4AE;margin-left:15px;animation:kpop .3s both}.ko.ortiq em{animation:ksana .6s 1s 2 both;filter:drop-shadow(0 0 6px #FF1744)}
+.kbar{display:flex;width:100%;height:40px;border-radius:8px;overflow:hidden;gap:2px}.kb{display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff;animation:kpop .5s both}.kb.all{background:#546E7A}.kb.bor{background:#1E88E5}.kb.yoq{background:repeating-linear-gradient(45deg,#B0BEC5 0 6px,#CFD8DC 6px 12px);color:#263238}.kb.top{background:#00C853}.kbarT{text-align:center;font-size:.85rem;color:#607D8B;margin-top:2px}
+.ksc.kbus{background:linear-gradient(180deg,#FFD54F,#FFB300);border-radius:16px 16px 8px 8px;padding:10px 8px 14px;box-shadow:inset 0 -6px 0 #E65100}.ksc.kbus .kpl{color:#fff}
+.dans.kyash{visibility:hidden}.dmatn{margin:6px 0;font-size:.9rem}.dmatn summary{cursor:pointer;opacity:.85}
+.kino.low *{animation:none!important}@media (prefers-reduced-motion:reduce){.kino *{animation:none!important}}
+/* 0.7.0 — 🎨 REALISTIK DIZAYN QATLAMI (foydalanuvchi 4 marta so'radi: «juda bolalarcha, realistik qil»).
+   O'yinchoq «zinapoya» soyalar, yumaloq Baloo shrifti va pushti konfet fon o'rniga: Inter + Exo 2 (raqam/sarlavha),
+   metall/shisha yuzalar, yumshoq chuqur soyalar, kichikroq radiuslar, yetuk ranglar. Faqat CSS — mantiq o'zgarmaydi. */
+body.th-orol{--bg:#120A24;--card:rgba(255,255,255,.07);--ink:#F6F2FF;--mut:#C9BDE0;--line:rgba(255,255,255,.14);--acc:#E0479A;--acc2:#8E1F5D;--onacc:#fff}
+body.th-orol{background:radial-gradient(ellipse at 80% -10%,rgba(224,71,154,.30),transparent 55%),radial-gradient(ellipse at 0% 40%,rgba(98,70,234,.22),transparent 50%),linear-gradient(180deg,#120A24,#1D1038 55%,#2A1446) fixed}
+body.th-garaj{--card:#1A2130;--line:rgba(255,255,255,.10)}
+body.th-garaj,body.th-orol{letter-spacing:.1px}
+h1,h2,h3,.top .ttl{font-weight:700;letter-spacing:-.2px}
+.btn{border-radius:14px;font-weight:700;letter-spacing:.2px;background:linear-gradient(180deg,color-mix(in srgb,var(--acc) 82%,#fff),var(--acc) 45%,color-mix(in srgb,var(--acc) 78%,#000));box-shadow:0 8px 20px -6px color-mix(in srgb,var(--acc) 55%,transparent),inset 0 1px 0 rgba(255,255,255,.35),inset 0 -1px 0 rgba(0,0,0,.2);transition:transform .08s,filter .08s}
+.btn:active{transform:scale(.98);filter:brightness(.95);box-shadow:0 4px 12px -6px color-mix(in srgb,var(--acc) 55%,transparent),inset 0 1px 0 rgba(255,255,255,.25)}
+.btn.big{font-size:1.12rem;min-height:58px}
+.btn.alt,.qutb{background:linear-gradient(180deg,#FF9A3D,#F06A00 50%,#C45500);box-shadow:0 8px 20px -6px rgba(240,106,0,.6),inset 0 1px 0 rgba(255,255,255,.35)}
+.btn.ghost{background:rgba(255,255,255,.04);border:1px solid var(--line);box-shadow:inset 0 1px 0 rgba(255,255,255,.05);font-weight:600}
+.btn.danger{background:linear-gradient(180deg,#E5484D,#B42318);box-shadow:0 8px 20px -6px rgba(180,35,24,.6)}
+.ib{width:48px;height:48px;flex:0 0 48px;border-width:1px;background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.03));box-shadow:0 4px 12px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.12);font-size:1.25rem}.ib.av{font-size:1.6rem}
+body:not(.th-garaj):not(.th-orol) .ib{background:var(--card);box-shadow:0 2px 8px rgba(16,24,40,.08)}
+.pill{border-radius:10px;font-weight:700;padding:5px 10px;background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.04));box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+body:not(.th-garaj):not(.th-orol) .pill{background:var(--card)}
+.card{border-radius:16px;box-shadow:0 10px 28px -12px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.05)}
+body:not(.th-garaj):not(.th-orol) .card{box-shadow:0 6px 20px -10px rgba(16,24,40,.18)}
+.bubble{margin:2px 0 12px;border-radius:14px;font-weight:600;background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.05));color:var(--ink);border:1px solid var(--line);padding:11px 14px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.bubble::before,.bubble::after{display:none}
+body:not(.th-garaj):not(.th-orol) .bubble{background:var(--card);color:var(--ink)}
+.opt{border:1px solid rgba(0,0,0,.08);border-radius:16px;font-weight:700;background:linear-gradient(180deg,#FFFFFF,#EEF2F7);box-shadow:0 8px 18px -8px rgba(0,0,0,.45),inset 0 1px 0 #fff,inset 0 -2px 0 rgba(0,0,0,.06);font-family:"Exo 2","Inter",system-ui,sans-serif}
+.opt:active{transform:scale(.97);box-shadow:0 4px 10px -6px rgba(0,0,0,.45),inset 0 1px 0 #fff}
+.opt.ok{border-color:var(--ok);background:linear-gradient(180deg,#F1FBF3,#D8F3DE);box-shadow:0 0 0 2px var(--ok),0 8px 18px -8px rgba(46,158,68,.6)}
+.opt.no{border-color:var(--no);background:linear-gradient(180deg,#FFF3F3,#FBDADA);box-shadow:0 0 0 2px var(--no)}
+.q,.kfor,.xcap b,.devbar b,.stats b,.big-t{font-family:"Exo 2","Inter",system-ui,sans-serif}
+.stats>div{border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03));border:1px solid var(--line)}
+.road{border-radius:10px;box-shadow:inset 0 2px 6px rgba(0,0,0,.35)}
+.note{border-radius:12px}.toast{border-radius:12px;font-weight:600;background:rgba(17,24,39,.92);backdrop-filter:blur(8px)}
+.kino{border-radius:16px;background:linear-gradient(180deg,#FFFFFF,#EEF2F7)}.kcap{font-weight:800;font-family:"Exo 2","Inter",system-ui,sans-serif}.kbtn.big{background:linear-gradient(180deg,#3B8BEB,#1565C0);box-shadow:0 6px 14px -6px rgba(21,101,192,.7)}
+.dars{border-radius:16px}
 </style>
 </head>
 <body class="th-neutral">
@@ -2793,11 +2854,151 @@ function darsFlow(b, m, st, it, next) {
   }
   showLesson(b, m, st, it, n);
 }
+/* ================= 🖼️ RASMLI KICHIK DARS — «kino» (0.7.0, foydalanuvchi so'rovi 06.11) =================
+   Matnli qoida bolalarga tushunarsiz edi. Endi matematika darsi — qisqa sahnalar: narsalar paydo bo'ladi, keladi, ketadi,
+   sanaladi; o'nliklar — tayoqcha-bog'lam, birliklar — kubik. Har sahnada 2–5 so'zli yozuv va katta formula, matn minimal.
+   Sahnalar o'zi oqadi (bola ⏮ bilan qayta ko'radi), oxirida «Men tayyorman». Matnli yechim kattalar uchun ochiladigan bo'limda.
+   Egizak savolda 1-xato bo'lsa — maslahat o'rniga O'SHA savol sonlari bilan qisqa kino (faded worked example). */
+const KEM = ['🍎', '🚗', '⚽', '🐥', '🍓', '🧸', '🎈', '🍊'];
+function kinoEm(b, it) { const v = it.vis || {}; if (v.em) return v.em; return b && b.dunyo === 'garaj' ? '🚗' : b && b.dunyo === 'orol' ? '🦋' : KEM[(+it.a || 0) % KEM.length]; }
+const kOb = (em, cls, d, lbl) => ({ em, cls: cls || '', d: d || 0, lbl: lbl == null ? '' : lbl });
+const ROD = (cls, d) => ({ rod: 1, cls: cls || '', d: d || 0 }), CUB = (cls, d, lbl) => ({ cub: 1, cls: cls || '', d: d || 0, lbl: lbl == null ? '' : lbl });
+const STEP = 0.32;
+/* qo'shish 20 gacha: bor edi → yana keldi (sanash davom etadi) → hammasi */
+function kinoQosh(a, b, em) {
+  const v = a + b, s = [];
+  s.push({ cap: `Bor edi: ${a} ta`, gr: [Array.from({ length: a }, (_, i) => kOb(em, 'in', i * STEP, i + 1))], f: `${a}` });
+  s.push({ cap: `Yana ${b} ta keldi`, gr: [Array.from({ length: a }, (_, i) => kOb(em, '', 0, i + 1)), Array.from({ length: b }, (_, i) => kOb(em, 'kel yangi', 0.2 + i * STEP, a + i + 1))], plus: '+', f: `${a} + ${b}` });
+  s.push({ cap: `Hammasi: ${v} ta`, gr: [Array.from({ length: v }, (_, i) => kOb(em, 'sana' + (i >= a ? ' yangi' : ''), i * 0.18, i + 1))], f: `${a} + ${b} = ${v}`, top: 1 });
+  return s;
+}
+function kinoAyir(a, b, em) {
+  const v = a - b, s = [];
+  s.push({ cap: `Bor edi: ${a} ta`, gr: [Array.from({ length: a }, (_, i) => kOb(em, 'in', i * STEP, i + 1))], f: `${a}` });
+  s.push({ cap: `${b} tasi ketdi`, gr: [Array.from({ length: a }, (_, i) => kOb(em, i >= v ? 'ket' : '', i >= v ? 0.3 + (i - v) * STEP : 0, i + 1))], f: `${a} − ${b}` });
+  s.push({ cap: `Qoldi: ${v} ta`, gr: [Array.from({ length: v }, (_, i) => kOb(em, 'sana', i * 0.22, i + 1))], f: `${a} − ${b} = ${v}`, top: 1 });
+  return s;
+}
+/* o'nlik-birlik: tayoqcha-bog'lam (10) va kubiklar */
+const tb = (n, cls, d0) => { const t = Math.floor(n / 10), u = n % 10, o = []; for (let i = 0; i < t; i++) o.push(ROD(cls, (d0 || 0) + i * STEP)); for (let i = 0; i < u; i++) o.push(CUB(cls, (d0 || 0) + (t + i) * 0.2)); return o; };
+const raq = n => { const t = Math.floor(n / 10), u = n % 10; return t ? `<span class="kt">${t}</span><span class="ku">${u}</span>` : `<span class="ku">${u}</span>`; };
+function kinoOnlik(n) {
+  const b = n - 10;
+  return [{ cap: "10 ta = 1 o'nlik (bog'lam)", gr: [[ROD('in', 0)]], f: '10' },
+    { cap: `Yana ${b} ta birlik`, gr: [[ROD('', 0)], Array.from({ length: b }, (_, i) => CUB('kel', 0.2 + i * STEP, i + 1))], plus: '+', f: `10 + ${b}` },
+    { cap: `${n} = 1 o'nlik ${b} birlik`, gr: [[ROD('', 0)], Array.from({ length: b }, () => CUB('', 0))], f: `<span class="kraq">${raq(n)}</span> = 10 + ${b}`, html: 1, top: 1 }];
+}
+function kinoXona(a, b, op) {
+  const v = op === '+' ? a + b : a - b, s = [], T = x => Math.floor(x / 10), U = x => x % 10;
+  if (v < 0 || a >= 100 || b >= 100 || v >= 100) return null;
+  s.push({ cap: `${a} = ${T(a)} o'nlik, ${U(a)} birlik`, gr: [tb(a, 'in', 0)], f: `<span class="kraq">${raq(a)}</span>`, html: 1 });
+  if (op === '+') {
+    s.push({ cap: `${b} = ${T(b)} o'nlik, ${U(b)} birlik`, gr: [tb(a, '', 0), tb(b, 'kel yangi', 0.2)], plus: '+', f: `${a} + ${b}` });
+    const uu = U(a) + U(b), tt = T(a) + T(b);
+    if (uu >= 10) {
+      const rods = []; for (let i = 0; i < tt; i++) rods.push(ROD('', 0)); const cubes = []; for (let i = 0; i < uu; i++) cubes.push(CUB(i < 10 ? 'yig' : '', i < 10 ? 0.4 + i * 0.12 : 0));
+      s.push({ cap: `${uu} birlik: 10 tasi → 1 o'nlik!`, gr: [rods, cubes], f: `${U(a)} + ${U(b)} = ${uu}` });
+    }
+    s.push({ cap: `Natija: ${v}`, gr: [tb(v, 'sana', 0)], f: `${a} + ${b} = ${v}`, top: 1 });
+  } else {
+    let a2 = a;
+    if (U(a) < U(b)) { const rods = []; for (let i = 0; i < T(a) - 1; i++) rods.push(ROD('', 0)); const cubes = []; for (let i = 0; i < U(a) + 10; i++) cubes.push(CUB(i >= U(a) ? 'yangi in' : '', i >= U(a) ? 0.3 + (i - U(a)) * 0.1 : 0));
+      s.push({ cap: "1 o'nlikni 10 birlikka maydalaymiz", gr: [rods, cubes], f: `${a} = ${T(a) - 1}0 + ${U(a) + 10}` }); a2 = -1; }
+    const tA = a2 < 0 ? T(a) - 1 : T(a), uA = a2 < 0 ? U(a) + 10 : U(a), rods = [], cubes = [];
+    for (let i = 0; i < tA; i++) rods.push(ROD(i >= tA - T(b) ? 'ket' : '', i >= tA - T(b) ? 0.3 + (tA - 1 - i) * STEP : 0));
+    for (let i = 0; i < uA; i++) cubes.push(CUB(i >= uA - U(b) ? 'ket' : '', i >= uA - U(b) ? 0.3 + (T(b) + uA - 1 - i) * 0.15 : 0));
+    s.push({ cap: `${b} ni olib ketamiz`, gr: [rods, cubes], f: `${a} − ${b}` });
+    s.push({ cap: `Qoldi: ${v}`, gr: [tb(v, 'sana', 0)], f: `${a} − ${b} = ${v}`, top: 1 });
+  }
+  return s;
+}
+/* □ — yashiringan son: butun va bo'lak */
+function kinoBolak(a, b, op, em) {
+  const v = op === '+' ? a + b : a - b, butun = op === '+' ? v : a, bor = op === '+' ? a : v, yoq = op === '+' ? b : b;
+  if (butun > 20) return [{ cap: `Butun: ${butun}`, bar: [[butun, 'all']], f: `${butun}` }, { cap: `Bilgan bo'lak: ${bor}`, bar: [[bor, 'bor'], [butun - bor, 'yoq']], f: `${butun} − ${bor} = ?` }, { cap: `Yashiringan son: ${yoq}`, bar: [[bor, 'bor'], [yoq, 'top']], f: `□ = ${yoq}`, top: 1 }];
+  return [{ cap: `Hammasi: ${butun} ta`, gr: [Array.from({ length: butun }, (_, i) => kOb(em, 'in', i * 0.15, i + 1))], f: `${butun}` },
+    { cap: `${bor} tasi ko'rinib turibdi`, gr: [Array.from({ length: bor }, (_, i) => kOb(em, '', 0, i + 1)), Array.from({ length: yoq }, () => kOb('❔', 'sir in', 0.3))], plus: op === '+' ? '+' : '−', f: `${butun} − ${bor} = ?` },
+    { cap: `Yashiringan: ${yoq} ta`, gr: [Array.from({ length: bor }, (_, i) => kOb(em, '', 0, i + 1)), Array.from({ length: yoq }, (_, i) => kOb(em, 'sana yangi', i * 0.25, bor + i + 1))], plus: op === '+' ? '+' : '−', f: `□ = ${yoq}`, top: 1 }];
+}
+/* sanash (M0.3, M0.8) */
+function kinoSana(n, em) {
+  return [{ cap: 'Har biriga barmoq tegizamiz', gr: [Array.from({ length: n }, (_, i) => kOb(em, 'sana', i * 0.45, i + 1))], f: '' },
+    { cap: `Oxirgisi — ${n}. Demak ${n} ta`, gr: [Array.from({ length: n }, (_, i) => kOb(em, i === n - 1 ? 'oxir' : '', 0, i + 1))], f: `${n}`, top: 1 }];
+}
+/* solishtirish (M0.5) — juftlab chiqish */
+function kinoJuft(l, r) {
+  const m = Math.min(l.n, r.n), ko = l.n > r.n ? 'chap' : l.n < r.n ? "o'ng" : '';
+  return [{ cap: 'Ikki guruh', juft: { l, r, pair: 0 }, f: `${l.n} va ${r.n}` },
+    { cap: 'Bittadan juftlaymiz', juft: { l, r, pair: m }, f: '' },
+    { cap: ko ? `Ortib qoldi → ${ko}da ko'p` : 'Hech biri ortmadi → teng', juft: { l, r, pair: m, ort: 1 }, f: l.n > r.n ? `${l.n} > ${r.n}` : l.n < r.n ? `${l.n} < ${r.n}` : `${l.n} = ${r.n}`, top: 1 }];
+}
+/* matnli masala (M2.4): avtobus */
+function kinoBus(a, b, c) {
+  const v = a - b + c, P = '🧍', s = [], one = (n, cls, d0, from) => Array.from({ length: n }, (_, i) => kOb(P, cls, (d0 || 0) + i * 0.15, from != null ? from + i + 1 : ''));
+  if (a > 20 || v > 20 || a - b < 0) return null;
+  s.push({ cap: `Avtobusda ${a} kishi`, bus: 1, gr: [one(a, 'in', 0)], f: `${a}` });
+  s.push({ cap: `${b} kishi tushdi`, bus: 1, gr: [one(a - b, '', 0).concat(one(b, 'ket', 0.3))], f: `${a} − ${b} = ${a - b}` });
+  s.push({ cap: `${c} kishi chiqdi`, bus: 1, gr: [one(a - b, '', 0), one(c, 'kel yangi', 0.3)], plus: '+', f: `${a - b} + ${c} = ${v}` });
+  s.push({ cap: `Endi: ${v} kishi`, bus: 1, gr: [one(v, 'sana', 0, 0)], f: `${a} − ${b} + ${c} = ${v}`, top: 1 });
+  return s;
+}
+function kino(b, it) {
+  const ex = it.ex || {}, em = kinoEm(b, it), a = +ex.a, bb = +ex.b, op = ex.op, id = it.tugun || '';
+  try {
+    if (id === 'M2.4') { const m = String(it.sav).match(/\d+/g); if (m && m.length >= 3 && ex.f != null) { const [x, y, z] = m.map(Number); if (x - y + z === +ex.f) { const k = kinoBus(x, y, z); if (k) return k; } } }
+    if (id === 'M1.2' && !op) { const n = teen(it); if (n) return kinoOnlik(n); }
+    if ((id === 'M0.3' || id === 'M0.8') && +it.a >= 1 && +it.a <= 20) return kinoSana(+it.a, em);
+    if (id === 'M0.5' && it.vis && it.vis.k === 'ikki' && it.vis.l && it.vis.r && it.vis.l.n <= 10 && it.vis.r.n <= 10) return kinoJuft(it.vis.l, it.vis.r);
+    if (isFinite(a) && isFinite(bb) && (op === '+' || op === '−')) {
+      const v = op === '+' ? a + bb : a - bb; if (v < 0) return null;
+      if (ex.yoq === 'b') return kinoBolak(a, bb, op, em);
+      if (ex.yoq) return null;
+      if (Math.max(a, bb, v) <= 20 && (a <= 10 || bb <= 10)) return op === '+' ? kinoQosh(a, bb, em) : kinoAyir(a, bb, em);
+      return kinoXona(a, bb, op);
+    }
+  } catch (e) { console.warn('kino', e); }
+  return null;
+}
+function kobHTML(o) {
+  const st = `style="animation-delay:${o.d.toFixed(2)}s"`;
+  if (o.rod) return `<span class="kr ${o.cls}" ${st}>${'<i></i>'.repeat(10)}</span>`;
+  if (o.cub) return `<span class="kcu ${o.cls}" ${st}>${o.lbl !== '' ? `<b>${o.lbl}</b>` : ''}</span>`;
+  return `<span class="ko ${o.cls}" ${st}><em>${o.em}</em>${o.lbl !== '' ? `<b>${o.lbl}</b>` : ''}</span>`;
+}
+function sahnaHTML(s) {
+  let body = '';
+  if (s.bar) { const T = s.bar.reduce((x, y) => x + y[0], 0); body = `<div class="kbar">${s.bar.map(([n, c], i) => `<span class="kb ${c}" style="flex:${n};animation-delay:${i * 0.4}s">${c === 'yoq' ? '?' : n}</span>`).join('')}</div><div class="kbarT">${T}</div>`; }
+  else if (s.juft) { const { l, r, pair, ort } = s.juft, row = (g, side) => Array.from({ length: g.n }, (_, i) => `<span class="ko ${i < pair ? 'jft' : ort ? 'ortiq' : ''}" style="animation-delay:${(i * 0.3).toFixed(2)}s"><em>${g.em}</em></span>`).join('');
+    body = `<div class="kjuft"><div class="kjr">${row(l, 'l')}</div><div class="kjl">${Array.from({ length: pair }, (_, i) => `<i style="animation-delay:${(i * 0.3).toFixed(2)}s"></i>`).join('')}</div><div class="kjr">${row(r, 'r')}</div></div>`; }
+  else body = (s.gr || []).map(g => `<div class="kgr">${g.map(kobHTML).join('')}</div>`).join(s.plus ? `<div class="kpl">${s.plus}</div>` : '');
+  return `<div class="ksc${s.bus ? ' kbus' : ''}">${body}</div>`;
+}
+const sahnaVaqt = s => { const ds = []; (s.gr || []).forEach(g => g.forEach(o => ds.push(o.d))); if (s.juft) ds.push(Math.max(s.juft.l.n, s.juft.r.n) * 0.3); if (s.bar) ds.push(s.bar.length * 0.4); return (Math.max(0, ...ds) + 1.6) * 1000; };
+/* host ichida kinoni o'ynatadi; tugaganda done() */
+function kinoPlay(host, sc, o) {
+  o = o || {}; let i = 0, tm = null; const tez = A.TEZ || FX.low;
+  host.innerHTML = `<div class="kino${o.mini ? ' mini' : ''}${FX.low ? ' low' : ''}"><div class="khd"><div class="kdots">${sc.map((_, j) => `<i data-kd="${j}"></i>`).join('')}</div><button class="kbtn" data-krep aria-label="Qaytadan">⏮</button></div>
+  <div class="kcap" data-kcap></div><div class="kst" data-kst></div><div class="kfor" data-kfor></div><div class="knav"><button class="kbtn" data-kprev aria-label="Oldingi">◀</button><button class="kbtn big" data-knext>▶ Keyingi</button></div></div>`;
+  const cap = $('[data-kcap]', host), stg = $('[data-kst]', host), fo = $('[data-kfor]', host), nx = $('[data-knext]', host), pv = $('[data-kprev]', host);
+  const show = j => {
+    clearTimeout(tm); i = Math.max(0, Math.min(sc.length - 1, j)); const s = sc[i];
+    cap.textContent = s.cap; stg.innerHTML = sahnaHTML(s); fo.innerHTML = s.html ? s.f : esc(s.f || ''); fo.classList.toggle('top', !!s.top);
+    $$('[data-kd]', host).forEach((d, k) => d.className = k < i ? 'ok' : k === i ? 'on' : '');
+    pv.style.visibility = i ? 'visible' : 'hidden'; nx.textContent = i === sc.length - 1 ? '✓ Tushundim' : '▶ Keyingi';
+    if (i === sc.length - 1) { if (!FX.low) FX.play('ding'); if (o.done) o.done(); }
+    else if (!o.qolda) tm = setTimeout(() => { if (host.isConnected) show(i + 1); }, tez ? 60 : sahnaVaqt(s) + 900);
+  };
+  nx.onclick = () => { if (i < sc.length - 1) show(i + 1); else if (o.tushundim) o.tushundim(); };
+  pv.onclick = () => show(i - 1); $('[data-krep]', host).onclick = () => show(0);
+  show(0); return { show, stop: () => clearTimeout(tm) };
+}
+A.kino = kino; A.kinoPlay = kinoPlay;
 /* O'zbekcha matn ichidagi arabcha bo'laklar o'ngdan chapga, aralashmasdan ko'rinsin */
 const AR_RUN = /[\u0600-\u06FF](?:[\u0600-\u06FF\s·+]*[\u0600-\u06FF])?/g, escB = s => esc(s).replace(AR_RUN, m => `<bdi dir="rtl" class="arb">${m}</bdi>`);
 function showLesson(b, m, st, it, n) {
   FX.play('yumshoq'); FX.vibrate(30);
   const d = gen.reg[it.tugun] || {}, kat = A.gl(b.daraja) === 'g0', qoida = DARS[it.tugun] || DARS_FAN[it.fan] || [], qad = darsQadam(it), dv = !it.vis && DARS_VIS[it.tugun] ? DARS_VIS[it.tugun](it) : null;
+  const sc = kino(b, it); if (sc) return showKinoLesson(b, m, st, it, n, sc, d, qoida, qad);
   const html = `<div class="dars" role="region" aria-label="Kichik dars">
   <div class="dh"><span>📖</span><span>Kichik dars${d.nom ? ': ' + esc(d.nom) : ''}</span></div>
   ${kat ? `<div class="dkat">👨‍👩‍👦 Kattalar o'qib bersin</div>` : ''}
@@ -2817,6 +3018,22 @@ function showLesson(b, m, st, it, n) {
   btn.onclick = () => { if (btn.disabled) return; const tw = twinItem(b, it, n); if (CUR && CUR.k === 'missiya') showItem(b, m, st, tw); else if (CUR && CUR.k === 'mashq') mashqNext(b, tw); else arenaNext(b, tw); };
   try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) {}
 }
+/* 🎬 rasmli dars: kino → «Tushundim» → egizak. Matnli yechim kattalar uchun yig'ma bo'limda. */
+function showKinoLesson(b, m, st, it, n, sc, d, qoida, qad) {
+  const html = `<div class="dars kinod" role="region" aria-label="Rasmli dars">
+  <div class="dh"><span>🎬</span><span>Rasmli dars${d.nom ? ': ' + esc(d.nom) : ''}</span></div>
+  <div class="dsav">${esc(it.sav)}</div><div data-kh></div>
+  <div class="dans kyash" data-dans>✅ Javob: ${javobHTML(it)}</div>
+  ${qoida.length || qad.length ? `<details class="dmatn"><summary>📄 Kattalar uchun — matnli yechim</summary>${qoida.length ? `<div class="dq">${qoida.map(escB).join('<br>')}</div>` : ''}${qad.length ? `<ol class="dsteps">${qad.map(x => `<li>${escB(x)}</li>`).join('')}</ol>` : ''}</details>` : ''}
+  <button class="btn big" data-twin disabled>${n === 1 ? "Endi o'zim yechaman ✍️" : 'Yana bittasi — osonrog\'i ✍️'}</button></div>`;
+  const host = $('.item'); if (host) host.outerHTML = html; else { const s = $('#stage') || app; s.innerHTML = html; }
+  const chb = $('[data-charch]'); if (chb) chb.remove();
+  const btn = $('[data-twin]'), go2 = () => { if (btn.disabled) return; const tw = twinItem(b, it, n); if (CUR && CUR.k === 'missiya') showItem(b, m, st, tw); else if (CUR && CUR.k === 'mashq') mashqNext(b, tw); else arenaNext(b, tw); };
+  btn.onclick = go2;
+  kinoPlay($('[data-kh]'), sc, { done: () => { btn.disabled = false; const a = $('[data-dans]'); if (a) a.classList.remove('kyash'); }, tushundim: go2 });
+  A.pushLog(b.id, { t: 'kino', ts: Date.now(), bola: b.id, tugun: it.tugun, n, sahna: sc.length });
+  try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) {}
+}
 A.darsQadam = darsQadam; A.mathSteps = mathSteps; A.DARS = DARS;
 if (A.TEZ) { G.__bjCur = () => CUR; /* faqat ?tez=1 avtomatik sinov uchun */
   G.__bjJavob = ok => { const C = CUR; if (C && C.cb) C.cb({ togri: !!ok, javob: ok ? C.it.a : '?', yakuniy: !ok }); }; }
@@ -2825,6 +3042,8 @@ function onAnswer(b, m, st, it, st0, r) {
   r.shoshildi = r.shoshildi || (!r.togri && Date.now() - st0.shown < 1200 && st0.urinish === 1);
   if (!r.togri && !r.final && st0.urinish === 1 && !r.yakuniy) { /* 1-xato: maslahat + 2-urinish */
     st0.urinish = 2; st0.maslahat = 1; st0.x1 = r.xato_turi; FX.play('yumshoq'); FX.vibrate(30);
+    const ksc = it.tur === 'dars' ? kino(b, it) : null;
+    if (ksc) { $('#fb').innerHTML = `<div class="hint">💡 Rasmga qara — xuddi darsdagidek:</div><div data-kh></div>`; kinoPlay($('#fb [data-kh]'), ksc.slice(0, -1).length ? ksc.slice(0, -1) : ksc, { mini: 1 }); return; }
     $('#fb').innerHTML = `<div class="hint">💡 ${esc((it.hint && it.hint.sav) || 'Yana bir marta diqqat bilan qara.')}</div>`; if (it.hint && it.hint.vis) $('#fb').insertAdjacentHTML('beforeend', ART.vis(it.hint.vis));
     return; }
   const fin = { togri: !!r.togri, togri_1: !!r.togri && st0.urinish === 1 && !r.xato_soni, javob: r.javob, xato_turi: r.togri && st0.urinish === 1 ? (r.xato_turi || null) : (st0.x1 || r.xato_turi || null), shoshildi: r.shoshildi };
@@ -3246,7 +3465,7 @@ function qutDone(b, C) {
 /* Sinov ekrani (faqat ?tez=1): bitta tugunning topshirig'ini ko'rsatadi — avtomatik sinov va ko'z bilan tekshirish uchun */
 function screenSinov(b, id, q, fmt) { CUR = { k: 'arena', b }; theme(b.dunyo); const it = A.makeItem(b, { tugun: id, q, tur: 'arena', fmt: fmt || null }), st0 = { shown: Date.now(), first: null, urinish: 1, maslahat: 0, ovoz: 0 }; CUR.it = it; CUR.st = st0; CUR.fan = it.fan;
   app.innerHTML = `<div class="wrap play"><div class="top"><button class="ib" data-x aria-label="Chiqish">✕</button><div class="ttl">🧪 ${esc(id)} q${q}</div></div><div class="item t-${it.t}">${headHTML(b, it)}<div id="body"></div><div id="fb"></div>${otaTip(b, it)}</div></div>`;
-  $('[data-x]').onclick = () => go('uy'); (RENDER[it.t] || RENDER.tanla)($('#body'), it, b, r => { CUR.sinovNatija = r; onAnswer(b, null, null, it, st0, r); }, st0); }
+  $('[data-x]').onclick = () => go('uy'); CUR.cb = r => { CUR.sinovNatija = r; onAnswer(b, null, null, it, st0, r); }; (RENDER[it.t] || RENDER.tanla)($('#body'), it, b, CUR.cb, st0); }
 /* ================= SESSIYA va TAYMERLAR (6.1, 6.2) ================= */
 let lastAct = Date.now(), contSec = 0, pauseFlag = false;
 ['pointerdown', 'keydown'].forEach(ev => document.addEventListener(ev, () => { lastAct = Date.now(); pauseFlag = false; }, { passive: true }));

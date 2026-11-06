@@ -113,7 +113,8 @@ Pedagogik qoidalar: sovg'a — muntazamlik uchun (tezlik uchun emas), oila umumi
 ## 0.7.0 — REJA («v7»; tarmoq `v0.7.0`, har bosqich shu tarmoqqa push, saytga faqat «chiqar» bilan)
 Tartib (foydalanuvchi qarori, 05.11; 06.11 — rasmli dars bozordan oldinga):
 1. [x] 🗺️ Sarguzasht xaritasi + 💖 «katta qiz» uslubi + 4 g'oya (06.11) — pastdagi bo'lim, `sinov/v070/sinov_bosqich1.py` (50).
-1b. 🖼️ RASMLI KICHIK DARS (06.11, foydalanuvchi so'rovi): 2 xatodan keyingi dars bolalarga matn bilan tushunarsiz — qoida rasm/animatsiya bilan, matn minimal, ovoz bilan; bola o'zi tushunsin. Mantiqni ham to'g'rilab «ideal» qilish (u: «logikasini to'g'rilab ideal qil»).
+1b. [x] 🖼️ RASMLI KICHIK DARS + 🎨 realistik dizayn qatlami (06.11) — pastdagi bo'limlar, `sinov/v070/sinov_bosqich1b.py`.
+1c. 🎮 O'YINLAR ZALI (06.11, u «o'zing to'g'ri bilganingni qil PY» dedi — Claude tanlovi) — pastdagi bo'lim.
 2. 🧺 Oila bozori — xaritadan KEYIN (pastdagi bo'lim).
 3. 🌍 Kun kashfiyoti · 📖 o'qish tezligi · 🕌 arab ra (tafxim/tarqiq) va vaqf.
 4. 🎙️ Ota-ona ovozi.
@@ -164,10 +165,23 @@ Tartib (foydalanuvchi qarori, 05.11; 06.11 — rasmli dars bozordan oldinga):
 - 🔤 Bilgan harflari testi (ota-ona → bola sahifasi, faqat maktabgacha; `#ota-harf-<id>`, `harfTest`): joriy harfdan boshlab, kattalar ✅/❌ bosadi, 2 ketma-ket ❌ yoki 3 daqiqa → birinchi ❌ gacha bo'lganlar ochiladi (takrorga qo'shiladi), log `{t:'harfTest'}`.
 - Dars egizagi o'sha harf va formatda (`twinItem` → `fmt`). Sinov ekrani formati bilan: `#sinov-H0.1-3-ovchi`.
 
-## 🎮 O'yinlar zali — G'OYA (06.11, u «PY» so'radi; hozirgilardan KEYIN, tanlovi kutilmoqda [?])
-- Maktabgacha uchun yangi: 1 🏁 Turbo gonka (barmoq bilan boshqarish, raqam/rang darvozalari, nitro, 👻 arvoh mashina — o'z rekordi) · 2 🚦 Svetofor · 3 🅿️ Parkovka · 4 🧱 Devor sindirish · 5 🔢 Raqamli trek · 6 🃏 Garaj xotirasi. Mavjud poyga/pazl/ko'zgu ham zalga.
-- Bola o'zi tanlaydi; har o'yinda shaxsiy 🏆 rekord + guvohnoma; oila rekordlar taxtasi yosh bo'yicha alohida.
-- Taklif (tasdiqlanmagan): zal missiyadan keyin ochiladi, kuniga ≤ 10 daq (sozlamada); muqobil — so'mga «chipta».
+## 🎮 O'yinlar zali — QAROR (06.11: u «o'zing to'g'ri bilganingni qil PY»; Claude tanlovi xabar qilingan)
+- Yangi (maktabgacha uchun asosan): 🏁 Turbo gonka (barmoq bilan boshqarish, raqam/rang darvozalari, nitro, 👻 arvoh mashina — o'z rekordi) · 🚦 Svetofor (yashil — gaz, qizil — tormoz; tezlashadi) · 🧱 Devor sindirish (to'g'ri javob → tezlik → krash) · 🃏 Garaj xotirasi (juftlar). Parkovka va raqamli trek KIRMAYDI (poyga va kod-yo'l bilan takror).
+- Mavjud poyga/pazl/ko'zgu ham zalga. Bola o'zi tanlaydi; har o'yinda shaxsiy 🏆 rekord + guvohnoma; oila rekordlar taxtasi yosh bo'yicha alohida.
+- Zal missiya bajarilgandan KEYIN ochiladi, kuniga ≤ 10 daq (ota-ona sozlamasida o'zgaradi). Dizayn realistik + animatsiyali.
+
+## 🎬 Rasmli kichik dars — BAJARILDI (06.11; sabab: bolalar matnli darsni o'zi tushunmayapti)
+- Kid modulda `kino(b, it)` → sahnalar `[{cap, gr:[[obj]], plus, f, html, top, bar, juft, bus}]` yoki null; `kinoPlay(host, sc, {mini, done, tushundim, qolda})` — sahnalar o'zi oqadi (`sahnaVaqt`), ⏮/◀/▶, oxirgisida «✓ Tushundim». `A.kino`, `A.kinoPlay`.
+- Turlar: `kinoQosh/kinoAyir` (≤20, bor edi → keldi/ketdi → sanaladi, sanash-davom yorliqlari) · `kinoXona` (<100: tayoqcha-bog'lam + kubik; o'tishda «10 birlik → 1 o'nlik», ayirishda «1 o'nlikni maydalaymiz») · `kinoOnlik` (M1.2: bog'lam + kubik, o'nlik raqami jigarrang, birlik ko'k) · `kinoBolak` (□ yashiringan son) · `kinoSana` (M0.3/M0.8) · `kinoJuft` (M0.5 juftlash) · `kinoBus` (M2.4 avtobus). Kino bor tugunlar: M0.3 M0.5 M0.8 M0.9 M0.10 M1.1 M1.2 M1.5 M1.6 M1.7 M1.10 M1.12 M2.1 M2.2 M2.3 M2.4.
+- `showLesson`: kino bo'lsa → `showKinoLesson` (sarlavha, savol, kino, javob oxirida ochiladi, «📄 Kattalar uchun — matnli yechim» yig'ma, «Endi o'zim yechaman» kino tugagach ochiladi); bo'lmasa eski matnli dars. Log `{t:'kino', tugun, n, sahna}`.
+- Egizak (`tur:'dars'`) da 1-xato → oddiy maslahat o'rniga O'SHA sonlar bilan mini-kino (oxirgi — javob sahnasisiz).
+- O'zbekcha TTS telefonlarda yo'q → kino ovozsiz; ovoz — «ota-ona ovozi» bosqichida.
+- Sinov: `sinov/v070/sinov_bosqich1b.py` — 2 700 generator topshirig'ida kino xatosiz va oxirgi sahna = javob; maxsus holatlar; oqim; 390 px.
+
+## 🎨 Realistik dizayn qatlami (06.11; u 4 marta: «juda bolalarcha, realistik qil»)
+- Shrift: Baloo 2 (yumaloq) → **Inter** (matn) + **Exo 2** (savol, javob variantlari, raqamlar, kombo). Google Fonts, `sw.js` keshlaydi.
+- `</style>` oxiridagi qatlam: tugmalar — gradient + yumshoq chuqur soya (o'yinchoq «zinapoya» soyasi yo'q), radius 14; javob kartalari — oq-kumush gradient, ingichka chegara; `.bubble` — shisha status kartasi (dumsiz); `.ib`/`.pill`/`.card`/`.stats` — shisha; orol foni — tungi binafsha (konfet-pushti emas). Mantiq o'zgarmagan.
+- Keyingi dizayn ishlarida ham shu yo'nalish: realistik, multfilm emas, animatsiyali.
 
 ## KEYINGI (g'oyalar, foydalanuvchi tasdig'isiz qilinmaydi)
 - ⚔️ Jonli duel (ikki oila, videoqo'ng'iroqda) — 0.6.0 ga kirmadi.
