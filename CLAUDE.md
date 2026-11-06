@@ -114,7 +114,7 @@ Pedagogik qoidalar: sovg'a — muntazamlik uchun (tezlik uchun emas), oila umumi
 Tartib (foydalanuvchi qarori, 05.11; 06.11 — rasmli dars bozordan oldinga):
 1. [x] 🗺️ Sarguzasht xaritasi + 💖 «katta qiz» uslubi + 4 g'oya (06.11) — pastdagi bo'lim, `sinov/v070/sinov_bosqich1.py` (50).
 1b. [x] 🖼️ RASMLI KICHIK DARS + 🎨 realistik dizayn qatlami (06.11) — pastdagi bo'limlar, `sinov/v070/sinov_bosqich1b.py`.
-1c. 🎮 O'YINLAR ZALI (06.11, u «o'zing to'g'ri bilganingni qil PY» dedi — Claude tanlovi) — pastdagi bo'lim.
+1c. [x] 🎮 O'YINLAR ZALI (06.11, u «o'zing to'g'ri bilganingni qil PY» dedi — Claude tanlovi) — pastdagi bo'lim, `sinov/v070/sinov_bosqich1c.py`.
 2. 🧺 Oila bozori — xaritadan KEYIN (pastdagi bo'lim).
 3. 🌍 Kun kashfiyoti · 📖 o'qish tezligi · 🕌 arab ra (tafxim/tarqiq) va vaqf.
 4. 🎙️ Ota-ona ovozi.
@@ -165,10 +165,17 @@ Tartib (foydalanuvchi qarori, 05.11; 06.11 — rasmli dars bozordan oldinga):
 - 🔤 Bilgan harflari testi (ota-ona → bola sahifasi, faqat maktabgacha; `#ota-harf-<id>`, `harfTest`): joriy harfdan boshlab, kattalar ✅/❌ bosadi, 2 ketma-ket ❌ yoki 3 daqiqa → birinchi ❌ gacha bo'lganlar ochiladi (takrorga qo'shiladi), log `{t:'harfTest'}`.
 - Dars egizagi o'sha harf va formatda (`twinItem` → `fmt`). Sinov ekrani formati bilan: `#sinov-H0.1-3-ovchi`.
 
-## 🎮 O'yinlar zali — QAROR (06.11: u «o'zing to'g'ri bilganingni qil PY»; Claude tanlovi xabar qilingan)
-- Yangi (maktabgacha uchun asosan): 🏁 Turbo gonka (barmoq bilan boshqarish, raqam/rang darvozalari, nitro, 👻 arvoh mashina — o'z rekordi) · 🚦 Svetofor (yashil — gaz, qizil — tormoz; tezlashadi) · 🧱 Devor sindirish (to'g'ri javob → tezlik → krash) · 🃏 Garaj xotirasi (juftlar). Parkovka va raqamli trek KIRMAYDI (poyga va kod-yo'l bilan takror).
-- Mavjud poyga/pazl/ko'zgu ham zalga. Bola o'zi tanlaydi; har o'yinda shaxsiy 🏆 rekord + guvohnoma; oila rekordlar taxtasi yosh bo'yicha alohida.
-- Zal missiya bajarilgandan KEYIN ochiladi, kuniga ≤ 10 daq (ota-ona sozlamasida o'zgaradi). Dizayn realistik + animatsiyali.
+## 🎮 O'yinlar zali — BAJARILDI (06.11, tarmoq `v0.7.0`; u «o'zing to'g'ri bilganingni qil PY», «nima qaror kerak bo'lsa o'zing qil»)
+- Modul `A.zal` (alohida `<script>`, 🔧 garajdan keyin, 💰 so'mdan oldin). Yo'l: `#zal`, `#zal-<tur>`, `#zal-rekord`, `#zal-guv` (router; kun chegarasi/uyqu tekshiruvida `zal` ham bor). `CUR = {k:'zal', fan:'zal'}` — faol vaqt va kun chegarasiga sanaladi; `FAN.zal` 🕹️; tanaffus varag'i zalda chiqmaydi; bulut `FAOL` ga `zal-` qo'shildi.
+- Ochilish: bugungi missiya bajarilgan (`agg.missiya` yoki `b.missiya.done`). Kuniga `sozlama.zal` daqiqa (standart 10; 0 — yopiq; ⚙️ `#zl`: 0/5/10/15/20/30). Hisob `b.zal.sek[kun]` (faqat ekran ko'rinib turganda, 0,5 s tick). Vaqt tugasa joriy o'yinga 75 s (tez — 2,5 s) imtiyoz, keyin majburiy yakun. Uyda `A.zal.tugma(b)` (🔒 / ⏱ N daq, pulse / «bugun tugadi»).
+- O'yinlar (`OY`, `TARTIB`): 🏁 `turbo` · 🚦 `svetofor` · 🧱 `devor` · 🃏 `xotira` (yangi, `GAME`) + 🏎️ `poyga`, 🧩 `pazl`, 🎨 `kozgu` — `A.oyin.zalRun(b, tur, sek, done)` (90/150/150 s; zalda «↩ Zalga», `{t:'oyin'}` logi YOZILMAYDI). Rekord yo'nalishi `yon`: turbo (s) va xotira (yurish) — kam yaxshi; qolgani — ko'p.
+- 🏁 Turbo: canvas pseudo-3D yo'l (garaj — tungi shahar, orol — binafsha shom), 10 darvoza (tez — 3), har birida 3 panel; barmoq bilan sudrash/bosish (`px` −1…1, yo'lak = ⅓ chegaralar). To'g'ri — nitro 2,2 s (×1,75), xato — sekinlash 1,4 s. Natija — marra vaqti. 👻 Arvoh: rekord poygasi `b.zal.arvoh = {n, g, s:[[m, x·100]…]}` (0,25 s), shaffof mashina + «👻 ±s» farqi; faqat o'sha `n` va yosh guruhi bo'lsa. Mashina — orqadan chizilgan (`carRear`), rangi `A.carRang(b)`.
+- `misol(g, lv)` (turbo + devor): g0 — rang → nuqta↔raqam (5, keyin 9 gacha); g1 — 10 → 20 gacha ±; g2 — 100 gacha ±, ×, :. Har doim 3 xil variant, manfiy yo'q (sinovda 8 100 ta tekshirildi).
+- 🚦 Svetofor: 60 s (tez — 6), GAZ/TORMOZ pedallari (bosib turish), qizilda `GR` (g0 0,8 s, boshqalar 0,5 s) dan keyin yursa 🚨 jarima (❤️×3), har chorrahada tezroq (`0,93^cyc`), ⚡ tez start +5 m. Natija — metr.
+- 🧱 Devor: har devorga 4 savol (tez — 2), to'g'ri → +⌈kerak/3⌉+1 km/soat, xato −8; keyin `FX.bigScene('devor')` ≤4,3 s: yetsa devor sochiladi (kerak 40 + 15·devor, qatorlar 5+devor), yetmasa «chidadi», urinish −1 (2 ta). Natija — sindirilgan devorlar (≤12).
+- 🃏 Xotira: g0 6 juft (3×4), g1 8 (4×4), g2 10 (4×5); kartalar — `ART.icon` detallari, orqasi karbon (garaj) / kristall (orol), 3D aylanish. Natija — yurish (rekord `n` = juftlar soni bilan).
+- Rekord: `b.zal.rek[tur] = {v, n, sana, ts, gl}`; yangi rekord → 📜 guvohnoma (`guvSvg`, oltin ramka, muhr) natija ekranida + `b.zal.guv` (oxirgi 12); «💾 Saqlash» — PNG 1200×840 (`navigator.share` fayl bilan, bo'lmasa yuklab olish). `#zal-rekord` — oila rekordlari, har o'yinda yosh guruhi alohida (g0 / g1 / g2+). Boshqa oilalar (reyting guruhi) bilan rekord almashish YO'Q — `firestore.rules` o'zgarmasin deb (keyingi g'oya [?]).
+- Yulduz va so'm bermaydi. Log `{t:'zal', tur, sek, v, rek, erta}`. Sinov: `?tez=1` da `window.__bjZal()` → seans (`game.state()`, turbo `setLane`, svetofor `gas/brake`, devor `javob`, xotira `flip`).
 
 ## 🎬 Rasmli kichik dars — BAJARILDI (06.11; sabab: bolalar matnli darsni o'zi tushunmayapti)
 - Kid modulda `kino(b, it)` → sahnalar `[{cap, gr:[[obj]], plus, f, html, top, bar, juft, bus}]` yoki null; `kinoPlay(host, sc, {mini, done, tushundim, qolda})` — sahnalar o'zi oqadi (`sahnaVaqt`), ⏮/◀/▶, oxirgisida «✓ Tushundim». `A.kino`, `A.kinoPlay`.
