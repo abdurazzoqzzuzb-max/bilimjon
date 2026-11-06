@@ -9,7 +9,7 @@ Yangi chat shu fayldan davom etadi. Javoblar o'zbekcha. Repo PUBLIC: bu yerga is
 - Hamma oilalar uchun bitta umumiy versiya. Yangilanish telefonga o'zi keladi (ilovani yopib qayta ochganda), natijalar telefonda (localStorage) qoladi; ☁️ akkaunt ulangan oilada Firestore'da ham.
 
 ## Versiya
-- Hozir: **0.6.0** (05.11.2026, saytda — foydalanuvchi «chiqar» dedi).
+- Hozir: **0.7.0** («v7», 06.11.2026 — foydalanuvchi «chiqar» dedi). 🧪 Sinov rejimi: `…/bilimjon/beta/` (main'dagi `beta/` papkasi, `python3 sinov/beta/beta_yig.py <tarmoq> beta`; xotira `bj_beta_*`, kirish — asosiy ilovaning admin PIN'i, bulut o'chiq). Keyingi versiyalar avval beta'ga, u sinagach «chiqar».
 - Har chiqarishda ikkalasi birga oshiriladi: `index.html` → `VER = 'x.y.z'`, `sw.js` → `const V = 'bj-vx.y.z'`.
 - Ekranda oddiy nom (foydalanuvchi so'rovi, 05.11): `A.VERK` — 0.6.0 → «v6», 0.6.1 → «v6.1» (`A.verBadge()`), uy va bola tanlash ekranida tepada ism ostida; ota-ona panelida «Versiya 6». Keyingi katta versiya — 0.7.0 → «v7».
 

@@ -504,6 +504,9 @@ body:not(.th-garaj):not(.th-orol) .zbig{color:#B9800F;background:none}
 .vqv:not(.oyt) .vqb{min-width:96px;height:96px;border-radius:24px}.vqv:not(.oyt) .vqb i{font-size:2.6rem}.vqv.oyt .vqb{min-width:40px;height:40px;border-radius:10px}.vqv.oyt .vqb i{font-size:1.15rem}
 .vqb.vq-lozim{background:linear-gradient(180deg,#E53935,#8E0000)}.vqb.vq-la{background:linear-gradient(180deg,#546E7A,#263238)}.vqb.vq-muonaqa{background:linear-gradient(180deg,#8E24AA,#4A148C)}.vqb.vq-jaiz{background:linear-gradient(180deg,#43A047,#1B5E20)}
 .vqb.vq-oyat{border-radius:50%!important;background:radial-gradient(circle,#FFF8E1 52%,#C9A227 54%,#C9A227 60%,#FFF8E1 62%,#FFF8E1 70%,#8D6E1F 72%);color:#5D4300;box-shadow:0 6px 16px -8px rgba(0,0,0,.5)}
+/* 🧪 sinov rejimi */
+.betab{position:fixed;left:8px;bottom:8px;z-index:9999;border:0;border-radius:999px;padding:5px 11px;font:900 .74rem/1.2 system-ui,sans-serif;color:#fff;background:linear-gradient(180deg,#FF9100,#E65100);box-shadow:0 6px 16px -6px rgba(230,81,0,.9);opacity:.94}
+.betag{text-align:center}.betag .btn{width:100%;margin-top:8px}body.beta .wrap{padding-bottom:44px}
 </style>
 </head>
 <body class="th-neutral">
@@ -2490,7 +2493,7 @@ BJ.vis = vis;
 (function (G) {
 'use strict';
 const BJ = G.BJ, A = BJ.A = {}, gen = BJ.gen, B = BJ.bank;
-A.VER = '0.6.0';
+A.VER = '0.7.0';
 /* Oddiy versiya nomi (foydalanuvchi so'rovi, 05.11): 0.6.0 → «6», 0.6.1 → «6.1», 1.2.0 → «1.2». Ekranda shu ko'rinadi, ichkarida A.VER qoladi. */
 A.VERK = (() => { const p = A.VER.split('.').map(Number); return p[0] ? p[0] + '.' + p[1] : p[1] + (p[2] ? '.' + p[2] : ''); })();
 A.verBadge = () => `<span class="verb" title="Versiya ${A.VER}">v${A.VERK}</span>`;
@@ -2529,7 +2532,9 @@ const XATO = { birga_xato: "1 ga adashdi", xona_almashdi: 'xonalar almashdi (47�
 const TUR_IC = { arharf: '🔤', daftar: '📓', tanla: '👆', yoz: '⌨️', tartib: '🔢', farq: '🔍', labirint: '🧭', sudoku: '🔲', xotira: '🃏', iz: '✍️', yigish: '🧩', oqish: '⏱', matn: '📄', kodyol: '🤖', ovchi: '🎯' };
 Object.assign(A, { FAN, ZANJIR, BOSH, DARAJA, gl, BLOK, MANT_KUN, UZUN, XATO, TUR_IC });
 /* ================= STORE ================= */
-const KEY = 'bj_state_v1'; /* HECH QACHON o'zgarmaydi: yangi versiya eski holatni migrate() bilan yangilaydi */
+/* 🧪 0.7.0: ota-ona SINOV rejimi — …/bilimjon/beta/ manzilida ochilsa, xotira alohida (bj_beta_*), asosiy ilovaga tegmaydi */
+const BETA = A.BETA = typeof location !== 'undefined' && /\/beta\/(index\.html)?$/.test(location.pathname);
+const KEY = BETA ? 'bj_beta_state_v1' : 'bj_state_v1'; /* asosiy kalit HECH QACHON o'zgarmaydi: yangi versiya eski holatni migrate() bilan yangilaydi */
 const SV = 1;
 function defaults() { return { v: SV, oila: null, pin: null, pinOta: null, sozlama: { ovoz: 0.8, kamEffekt: 'auto', tanaffus: 20, oyinHar: 5, oyinDaq: 3, uyqu: '21:00', reyting: true, tjTasdiq: {}, sandiq: { bronza: 40, kumush: 90, oltin: 150, olmos: 220 }, arTasdiq: {}, alifTasdiq: false, pul: true, byudjet: 50000, kassa: true, zal: 10, bozor: true, bozorXoh: true, kashfUy: true }, bolalar: {}, tartib: [], joriy: null, duel: {}, oilaTel: {}, sovga: [], dokon: [], bozor: null, qurilma: null, lastBackup: null, seenVer: null, appVer: null }; }
 let S = load(); A.storageOK = true;
@@ -2551,7 +2556,7 @@ function save(now) { clearTimeout(saveT); const f = () => { try { localStorage.s
 try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {}); } catch (e) {}
 A.S = () => S; A.setS = s => { S = migrate(s); save(true); }; A.save = save; A.migrate = migrate; A.KEY = KEY; A.pinHash = pinHash;
 /* ================= LOG (har javob, 6.1) ================= */
-const LOGP = 'bj_log_v1|';
+const LOGP = BETA ? 'bj_beta_log_v1|' : 'bj_log_v1|';
 const logKey = (id, k) => LOGP + id + '|' + k;
 const logCache = {};
 function readLog(id, k) { const key = logKey(id, k); if (logCache[key]) return logCache[key]; let a = []; try { a = JSON.parse(localStorage.getItem(key) || '[]'); } catch (e) {} logCache[key] = a; return a; }
@@ -5894,7 +5899,7 @@ const { $, $$, esc, toast, sheet, closeSheets } = A;
 const S = () => A.S();
 const FBV = '13.2.0', CDN = 'https://www.gstatic.com/firebasejs/' + FBV + '/';
 const CFG = { apiKey: 'AIzaSyCPmq6Bx4R5TQSaCbj_zxCBEmpX6VnvTYs', authDomain: 'bilimjon-4c008.firebaseapp.com', projectId: 'bilimjon-4c008', storageBucket: 'bilimjon-4c008.firebasestorage.app', messagingSenderId: '443794699565', appId: '1:443794699565:web:cd88f4f4ada41ba115cfa4' };
-const LK = 'bj_bulut_v1', TICK = 6000, KOD_ALF = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+const LK = A.BETA ? 'bj_beta_bulut_v1' : 'bj_bulut_v1', TICK = 6000, KOD_ALF = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 const MAHALLIY = ['bolalar', 'joriy', 'qurilma', 'lastBackup', 'seenVer', 'appVer'];
 const FAOL = /^(missiya|arena|natija|mashq|vazifa-|sinov-|dunyo|zal-|bozor)/;
 const logV = {};
@@ -6138,6 +6143,10 @@ A.guruhBind = function (redraw) {
 };
 /* ---------- ISHGA TUSHIRISH: faqat akkaunt ulangan telefonda SDK yuklanadi ---------- */
 A.bulutStart = function () { if (L && L.uid) yukla().catch(() => {}); };
+if (A.BETA) { /* 🧪 sinov rejimi: bulutga hech narsa yozilmaydi va o'qilmaydi */
+  A.bulutStart = () => {}; A.guruhHTML = () => '';
+  A.bulutPanel = function (top, bindTop) { A.app.innerHTML = `<div class="wrap ota">${top ? top('☁️ Oila akkaunti', 'ota') : '<div class="top"><button class="ib" data-bk aria-label="Orqaga">←</button><div class="ttl">☁️ Oila akkaunti</div></div>'}<div class="card"><h2>🧪 Sinov rejimi</h2><p>Bu — sinov nusxasi. Bulut (oila akkaunti, reyting guruhi) bu yerda o'chiq: oila ma'lumotiga hech narsa yozilmaydi.</p></div></div>`; if (bindTop) bindTop(); const bk = A.$('[data-bk]'); if (bk) bk.onclick = () => A.go('uy'); };
+}
 A.bulutHolat = () => ({ ulangan: !!user, email: user && user.email, oxirgi: L && L.oxirgi, xato, yuklandi: !!fb, band });
 BJ.bulut = { yukla, tick, logOl, holat: A.bulutHolat };
 })(window);
@@ -6543,7 +6552,32 @@ function backupPanel() {
     sheet(`<h2>📂 Tiklash</h2><p>Fayl: ${esc(o.saved || '')}, bolalar: ${Object.keys(o.state.bolalar || {}).length}. Hozirgi ma'lumot almashtiriladi.</p><div class="row"><button class="btn" data-ok>✓ Tiklash</button><button class="btn ghost" data-x>Bekor</button></div>`, el => { $('[data-ok]', el).onclick = () => { Object.keys(o.logs || {}).forEach(k => { try { localStorage.setItem(k, JSON.stringify(o.logs[k])); } catch (e) {} }); A.setS(o.state); closeSheets(); toast('Tiklandi ✓'); location.hash = ''; location.reload(); }; }); }; r.readAsText(f); }; inp.click(); };
 }
 /* ================= ISHGA TUSHIRISH ================= */
+/* 🧪 Sinov rejimi: kirish — shu telefondagi asosiy ilovaning admin PIN'i (asosiy ilova sozlanmagan telefonda ochilmaydi) */
+const PROD_KEY = 'bj_state_v1', PROD_LOG = 'bj_log_v1|', BLOG = 'bj_beta_log_v1|', BOK = 'bj_beta_ok';
+function prodS() { try { return JSON.parse(localStorage.getItem(PROD_KEY) || 'null'); } catch (e) { return null; } }
+function betaOk() { try { return +localStorage.getItem(BOK) > Date.now() - 12 * 3600e3; } catch (e) { return false; } }
+function kalitlar(p) { const out = []; try { for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k && k.indexOf(p) === 0) out.push(k); } } catch (e) {} return out; }
+function betaNusxa() { const p = localStorage.getItem(PROD_KEY); if (!p) return false; try { A.flushLog(); } catch (e) {} kalitlar(BLOG).forEach(k => localStorage.removeItem(k)); kalitlar(PROD_LOG).forEach(k => { try { localStorage.setItem(BLOG + k.slice(PROD_LOG.length), localStorage.getItem(k)); } catch (e) {} }); A.setS(JSON.parse(p)); /* xotiradagi holat ham almashadi — sahifa yopilayotganda eski holat qayta yozilmasin */ localStorage.setItem('bj_beta_nusxa', String(Date.now())); return true; }
+function betaTozala() { try { A.flushLog(); } catch (e) {} kalitlar(BLOG).forEach(k => localStorage.removeItem(k)); A.setS(null); localStorage.removeItem('bj_beta_nusxa'); }
+A.betaNusxa = betaNusxa;
+function betaGate() {
+  const p = prodS();
+  app.innerHTML = `<div class="wrap onb"><div class="card betag"><h1>🧪 Sinov rejimi</h1><p>Bilimjonning keyingi versiyasi — <b>v${A.VERK}</b>. Bolalar ilovasiga tegmaydi: ma'lumot alohida saqlanadi, bulutga hech narsa yozilmaydi.</p>
+  ${p && p.pin ? `<label class="lb">Asosiy ilovadagi admin PIN</label><input id="bpin" class="inp mono" type="password" inputmode="numeric" maxlength="4" autocomplete="off"><button class="btn big" data-ok>Kirish</button>` : `<div class="note">Bu telefonda asosiy Bilimjon (admin PIN bilan) sozlanmagan. Sinov rejimi faqat ota-ona telefonida ochiladi.</div>`}</div></div>`;
+  const b = $('[data-ok]'); if (!b) return;
+  b.onclick = () => { const v = $('#bpin').value.trim(); if (A.fnv('bilimjon|' + v + '|' + (p.oila && p.oila.kod || '')) !== p.pin) return toast("PIN noto'g'ri"); localStorage.setItem(BOK, String(Date.now()));
+    if (S().oila) return location.reload();
+    app.innerHTML = `<div class="wrap onb"><div class="card betag"><h1>🧪 Qaysi ma'lumot bilan sinaymiz?</h1><button class="btn big" data-nus>📥 Bolalar ma'lumotidan nusxa (tavsiya)</button><button class="btn ghost" data-bos>🆕 Bo'sh boshlash</button><p class="sm mut">Nusxa — bugungi holatning surati. Sinovda nima qilsangiz ham, bolalarning asl ilovasi o'zgarmaydi.</p></div></div>`;
+    $('[data-nus]').onclick = () => { betaNusxa(); location.reload(); }; $('[data-bos]').onclick = () => location.reload(); };
+}
+function betaBelgi() {
+  document.title = 'Bilimjon 🧪'; document.body.classList.add('beta');
+  const el = document.createElement('button'); el.className = 'betab'; el.type = 'button'; el.textContent = '🧪 SINOV · v' + A.VERK; document.body.appendChild(el);
+  el.onclick = () => sheet(`<h2>🧪 Sinov rejimi · v${A.VERK}</h2><p class="sm">Nusxa olingan: ${localStorage.getItem('bj_beta_nusxa') ? new Date(+localStorage.getItem('bj_beta_nusxa')).toLocaleString() : '—'}</p><button class="btn" data-nus>📥 Asosiy ilovadan qayta nusxa</button><button class="btn ghost" data-toz>🗑 Sinov ma'lumotini tozalash</button><button class="btn ghost" data-chiq>🔒 Sinovdan chiqish</button>`, sh => {
+    $('[data-nus]', sh).onclick = () => { betaNusxa(); location.reload(); }; $('[data-toz]', sh).onclick = () => { betaTozala(); location.reload(); }; $('[data-chiq]', sh).onclick = () => { localStorage.removeItem(BOK); location.reload(); }; });
+}
 function start() {
+  if (A.BETA) { if (!betaOk()) return betaGate(); betaBelgi(); }
   const s = S(), oldVer = s.appVer; if (s.appVer !== A.VER) { s.appVer = A.VER; A.save(true); }
   try { A.ensurePlans(); A.pruneLogs(); } catch (e) { console.warn(e); }
   A.applyFX(); FX.ensure();
@@ -6551,7 +6585,7 @@ function start() {
   BJ.debug = { state: () => A.S(), fx: FX.stats, A, gen: BJ.gen };
   A.render();
   try { if (A.bulutStart) A.bulutStart(); } catch (e) { console.warn(e); }
-  if (oldVer && oldVer !== A.VER) setTimeout(() => toast('🆕 Bilimjon ' + A.VER + ": ☁️ Oila akkaunti (email + parol bilan) — ikki telefonda bir joydan davom etish, 🏆 reyting guruhi!"), 900);
+  if (oldVer && oldVer !== A.VER) setTimeout(() => toast('🆕 Bilimjon v7: 🗺️ sarguzasht xaritasi, 🎮 o\'yinlar zali, 🧺 oila bozori, 🌍 30 ta kashfiyot, 📖 uch marta o\'qish!'), 900);
 }
 start();
 })(window);
