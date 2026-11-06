@@ -117,9 +117,29 @@ Tartib (foydalanuvchi qarori, 05.11; 06.11 — rasmli dars bozordan oldinga):
 1b. [x] 🖼️ RASMLI KICHIK DARS + 🎨 realistik dizayn qatlami (06.11) — pastdagi bo'limlar, `sinov/v070/sinov_bosqich1b.py`.
 1c. [x] 🎮 O'YINLAR ZALI (06.11, u «o'zing to'g'ri bilganingni qil PY» dedi — Claude tanlovi) — pastdagi bo'lim, `sinov/v070/sinov_bosqich1c.py`.
 2. [x] 🧺 Oila bozori (06.11) — pastdagi bo'lim, `sinov/v070/sinov_bosqich2.py` (101).
-3. 🌍 Kun kashfiyoti · 📖 o'qish tezligi · 🕌 arab ra (tafxim/tarqiq) va vaqf.
+3. [ ] 🌍 Kun kashfiyoti · 📖 o'qish tezligi · 🕌 arab ra (tafxim/tarqiq) va vaqf — LOYIHA TAYYOR (pastdagi bo'lim, 06.11), KOD YO'Q.
 4. 🎙️ Ota-ona ovozi.
 5. To'liq sinov → VER 0.7.0 → u «chiqar» desa main.
+
+## 3-bosqich — LOYIHA (06.11, Claude qarorlari; kod yozilmagan — Abdurazzoq profili limiti 97% da to'xtatildi)
+Kod joylari: bank `kashf:` va `matn:` (~657–703), `KASHF` gen (~1532), `kashfOfDay`/`buildMission` (~2369–2390), `stepRun`/`nextItem` (~2741–2760), `stepKashfCard` (~3420), `stepOqish`/`oqishScreen` (~3434–3452), `ota-oqish` (~5893), tajvid (~1642–1765). Sinov: `sinov/v070/sinov_bosqich3.py`.
+**🌍 Kashfiyot 2.0** (hozir 6 mavzu, 6 kunda takrorlanadi):
+- Mavzuga `kat` (kosmos · osmon · suv · tabiat · hayvon · tana · texnika · yer) va `uy: {t, s:[savol, v1, v2, v3], a? (kutilgan javob indeksi; yo'q bo'lsa hammasi qabul — kuzatuv), iz}`.
+- +24 mavzu k7–k30 (3 chuqurlik, har birida 1 savol + `en`): yurak, soyalar, asalari, muz/tuz, o'simlik/fotosintez, Oy, chumoli, tishlar, vulqon (magma/lava), chaqmoq, tuya (baqtriya — Surxondaryo), Quyosh, ko'z/qorachiq, kit, tovush/aks-sado, kuz barglari/halqalar, pingvin, suyaklar, telefon/radio to'lqin, qor parchasi, dinozavr (Temurlengiya — Qizilqum), shamol, non/xamirturush, sayyoralar. Raqamlar ehtiyotkor: kattalar yuragi 60–100/daq, nur 8 daq, Yupiter >1 000 Yer, ko'k kit 30 m.
+- Uy tajribalari (olov, pichoq, elektr YO'Q; qaychi/teshish — kattalar): muz+tuz, qo'l chiroq soyasi, soda+sirka (kattalar bilan), shar+qog'oz (statik), ip telefon, oq/qora stakan quyoshda, ko'zguda qorachiq, un ustida barmoq/kaft izi, loviya deraza/shkaf, barg yig'ish, qog'oz qor parchasi, parrak, non g'ovaklari, sayyoralar chizish, barmoq bo'g'imlari, 20 sakrashdan keyin yurak, oltiburchak katak, chumoli chizish (6 oyoq), Oy shaklini chizish, tish 2 daq, qo'lqop+muzli suv 5 s, 30 qadam (kit), kattalar bolaligidagi telefon, plastilin iz. k1–k6 ga ham uy: mashina silliq/gilam, qog'oz samolyot, magnit 5 narsa, likopchadagi suv bug'lanadi, stakan suv kamalagi, chiroq+to'p kun-tun.
+- Oqim: karta realistik (`kat` bo'yicha SVG sahna-fon + katta emoji shisha medalyonda, ajdar YO'Q) → 1 savol (`st.savollar = 1`, `kashfSavol = D % s.length`) → «🏠 Uyda sinab ko'r» kartasi («📌 Eslab qoldim») → `b.kashfUy[] {sana, id, holat}`. Uyda ≤7 kunlik bajarilmaganlari: «✅ Bajardim» → kuzatuv savoli + izoh → +2 ⭐, log `{t:'kashf', hodisa:'uy'}`. `sozlama.kashfUy` (standart true, ⚙️ da). Hisobotda haftadagi uy topshiriqlari soni.
+- XATO tuzatish: yakshanba `viktorina` `B.kashf[i % len]` → doim k1–k6; o'rniga shu haftaning mavzulari (`kashfOfDay` D−6…D−1).
+**📖 Uch marta o'qi** (missiyadagi `oqish` qadami, g1+; g0 — yo'q):
+- Bitta matn 3 marta; bola o'zi: «▶ Boshla» → ovoz chiqarib butun matn → «✓ O'qib bo'ldim»; so'z/daq = so'z·60/sek. Ishonchlilik: g1 >130, g2 >170 → «Har so'zni ovoz chiqarib o'qi», qayta. Ixtiyoriy «👨 Kattalar tinglaydi» (`b.uch.kat`): xato so'zlarni bosish → WCPM; 1-o'qish `b.wcpm` ga ham (grafik uzluksiz).
+- Natija: 3 ustun (gradient, o'sish animatsiyasi), «+N%», shaxsiy rekord; keyin 1 tushunish savoli (matnning `s` idan). `b.uch = {kat, tarix:[{sana, matn, w:[a,b,c], sav}]}` (≤30), log `{t:'oqish', tur:'uch'}`. `stepTitle` → «📖 Uch marta o'qish». Ota-ona `ota-oqish`: 1-o'qish (sovuq) grafigi + kunlik o'sish.
+- `B.matn`: hozir d1×3, d2×3 → +10 d1 (35–55 so'z), +10 d2 (70–100 so'z), har biriga 2–3 savol.
+- G'oya [?] (u tasdiqlasa): g0 uchun arabcha takroriy o'qish (tasdiqlangan iboralardan).
+**🕌 TJ.7 Ra** (tafxim — qalin / tarqiq — ingichka); dvigatel `raHukm(w, {v, arid})`, sinov ma'lumot = dvigatel:
+- ra fatha/damma (tanvin ham) → tafxim; kasra → tarqiq; sukun: oldingi fatha/damma → tafxim; oldingi asl kasra → keyin isti'lo harfi (خصضغطقظ) bo'lsa tafxim, aks holda tarqiq; arid kasra (hamzai vasl: ارْجِعِي) → tafxim. Vaqfda: oldingi harfga (u sukunli bo'lsa — undan oldingisiga) qaraladi; ي sokin/madd → tarqiq; ا/و madd → tafxim; shaddali ra — oldingi harf.
+- Misollar (har so'zda bitta ر): رَبِّ، رُسُلٌ، رِجَالٌ، مَرْيَمُ، الْأَرْضِ، الْقُرْآنُ، يُرْزَقُونَ، فِرْعَوْنَ، مِرْيَةٍ، شِرْعَةً، قِرْطَاسٍ، مِرْصَادًا، فِرْقَةٍ، ارْجِعِي · vaqfda: وَالْفَجْرِ، الْقَدْرِ، وَالْعَصْرِ، خُسْرٍ، ذِكْرٌ، خَيْرٌ، قَدِيرٌ، الْبَصِيرُ، النَّارِ، غَفُورٌ. Ikkalasi joiz bo'lganlar QO'SHILMAYDI: مِصْرَ، الْقِطْرِ، يَسْرِ، فِرْقٍ.
+- Savollar: «ra qanday o'qiladi?» (qalin/ingichka), q2+ «nega?» (sabab variantlari), g0 — arabcha variantlar. DARS + QADAM (ra ni top → harakati/oldingi harf → hukm).
+**🕌 TJ.8 Vaqf belgilari** (Madina mushafi, Hafs): مـ lozim (to'xtash shart) · لا (to'xtalmaydi) · ج (ikkalasi teng) · صلى (davom afzal) · قلى (to'xtash afzal) · ∴ ∴ mu'onaqa (ikkisidan birida) · ۝ oyat oxiri. Belgi alohida nishon bo'lib chiziladi (Unicode belgilar shriftga bog'liq). Oyatdan faqat aniq misollar: Baqara 2 «لَا رَيْبَ ۛ فِيهِ ۛ», An'om 36 «يَسْمَعُونَ ۘ وَالْمَوْتَىٰ», Yosin 76 «قَوْلُهُمْ ۘ إِنَّا». Tasdiqda ota-onaga: «Qur'oningizda boshqa belgilar (ط ، ز ، ص) bo'lsa — ayting» [?].
+- `TJ` ro'yxati, `TJ_MISOL`, `DARS` ga TJ.7/TJ.8 (`BOLIM.tajvid` va tasdiq paneli o'zi oladi). Sinov: har harfda ≤1 harakat, ra hukmi dvigatel bilan, 2 tugun × 3 qiyinlik × g0/katta `gen.valid`.
 
 ## 🗺️ Sarguzasht xaritasi — BAJARILDI (06.11, tarmoq `v0.7.0`; qarorlar 05–06.11: 1BC, 2A, 3A=A, qutqarish 6 savol ≤2 bekat, qutqarilgan kun 5-kun bonusiga sanaladi)
 - Modul `A.xarita` (alohida `<script>`, 💰 so'mdan keyin, ☁️ bulutdan oldin). `b.xarita = {qut{sana:{ts,n,ok,kun}}, kubok{wk}, dev{wk:{ok,need,yutdi,qalqon}}, yurdi, ochildi}`; `b.uslub` ('' | 'katta'). Firestore qoidalari o'zgarmadi (bola JSON ichida).
