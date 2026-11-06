@@ -108,6 +108,7 @@ Pedagogik qoidalar: sovg'a — muntazamlik uchun (tezlik uchun emas), oila umumi
 - [ ] 6. 🎙️ Ota-ona ovozi: MediaRecorder, 3–5 s qisqa yozuv, Firestore'da (Storage — faqat Blaze tarif!), iPhone↔Android ijro sinovi.
 - [x] 5. 💰 So'm iqtisodi — pastdagi bo'lim.
 - [x] 7. To'liq sinov (194), VER 0.6.0, main ga push («chiqar», 05.11).
+- Sinovlar 0.7.0: `sinov/v070/sinov_bosqich1.py` (50), `1b` (31), `1c` (59), `sinov_bosqich2.py` (bozor, 101).
 - Sinovlar: `sinov/v060/sinov_bosqich1.py` (21), `sinov/v060/sinov_bosqich2.py` (13), `sinov/v060/sinov_bosqich3.py` (35), `sinov/v060/sinov_bosqich4.py` (36, harflar), `sinov/v060/sinov_bosqich5.py` (62, so'm + versiya belgisi), `sinov/bulut/sinov_bulut.py` (21), `sinov/bulut/sinov_chekka.py` (10).
 
 ## 0.7.0 — REJA («v7»; tarmoq `v0.7.0`, har bosqich shu tarmoqqa push, saytga faqat «chiqar» bilan)
@@ -115,7 +116,7 @@ Tartib (foydalanuvchi qarori, 05.11; 06.11 — rasmli dars bozordan oldinga):
 1. [x] 🗺️ Sarguzasht xaritasi + 💖 «katta qiz» uslubi + 4 g'oya (06.11) — pastdagi bo'lim, `sinov/v070/sinov_bosqich1.py` (50).
 1b. [x] 🖼️ RASMLI KICHIK DARS + 🎨 realistik dizayn qatlami (06.11) — pastdagi bo'limlar, `sinov/v070/sinov_bosqich1b.py`.
 1c. [x] 🎮 O'YINLAR ZALI (06.11, u «o'zing to'g'ri bilganingni qil PY» dedi — Claude tanlovi) — pastdagi bo'lim, `sinov/v070/sinov_bosqich1c.py`.
-2. 🧺 Oila bozori — xaritadan KEYIN (pastdagi bo'lim).
+2. [x] 🧺 Oila bozori (06.11) — pastdagi bo'lim, `sinov/v070/sinov_bosqich2.py` (101).
 3. 🌍 Kun kashfiyoti · 📖 o'qish tezligi · 🕌 arab ra (tafxim/tarqiq) va vaqf.
 4. 🎙️ Ota-ona ovozi.
 5. To'liq sinov → VER 0.7.0 → u «chiqar» desa main.
@@ -138,7 +139,17 @@ Tartib (foydalanuvchi qarori, 05.11; 06.11 — rasmli dars bozordan oldinga):
 - 2A: yakshanba finali — do'stona «dev» (boss): kuch chizig'i, har to'g'ri javobda kamayadi; savollar shu haftaning qiyin tugunlaridan (`qiyin` < 70%); yutsa — hafta sandig'i (`A.sandiq`) + xaritaga kubok; yutolmasa — jazosiz («dev keyingi hafta qaytadi»). Mavjud yakshanba finali (`buildFinal`) asos.
 - 3A: xarita uy ekranida darhol ko'rinadi (worldScene bilan birga yoki o'rnida — yasashda inline namunada ko'rsatib tanlatiladi); 390 px, tepadagi tugmalar ≤ 390.
 
-## 🧺 Oila bozori — TASDIQLANDI (05.11: 1A — faqat ilova ichida, 2A — cola/chips haftada 1, 3C — xaritadan keyin)
+## 🧺 Oila bozori — BAJARILDI (06.11, tarmoq `v0.7.0`)
+- Modul `A.bozor` (alohida `<script>`, 💰 so'mdan keyin, 🗺️ xaritadan oldin). Yo'l: `#bozor` (router; kun chegarasi/uyqu tekshiruvida, bulut `FAOL` da), ota-ona `#ota-bozor`, `#ota-bozor-yangi`. `CUR = {k:'bozor', fan:'bozor'}`, `FAN.bozor` 🧺.
+- Ma'lumot: `S.bozor = {top:[T], xoh:[{id,k,nom,narx,on}], narx:{kalit:{bir, v:[[narx,haj]…], ts}}}` (oila darajasi → `umumiy()` bilan o'zi sinxron, rasmsiz — hujjat hajmiga deyarli ta'sir yo'q). `T = {id, kim, byu, roy:[{id,k,nom,miq,bir,v:[{l,narx,haj}]}], holat 'yangi'|'jarayon'|'tugadi', kirdi, sav{iid:vi}, son{iid:n}, savol{n,ok,q}, tolandi, sarf, xoh, xohYoq, natija{sarf,xoh,qoldi,tej,oila,sana}, tugadiTs}`. `v.l` — 0 Arzon / 1 O'rta / 2 Qimmat (bo'sh narx tashlanadi, yorliq saqlanadi). Bola: `b.bozor = {tej{wk}, xoh{wk}}`. Sozlama: `sozlama.bozor`, `sozlama.bozorXoh` (standart true). Cheklar arxivi ≤ 12. Firestore qoidalari o'zgarmadi.
+- Oqim: uyda `A.bozor.uyHTML` (faqat faol topshiriq bo'lsa; yangisida pulse) → kirish varag'i (ehtiyoj / xohish) → ro'yxat: narsa → variantlar varag'i (qadoq, narx, `p × narx = jami`) → 🧾 kassa → `A.pul.tolov(b, narx, nom, ok, {h, ajrat, matn})` — **5-parametr: boshqa hamyondan to'lash, bola hamyoniga tegmaydi** (oila hamyoni `oilaAjrat` — ≤ 20 000 lik kupyuralar) → 🍭 xohish javoni (qolgan puldan, haftasiga 1, narxsizi ko'rinmaydi; «Kola = N so'm + M so'mlik tejash mukofotidan voz kechish») → chek (`yakun`): qolgan × 50% → `A.pul.kirim(b, s, 'tejash')`, haftasiga ≤ `A.pul.narxK(b, 5000)`; qolgani oilaga. So'm iqtisodi o'chiq bo'lsa tejash 0.
+- Yosh: g0 — tangalar (💰…💰💰💰), «dona» ni rasmni bosib sanaydi (`sanoqSheet`, ≤12), oshsa kassa ochilmaydi, to'lov avtomatik · g1 — kassada «Oila puli yetadimi?» (savol hisobi), kupyuralar · g2 — `savolJavob(it)`: qadoqlari har xil va aniq bitta eng arzon birlik narxi bo'lsa «🧮 Qaysi biri arzon?» (2-urinishdan keyin javob ko'rsatiladi, bir marta), byudjetdan oshsa kassa yopiq, qaytim savoli.
+- Ota-ona: ⚙️ (bozor, xohish javoni), ➕ shakl (bir nechta bolaga birdan; yosh maslahati; ⚡ namuna ro'yxat `NAMUNA[g]`; 19 ta mahsulot + «Boshqa…»; har narsaga miqdor/birlik va 3 narx + qadoq; `tekshir()` — xato: narx < 2, qadoqqa bo'linmaydi, eng arzoni ham sig'maydi, faol topshiriq bor; ogohlantirish: juda katta byudjet, soni yoshga mos emas, maktabgachaga kg/l), narx xotirasi `S.bozor.narx`, faol topshiriqlar (🗑 bekor), 🧾 cheklar (arzonini nechtasida tanladi, savollar), 🍭 xohish javoni (narx, ko'rinsin, qo'shish: kola, chips, muzqaymoq, shokolad, sharbat, mandarin).
+- Rasmlar: `A.bozor.ICO` — 26 ta realistik SVG (gradient, yorug'lik, soya; multfilm emas): non, sut, tuxum, olma, banan, kartoshka, piyoz, sabzi, pomidor, bodring, guruch, yog', shakar, un, go'sht, qatiq, suv, choy, tuz, kola, chips, muzqaymoq, shokolad, sharbat, mandarin, savat, boshqa. Brend yo'q.
+- Log: `{t:'bozor', hodisa:'boshladi'|'tolov'|'savol'|'xohish'|'tugadi', tid, …}` (tugadi: sarf, xoh, qoldi, tej, arzon, n, savol, ok).
+- Narxlar: ilovada tayyor narx YO'Q — ota-ona kiritadi (Claude so'ralganda internetdan, manba va sana bilan).
+
+## 🧺 Oila bozori — qarorlar (05.11: 1A — faqat ilova ichida, 2A — cola/chips haftada 1, 3C — xaritadan keyin)
 - Maqsad: «ehtiyoj va xohish», byudjet, qaytim, birlik narxi, «har tanlovning narxi bor».
 - Oila puli — ALOHIDA: ota-ona har topshiriqqa byudjet qo'yadi (masalan 50 000). Bola hamyonidan (`b.pul.h`) hech qachon yechilmaydi, aralashmaydi.
 - Ro'yxat (ota-ona tuzadi): narsa, miqdor (qat'iy — 2 kg = 2 kg), har biriga 2–3 variant narx (arzon / o'rta / qimmat). Narxni ota-ona kiritadi (yoki Claude so'ralganda internetdan, manba va sana bilan).
