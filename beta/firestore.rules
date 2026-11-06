@@ -1,0 +1,77 @@
+rules_version = '2';
+// Bilimjon 0.7.1 — Firestore xavfsizlik qoidalari (Firebase konsoli → Firestore → Rules ga qo'yiladi).
+// 🛡️ RUXSAT TIZIMI: yangi oila bulutga faqat admin (Bilimjon egasi) tasdig'i bilan yoza oladi — ruxsat/{uid}.holat == 'ok'.
+// admin() dagi ID — admin akkaunt ID si. Uni QO'LDA yozmang: ilova o'zi qo'yadi (👨‍👩‍👧 → ☁️ Oila akkaunti → 🛡️ → «📋 Qoidalarni nusxalash»).
+// Bu fayl repo'da namuna sifatida turadi. Eski (0.5.0–0.7.0) qoidalar: qoidalar/firestore-0.5.0.rules
+// oila/{uid}/** — faqat shu akkaunt egasi (yozish — ruxsat bilan). guruh/{kod} — faqat a'zo oilalar o'qiydi; har oila faqat o'z bolalarining haftalik xulosasini yozadi.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function kirgan() { return request.auth != null; }
+    function ozi(uid) { return kirgan() && request.auth.uid == uid; }
+    function admin() { return kirgan() && request.auth.uid == '__ADMIN_UID__'; }
+    // admin — hujjat o'qilmaydi (bepul); boshqa oila — o'z ruxsat hujjati (1 o'qish). Hujjat yo'q bo'lsa — rad.
+    function ruxsatli() {
+      return admin() || (kirgan() && get(/databases/$(database)/documents/ruxsat/$(request.auth.uid)).data.holat == 'ok');
+    }
+
+    match /oila/{uid} {
+      allow read: if ozi(uid);
+      allow write: if ozi(uid) && ruxsatli();
+      match /{qism=**} {
+        allow read: if ozi(uid);
+        allow write: if ozi(uid) && ruxsatli();
+      }
+    }
+
+    // 🛡️ ruxsat so'rovlari: oila faqat o'zinikini «kutish» holatida yozadi; holatni faqat admin o'zgartiradi
+    match /ruxsat/{uid} {
+      function sorov() {
+        let d = request.resource.data;
+        return d.keys().hasOnly(['email', 'oila', 'ts', 'holat'])
+          && d.holat == 'kutish'
+          && d.email is string && d.email == request.auth.token.email
+          && d.oila is string && d.oila.size() <= 24
+          && d.ts is int;
+      }
+      allow get: if ozi(uid) || admin();
+      allow list: if admin();
+      allow create: if admin() || (ozi(uid) && sorov());
+      allow update: if admin() || (ozi(uid) && resource.data.holat == 'kutish' && sorov());
+      allow delete: if admin();
+    }
+
+    match /guruh/{kod} {
+      function azomi() {
+        return kirgan() && exists(/databases/$(database)/documents/guruh/$(kod)/oilalar/$(request.auth.uid));
+      }
+      allow get: if azomi();
+      allow create: if kirgan() && ruxsatli() && kod.matches('^[A-Z2-9]{10}$')
+        && request.resource.data.keys().hasOnly(['yaratdi', 'ts'])
+        && request.resource.data.yaratdi == request.auth.uid;
+
+      match /oilalar/{uid} {
+        allow read: if azomi();
+        allow create, update: if ozi(uid) && ruxsatli()
+          && request.resource.data.keys().hasOnly(['ts'])
+          && exists(/databases/$(database)/documents/guruh/$(kod));
+        allow delete: if ozi(uid);
+      }
+
+      match /azo/{bid} {
+        function togri() {
+          let d = request.resource.data;
+          return d.keys().hasOnly(['uid', 'oila', 'av', 'laqab', 'daraja', 'yulduz', 'kun', 'osish', 'detal', 'missiya', 'wk', 'ts'])
+            && d.uid == request.auth.uid
+            && d.laqab is string && d.laqab.size() <= 24
+            && d.oila is string && d.oila.size() <= 24
+            && d.av is string && d.av.size() <= 8
+            && d.yulduz is int && d.kun is int && d.osish is int;
+        }
+        allow read: if azomi();
+        allow create: if azomi() && ruxsatli() && togri();
+        allow update: if azomi() && ruxsatli() && togri() && resource.data.uid == request.auth.uid;
+        allow delete: if kirgan() && resource.data.uid == request.auth.uid;
+      }
+    }
+  }
+}

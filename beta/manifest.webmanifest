@@ -1,0 +1,30 @@
+{
+  "name": "Bilimjon 🧪 Sinov",
+  "short_name": "Bilimjon 🧪",
+  "description": "Oilaviy missiyali o'yin-darslik",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#12161F",
+  "theme_color": "#E65100",
+  "lang": "uz",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
