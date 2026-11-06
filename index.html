@@ -471,6 +471,39 @@ body:not(.th-garaj):not(.th-orol) .zbig{color:#B9800F;background:none}
 .bzfh{display:flex;align-items:center;gap:8px;margin-bottom:4px}.bzfh .sp{flex:1}
 .bzfr{display:grid;grid-template-columns:70px 1fr 96px;align-items:center;gap:6px;margin:3px 0}.bzfr .inp{margin:0;min-width:0;min-height:44px;padding:6px 10px;font-size:1rem}.bzchw{flex-wrap:wrap;overflow:visible}.bzfr label{font-size:.85rem;font-weight:700}.bzfhd small{color:var(--mut);font-size:.75rem}
 .bzxt{border-color:rgba(217,56,56,.4);background:rgba(217,56,56,.08)}
+/* 0.7.0 3-bosqich — 🌍 kashfiyot 2.0 (realistik sahna, shisha medalyon), 🏠 uy tajribasi, 📖 uch marta o'qish, 🕌 vaqf nishonlari */
+.kcard.k2{padding:0 0 16px;overflow:hidden;box-shadow:0 14px 34px -14px rgba(0,0,0,.45)}.kcard.k2>h2,.kcard.k2>p,.kcard.k2>.note,.kcard.k2>.row,.kcard.k2>.btn{margin-left:16px;margin-right:16px}.kcard.k2>.btn.big{width:calc(100% - 32px)}
+.ksc{position:relative;height:178px;overflow:hidden;background:#0B1026}.ksc-svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.kmed{position:absolute;left:50%;top:50%;width:104px;height:104px;margin:-52px 0 0 -52px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.55),rgba(255,255,255,.12) 46%,rgba(255,255,255,.06));border:1.5px solid rgba(255,255,255,.55);box-shadow:0 18px 40px -10px rgba(0,0,0,.6),inset 0 2px 0 rgba(255,255,255,.6),inset 0 -10px 22px rgba(0,0,0,.18);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);animation:kmedf 5s ease-in-out infinite}
+.kmed span{font-size:3.4rem;line-height:1;filter:drop-shadow(0 6px 8px rgba(0,0,0,.45))}@keyframes kmedf{50%{transform:translateY(-5px)}}
+.kkat{position:absolute;left:10px;top:10px;padding:4px 10px;border-radius:999px;font-size:.78rem;font-weight:800;color:#fff;background:rgba(10,14,28,.42);border:1px solid rgba(255,255,255,.28);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);letter-spacing:.02em}
+.kcard.k2 h2{margin-top:14px}.kcard .btn.ghost{color:#172033;border-color:#D5DCE8;background:#F5F7FB}
+.ks-tw{animation:kstw 2.6s ease-in-out infinite}@keyframes kstw{50%{opacity:.15}}
+.ks-uch{animation:ksuch 7s linear infinite;opacity:0}@keyframes ksuch{0%,80%{transform:translate(0,0);opacity:0}84%{opacity:.9}100%{transform:translate(420px,126px);opacity:0}}
+.ks-bul{animation:ksbul 22s ease-in-out infinite alternate}.ks-bul2{animation:ksbul2 30s ease-in-out infinite alternate}@keyframes ksbul{to{translate:16px 0}}@keyframes ksbul2{to{translate:-20px 0}}
+.ks-nur{animation:ksnur 6s ease-in-out infinite}@keyframes ksnur{50%{opacity:.35}}
+.ks-puf{animation:kspuf 7s linear infinite}@keyframes kspuf{from{transform:translateY(0);opacity:0}15%{opacity:1}to{transform:translateY(-150px);opacity:0}}
+.ks-ekg{animation:ksekg 3.2s linear infinite}@keyframes ksekg{to{stroke-dashoffset:-520}}
+.ks-tish{animation:kstish 14s linear infinite}.ks-tish2{animation:kstish 9s linear infinite reverse}@keyframes kstish{to{transform:rotate(360deg)}}
+.ks-lava{animation:kslava 3s ease-in-out infinite}@keyframes kslava{50%{opacity:.7}}.ks-tutun{animation:kstut 9s ease-in-out infinite alternate}@keyframes kstut{to{transform:translate(10px,-8px)}}
+.ksc.low *,.ksc.low .kmed{animation:none!important}@media (prefers-reduced-motion:reduce){.ksc *,.ksc .kmed{animation:none!important}}
+.kuy{text-align:left}.kuyh{display:flex;align-items:center;gap:12px;margin-bottom:6px}.kuyi{width:52px;height:52px;flex:none;border-radius:16px;display:grid;place-items:center;font-size:1.9rem;background:linear-gradient(145deg,#FFF8E1,#FFE0B2);box-shadow:0 8px 18px -8px rgba(230,81,0,.55),inset 0 1px 0 #fff}
+.kuy .btn.ghost{width:100%;margin-top:6px}.kuyc{border:1px solid rgba(255,193,7,.45);background:linear-gradient(160deg,rgba(255,213,79,.14),transparent 60%),var(--card)}.kuyc .btn{width:100%}
+.kuyo{display:grid;gap:8px;margin:10px 0}.kuyo .btn,.uopts .btn{width:100%;text-align:left}.kuyo .btn.togri,.uopts .btn.togri{background:linear-gradient(180deg,#43A047,#2E7D32);color:#fff;border-color:#2E7D32}.kuyo .btn.xato,.uopts .btn.xato{background:linear-gradient(180deg,#E53935,#B71C1C);color:#fff;border-color:#B71C1C}
+.uchc{text-align:center}.uchc h2{margin:6px 0}.uchn{display:flex;justify-content:center;gap:8px;margin-bottom:4px}.uchn i{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:900;font-size:.9rem;border:2px solid var(--line);color:var(--mut)}
+.uchn i.on{border-color:var(--acc);color:var(--acc);box-shadow:0 0 0 4px color-mix(in srgb,var(--acc) 22%,transparent)}.uchn i.ok{background:linear-gradient(180deg,#43A047,#2E7D32);border-color:#2E7D32;color:#fff}
+.uchnom{font-weight:800;color:var(--mut);margin-top:6px}.oqt.uch{text-align:left;font-size:1.3rem;line-height:1.8;box-shadow:inset 0 0 0 1px #E1E6EF,0 10px 24px -14px rgba(0,0,0,.4)}.oqiyapti .oqt.uch{font-size:1.38rem}
+.uchtm{font-size:2.2rem;font-weight:900;letter-spacing:.04em;margin:4px 0;font-family:'Exo 2',system-ui,sans-serif}.uchc .chk{justify-content:center}
+.ubars{display:flex;justify-content:center;align-items:flex-end;gap:18px;height:190px;margin:10px 0 4px}.ub{display:flex;flex-direction:column;align-items:center;gap:4px;width:70px}.ub b{font-size:1.25rem;font-family:'Exo 2',system-ui,sans-serif}.ub span{font-size:.75rem;color:var(--mut);font-weight:700}
+.ubt{height:130px;width:46px;display:flex;align-items:flex-end;border-radius:12px;background:rgba(127,127,127,.12);overflow:hidden}.ubt i{display:block;width:100%;height:var(--h);border-radius:12px 12px 4px 4px;background:linear-gradient(180deg,#80D8FF,#2979FF 55%,#1A237E);box-shadow:inset 0 2px 0 rgba(255,255,255,.55);animation:ubo .9s cubic-bezier(.2,1.2,.4,1) both;transform-origin:bottom}
+.ub:last-child .ubt i{background:linear-gradient(180deg,#B9F6CA,#00C853 55%,#1B5E20)}@keyframes ubo{from{transform:scaleY(0)}}
+.uosish{display:inline-block;font-size:2rem;font-weight:900;padding:2px 16px;border-radius:999px;background:rgba(127,127,127,.14);font-family:'Exo 2',system-ui,sans-serif}.uosish.ok{color:#fff;background:linear-gradient(180deg,#00E676,#00A152);box-shadow:0 10px 24px -10px rgba(0,200,83,.8)}
+.uopts{display:grid;gap:8px;margin:12px 0}.uchc details.matn{text-align:left}
+.vqv{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px;margin:10px 0;font-size:1.9rem}.vqv .arab{font-size:2rem}.vqv.oyt{background:linear-gradient(180deg,#FFFDF5,#FBF3DC);color:#2B2111;border:1px solid #E7D7A8;border-radius:16px;padding:14px 10px;box-shadow:inset 0 0 0 4px #FFF8E1}
+.vqb{display:inline-grid;place-items:center;min-width:52px;height:52px;padding:0 10px;border-radius:14px;background:linear-gradient(180deg,#1E88E5,#0D47A1);color:#fff;box-shadow:0 8px 18px -8px rgba(13,71,161,.8),inset 0 1px 0 rgba(255,255,255,.5)}.vqb i{font-style:normal;font-size:1.5rem;line-height:1;font-family:'Amiri','Scheherazade New','Noto Naskh Arabic',serif}
+.vqv:not(.oyt) .vqb{min-width:96px;height:96px;border-radius:24px}.vqv:not(.oyt) .vqb i{font-size:2.6rem}.vqv.oyt .vqb{min-width:40px;height:40px;border-radius:10px}.vqv.oyt .vqb i{font-size:1.15rem}
+.vqb.vq-lozim{background:linear-gradient(180deg,#E53935,#8E0000)}.vqb.vq-la{background:linear-gradient(180deg,#546E7A,#263238)}.vqb.vq-muonaqa{background:linear-gradient(180deg,#8E24AA,#4A148C)}.vqb.vq-jaiz{background:linear-gradient(180deg,#43A047,#1B5E20)}
+.vqb.vq-oyat{border-radius:50%!important;background:radial-gradient(circle,#FFF8E1 52%,#C9A227 54%,#C9A227 60%,#FFF8E1 62%,#FFF8E1 70%,#8D6E1F 72%);color:#5D4300;box-shadow:0 6px 16px -8px rgba(0,0,0,.5)}
 </style>
 </head>
 <body class="th-neutral">
@@ -698,6 +731,167 @@ kashf: [
 /* Diktant (2-sinf, 5 so'z) — ota-ona so'zni aytadi, bola ilovaning harf tugmalari bilan yozadi */
 diktant: ["ma'no", 'katta', 'ikki', "she'r", 'issiq', 'kitob', 'daraxt', "yomg'ir", "san'at", 'qattiq', "o'rdak", 'shakkar', 'kamalak', "ta'til", 'quyosh']
 };
+/* ===== 0.7.0 3-bosqich: 🌍 Kashfiyot 2.0 (kat, uy tajribasi, +24 mavzu) va 📖 uch marta o'qish matnlari (+20) =====
+   kat: kosmos · osmon · suv · tabiat · hayvon · tana · texnika · yer — kartaning realistik sahna-foni.
+   uy: { t: topshiriq, s: [kuzatuv savoli, v1, v2, v3], a?: kutilgan javob (0-based; yo'q bo'lsa — kuzatuv, hammasi qabul), iz: izoh }.
+   Uy tajribalarida olov, pichoq, elektr YO'Q; qaychi va teshish — faqat kattalar. Raqamlar ehtiyotkor (06.11.2026). */
+(function (B) {
+const UY = {
+  k1: { kat: 'texnika', uy: { t: "O'yinchoq mashinani avval silliq polda, keyin gilam ustida bir xil kuch bilan itaring.", s: ["Mashina qayerda uzoqroq yurdi?", "silliq polda", "gilam ustida", "bir xil"], a: 0, iz: "Gilamda ishqalanish ko'p — g'ildirak tez sekinlashadi. Silliq polda ishqalanish kam, mashina uzoqroq yuradi." } },
+  k2: { kat: 'texnika', uy: { t: "Kattalar yordamida qog'ozdan samolyot yasang. Uni avval sekin va tekis, keyin kuch bilan pastga qaratib oting.", s: ["Samolyot qachon uzoqroq uchdi?", "sekin va tekis otganda", "pastga qaratib otganda", "farqi bo'lmadi"], a: 0, iz: "Tekis uchganda havo qanotni ko'tarib turadi. Pastga otilgan samolyot tez yerga tushadi." } },
+  k3: { kat: 'texnika', uy: { t: "Kattalardan muzlatkich magnitini so'rang. Uni 5 ta narsaga tekkizib ko'ring: temir qisqich (skrepka), qalam, qog'oz, plastik o'yinchoq, qoshiq.", s: ["Magnit qaysi biriga albatta yopishdi?", "temir qisqichga", "qog'ozga", "plastik o'yinchoqqa"], a: 0, iz: "Magnit temirni tortadi. Qog'oz, plastik va yog'ochni tortmaydi. Ba'zi qoshiqlar temirdan emas — ularga yopishmaydi." } },
+  k4: { kat: 'suv', uy: { t: "Likopchaga ozgina suv quying va deraza tokchasiga qo'ying. Suv qayergacha ekanini eslab qoling. Ertaga qarang.", s: ["Ertasi kuni suv nima bo'ldi?", "kamaydi", "ko'paydi", "o'zgarmadi"], a: 0, iz: "Suv bug'ga aylanib havoga ko'tarildi — bu bug'lanish. Osmonda bug' soviydi va bulut bo'ladi." } },
+  k5: { kat: 'osmon', uy: { t: "Quyoshli kuni stakanga suv to'ldiring va deraza tokchasiga, oq qog'oz ustiga qo'ying. Qog'ozga qarang.", s: ["Qog'ozda nima ko'rdingiz?", "rangli yo'l-yo'l", "faqat soya", "hech narsa"], iz: "Nur suvdan o'tib ranglarga ajraladi — qog'ozda kichik kamalak chiqadi. Bulutli kunda chiqmasligi mumkin — boshqa kuni yana sinab ko'ring." } },
+  k6: { kat: 'kosmos', uy: { t: "Qorong'i xonada qo'l chiroqni yoqing — bu Quyosh. To'p — Yer. To'pni chiroq oldida sekin aylantiring.", s: ["To'pning chiroqqa qaragan tomoni qanday?", "yorug' — u yerda kun", "qorong'i — u yerda kun", "hammasi bir xil yorug'"], a: 0, iz: "Yer aylanadi: Quyoshga qaragan tomoni — kun, teskari tomoni — tun." } }
+};
+B.kashf.forEach(k => { if (UY[k.id]) Object.assign(k, UY[k.id]); });
+const K = (id, nom, em, kat, en, d, uy) => ({ id, nom, em, kat, en, d: d.map(([t, s]) => ({ t, s: [s] })), uy });
+B.kashf.push(
+K('k7', "Yurak — tinimsiz nasos", '❤️', 'tana', ['heart', '❤️'], [
+  ["Yuragingiz ko'kragingizda. U «tuk-tuk» deb urib turadi va butun tanaga qon haydaydi.", ["Yurak qayerda?", "🫀 ko'krakda", "🦶 oyoqda", "👂 quloqda"]],
+  ["Yurak — mushtingizdek kattalikdagi mushak. U qonni tomirlar orqali butun tanaga haydaydi. Qon har bir hujayraga havo va oziq olib boradi. Yugursangiz, yurak tezroq uradi.", ["Yurak qanchalik katta?", "mushtdek", "tarvuzdek", "no'xatdek"]],
+  ["Kattalarning yuragi tinch holatda daqiqasiga 60–100 marta uradi, bolalarniki esa tezroq. Yurak bir umr dam olmasdan ishlaydi. Yugurganda mushaklarga ko'proq kislorod kerak bo'ladi — shuning uchun yurak tezlashadi. Sport yurakni kuchli qiladi.", ["Yugurganda yurak nega tezlashadi?", "mushaklarga ko'proq kislorod kerak", "yurak charchab qoladi", "qon soviydi"]]],
+  { t: "Kaftingizni ko'kragingizga qo'yib, yurak urishini his qiling. Keyin 20 marta sakrang va yana qo'lingizni qo'ying.", s: ["Sakrashdan keyin yurak qanday urdi?", "tezroq", "sekinroq", "o'zgarmadi"], a: 0, iz: "Sakraganda mushaklar ko'p ishlaydi — ularga ko'proq qon kerak, shuning uchun yurak tezlashadi." }),
+K('k8', "Soya qayerdan keladi?", '🔦', 'osmon', ['shadow', '👤'], [
+  ["Quyosh yoki chiroq nuri bizga tushadi. Biz nurni to'samiz — orqamizda qora soya paydo bo'ladi.", ["Soya qachon paydo bo'ladi?", "🔦 nurni to'sganda", "🌑 hamma joy qorong'i bo'lganda", "💧 suv quyganda"]],
+  ["Nur to'g'ri chiziq bo'ylab yuradi. Uning yo'lida narsa tursa, nur o'tolmaydi — narsaning orqasida soya hosil bo'ladi. Ertalab va kechqurun soyamiz uzun, tushda esa kalta bo'ladi.", ["Tushda soya qanday bo'ladi?", "kalta", "juda uzun", "ko'k rangli"]],
+  ["Quyosh osmonda qanchalik past bo'lsa, soya shunchalik uzun tushadi. Tushda Quyosh eng baland — soya eng kalta. Qadimgi odamlar shundan quyosh soatini yasashgan: tayoq soyasi qayerga tushishiga qarab vaqtni bilishgan.", ["Quyosh soati nima bilan ishlaydi?", "tayoq soyasi bilan", "batareya bilan", "suv bilan"]]],
+  { t: "Qorong'i xonada devorga qo'l chiroq tuting. Qo'lingizni avval chiroqqa yaqin, keyin devorga yaqin tuting. Barmoqlaringiz bilan quyon yoki it soyasini yasang!", s: ["Qo'l chiroqqa yaqinlashganda soya qanday bo'ldi?", "kattalashdi", "kichraydi", "yo'qoldi"], a: 0, iz: "Qo'l chiroqqa yaqin bo'lsa, ko'proq nurni to'sadi — soya katta bo'ladi." }),
+K('k9', "Asalarilar shahri", '🐝', 'hayvon', ['bee', '🐝'], [
+  ["Asalari gullarga qo'nadi va shirin shira yig'adi. Undan mazali asal tayyorlaydi.", ["Asalni kim tayyorlaydi?", "🐝 asalari", "🐄 sigir", "🐔 tovuq"]],
+  ["Asalarilar katta oila bo'lib uyada yashaydi. Ular mumdan olti burchakli kataklar yasab, ularga asal to'playdi. Asalari gulma-gul uchib, gullarni changlatadi — shunda meva paydo bo'ladi.", ["Asalari katagi nechta burchakli?", "6", "4", "3"]],
+  ["Uyadagi oilaning bitta onasi — malika bor, u tuxum qo'yadi. Ishchi asalarilar shira yig'adi, uyani tozalaydi va qo'riqlaydi. Yaxshi gul topgan asalari uyaga qaytib «raqs» tushadi — raqs boshqalarga gullar qaysi tomonda ekanini ko'rsatadi.", ["Asalari «raqsi» nimani bildiradi?", "gullar qaysi tomonda ekanini", "uyquga ketish vaqtini", "yomg'ir yog'ishini"]]],
+  { t: "Uydagi oddiy qalamning yo'nilmagan uchiga qarang yoki kattalar bilan qog'ozga asalari katagini chizing. Burchaklarini sanang.", s: ["Asalari katagining nechta burchagi bor?", "6", "4", "8"], a: 0, iz: "Olti burchakli kataklar bir-biriga zich yopishadi — orada bo'sh joy qolmaydi, mum ham kam ketadi." }),
+K('k10', "Muz nega eriydi?", '🧊', 'suv', ['ice', '🧊'], [
+  ["Suv juda sovuq bo'lsa, qotib muzga aylanadi. Issiqda muz erib, yana suv bo'ladi.", ["Muz isisa nima bo'ladi?", "💧 suvga aylanadi", "🪨 toshga aylanadi", "🔥 olovga aylanadi"]],
+  ["Suv 0 darajada muzlaydi. Qishda ko'chalardagi muzga tuz sepishadi. Tuz muzni eritadi va odamlar sirpanib yiqilmaydi. Dengiz suvi sho'r, shuning uchun u oddiy suvdan qiyinroq muzlaydi.", ["Qishda muzga nega tuz sepishadi?", "muzni eritish uchun", "mazali bo'lishi uchun", "oq bo'lishi uchun"]],
+  ["Toza suv 0 °C da muzlaydi. Suvga tuz qo'shilsa, u 0 dan pastroq haroratda muzlaydi. Shuning uchun tuz sepilgan muz biroz sovuqda ham eriydi. Dengiz suvi taxminan −2 °C da muzlaydi. Juda qattiq sovuqda esa tuz ham yordam bermaydi.", ["Dengiz suvi nega qiyinroq muzlaydi?", "unda tuz bor", "u juda chuqur", "unda baliq ko'p"]]],
+  { t: "Ikkita likopchaga bittadan muz bo'lagi qo'ying. Bittasiga bir chimdim tuz seping. 10 daqiqadan keyin qarang.", s: ["Qaysi muz tezroq eridi?", "tuz sepilgani", "tuzsizi", "bir xil"], a: 0, iz: "Tuz muzning erish haroratini pasaytiradi — tuzli muz tezroq eriydi." }),
+K('k11', "O'simlik nima yeydi?", '🌱', 'tabiat', ['plant', '🌱'], [
+  ["O'simlik o'sishi uchun suv, quyosh nuri va havo kerak. Shuning uchun uni sug'orib turamiz.", ["O'simlikka nima kerak?", "💧 suv va ☀️ nur", "🍬 konfet", "📺 televizor"]],
+  ["O'simlik ildizi bilan yerdan suv ichadi. Barglari quyosh nurini tutadi va nur yordamida o'zi uchun oziq tayyorlaydi. Qorong'ida o'simlik sarg'ayib, nimjon bo'lib qoladi.", ["O'simlik suvni nima bilan ichadi?", "ildizi bilan", "gullari bilan", "mevasi bilan"]],
+  ["Yashil barglar quyosh nuri, havodagi karbonat angidrid gazi va suvdan shakar tayyorlaydi. Bu jarayon fotosintez deyiladi. Bunda havoga kislorod chiqadi — biz shu kislorod bilan nafas olamiz. Shuning uchun daraxt ko'p joyda havo toza.", ["Fotosintezda havoga nima chiqadi?", "kislorod", "tutun", "chang"]]],
+  { t: "Ikkita stakanga ho'l paxta solib, har biriga 2–3 ta loviya qo'ying. Birini deraza oldiga, ikkinchisini qorong'i shkafga qo'ying. Har kuni ozgina suv quying va bir haftadan keyin solishtiring.", s: ["Qaysi biri yashilroq o'sdi?", "deraza oldidagisi", "shkafdagisi", "bir xil"], a: 0, iz: "Yorug'likda barg fotosintez qiladi va yashil bo'ladi. Qorong'ida o'simta sarg'ish va ingichka o'sadi." }),
+K('k12', "Oy nega shaklini o'zgartiradi?", '🌙', 'kosmos', ['moon', '🌙'], [
+  ["Kechasi osmonda Oy ko'rinadi. Ba'zan u yumaloq, ba'zan esa o'roqdek ingichka bo'ladi.", ["Kechasi osmonda nima ko'rinadi?", "🌙 Oy", "🌈 kamalak", "☀️ Quyosh"]],
+  ["Oyning o'z nuri yo'q. U Quyosh nurini qaytarib yaltiraydi, xuddi ko'zgu kabi. Oy Yer atrofida aylanadi, shuning uchun biz uning yoritilgan qismini har kuni har xil ko'ramiz.", ["Oy nega yaltiraydi?", "Quyosh nurini qaytaradi", "ichida chiroq bor", "u yonib turadi"]],
+  ["Oy Yer atrofini taxminan bir oyda aylanib chiqadi. Shu vaqtda u yangi oydan to'linoygacha va yana ortga o'zgaradi — bular Oy fazalari. Oy Yerdan taxminan 384 000 km uzoqda. 1969-yili odamlar birinchi marta Oyga qadam qo'yishgan.", ["Oy Yer atrofini qancha vaqtda aylanadi?", "taxminan bir oyda", "bir kunda", "bir yilda"]]],
+  { t: "Bugun kechqurun kattalar bilan osmonga qarang va Oyni qog'ozga chizing. 3–4 kundan keyin yana chizib, solishtiring.", s: ["Bugun Oy qanday ko'rindi?", "to'liq doira", "yarimta yoki o'roqdek", "ko'rinmadi (bulut)"], iz: "Oy har kuni biroz o'zgaradi. Chizmalarni solishtirsangiz, uning «o'sishi» yoki «kichrayishi»ni ko'rasiz." }),
+K('k13', "Chumolilar — kichik kuchlilar", '🐜', 'hayvon', ['ant', '🐜'], [
+  ["Chumoli juda kichkina, lekin mehnatkash. U ovqatni uyasiga tashiydi.", ["Chumoli ovqatni qayerga tashiydi?", "🏠 uyasiga", "🌊 dengizga", "☁️ bulutga"]],
+  ["Chumolining 6 ta oyog'i bor — u hasharot. Chumolilar katta oila bo'lib yashaydi. Ular o'zidan bir necha barobar og'ir narsani ko'tara oladi va bir-biriga yo'lni hid bilan ko'rsatadi.", ["Chumolining nechta oyog'i bor?", "6", "4", "8"]],
+  ["Chumoli uyasida malika tuxum qo'yadi, ishchi chumolilar esa ovqat topadi, uyani quradi va qo'riqlaydi. Ovqat topgan chumoli yo'lda maxsus hid qoldiradi — boshqalar shu iz bo'ylab yuradi. Shuning uchun chumolilar qator bo'lib yuradi. Hasharot tanasi uch qismli: bosh, ko'krak va qorin.", ["Chumolilar nega qator bo'lib yuradi?", "hidli iz bo'ylab yuradi", "ko'zlari ko'rmaydi", "shamol suradi"]]],
+  { t: "Qog'ozga chumoli chizing: bosh, ko'krak, qorin va to'g'ri sondagi oyoqlar. Hovlida chumolilarni kuzating — ularga tegmang.", s: ["Chumoliga nechta oyoq chizdingiz?", "6", "4", "8"], a: 0, iz: "Hamma hasharotning 6 ta oyog'i bor. O'rgimchakning 8 ta oyog'i bor — u hasharot emas." }),
+K('k14', "Tishlarimiz sirlari", '🦷', 'tana', ['tooth', '🦷'], [
+  ["Tishlar ovqatni chaynashga yordam beradi. Ularni har kuni ertalab va kechqurun yuvamiz.", ["Tishni kuniga necha marta yuvamiz?", "2 marta", "hech qachon", "10 marta"]],
+  ["Bolalarda 20 ta sut tishi bo'ladi. Taxminan 6 yoshdan ular tushib, o'rniga doimiy tishlar chiqadi. Shirinlik ko'p yesak, tishda mikroblar ko'payadi va tish og'riydi.", ["Bolalarda nechta sut tishi bo'ladi?", "20", "32", "5"]],
+  ["Tishning ustki qavati — emal — tanamizdagi eng qattiq modda. Lekin shirinlikdan keyin mikroblar kislota chiqaradi va emalni yemiradi — karies paydo bo'ladi. Kattalarda 32 tagacha doimiy tish bo'ladi. Tishni kuniga 2 marta, 2 daqiqadan yuvish kerak.", ["Tanamizdagi eng qattiq modda qaysi?", "tish emali", "suyak", "tirnoq"]]],
+  { t: "Bugun kechqurun tishingizni soat yoki qum soat bilan aynan 2 daqiqa yuving: avval o'ng tomon, keyin chap, oxirida old tishlar.", s: ["Tishni necha daqiqa yuvish kerak?", "2 daqiqa", "10 soniya", "1 soat"], a: 0, iz: "2 daqiqa — har bir tishga yetib borish uchun yetarli vaqt." }),
+K('k15', "Vulqon — olov tog'", '🌋', 'yer', ['volcano', '🌋'], [
+  ["Vulqon — tog'. Ba'zan uning ichidan issiq, qizil lava otilib chiqadi.", ["Vulqondan nima otilib chiqadi?", "🔥 lava", "❄️ qor", "🍦 muzqaymoq"]],
+  ["Yer ostida juda issiq, erigan tosh bor — u magma deyiladi. Magma yer yuziga chiqsa, uni lava deymiz. Lava sovigach, qotib, qora toshga aylanadi.", ["Yer yuziga chiqqan magma nima deyiladi?", "lava", "qum", "loy"]],
+  ["Yer qobig'i yaxlit emas — u ulkan bo'laklardan iborat. Bo'laklar chegarasida magma yuqoriga yo'l topadi va vulqon paydo bo'ladi. Otilishda lava bilan birga kul va gaz ham chiqadi. Vulqon kuli tushgan yerlar keyin juda unumdor bo'ladi.", ["Vulqonlar ko'pincha qayerda paydo bo'ladi?", "Yer qobig'i bo'laklari chegarasida", "cho'l o'rtasida", "ko'l tubida"]]],
+  { t: "Faqat kattalar bilan! Stakanni likopchaga qo'ying, unga 1 qoshiq soda soling va ustiga 2–3 qoshiq sirka quying. Yuzingizni yaqin tutmang.", s: ["Soda va sirka qo'shilganda nima bo'ldi?", "ko'pik toshib chiqdi", "muzlab qoldi", "hech narsa"], a: 0, iz: "Soda va sirka gaz chiqaradi — ko'pik lavadek toshadi. Haqiqiy lava esa juda issiq erigan tosh." }),
+K('k16', "Chaqmoq va momaqaldiroq", '⚡', 'osmon', ['lightning', '⚡'], [
+  ["Yomg'irli kunda osmonda chaqmoq chaqnaydi. Keyin «gumbur» degan ovoz — momaqaldiroq eshitiladi.", ["Chaqmoqdan keyin nima eshitiladi?", "🔊 momaqaldiroq", "🎵 qo'shiq", "🐦 qush ovozi"]],
+  ["Chaqmoq — bulutlardagi ulkan elektr uchqun. U havoni juda qizitadi va havo «portlaydi» — bu momaqaldiroq. Yorug'lik tovushdan tez yuradi, shuning uchun avval chaqmoqni ko'ramiz, keyin ovozni eshitamiz.", ["Nega avval chaqmoqni ko'ramiz?", "yorug'lik tovushdan tez", "ko'zimiz quloqdan yaxshi", "chaqmoq juda yaqin"]],
+  ["Bulut ichida muz parchalari va tomchilar bir-biriga urilib, elektr to'playdi. Elektr juda ko'payganda chaqmoq bo'lib otiladi. Chaqmoq va momaqaldiroq orasidagi soniyalarni sanang: har 3 soniya — taxminan 1 km. Momaqaldiroqda uyda qoling, baland daraxt tagida turmang.", ["Momaqaldiroqda qayerda turish xavfsiz?", "uyda", "baland daraxt tagida", "ochiq dalada"]]],
+  { t: "Havo sharini puflang (kattalar yordam bersin) va uni sochingizga 10 marta ishqalang. Keyin mayda qog'oz parchalariga yaqinlashtiring.", s: ["Qog'oz parchalari nima qildi?", "sharga yopishdi", "qochib ketdi", "hech narsa"], a: 0, iz: "Ishqalanganda sharda elektr to'planadi va u qog'ozni tortadi. Chaqmoq ham elektr, faqat juda-juda katta." }),
+K('k17', "Cho'l kemasi — tuya", '🐫', 'hayvon', ['camel', '🐫'], [
+  ["Tuya cho'lda yashaydi. U uzoq vaqt suv ichmasdan yura oladi.", ["Tuya qayerda yashaydi?", "🏜️ cho'lda", "🌊 dengizda", "🧊 muz ustida"]],
+  ["Tuyaning o'rkachida suv emas, yog' saqlanadi. Ovqat bo'lmaganda tuya shu yog'dan kuch oladi. Uzun kipriklari ko'zini qumdan, keng tovonlari esa qumga botib ketishdan asraydi.", ["Tuyaning o'rkachida nima bor?", "yog'", "suv", "qum"]],
+  ["Ikki o'rkachli tuya baqtriya tuyasi deyiladi. Bu nom qadimiy Baqtriya o'lkasidan olingan — Surxondaryo ham shu o'lkaning bir qismi bo'lgan. Tuya bir martada 100 litrga yaqin suv icha oladi. Keng tovon og'irlikni katta yuzaga taqsimlaydi, shuning uchun tuya qumga botmaydi.", ["Tuya nega qumga botmaydi?", "tovoni keng", "juda yengil", "tez yuguradi"]]],
+  { t: "Patnisga un yoki qum seping. Avval bitta barmog'ingiz bilan, keyin butun kaftingiz bilan bir xil kuch bilan bosing.", s: ["Qaysi biri chuqurroq botdi?", "barmoq", "kaft", "bir xil"], a: 0, iz: "Kaft keng — og'irlik ko'p joyga taqsimlanadi va kam botadi. Tuyaning keng tovoni ham shunday ishlaydi." }),
+K('k18', "Quyosh — eng yaqin yulduz", '☀️', 'kosmos', ['sun', '☀️'], [
+  ["Quyosh bizga yorug'lik va issiqlik beradi. Quyoshga to'g'ridan-to'g'ri qarash mumkin emas — ko'zga zarar.", ["Quyosh bizga nima beradi?", "☀️ yorug'lik va issiqlik", "🌧️ yomg'ir", "❄️ qor"]],
+  ["Quyosh — yulduz. Kechasi ko'rinadigan yulduzlar ham quyoshlar, faqat juda-juda uzoqda. Quyosh bo'lmasa, Yerda o'simlik ham, hayvon ham yashay olmasdi.", ["Quyosh nima?", "yulduz", "sayyora", "Oy"]],
+  ["Quyosh shunchalik kattaki, uning ichiga milliondan ortiq Yer sig'adi. Quyosh nuri Yerga taxminan 8 daqiqada yetib keladi. Qora narsalar nurni ko'proq yutib tez isiydi, oq narsalar esa nurni qaytaradi. Shuning uchun yozda oq kiyim salqinroq.", ["Quyosh nuri Yerga qancha vaqtda yetadi?", "taxminan 8 daqiqada", "1 soniyada", "1 yilda"]]],
+  { t: "Oq va qora stakanga bir xil suv quying (qora stakan bo'lmasa, stakanni qora qog'ozga o'rang) va quyoshli joyga qo'ying. 1 soatdan keyin barmog'ingizni suvga tekkizing.", s: ["Qaysi stakandagi suv iliqroq?", "qora stakandagi", "oq stakandagi", "bir xil"], a: 0, iz: "Qora rang nurni yutadi va isiydi, oq rang nurni qaytaradi." }),
+K('k19', "Ko'z qanday ko'radi?", '👁️', 'tana', ['eye', '👁️'], [
+  ["Biz ko'zimiz bilan ko'ramiz. Ko'zni asrash uchun telefonga uzoq qaramaymiz.", ["Biz nima bilan ko'ramiz?", "👁️ ko'z", "👃 burun", "👂 quloq"]],
+  ["Ko'zning o'rtasidagi qora doira — qorachiq. Yorug'lik qorachiq orqali ko'z ichiga kiradi. Yorug'da qorachiq kichrayadi, qorong'ida esa kattalashadi — ko'proq nur kirishi uchun.", ["Qorong'ida qorachiq nima bo'ladi?", "kattalashadi", "kichrayadi", "yo'qoladi"]],
+  ["Ko'z kamera kabi ishlaydi: qorachiqdan kirgan nur gavhar orqali ko'zning orqa devoriga tushadi va u yerda tasvir hosil bo'ladi. Tasvir aslida teskari tushadi, uni miya to'g'rilaydi. Ko'zni charchatmaslik uchun har 20 daqiqada uzoqqa qarab dam berish foydali.", ["Ko'zdagi teskari tasvirni nima to'g'rilaydi?", "miya", "qorachiq", "kiprik"]]],
+  { t: "Ko'zguga yaqin turib qorachig'ingizga qarang. Keyin ko'zingizni 10 soniya kaftingiz bilan yoping, ochib darhol qarang.", s: ["Ko'zni ochgan zahoti qorachiq qanday edi?", "katta edi, keyin kichraydi", "juda kichik edi", "o'zgarmadi"], a: 0, iz: "Qorong'ida qorachiq kattalashadi, yorug'lik tushishi bilan tez kichrayadi." }),
+K('k20', "Kit — eng katta hayvon", '🐋', 'suv', ['whale', '🐋'], [
+  ["Kit dengizda yashaydi. U juda-juda katta, baliqqa o'xshaydi, lekin baliq emas.", ["Kit qayerda yashaydi?", "🌊 dengizda", "🌳 o'rmonda", "🏜️ cho'lda"]],
+  ["Kit havodan nafas oladi, shuning uchun suv yuzasiga chiqib turadi. Boshidagi teshikdan havo chiqarganda suv favvoradek otiladi. Kit bolasini sut bilan boqadi — u sutemizuvchi.", ["Kit nima bilan nafas oladi?", "havo bilan", "suv bilan", "nafas olmaydi"]],
+  ["Ko'k kit — Yerda yashagan eng katta hayvon, dinozavrlardan ham katta. Uning uzunligi 30 metrgacha yetadi — bu taxminan 3 ta avtobus. Ko'k kit mayda qisqichbaqasimonlar — kril bilan oziqlanadi. Kitlar bir-biri bilan «qo'shiq» orqali gaplashadi.", ["Ko'k kit nima bilan oziqlanadi?", "mayda kril bilan", "akulalar bilan", "suv o'tlari bilan"]]],
+  { t: "Hovlida yoki yo'lakda kattalar bilan 30 ta katta qadam tashlang. Ko'k kit taxminan shuncha uzun!", s: ["Ko'k kit qancha uzun?", "taxminan 30 katta qadam", "1 qadam", "1000 qadam"], a: 0, iz: "Kattalarning katta qadami taxminan 1 metr. 30 qadam — 30 metr, ko'k kitning uzunligi." }),
+K('k21', "Tovush va aks-sado", '🔊', 'texnika', ['sound', '🔊'], [
+  ["Biz tovushni quloq bilan eshitamiz. Baraban, qo'shiq, it vovullashi — hammasi tovush.", ["Tovushni nima bilan eshitamiz?", "👂 quloq", "👁️ ko'z", "✋ qo'l"]],
+  ["Tovush — titrash. Gitara torini chertsangiz, u titraydi va havoni ham titratadi. Bu titrash qulog'imizga yetib keladi. Tog'da baqirsangiz, tovush qoyadan qaytib keladi — bu aks-sado.", ["Tovush qoyadan qaytib kelsa, nima deyiladi?", "aks-sado", "chaqmoq", "shamol"]],
+  ["Tovush havoda soniyasiga taxminan 340 metr yuradi, suvda va qattiq jismlarda esa yanada tez tarqaladi. Ko'rshapalak va delfin aks-sadodan foydalanadi: ovoz chiqarib, qaytgan tovushga qarab narsa qayerda ekanini biladi. Bo'm-bo'sh xonada aks-sado ko'proq eshitiladi.", ["Ko'rshapalak qorong'ida qanday yo'l topadi?", "aks-sado bilan", "chiroq bilan", "xarita bilan"]]],
+  { t: "Kattalar ikkita qog'oz stakanning tagini teshib bersin. Ularni uzun ip bilan ulang va ipni tarang torting. Biringiz stakanga gapiring, ikkinchingiz stakanni qulog'ingizga tuting.", s: ["Ip tarang bo'lganda ovoz eshitildimi?", "ha, ip orqali eshitildi", "yo'q, umuman", "faqat ip bo'sh bo'lganda"], a: 0, iz: "Ovoz ipni titratadi, titrash ikkinchi stakanga yetib boradi. Ip bo'sh bo'lsa, titrash yo'qoladi." }),
+K('k22', "Barglar nega sarg'ayadi?", '🍂', 'tabiat', ['leaf', '🍂'], [
+  ["Kuzda daraxt barglari sariq, qizil va jigarrang bo'lib, yerga to'kiladi.", ["Kuzda barglar nima bo'ladi?", "🍂 sarg'ayib to'kiladi", "🌸 gul ochadi", "❄️ muzga aylanadi"]],
+  ["Bargning yashil rangi xlorofill degan moddadan. Kuzda kunlar qisqarib, havo soviydi va xlorofill parchalanadi. Shunda bargda yashirinib turgan sariq va to'q sariq ranglar ko'rinib qoladi.", ["Bargga yashil rangni nima beradi?", "xlorofill", "yomg'ir", "tuproq"]],
+  ["Daraxt qishda suvni tejash uchun barglarini to'kadi. Daraxt tanasi har yili bitta halqa qo'shib yo'g'onlashadi. Kesilgan daraxt halqalarini sanab, uning yoshini bilish mumkin. Keng halqa — iliq, serquyosh yil, tor halqa — qurg'oqchil yoki sovuq yil.", ["Daraxt yoshini qanday bilish mumkin?", "halqalarini sanab", "barglarini sanab", "balandligini o'lchab"]]],
+  { t: "Kattalar bilan hovli yoki bog'dan har xil rangdagi 5 ta barg yig'ing. Ularni rangiga qarab yashildan qizilgacha qatorga tering.", s: ["Qaysi rangdagi barg ko'p bo'ldi?", "sariq", "qizil yoki jigarrang", "yashil"], iz: "Har bir daraxtning kuzgi rangi o'zgacha. Bargni kitob orasida quritib, albom qilsa bo'ladi." }),
+K('k23', "Pingvin — ucha olmaydigan qush", '🐧', 'hayvon', ['penguin', '🐧'], [
+  ["Pingvin — qush, lekin ucha olmaydi. U juda yaxshi suzadi va sovuq joylarda yashaydi.", ["Pingvin nima qila oladi?", "🏊 suzadi", "✈️ uchadi", "🌳 daraxtga chiqadi"]],
+  ["Pingvinlar Yerning janubidagi sovuq joylarda yashaydi. Ularning qanotlari suzgichga aylangan. Qalin yog' qatlami va zich patlari ularni sovuqdan saqlaydi.", ["Pingvinni sovuqdan nima saqlaydi?", "yog' qatlami va zich patlar", "issiq kurtka", "qor uyasi"]],
+  ["Imperator pingvin — eng katta pingvin. Ona tuxum qo'ygach, ota uni ikki oyga yaqin oyoqlari ustida, qorin burmasi ostida isitib turadi. Qattiq sovuqda pingvinlar bir-biriga zich yopishib, to'da bo'lib isinadi. Pingvinlarning deyarli hammasi Yerning janubiy yarmida yashaydi.", ["Imperator pingvinda tuxumni kim isitadi?", "ota pingvin", "quyosh", "baliqlar"]]],
+  { t: "Kosaga sovuq suv va muz soling. Bir qo'lingizga qalin rezina qo'lqop kiying. Ikkala qo'lni 5 soniyaga suvga soling — ko'p ushlamang!", s: ["Qaysi qo'l ko'proq sovqotdi?", "qo'lqopsizi", "qo'lqoplisi", "bir xil"], a: 0, iz: "Qo'lqop sovuqni o'tkazmaydi — pingvinning yog' qatlami va patlari ham shunday himoya qiladi." }),
+K('k24', "Tanamizning tayanchi — suyaklar", '🦴', 'tana', ['bone', '🦴'], [
+  ["Tanamiz ichida qattiq suyaklar bor. Ular bizni tik ushlab turadi.", ["Bizni tik nima ushlab turadi?", "🦴 suyaklar", "💧 suv", "👕 kiyim"]],
+  ["Suyaklar birga skelet hosil qiladi. Bosh suyagi miyani, qovurg'alar yurak va o'pkani himoya qiladi. Suyaklar bo'g'imlarda bukiladi: tirsak, tizza, barmoqlar. Sut va qatiq suyakni mustahkam qiladi.", ["Miyani qaysi suyak himoya qiladi?", "bosh suyagi", "qovurg'a", "tizza"]],
+  ["Katta odamning skeletida 206 ta suyak bor. Chaqaloqda esa 300 ga yaqin suyak bo'ladi — o'sgan sari ba'zilari qo'shilib ketadi. Eng uzun suyak — son suyagi, eng kichigi — quloq ichidagi «uzangi» suyagi. Suyaklar tirik: ular o'sadi va singanda bitib ketadi.", ["Katta odamda nechta suyak bor?", "206", "50", "1000"]]],
+  { t: "Qo'lingizni ochib-yuming va barmoqlaringiz bukiladigan joylarini (bo'g'imlarni) sanang. Bosh barmoqni alohida sanang.", s: ["Ko'rsatkich barmoqda nechta bo'g'im bukiladi?", "3", "1", "5"], a: 0, iz: "Bosh barmoqdan boshqa barmoqlarda 3 tadan bukiladigan bo'g'im bor, bosh barmoqda esa 2 ta ko'rinadi." }),
+K('k25', "Ovoz qanday uchib boradi?", '📱', 'texnika', ['phone', '📱'], [
+  ["Telefon bilan uzoqdagi buvimiz bilan gaplasha olamiz. Ovoz ko'zga ko'rinmaydigan to'lqinlar bilan boradi.", ["Uzoqdagi odam bilan nima orqali gaplashamiz?", "📱 telefon", "📚 kitob", "🧸 o'yinchoq"]],
+  ["Telefon ovozimizni ko'rinmas radio to'lqinlarga aylantiradi. To'lqinlar baland minoralarga, u yerdan boshqa telefonga yetib boradi. U yerda to'lqin yana ovozga aylanadi.", ["Telefon ovozni nimaga aylantiradi?", "radio to'lqinlarga", "suvga", "qog'ozga"]],
+  ["Radio to'lqinlar yorug'lik tezligida — soniyasiga taxminan 300 000 km yuradi. Shuning uchun boshqa shahardagi odam ovozimizni darhol eshitadi. Avvallari telefonlar sim orqali ishlagan va uydan olib chiqib bo'lmagan. Bugungi telefon — kichik kompyuter: unda kamera, xarita va internet bor.", ["Radio to'lqinlar qanday tezlikda yuradi?", "yorug'lik tezligida", "mashina tezligida", "piyoda tezligida"]]],
+  { t: "Dadangiz yoki oyingizdan so'rang: ular bolaligida qanday telefon bo'lgan? Raqam qanday terilardi?", s: ["Kattalar bolaligida telefon qanday edi?", "simli, uyda turardi", "hozirgidek smartfon", "telefon umuman yo'q edi"], iz: "Kattalarning hikoyasi — tarixning eng qiziq qismi! Ularning javobini daftaringizga yozib qo'ying." }),
+K('k26', "Qor parchasi", '❄️', 'osmon', ['snowflake', '❄️'], [
+  ["Qishda osmondan oppoq qor yog'adi. Qor juda sovuq, qo'lda tez erib ketadi.", ["Qor ko'pincha qachon yog'adi?", "❄️ qishda", "☀️ yozda", "🍉 issiq kunda"]],
+  ["Qor — muzlagan suv. Bulutda juda sovuq bo'lganda, suv bug'i mayda muz kristallariga aylanadi. Ular bir-biriga yopishib qor parchasini hosil qiladi. Qor parchasining 6 ta nuri bor.", ["Qor parchasining nechta nuri bor?", "6", "4", "10"]],
+  ["Qor parchasi bulut ichidan tushib kelayotganda o'sadi. Havo harorati va namligi o'zgarishi bilan uning nurlari har xil shakl oladi. Shuning uchun ikkita mutlaqo bir xil qor parchasini topish juda qiyin. Lekin hammasining 6 ta nuri bor — bu suv zarralarining tuzilishi bilan bog'liq.", ["Qor parchalari nega har xil bo'ladi?", "havo harorati va namligi o'zgaradi", "bulutlar bo'yaydi", "shamol chizadi"]]],
+  { t: "Kattalar yordamida: qog'ozni uchburchak qilib 3 marta buklang, chetlaridan kichik shakllar qirqing (qaychini faqat kattalar ushlasin). Ochib ko'ring — qor parchasi!", s: ["Qor parchangizda nechta nur chiqdi?", "6", "4", "8"], iz: "To'g'ri buklasangiz, 6 nurli bo'ladi — xuddi haqiqiy qor parchasidek. Boshqacha chiqsa, yana bir bor urinib ko'ring!" }),
+K('k27', "Dinozavrlar — qadimgi gigantlar", '🦖', 'yer', ['dinosaur', '🦖'], [
+  ["Juda-juda qadimda Yerda dinozavrlar yashagan. Hozir ularning suyaklarini faqat muzeyda ko'ramiz.", ["Dinozavr suyaklarini qayerda ko'ramiz?", "🏛️ muzeyda", "🏪 do'konda", "🚌 avtobusda"]],
+  ["Dinozavrlar millionlab yil oldin yashagan. Ularning ba'zilari o't yegan, ba'zilari yirtqich bo'lgan. Olimlar yerdan ularning toshga aylangan suyaklari va izlarini topadi — bular qazilmalar deyiladi.", ["Toshga aylangan suyak va izlar nima deyiladi?", "qazilmalar", "minerallar", "toshbaqalar"]],
+  ["O'zbekistonda, Qizilqum cho'lida ham dinozavr qazilmalari topilgan. 2016-yili olimlar u yerda topilgan yangi turga Amir Temur sharafiga «Temurlengiya» deb nom berishdi. U taxminan 90 million yil oldin yashagan, otdek kattalikdagi yirtqich bo'lib, mashhur tiranozavrning qarindoshi hisoblanadi.", ["Qizilqumda topilgan dinozavr kim sharafiga nomlangan?", "Amir Temur", "Alisher Navoiy", "Ibn Sino"]]],
+  { t: "Plastilindan tekis «tuproq» yasang va unga o'yinchoq hayvon oyog'i yoki barmog'ingiz bilan iz qoldiring. Shu iz qotib qolsa — qazilma bo'ladi!", s: ["Izga qarab nimani bilish mumkin?", "oyoq shakli va kattaligini", "hayvonning rangini", "uning ismini"], a: 0, iz: "Olimlar dinozavr izlariga qarab uning kattaligini va qanday yurganini aniqlaydi." }),
+K('k28', "Shamol qayerdan keladi?", '🌬️', 'osmon', ['wind', '🌬️'], [
+  ["Shamol — harakatlanayotgan havo. U daraxtlarni tebratadi va varrakni uchiradi.", ["Varrakni nima uchiradi?", "🌬️ shamol", "💧 suv", "🔦 chiroq"]],
+  ["Quyosh yerni bir xil isitmaydi. Iliq havo yengil bo'lib, yuqoriga ko'tariladi, uning o'rniga sovuq havo oqib keladi. Havoning shu oqimi — shamol.", ["Iliq havo nima qiladi?", "yuqoriga ko'tariladi", "pastga tushadi", "muzlab qoladi"]],
+  ["Kunduzi quruqlik suvdan tezroq isiydi, shuning uchun dengiz bo'yida kunduzi shamol dengizdan quruqlikka esadi. Odamlar qadimdan shamoldan foydalangan: yelkanli kemalar va shamol tegirmonlari. Bugun ulkan shamol turbinalari elektr ishlab chiqaradi.", ["Shamol turbinasi nima ishlab chiqaradi?", "elektr", "suv", "yomg'ir"]]],
+  { t: "Kattalar yordamida qog'ozdan parrak yasang: kvadrat qog'ozni burchaklaridan o'rtasiga qarab qirqing, uchlarini o'rtaga bukib, tayoqchaga mahkamlang. Avval sekin, keyin kuchli puflang.", s: ["Kuchli puflaganda parrak nima qildi?", "tezroq aylandi", "to'xtadi", "sekinlashdi"], a: 0, iz: "Kuchli shamol — tezroq aylanish. Shamol turbinasi ham shunday aylanib, elektr hosil qiladi." }),
+K('k29', "Non nega g'ovak?", '🍞', 'tabiat', ['bread', '🍞'], [
+  ["Non xamirdan pishiriladi. Xamir iliq joyda «ko'pchiydi» — kattalashadi.", ["Non nimadan pishiriladi?", "🥣 xamirdan", "🧊 muzdan", "🪨 toshdan"]],
+  ["Xamirga xamirturush qo'shiladi. Xamirturush — juda mayda tirik zamburug'. U xamirdagi shakarni yeydi va gaz pufakchalari chiqaradi. Pufakchalar xamirni ko'tarib, nonni yumshoq qiladi.", ["Xamirni nima ko'pchitadi?", "xamirturush", "tuz", "suv"]],
+  ["Xamirturush iliqda tez ishlaydi, sovuqda sekinlashadi, juda issiqda esa nobud bo'ladi. U chiqargan gaz — karbonat angidrid — xamir ichida qolib, mayda g'ovaklar hosil qiladi. Tandirda pishganda g'ovaklar qotib qoladi, shuning uchun non yumshoq va yengil.", ["Xamirturush qayerda tez ishlaydi?", "iliq joyda", "muzlatkichda", "olov ichida"]]],
+  { t: "Kattalar nonni ikkiga bo'lib bersin. Non ichiga yaqindan qarang (lupa bo'lsa — yana yaxshi).", s: ["Non ichida nima ko'rdingiz?", "mayda teshikchalar", "toshchalar", "suv tomchilari"], a: 0, iz: "Bu teshikchalar — g'ovaklar, xamirturush chiqargan gaz pufakchalarining izi." }),
+K('k30', "Quyosh oilasi — sayyoralar", '🪐', 'kosmos', ['planet', '🪐'], [
+  ["Quyosh atrofida 8 ta sayyora aylanadi. Biz ulardan biri — Yerda yashaymiz.", ["Biz qaysi sayyorada yashaymiz?", "🌍 Yer", "🔴 Mars", "🪐 Saturn"]],
+  ["Quyoshga eng yaqin sayyora — Merkuriy. Mars qizg'ish rangli, uni «qizil sayyora» deyishadi. Saturnning chiroyli halqalari bor. Yer — hayot borligi bizga ma'lum yagona sayyora.", ["Qaysi sayyorani «qizil sayyora» deyishadi?", "Mars", "Venera", "Neptun"]],
+  ["Sayyoralar tartibi: Merkuriy, Venera, Yer, Mars, Yupiter, Saturn, Uran, Neptun. Eng kattasi — Yupiter: uning ichiga mingdan ortiq Yer sig'adi. Birinchi to'rttasi toshloq, qolganlari ulkan gaz va muz sayyoralari. Neptun Quyoshdan shunchalik uzoqki, u yerda bir yil Yerning 165 yiliga yaqin.", ["Eng katta sayyora qaysi?", "Yupiter", "Yer", "Merkuriy"]]],
+  { t: "Qog'ozning chap chetiga Quyoshni, keyin 8 ta sayyorani tartib bilan chizing. Yupiterni eng katta, Merkuriyni eng kichik qiling.", s: ["Quyoshga eng yaqin sayyora qaysi?", "Merkuriy", "Yer", "Yupiter"], a: 0, iz: "Merkuriy, Venera, Yer, Mars — kichik toshloqlar; Yupiter, Saturn, Uran, Neptun — gigantlar." })
+);
+/* 📖 Uch marta o'qish: d1 — 35–55 so'z, d2 — 70–100 so'z (sinovda tekshiriladi) */
+B.matn.push(
+  { id: 'm7', d: 1, nom: "Qorbobo", t: "Ertalab derazadan qaradim. Hamma yoq oppoq! Kechasi qor yog'ibdi. Men issiq kiyindim va hovliga chiqdim. Akam bilan qorbobo yasadik. Uning burni sabzidan, ko'zlari ko'mirdan bo'ldi. Boshiga eski chelak kiydirdik. Keyin qor otishib o'ynadik. Uyga qaytsak, oyim issiq choy damlab qo'yibdi.", s: [["Qorboboning burni nimadan edi?", "sabzidan", "ko'mirdan", "olmadan"], ["Qorboboning boshiga nima kiydirdik?", "eski chelak", "do'ppi", "shapka"], ["Uyda bizni nima kutardi?", "issiq choy", "muzqaymoq", "sovuq suv"]] },
+  { id: 'm8', d: 1, nom: "Bo'ribosar", t: "Hovlimizda Bo'ribosar degan kuchukcha bor. U hali kichkina va juda o'yinqaroq. Ertalab men unga ovqat beraman. U dumini likillatib, meni kutib oladi. Kechqurun eshik oldida yotib, uyni qo'riqlaydi. Begona odam kelsa, vovullaydi. Men Bo'ribosarni juda yaxshi ko'raman.", s: [["Kuchukchaning ismi nima?", "Bo'ribosar", "Momiq", "Olapar"], ["Begona odam kelsa, kuchukcha nima qiladi?", "vovullaydi", "uxlaydi", "qochadi"], ["Ertalab kuchukchaga kim ovqat beradi?", "men", "dadam", "qo'shnimiz"]] },
+  { id: 'm9', d: 1, nom: "Bozorga", t: "Shanba kuni dadam bilan bozorga bordik. Bozor odamlarga to'la edi. Biz olma, uzum va pomidor oldik. Sotuvchi amaki menga bitta nok sovg'a qildi. Men unga rahmat aytdim. Uyga qaytgach, oyim mevalarni yuvib, dasturxonga qo'ydi. Hammamiz birga mazza qilib yedik.", s: [["Bozorga kim bilan bordik?", "dadam bilan", "oyim bilan", "akam bilan"], ["Sotuvchi nima sovg'a qildi?", "nok", "olma", "uzum"], ["Bozorga qaysi kuni bordik?", "shanba", "dushanba", "juma"]] },
+  { id: 'm10', d: 1, nom: "Quyoncha", t: "O'rmonda kichkina quyoncha yashardi. Bir kuni u katta sabzi topdi. Avval sabzini yolg'iz o'zi yemoqchi bo'ldi. Keyin och qolgan do'stlari — tipratikan va olmaxonni esladi. Quyoncha sabzini uch bo'lakka bo'ldi. Do'stlari juda xursand bo'lishdi. Birga yeyilgan ovqat yanada shirin bo'ladi.", s: [["Quyoncha nima topdi?", "katta sabzi", "olma", "yong'oq"], ["Quyoncha sabzini nechta bo'lakka bo'ldi?", "uchta", "ikkita", "beshta"], ["Bu ertak nimani o'rgatadi?", "bo'lishishni", "yolg'iz yeyishni", "uxlashni"]] },
+  { id: 'm11', d: 1, nom: "Bizning maktab", t: "Bizning maktabimiz katta va chiroyli. Unda ko'p sinfxonalar, sport zali va kutubxona bor. Hovlida gullar va daraxtlar o'sadi. Ustozimiz bizga o'qish, yozish va hisoblashni o'rgatadi. Tanaffusda do'stlarim bilan to'p o'ynayman. Men maktabimni juda yaxshi ko'raman.", s: [["Maktabda yana nima bor?", "kutubxona", "hayvonot bog'i", "bozor"], ["Tanaffusda nima qilaman?", "to'p o'ynayman", "uxlayman", "televizor ko'raman"]] },
+  { id: 'm12', d: 1, nom: "Toshbaqa", t: "Buvimning uyida Sabr degan toshbaqa bor. U juda sekin yuradi. Toshbaqaning qattiq kosasi bor. Xavf tug'ilsa, u boshini va oyoqlarini kosasiga yashiradi. Sabr salat bargi va bodringni yaxshi ko'radi. Qishda u ko'p uxlaydi. Toshbaqalar juda uzoq yashaydi.", s: [["Toshbaqa xavf tug'ilsa nima qiladi?", "kosasiga yashirinadi", "tez yuguradi", "baqiradi"], ["Sabr nimani yaxshi ko'radi?", "salat bargi va bodringni", "go'shtni", "konfetni"]] },
+  { id: 'm13', d: 1, nom: "Yangi velosiped", t: "Tug'ilgan kunimda dadam menga qizil velosiped sovg'a qildi. Avvaliga men yiqilishdan qo'rqdim. Dadam velosipedni orqasidan ushlab turdi. Men pedalni aylantirdim va asta-sekin yura boshladim. Bir haftadan keyin o'zim yuradigan bo'ldim. Endi har kuni dubulg'a kiyib, hovlida aylanaman.", s: [["Velosiped qanday rangda?", "qizil", "ko'k", "sariq"], ["Velosipedda yurganda nima kiyaman?", "dubulg'a", "shlyapa", "ko'zoynak"], ["Qachon o'zim yuradigan bo'ldim?", "bir haftadan keyin", "birinchi kuni", "bir yildan keyin"]] },
+  { id: 'm14', d: 1, nom: "Chumchuqlar", t: "Qishda hovlimizga chumchuqlar uchib keladi. Ular sovuqda yem topa olmaydi. Dadam bilan taxtadan qush uychasi yasadik va uni daraxtga osdik. Har kuni ertalab unga non ushoqlari va don sepaman. Chumchuqlar chirqillab, menga rahmat aytayotgandek bo'ladi. Bahorda esa ular bizga qo'shiq kuylaydi.", s: [["Qush uychasini nimadan yasadik?", "taxtadan", "qog'ozdan", "plastikdan"], ["Chumchuqlarga nima beraman?", "non ushoqlari va don", "sut", "go'sht"]] },
+  { id: 'm15', d: 1, nom: "Yomg'ir", t: "Kechqurun osmonni qora bulutlar qopladi. Shamol esdi, keyin yomg'ir yog'a boshladi. Tomchilar derazaga taq-taq urildi. Men deraza oldida o'tirib, ko'chaga qaradim. Odamlar soyabon ochib, tez-tez yurib ketishardi. Ertasiga havo toza va salqin bo'ldi. Hovlida katta ko'lmak paydo bo'libdi.", s: [["Yomg'irdan oldin osmonni nima qopladi?", "qora bulutlar", "kamalak", "yulduzlar"], ["Odamlar nima ochishdi?", "soyabon", "eshik", "kitob"], ["Ertasiga hovlida nima paydo bo'ldi?", "ko'lmak", "qor", "gul"]] },
+  { id: 'm16', d: 1, nom: "Do'stlik", t: "Ali va Vali qo'shni bo'lib yashaydi. Ular har kuni birga maktabga boradi. Bir kuni Vali qalamini uyda unutib qoldirdi. Ali sumkasidan ikkinchi qalamini olib, do'stiga berdi. Vali juda xursand bo'ldi. Ertasiga u Aliga mazali olma olib keldi. Haqiqiy do'stlar bir-biriga yordam beradi.", s: [["Vali nimani unutib qoldirdi?", "qalamini", "kitobini", "sumkasini"], ["Ertasiga Vali Aliga nima olib keldi?", "olma", "qalam", "konfet"]] },
+  { id: 'm17', d: 2, nom: "Navro'z", t: "Navro'z — bahor bayrami. U 21-mart kuni nishonlanadi. Bu kunlarda kun va tun deyarli teng bo'ladi. Navro'z arafasida mahallada ayollar katta qozonda sumalak pishiradi. Sumalak bug'doy maysasidan tayyorlanadi va uni tun bo'yi navbatma-navbat kavlashadi. Bolalar qozon atrofida qo'shiq aytib, o'yin o'ynaydi. Ertalab sumalak qo'shni va qarindoshlarga tarqatiladi. Odamlar bir-birini tabriklaydi, daraxt ekadi, hovlilarni tozalaydi. Bayramda milliy kiyimlar kiyiladi, ko'chalarda karnay-surnay chalinadi, ko'k somsa va halim pishiriladi. Navro'z — yangilanish, mehr va do'stlik bayrami.", s: [["Navro'z qaysi kuni nishonlanadi?", "21-mart", "1-yanvar", "1-sentabr"], ["Sumalak nimadan tayyorlanadi?", "bug'doy maysasidan", "guruchdan", "olmadan"], ["Navro'zda odamlar yana nima qiladi?", "daraxt ekadi", "qorbobo yasaydi", "kun bo'yi uxlaydi"]] },
+  { id: 'm18', d: 2, nom: "Kichkina olim", t: "Malika sinfda o'simliklar haqida o'qidi. Ustoz: «O'simlikka yorug'lik kerak», — dedi. Malika buni o'zi tekshirib ko'rmoqchi bo'ldi. U ikkita tuvakka loviya ekdi. Birini deraza tokchasiga, ikkinchisini qorong'i shkafga qo'ydi. Ikkalasiga ham bir xil suv quydi. Bir haftadan keyin derazadagi loviya yashil va baquvvat o'sdi. Shkafdagisi esa sarg'ish va ingichka bo'lib qoldi. Malika har kuni loviyalar bo'yini o'lchab, jadvalga yozib bordi. Malika natijani daftariga yozib, sinfda so'zlab berdi. Ustoz uni «kichkina olim» deb maqtadi. Do'stlari ham uyda shunday tajriba qilmoqchi bo'lishdi.", s: [["Malika nechta tuvakka loviya ekdi?", "ikkita", "bitta", "beshta"], ["Shkafdagi loviya qanday bo'ldi?", "sarg'ish va ingichka", "yashil va baquvvat", "qizil va baland"], ["Ustoz Malikani nima deb maqtadi?", "kichkina olim", "eng tez yuguruvchi", "kichkina rassom"]] },
+  { id: 'm19', d: 2, nom: "Buyuk Ipak yo'li", t: "Qadimda Xitoydan Yevropagacha uzun savdo yo'li bo'lgan. Uni Buyuk Ipak yo'li deb atashgan, chunki u orqali qimmatbaho ipak olib borilgan. Karvonlar tuyalarga yuk ortib, cho'l va tog'lardan oshib o'tgan. Yo'l ustida Samarqand, Buxoro va Xiva kabi shaharlar gullab-yashnagan. Bu shaharlarda savdogarlar dam olgan va mol almashgan. Ipak yo'li bilan faqat mol emas, bilim ham tarqalgan: qog'oz yasash, yangi ekinlar va kitoblar. Shuning uchun yurtimiz qadimdan ilm va savdo markazi bo'lgan.", s: [["Yo'l nega Ipak yo'li deb atalgan?", "u orqali ipak olib borilgan", "yo'l ipakdan qilingan", "u yerda ipak qurti yashagan"], ["Karvonlar yukni nimaga ortgan?", "tuyalarga", "mashinalarga", "kemalarga"], ["Yo'l ustidagi shahar qaysi?", "Samarqand", "Parij", "Tokio"]] },
+  { id: 'm20', d: 2, nom: "Ibn Sino", t: "Abu Ali ibn Sino Buxoro yaqinidagi Afshona qishlog'ida tug'ilgan. U bolaligidan kitobni juda yaxshi ko'rgan va o'n yoshida Qur'onni yod olgan. Keyin tabiblikni o'rganib, yoshligidayoq bemorlarni davolay boshlagan. Ibn Sino «Tib qonunlari» degan katta kitob yozgan. Bu kitob bo'yicha Yevropada ham bir necha yuz yil davomida tabiblar o'qishgan. U falsafa, matematika va astronomiya haqida ham ko'plab asarlar yozgan. Ibn Sino butun umri davomida o'qish va yozishdan to'xtamagan. Uning hayoti har bir bolaga bilimning kuchini ko'rsatadi.", s: [["Ibn Sino qayerda tug'ilgan?", "Afshona qishlog'ida", "Samarqandda", "Toshkentda"], ["U qanday katta kitob yozgan?", "«Tib qonunlari»", "«Alpomish»", "«Kalila va Dimna»"], ["Ibn Sino qaysi kasbni o'rgangan?", "tabiblikni", "duradgorlikni", "dehqonchilikni"]] },
+  { id: 'm21', d: 2, nom: "Daryo qayerdan boshlanadi?", t: "Amudaryo va Sirdaryo — yurtimizning eng katta daryolari. Ular baland tog'lardan boshlanadi. Tog' cho'qqilaridagi qor va muzliklar yozda eriydi. Eriyotgan suv mayda irmoqlarga, irmoqlar esa katta daryoga qo'shiladi. Daryo suvi kanallar orqali dalalarga boradi — paxta, bug'doy va bog'lar sug'oriladi. Ilgari ikkala daryo ham Orol dengiziga quyilgan. Dalalar uchun suv ko'p olingani sababli dengiz juda kichrayib ketdi. Suv — hayot manbai. Shuning uchun suvni isrof qilmaslik, jo'mrakni ochiq qoldirmaslik kerak. Har bir tomchi kimningdir dalasiga yetib borishi mumkin.", s: [["Daryolar qayerdan boshlanadi?", "baland tog'lardan", "dengizdan", "cho'ldan"], ["Daryo suvi dalalarga nima orqali boradi?", "kanallar orqali", "bulutlar orqali", "simlar orqali"], ["Suvni tejash uchun nima qilish kerak?", "jo'mrakni ochiq qoldirmaslik", "ko'proq suv quyish", "daryoga axlat tashlash"]] },
+  { id: 'm22', d: 2, nom: "Robot to'garagi", t: "Sardor maktabdagi robototexnika to'garagiga yozildi. Birinchi darsda ustoz kichik robot ko'rsatdi. Robot to'siqni ko'rsa, to'xtab, boshqa tomonga burilardi. «Robot o'zi o'ylaydimi?» — so'radi Sardor. Ustoz tushuntirdi: «Yo'q, robot dastur bo'yicha ishlaydi. Dasturni esa odamlar yozadi». O'sha kuni bolalar robotga oddiy buyruqlar berishni o'rganishdi: «oldinga yur», «chapga buril», «to'xta». Keyin ustoz har bir bolaga kichik vazifa berdi. Sardorning roboti stol ustidagi labirintdan chiqib oldi. Keyingi darsda ular robotga chiroq yoqish va ovoz chiqarishni o'rgatishmoqchi. U uyga quvonib qaytdi va muhandis bo'lishni orzu qildi.", s: [["Robot to'siqni ko'rsa nima qilardi?", "to'xtab, boshqa tomonga burilardi", "sakrab o'tib ketardi", "qo'shiq aytardi"], ["Robot nima bo'yicha ishlaydi?", "dastur bo'yicha", "o'z xohishi bilan", "ob-havo bo'yicha"], ["Sardor kim bo'lishni orzu qildi?", "muhandis", "oshpaz", "haydovchi"]] },
+  { id: 'm23', d: 2, nom: "Kutubxonada", t: "Dilnoza birinchi marta shahar kutubxonasiga bordi. Javonlarda minglab kitoblar terilgan edi. Kutubxonachi opa unga bolalar bo'limini ko'rsatdi. «Kitobni uyga olib ketib, ikki haftadan keyin qaytarishing mumkin», — dedi u. Dilnoza hayvonlar haqidagi rasmli kitobni tanladi. Opa kitobxon kartasini to'ldirib berdi va eslatdi: kitobni ehtiyot qilish, varaqlarini bukmaslik va ustiga yozmaslik kerak. Uyda Dilnoza kitobni oxirigacha o'qib chiqdi va ukasiga qiziq joylarini aytib berdi. Ikki haftadan keyin u kitobni qaytarib, yangisini oldi. Endi kutubxona uning eng sevimli joyi.", s: [["Kitobni qancha vaqtga berishadi?", "ikki haftaga", "bir kunga", "bir yilga"], ["Dilnoza qanday kitob tanladi?", "hayvonlar haqidagi", "ertaklar to'plami", "matematika darsligi"], ["Kitobni qaytargach nima qildi?", "yangisini oldi", "kutubxonaga boshqa bormadi", "kitobni yo'qotdi"]] },
+  { id: 'm24', d: 2, nom: "Asalari va kapalak", t: "Bahorda gul ustida asalari va kapalak uchrashib qolishdi. Kapalak maqtandi: «Qanotlarim qanday chiroyli! Men kun bo'yi gulma-gul uchib, o'ynab yuraman». Asalari javob berdi: «Men esa shira yig'ib, asal tayyorlayman. Qishda oilamiz shu asal bilan to'q bo'ladi». Kapalak kulib uchib ketdi. Kuz kelib, havo sovidi. Kapalak qayerga borishini bilmay qoldi. U sovuqdan qaltirab, asalarining uyasi oldiga keldi. Uya ichi issiq va to'kin edi. Asalari unga rahm qilib, ichkariga taklif qildi. Kapalak uyalib: «Endi men ham mehnat qilaman», — dedi. Mehnat qilgan hech qachon qiynalmaydi.", s: [["Kapalak nima bilan maqtandi?", "chiroyli qanotlari bilan", "mazali asali bilan", "katta uyasi bilan"], ["Asalari nima tayyorlaydi?", "asal", "sut", "non"], ["Ertak nimani o'rgatadi?", "mehnat qilishni", "maqtanishni", "ko'p uxlashni"]] },
+  { id: 'm25', d: 2, nom: "Bobomning hunari", t: "Hasanning bobosi — kulol. U loydan ko'za, kosa va lagan yasaydi. Bobosi avval loyni suv bilan obdon pishitadi. Keyin uni aylanib turadigan charxga qo'yadi. Charx aylanganda bobosining qo'llari loyga shakl beradi va bir zumda chiroyli ko'za paydo bo'ladi. Ko'za soyada quritiladi, so'ng xumdonda pishiriladi. Oxirida bobosi unga ko'k va oq naqshlar chizadi. Hasan ham bobosidan kulolchilikni o'rganmoqda. Kulolchilik sabr talab qiladi: bitta ko'za uchun bir necha kun kerak. Rishton va G'ijduvon kulollari butun dunyoga mashhur. Bu hunar ota-bobolarimizdan qolgan.", s: [["Kulol nimadan idish yasaydi?", "loydan", "temirdan", "yog'ochdan"], ["Loy nimaning ustida aylanadi?", "charx ustida", "stol ustida", "gilam ustida"], ["Ko'za oxirida qanday bezatiladi?", "naqsh chiziladi", "qog'oz yopishtiriladi", "hech bezatilmaydi"]] },
+  { id: 'm26', d: 2, nom: "Svetofor", t: "Bekzod har kuni maktabga piyoda boradi. Yo'lda katta chorraha bor. Dadasi unga svetofor qoidalarini o'rgatgan. Qizil chiroq yonsa — to'xtash kerak. Sariq chiroq «tayyorlan» degani. Yashil chiroqda yo'ldan o'tish mumkin, lekin avval chapga, keyin o'ngga qarab olish kerak. Yo'lni faqat «zebra» — oq chiziqli piyodalar yo'lagidan kesib o'tadi. Telefonga qarab yoki yugurib o'tish xavfli. Kechqurun yorug'lik qaytaradigan belgili kiyim kiyish ham foydali — haydovchi sizni uzoqdan ko'radi. Bekzod qoidalarni yaxshi biladi, shuning uchun dadasi unga ishonadi.", s: [["Qizil chiroq yonsa nima qilinadi?", "to'xtaladi", "yuguriladi", "o'tib ketiladi"], ["Yo'lni qayerdan kesib o'tish kerak?", "piyodalar yo'lagidan", "istalgan joydan", "mashinalar orasidan"], ["Yo'ldan o'tishdan oldin qayerga qaraladi?", "avval chapga, keyin o'ngga", "faqat osmonga", "telefonga"]] }
+);
+})(BJ.bank);
 })(typeof window !== 'undefined' ? window : globalThis);
 
 </script>
@@ -1721,6 +1915,88 @@ add('TJ.6', { fan: 'ar', nom: "Tajvid: g'unna", me: 6, gen(q, c) {
   return { sav: "Qaysi so'zda g'unna bor?", o, a: w, k: 'g' + w, sig: sg('g' + w, o), ex: { w }, tushun: `${w}: nun yoki mim shaddali — burunda 2 harakat g'unna.` };
 }, chk: it => (it.ex.s ? it.a === '2' : GPOS.includes(it.a)) || 'gunna' });
 
+/* ===== 0.7.0 3-bosqich: TJ.7 Ra (tafxim / tarqiq) va TJ.8 vaqf belgilari =====
+   Ra dvigateli raHukm(w, {v, arid}) — misollarning hukmi ham shu dvigateldan (sinov: qo'lda yozilgan javoblar bilan solishtiriladi).
+   Qoidalar: ra fatha/damma (tanvin ham) → tafxim; kasra → tarqiq. Sukunli ra: oldingi fatha/damma → tafxim; oldingi arid kasra (hamzai vasl) → tafxim;
+   oldingi asl kasra → keyin isti'lo harfi (خصضغطقظ) bo'lsa tafxim, aks holda tarqiq. Vaqfda ra sukunli bo'ladi: oldingi harfga qaraladi
+   (u sukunli bo'lsa — undan oldingisiga); oldida ي (sokin yoki madd) → tarqiq; ا yoki و (madd) → tafxim; shaddali ra — oldingi harf. */
+const ISTILO = 'خصضغطقظ';
+const harak = x => x ? x.m.filter(m => m !== 'ّ') : [];
+const unli = x => { const m = harak(x); if (!m.length) return null; if (m.includes('ْ')) return 'sukun'; if (m.some(c => 'َُ'.includes(c) || 'ًٌ'.includes(c))) return 'fd'; if (m.some(c => 'ٍِ'.includes(c))) return 'k'; return null; };
+function raHukm(w, o) {
+  o = o || {}; const L = bogin(w), i = L.findIndex(x => x.h === 'ر'); if (i < 0) return null;
+  const r = L[i], p = L[i - 1], pp = L[i - 2], n = L[i + 1], ru = unli(r), sh = r.m.includes('ّ');
+  const res = (h, sabab) => ({ h, sabab, i, v: !!o.v });
+  if (!o.v) {
+    if (ru === 'fd') return res('tafxim', 'harakat_fd');
+    if (ru === 'k') return res('tarqiq', 'harakat_k');
+    /* sukunli ra */
+    if (o.arid || (i === 1 && p && p.h === 'ا' && !harak(p).length)) return res('tafxim', 'arid');
+    const pu = unli(p);
+    if (pu === 'fd') return res('tafxim', 'old_fd');
+    if (pu === 'k') return n && ISTILO.includes(n.h) ? res('tafxim', 'istilo') : res('tarqiq', 'old_k');
+    const qu = unli(pp); return qu === 'k' ? res('tarqiq', 'old_k') : res('tafxim', 'old_fd');
+  }
+  /* vaqf: ra sukunli o'qiladi */
+  if (!p) return res('tafxim', 'v_old_fd');
+  const pu = unli(p);
+  if (p.h === 'ي' && pu !== 'fd' && pu !== 'k') return res('tarqiq', 'v_ya');
+  if ((p.h === 'ا' || p.h === 'و' || p.h === 'ى') && pu !== 'fd' && pu !== 'k' && !sh) return res('tafxim', 'v_madd');
+  if (pu === 'fd') return res('tafxim', 'v_old_fd');
+  if (pu === 'k') return res('tarqiq', 'v_old_k');
+  const qu = unli(pp); return qu === 'k' ? res('tarqiq', 'v_sokin_k') : res('tafxim', 'v_sokin_fd');
+}
+/* Har so'zda bitta ر. Ikkalasi joiz bo'lganlar (مِصْرَ، الْقِطْرِ، يَسْرِ، فِرْقٍ) QO'SHILMAYDI. */
+const RA = ['رَبِّ', 'رُسُلٌ', 'رِجَالٌ', 'مَرْيَمُ', 'الْأَرْضِ', 'الْقُرْآنُ', 'يُرْزَقُونَ', 'فِرْعَوْنَ', 'مِرْيَةٍ', 'شِرْعَةً', 'قِرْطَاسٍ', 'مِرْصَادًا', 'فِرْقَةٍ', 'ارْجِعِي'];
+const RAV = ['وَالْفَجْرِ', 'الْقَدْرِ', 'وَالْعَصْرِ', 'خُسْرٍ', 'ذِكْرٌ', 'خَيْرٌ', 'قَدِيرٌ', 'الْبَصِيرُ', 'النَّارِ', 'غَفُورٌ'];
+const RAD = RA.map(w => ({ w, v: false, r: raHukm(w) })).concat(RAV.map(w => ({ w, v: true, r: raHukm(w, { v: true }) })));
+const RAN = { tafxim: "Qalin — tafxim", tarqiq: "Ingichka — tarqiq" };
+const RAS = {
+  harakat_fd: "Ra o'zi fatha yoki damma bilan", harakat_k: "Ra o'zi kasra bilan", old_fd: "Ra sukunli, oldidagi harf fatha/damma bilan",
+  old_k: "Ra sukunli, oldida kasra, keyin isti'lo harfi yo'q", istilo: "Oldida kasra, lekin keyin isti'lo harfi (خصضغطقظ)", arid: "Oldidagi kasra arid — hamzai vasl (ا)",
+  v_ya: "Vaqfda: oldida ي (sokin yoki madd)", v_madd: "Vaqfda: oldida madd harfi ا yoki و", v_old_fd: "Vaqfda: oldingi harf fatha/damma bilan", v_old_k: "Vaqfda: oldingi harf kasra bilan",
+  v_sokin_fd: "Vaqfda: oldingi harf sukunli, undan oldingisi fatha/damma", v_sokin_k: "Vaqfda: oldingi harf sukunli, undan oldingisi kasra" };
+add('TJ.7', { fan: 'ar', nom: "Tajvid: ra — qalin va ingichka", me: 8, gen(q, c) {
+  if (c.g0 || f() < 0.35) {
+    const tt = pick(['tafxim', 'tarqiq']), pos = RAD.filter(d => d.r.h === tt && (q >= 2 || !d.v)), neg = RAD.filter(d => d.r.h !== tt && (q >= 2 || !d.v)), a = pick(pos);
+    const o = arO(opts(a.w, sample(neg, 3).map(d => ({ v: d.w, x: 'tajvid_xato' })), q === 1 ? 3 : 4));
+    return { sav: `Qaysi so'zda «ر» ${tt === 'tafxim' ? 'qalin (tafxim)' : 'ingichka (tarqiq)'} o'qiladi?${a.v ? ' (oxirida to\'xtab o\'qiladi)' : ''}`, o, a: a.w, k: 'rb' + a.w, sig: sg('rb' + a.w, o), ex: { w: a.w, v: a.v, tt }, tushun: `${a.w}: ${RAS[a.r.sabab]} → ${RAN[tt]}` };
+  }
+  const L = RAD.filter(d => q >= 2 || !d.v), dd = pick(L), r = dd.r;
+  if (q >= 2 && f() < 0.5) {
+    const xs = shuf(Object.keys(RAS).filter(k => k !== r.sabab && (k[0] === 'v') === dd.v)).slice(0, q === 2 ? 2 : 3);
+    const o = opts(r.sabab, xs.map(v => ({ v, x: 'tajvid_xato' })), xs.length + 1).map(x => Object.assign(x, { h: RAS[x.v] }));
+    return { sav: `Bu so'zda «ر» ${r.h === 'tafxim' ? 'qalin' : 'ingichka'} o'qiladi. Nega?`, vis: { k: 'arab', t: dd.w }, sav2: dd.v ? "Oxirida to'xtab (vaqf) o'qiladi" : null, o, a: r.sabab, k: 'rs' + dd.w, sig: sg('rs' + dd.w, o), ex: { w: dd.w, v: dd.v, s: 1 }, tushun: `${RAS[r.sabab]} → ${RAN[r.h]}` };
+  }
+  const o = opts(r.h, [{ v: r.h === 'tafxim' ? 'tarqiq' : 'tafxim', x: 'tajvid_xato' }], 2).map(x => Object.assign(x, { h: RAN[x.v] }));
+  return { sav: "«ر» qanday o'qiladi?", vis: { k: 'arab', t: dd.w }, sav2: dd.v ? "Oxirida to'xtab (vaqf) o'qiladi" : null, o, a: r.h, k: 'rh' + dd.w, sig: sg('rh' + dd.w, o), ex: { w: dd.w, v: dd.v }, tushun: `${RAS[r.sabab]} → ${RAN[r.h]}` };
+}, chk: it => { const r = raHukm(it.ex.w, { v: it.ex.v }); if (!r) return 'ra'; return (it.ex.tt ? r.h === it.ex.tt : it.ex.s ? r.sabab === it.a : r.h === it.a) || 'ra'; } });
+/* TJ.8 Vaqf belgilari (Madina mushafi, Hafs). Oyatdan faqat aniq misollar. */
+const VQ = [
+  { k: 'lozim', b: 'مـ', nom: "Vaqf lozim — to'xtash shart" }, { k: 'la', b: 'لا', nom: "To'xtalmaydi — davom etiladi" }, { k: 'jaiz', b: 'ج', nom: "To'xtash ham, davom ham — teng" },
+  { k: 'sila', b: 'صلى', nom: "Davom etish afzal" }, { k: 'qila', b: 'قلى', nom: "To'xtash afzal" }, { k: 'muonaqa', b: '∴ ∴', nom: "Mu'onaqa — ikkisidan birida to'xtaladi" }, { k: 'oyat', b: '٧', nom: "Oyat oxiri" }];
+const vq = k => VQ.find(x => x.k === k);
+const VQO = [
+  { p: ['لَا رَيْبَ', vq('muonaqa'), 'فِيهِ', vq('muonaqa')], k: 'muonaqa', m: "Baqara, 2", t: "Ikki belgidan birida to'xtaladi: «لَا رَيْبَ» da yoki «فِيهِ» da — ikkalasida emas." },
+  { p: ['يَسْمَعُونَ', vq('lozim'), 'وَالْمَوْتَىٰ'], k: 'lozim', m: "An'om, 36", t: "To'xtash shart: ulab o'qilsa, ma'no buziladi." },
+  { p: ['قَوْلُهُمْ', vq('lozim'), 'إِنَّا'], k: 'lozim', m: "Yosin, 76", t: "To'xtash shart: keyingi so'z ularning gapi emas." }];
+add('TJ.8', { fan: 'ar', nom: "Tajvid: vaqf belgilari", me: 7, gen(q, c) {
+  const n = q === 1 ? 3 : q === 2 ? 4 : 5;
+  if (q >= 2 && !c.g0 && f() < 0.3) {
+    const e = pick(VQO), ch = shuf(VQ.filter(x => x.k !== e.k)).slice(0, n - 1);
+    const o = opts(e.k, ch.map(x => ({ v: x.k, x: 'tajvid_xato' })), n).map(x => Object.assign(x, { h: vq(x.v).nom }));
+    return { sav: `Belgi bor joyda qanday o'qiladi? (${e.m})`, vis: { k: 'vaqf', p: e.p }, o, a: e.k, k: 'vo' + e.m, sig: sg('vo' + e.m, o), ex: { k: e.k, o: e.m }, tushun: e.t };
+  }
+  let x = pick(VQ);
+  if (c.g0 || f() < 0.4) {
+    const T = VQ.filter(y => y.k !== 'oyat'); if (x.k === 'oyat') x = pick(T); /* doira belgisi matn variantda chiqmaydi */
+    const ch = shuf(T.filter(y => y.k !== x.k)).slice(0, n - 1), o = opts(x.b, ch.map(y => ({ v: y.b, x: 'tajvid_xato' })), n).map(z => Object.assign(z, { h: z.v, ar: 1 }));
+    return { sav: `Qaysi belgi: «${x.nom}»?`, o, a: x.b, k: 'vb' + x.k, sig: sg('vb' + x.k, o), ex: { k: x.k, b: 1 }, tushun: `${x.b} — ${x.nom}` };
+  }
+  const ch = shuf(VQ.filter(y => y.k !== x.k)).slice(0, n - 1), o = opts(x.k, ch.map(y => ({ v: y.k, x: 'tajvid_xato' })), n).map(z => Object.assign(z, { h: vq(z.v).nom }));
+  return { sav: "Bu vaqf belgisi nima degani?", vis: { k: 'vaqf', p: [x] }, o, a: x.k, k: 'vm' + x.k, sig: sg('vm' + x.k, o), ex: { k: x.k }, tushun: `${x.b} — ${x.nom}` };
+}, chk: it => { if (it.ex.o) { const e = VQO.find(y => y.m === it.ex.o); return (!!e && e.k === it.a) || 'vaqf'; } const x = vq(it.ex.k); return (!!x && (it.ex.b ? x.b === it.a : x.k === it.a)) || 'vaqf'; } });
+
 /* ================= Kichik dars qoidalari (o'zbekcha) ================= */
 const DARS = {
   'AQ.1': ["So'zni harakatlari bilan sekin o'qi, keyin ma'nosini esla. Bir mavzudagi so'zlar bir-biriga yaqin — shoshilma.", "Oxiridagi ة (ta marbuta) — ko'pincha muannas (ayol jinsi) belgisi: جَدٌّ bobo → جَدَّةٌ buvi, أَخٌ aka-uka → أُخْتٌ opa-singil."],
@@ -1734,7 +2010,9 @@ const DARS = {
   'TJ.3': ["Mim sokin (مْ) dan keyingi harfga qara:", "Ixfo shafaviy — ب: lab yopiq, g'unna bilan. Idg'om shafaviy — م: ikki mim qo'shiladi.", "Izhor shafaviy — qolgan harflar: aniq o'qiladi (ayniqsa و va ف oldidan)."],
   'TJ.4': ["Qalqala harflari 5 ta: ق ط ب ج د («قُطْبُ جَدٍّ»).", "Ular sukunli bo'lsa, tovush biroz «sakraydi»: يَدْخُلُونَ ، قَدْ."],
   'TJ.5': ["Madd — cho'zib o'qish. Madd harflari: ا (fathadan keyin), و (dammadan keyin), ي (kasradan keyin).", "Madd tabiiy — 2 harakat: قَالَ. Madd lozim — maddan keyin shadda/sukun, 6 harakat: الضَّالِّينَ.", "Muttasil — hamza shu so'zda: جَاءَ. Munfasil — hamza keyingi so'zda: يَا أَيُّهَا (ikkalasi ham ustozingiz o'rgatgan miqdorda cho'ziladi)."],
-  'TJ.6': ["Nun va mim shaddali bo'lsa (نّ ، مّ) — g'unna: burunda 2 harakat ushlab turiladi: إِنَّ ، ثُمَّ."]
+  'TJ.6': ["Nun va mim shaddali bo'lsa (نّ ، مّ) — g'unna: burunda 2 harakat ushlab turiladi: إِنَّ ، ثُمَّ."],
+  'TJ.7': ["«ر» o'zi fatha yoki damma bilan bo'lsa — qalin (tafxim): رَبِّ ، رُسُلٌ. Kasra bilan — ingichka (tarqiq): رِجَالٌ.", "«ر» sukunli bo'lsa — oldingi harfga qara: fatha/damma → qalin (مَرْيَمُ), kasra → ingichka (فِرْعَوْنَ).", "Kasradan keyin bo'lsa ham, «ر» dan so'ng isti'lo harfi (خ ص ض غ ط ق ظ) kelsa — qalin: قِرْطَاسٍ. Hamzai vasl kasrasi (ارْجِعِي) ham qalin qiladi.", "Oxirida to'xtasak (vaqf), «ر» sukunli bo'ladi — oldidagi harfga qaraymiz: ي bo'lsa ingichka (خَيْرٌ), ا yoki و bo'lsa qalin (النَّارِ ، غَفُورٌ)."],
+  'TJ.8': ["Vaqf belgilari oyatning qayerida to'xtash yoki davom etishni ko'rsatadi.", "مـ — to'xtash shart. لا — to'xtalmaydi. ج — ikkalasi teng.", "صلى — davom etish afzal. قلى — to'xtash afzal. ∴ ∴ — ikkisidan birida to'xtaladi (ikkalasida emas).", "Doira — oyat oxiri. Belgilar mushafga qarab biroz farq qilishi mumkin — ustozingizdan so'rang."]
 };
 /* 0.4.1: namuna yechimlar (kichik dars) — shu savolning so'zi harfma-harf */
 const BN = { 'َ': 'fatha (a)', 'ُ': 'damma (u)', 'ِ': 'kasra (i)', 'ْ': 'sukun', 'ّ': 'shadda', 'ً': 'tanvin (-an)', 'ٌ': 'tanvin (-un)', 'ٍ': 'tanvin (-in)' };
@@ -1747,8 +2025,12 @@ const QADAM = {
   'AQ.3': it => { const w = it.ex.w; if (it.ex.n != null) { const hs = harflar(w); return [`Harflarni birma-bir sana: ${hs.map((h, i) => (i + 1) + ') ' + h).join('   ')}`, `Harakat va belgilar (ـَ ـِ ـُ ـْ ـّ ـٌ) harf emas — sanalmaydi. Jami: ${hs.length} ta harf.`]; } return [`Har harfni belgisi bilan ko'r (${w}):`].concat(tahlil(it.a)); },
   'TJ.1': it => { const w = it.ex.w, h = harflar(w)[2], t = lomTur(w); return [`1) «ال» ni top: ${w}`, `2) Undan keyingi harf: «${hn(h)}» (${h}).`, t === 'shamsiy' ? `3) «${hn(h)}» — ☀️ shamsiy harf: lom o'qilmaydi, «${hn(h)}» shaddali o'qiladi.` : `3) «${hn(h)}» — 🌙 qamariy harf: lom sukunli, aniq o'qiladi.`]; }
 };
+/* 0.7.0: TJ.7 va TJ.8 namuna yechimi */
+QADAM['TJ.7'] = it => { const v = !!it.ex.v, r = raHukm(it.ex.w, { v }), L = bogin(it.ex.w), x = L[r.i], p = L[r.i - 1], m = y => y && y.m.length ? y.m.map(c => BN[c]).filter(Boolean).join(' + ') : 'harakatsiz';
+  return [`1) «ر» ni top: ${it.ex.w} — ${r.i + 1}-harf.`, v ? `2) Oxirida to'xtaymiz — «ر» sukunli bo'ladi. Oldidagi harf: ${p ? `«${hn(p.h)}» (${p.h}${p.m.join('')}) — ${m(p)}` : "yo'q"}.` : `2) «ر» ning o'zi: ${m(x)}${unli(x) === 'sukun' || !unli(x) ? `; oldidagi harf «${p ? hn(p.h) : '—'}» — ${m(p)}` : ''}.`, `3) ${RAS[r.sabab]} → ${RAN[r.h]}.`]; };
+QADAM['TJ.8'] = it => { if (it.ex.o) { const e = VQO.find(y => y.m === it.ex.o); return e ? [`${e.m}: ${e.p.map(y => typeof y === 'string' ? y : '[' + y.b + ']').join(' ')}`, e.t] : []; } const x = vq(it.ex.k); return x ? [`Belgi: ${x.b}`, `Ma'nosi: ${x.nom}.`] : []; };
 /* ================= Bo'limlar va mavjudlik ================= */
-const OQ = ['AQ.1', 'AQ.2', 'AQ.3', 'AQ.4'], YZ = ['AY.1', 'AY.2', 'AY.3'], TJ = ['TJ.1', 'TJ.2', 'TJ.3', 'TJ.4', 'TJ.5', 'TJ.6'];
+const OQ = ['AQ.1', 'AQ.2', 'AQ.3', 'AQ.4'], YZ = ['AY.1', 'AY.2', 'AY.3'], TJ = ['TJ.1', 'TJ.2', 'TJ.3', 'TJ.4', 'TJ.5', 'TJ.6', 'TJ.7', 'TJ.8'];
 const BOLIM = {
   aralash: { ic: '🎲', nom: 'Aralash', ids: OQ.concat(YZ, TJ) }, oqish: { ic: '📖', nom: "O'qish", ids: OQ }, yozish: { ic: '✍️', nom: 'Yozish', ids: YZ },
   tajvid: { ic: '📗', nom: 'Tajvid', ids: TJ }, lugat: { ic: '🔤', nom: "Lug'at", ids: ['AQ.1', 'AQ.2', 'AQ.4'] }, daftar: { ic: '📓', nom: 'Daftarga yozish', ids: ['AY.4'] } };
@@ -1759,10 +2041,11 @@ function mavjud(S, ids) {
 /* Ota-ona tasdig'i uchun: har tajvid bo'limining misollari va hukmi */
 const TJ_MISOL = {
   'TJ.1': LOM.map(w => [w, LOMN[lomTur(w)]]), 'TJ.2': NUN.map(d => [d[0], NUNN[nunTur(d[1])]]), 'TJ.3': MIM.map(d => [d[0], MIMN[mimTur(d[1])]]),
-  'TJ.4': QPOS.map(w => [w, 'qalqala bor']).concat(QNEG.map(w => [w, "qalqala yo'q"])), 'TJ.5': MADD.map(d => [d[0], MADDN[d[1]]]), 'TJ.6': GPOS.map(w => [w, "g'unna bor"]).concat(GNEG.map(w => [w, "g'unna yo'q"])) };
+  'TJ.4': QPOS.map(w => [w, 'qalqala bor']).concat(QNEG.map(w => [w, "qalqala yo'q"])), 'TJ.5': MADD.map(d => [d[0], MADDN[d[1]]]), 'TJ.6': GPOS.map(w => [w, "g'unna bor"]).concat(GNEG.map(w => [w, "g'unna yo'q"])),
+  'TJ.7': RAD.map(d => [d.w, `${d.v ? 'Vaqfda: ' : ''}${RAN[d.r.h]} — ${RAS[d.r.sabab]}`]), 'TJ.8': VQ.map(x => [x.b, x.nom]).concat(VQO.map(e => [e.p.map(y => typeof y === 'string' ? y : y.b).join(' '), `${e.m}: ${vq(e.k).nom}`])) };
 /* Maktabgacha bola o'zbekcha savolni o'qiy olmasligi mumkin — har arab savolida kattalarga maslahat */
 OQ.concat(YZ, TJ, ['AY.4']).forEach(id => { const d = gen.reg[id], f0 = d.gen; d.gen = function (q, c) { const it = f0.call(this, q, c); if (c && c.g0 && !it.ota) it.ota = "Savolni o'qib bering — arabchasini bolaning o'zi o'qisin."; return it; }; });
-BJ.arab = { QADAM, BOLIM, mavjud, skelet, harflar, hn, yaqin, IBR, DARS, TJ_MISOL, LOM, NUN, MIM, QPOS, QNEG, MADD, GPOS, GNEG, lomTur, nunTur, mimTur, OQ, YZ, TJ };
+BJ.arab = { raHukm, RA, RAV, RAD, RAN, RAS, VQ, VQO, QADAM, BOLIM, mavjud, skelet, harflar, hn, yaqin, IBR, DARS, TJ_MISOL, LOM, NUN, MIM, QPOS, QNEG, MADD, GPOS, GNEG, lomTur, nunTur, mimTur, OQ, YZ, TJ };
 })(typeof window !== 'undefined' ? window : globalThis);
 
 </script>
@@ -2104,6 +2387,7 @@ function vis(v) {
     case 'emoji': return `<div class="bigemo">${v.e}</div>`;
     case 'harflar': return `<div class="hqator">${v.s.map(x => `<span><i style="${x.st || ''}">${String(x.h).replace(/[<>&"]/g, '')}</i></span>`).join('')}</div>`;
     case 'arab': return `<div class="arab big${String(v.t).length > 9 ? ' uzun' : ''}" dir="rtl" lang="ar">${esc(v.t)}</div>`;
+    case 'vaqf': return `<div class="vqv${(v.p || []).length > 1 ? ' oyt' : ''}" dir="rtl" lang="ar">${(v.p || []).map(x => typeof x === 'string' ? `<span class="arab">${esc(x)}</span>` : vqb(x)).join(' ')}</div>`;
     case 'taroz': return `<svg viewBox="0 0 200 80" class="vis"><path d="M100 70 L100 20 M40 24 L160 16" stroke="#5D4037" stroke-width="4"/><path d="M90 74 h20" stroke="#5D4037" stroke-width="6"/><path d="M20 30 h44 l-6 10 h-32z M136 22 h44 l-6 10 h-32z" fill="#FFCC80" stroke="#5D4037"/>${Array.from({ length: v.m }, (_, i) => emo(30 + i * 13, 24, v.e1, 12)).join('')}${emo(158, 16, v.e2, 14)}</svg>`;
     case 'katak': { let s = ''; for (let i = 0; i <= v.m; i++) s += `<path d="M${10 + i * 80 / v.m} 10 v80 M10 ${10 + i * 80 / v.m} h80" stroke="#37474F" stroke-width="2"/>`; return `<svg viewBox="0 0 100 100" class="vis" style="max-width:150px">${s}</svg>`; }
   }
@@ -2134,7 +2418,68 @@ function race(dunyo, d, opts) {
     if (t > 5200) { c.save(); c.globalAlpha = Math.min(1, (t - 5200) / 400); c.font = `900 ${Math.round(W * 0.09)}px system-ui, sans-serif`; c.textAlign = 'center'; c.fillStyle = '#fff'; c.strokeStyle = '#1A1A1A'; c.lineWidth = 5; c.strokeText(opts.txt || "G'ALABA!", W / 2, H * 0.55); c.fillText(opts.txt || "G'ALABA!", W / 2, H * 0.55); c.restore(); }
   });
 }
-BJ.art = { dragon, car, pegasus, island, vis, shapeSvg, race, nextReward, decor, DETAL, SH, svgImg, RANGLAR, icon, ICON_KEYS, shade, KZ, gdefs };
+/* 0.7.0 3-bosqich: 🌍 kashfiyot kartasi uchun realistik sahna-fonlar (8 ta kat) — qatlamli gradientlar, yorug'lik, sekin animatsiya (.ksc.low va reduced-motion'da o'chadi). Ajdar YO'Q. */
+function kashfSahna(kat) {
+  const id = 'ks' + (kat || 'x'), u = n => `url(#${id}${n})`;
+  const lg = (n, st, x2) => `<linearGradient id="${id}${n}" x1="0" y1="0" x2="${x2 ? 1 : 0}" y2="${x2 ? 0 : 1}">${st.map(([o, c, op]) => `<stop offset="${o}" stop-color="${c}"${op != null ? ` stop-opacity="${op}"` : ''}/>`).join('')}</linearGradient>`;
+  const rg = (n, st, cx, cy, r) => `<radialGradient id="${id}${n}" cx="${cx == null ? 0.5 : cx}" cy="${cy == null ? 0.5 : cy}" r="${r || 0.5}">${st.map(([o, c, op]) => `<stop offset="${o}" stop-color="${c}"${op != null ? ` stop-opacity="${op}"` : ''}/>`).join('')}</radialGradient>`;
+  const blur = (n, s) => `<filter id="${id}${n}" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="${s}"/></filter>`;
+  let sd = 7; const rnd = () => (sd = (sd * 16807) % 2147483647) / 2147483647;
+  let d = '', s = '';
+  switch (kat) {
+    case 'kosmos': {
+      d = rg('a', [[0, '#2A2470'], [0.55, '#120E3A'], [1, '#05040F']], 0.3, 0.2, 0.9) + rg('p', [[0, '#7FD3FF'], [0.45, '#2D6BD8'], [1, '#0B1A4A']], 0.35, 0.3, 0.75) + rg('g', [[0, '#7FD3FF', 0.55], [1, '#7FD3FF', 0]]) + blur('b', 14);
+      s = `<rect width="360" height="200" fill="${u('a')}"/><ellipse cx="90" cy="70" rx="120" ry="46" fill="#7B4DFF" opacity=".28" filter="${u('b')}"/><ellipse cx="230" cy="40" rx="90" ry="30" fill="#00BFA5" opacity=".18" filter="${u('b')}"/>`;
+      for (let i = 0; i < 46; i++) { const x = rnd() * 360, y = rnd() * 200, r = 0.4 + rnd() * 1.3; s += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(2)}" fill="#fff" opacity="${(0.35 + rnd() * 0.65).toFixed(2)}"${i % 5 === 0 ? ` class="ks-tw" style="animation-delay:${(rnd() * 3).toFixed(2)}s"` : ''}/>`; }
+      s += `<circle cx="318" cy="182" r="96" fill="${u('g')}"/><circle cx="318" cy="182" r="74" fill="${u('p')}"/><path d="M250 170 Q318 150 386 170" stroke="#BFE8FF" stroke-opacity=".25" stroke-width="3" fill="none"/><ellipse cx="318" cy="182" rx="118" ry="20" fill="none" stroke="#E6D7A8" stroke-opacity=".55" stroke-width="5" transform="rotate(-14 318 182)"/>`;
+      s += `<g class="ks-uch"><path d="M-20 30 l40 12" stroke="#fff" stroke-width="1.6" stroke-linecap="round" opacity=".8"/></g>`; break; }
+    case 'osmon': {
+      d = lg('a', [[0, '#3C8DD6'], [0.6, '#8FC8F0'], [1, '#E3F3FF']]) + rg('s', [[0, '#FFFDE7'], [0.25, '#FFE082', 0.9], [1, '#FFE082', 0]]) + blur('b', 5) + lg('c', [[0, '#FFFFFF'], [1, '#D6E4F2']]);
+      s = `<rect width="360" height="200" fill="${u('a')}"/><circle cx="292" cy="44" r="70" fill="${u('s')}"/><circle cx="292" cy="44" r="18" fill="#FFFDE7"/>`;
+      const cl = (x, y, k, cls) => `<g class="${cls}" transform="translate(${x} ${y}) scale(${k})"><ellipse cx="0" cy="14" rx="62" ry="12" fill="#9DB4CC" opacity=".35" filter="${u('b')}"/><circle cx="-30" cy="0" r="20" fill="${u('c')}"/><circle cx="0" cy="-12" r="28" fill="${u('c')}"/><circle cx="32" cy="2" r="20" fill="${u('c')}"/><rect x="-50" y="0" width="100" height="18" rx="9" fill="${u('c')}"/></g>`;
+      s += cl(70, 70, 1, 'ks-bul') + cl(210, 130, 0.8, 'ks-bul2') + cl(330, 150, 0.6, 'ks-bul') + `<path d="M0 200 Q90 170 180 186 T360 178 V200Z" fill="#DCEFFB" opacity=".8"/>`; break; }
+    case 'suv': {
+      d = lg('a', [[0, '#2BA6D9'], [0.45, '#0F5E8C'], [1, '#062A44']]) + lg('r', [[0, '#FFFFFF', 0.35], [1, '#FFFFFF', 0]]) + blur('b', 4);
+      s = `<rect width="360" height="200" fill="${u('a')}"/>`;
+      [[40, 70], [120, 60], [210, 80], [300, 64]].forEach(([x, w], i) => { s += `<polygon class="ks-nur" style="animation-delay:${i * 0.8}s" points="${x},0 ${x + w * 0.4},0 ${x + w + 40},200 ${x + 10},200" fill="${u('r')}" filter="${u('b')}"/>`; });
+      s += `<path d="M0 10 Q30 4 60 10 T120 10 T180 10 T240 10 T300 10 T360 10 V0 H0Z" fill="#BDEBFF" opacity=".5"/>`;
+      for (let i = 0; i < 12; i++) { const x = 20 + rnd() * 320, r = 1.5 + rnd() * 4; s += `<circle class="ks-puf" style="animation-delay:${(rnd() * 6).toFixed(2)}s" cx="${x.toFixed(1)}" cy="${(120 + rnd() * 80).toFixed(1)}" r="${r.toFixed(1)}" fill="none" stroke="#E1F5FE" stroke-opacity=".7"/>`; }
+      s += `<path d="M0 200 V176 Q40 164 80 174 T160 170 T240 178 T320 168 T360 172 V200Z" fill="#04192B"/><path d="M40 176 q-6 -26 4 -48 M48 176 q8 -22 -2 -40 M300 172 q-8 -30 6 -56 M312 172 q6 -18 -4 -34" stroke="#0E3B2E" stroke-width="5" fill="none" stroke-linecap="round"/>`; break; }
+    case 'tabiat': {
+      d = lg('a', [[0, '#8FCDEB'], [0.7, '#D9F1E4'], [1, '#EAF7EE']]) + lg('h', [[0, '#3E8E4F'], [1, '#1E5B2C']]) + rg('s', [[0, '#FFFDE7', 0.95], [1, '#FFF59D', 0]]) + blur('b', 3);
+      s = `<rect width="360" height="200" fill="${u('a')}"/><circle cx="56" cy="38" r="60" fill="${u('s')}"/><path d="M0 120 Q80 86 170 112 T360 96 V200 H0Z" fill="#9CCB9F" opacity=".75" filter="${u('b')}"/><path d="M0 150 Q100 112 210 140 T360 128 V200 H0Z" fill="#5FA066"/>`;
+      [[250, 128, 1], [292, 122, 1.25], [330, 130, 0.9], [70, 146, 0.8]].forEach(([x, y, k]) => { s += `<g transform="translate(${x} ${y}) scale(${k})"><rect x="-3" y="-4" width="6" height="26" fill="#4E342E"/><circle cx="0" cy="-16" r="16" fill="#2E7D32"/><circle cx="-10" cy="-8" r="11" fill="#388E3C"/><circle cx="10" cy="-9" r="12" fill="#1B5E20"/><circle cx="-4" cy="-22" r="7" fill="#66BB6A" opacity=".6"/></g>`; });
+      s += `<path d="M0 172 Q120 150 240 168 T360 160 V200 H0Z" fill="${u('h')}"/>`;
+      for (let i = 0; i < 40; i++) { const x = rnd() * 360; s += `<path d="M${x.toFixed(1)} 200 q${(rnd() * 4 - 2).toFixed(1)} -${(8 + rnd() * 10).toFixed(1)} ${(rnd() * 6 - 3).toFixed(1)} -${(14 + rnd() * 10).toFixed(1)}" stroke="#14421F" stroke-width="1.4" fill="none"/>`; } break; }
+    case 'hayvon': {
+      d = lg('a', [[0, '#F2A65A'], [0.55, '#F7D59C'], [1, '#FBEBCB']]) + rg('s', [[0, '#FFF3C4'], [0.35, '#FFCA6B', 0.9], [1, '#FFB74D', 0]]) + lg('g', [[0, '#C9A15E'], [1, '#7E5C2E']]);
+      s = `<rect width="360" height="200" fill="${u('a')}"/><circle cx="110" cy="118" r="90" fill="${u('s')}"/><circle cx="110" cy="118" r="26" fill="#FFF1C1"/><path d="M0 136 Q60 128 120 134 T240 130 T360 136 V200 H0Z" fill="#B7864A" opacity=".55"/><path d="M0 150 Q90 140 180 148 T360 144 V200 H0Z" fill="${u('g')}"/>`;
+      s += `<g fill="#2E1F12"><path d="M262 150 q4 -30 -2 -52 l5 0 q4 22 3 52Z"/><path d="M262 104 q-30 -6 -52 2 q20 -14 52 -10 q30 -8 58 6 q-26 -4 -58 2Z"/><ellipse cx="262" cy="94" rx="58" ry="9"/><ellipse cx="238" cy="99" rx="30" ry="6"/><ellipse cx="290" cy="98" rx="32" ry="6"/></g>`;
+      s += `<g fill="#3B2A18" opacity=".8"><ellipse cx="40" cy="146" rx="16" ry="5"/><path d="M28 146 l-2 10 M34 147 l-1 9 M46 147 l1 9 M52 146 l2 10" stroke="#3B2A18" stroke-width="2"/><path d="M54 140 l10 -14 l3 2 l-8 14Z"/></g>`;
+      for (let i = 0; i < 46; i++) { const x = rnd() * 360; s += `<path d="M${x.toFixed(1)} 200 l${(rnd() * 4 - 2).toFixed(1)} -${(10 + rnd() * 14).toFixed(1)}" stroke="#6B4B22" stroke-width="1.2"/>`; } break; }
+    case 'tana': {
+      d = lg('a', [[0, '#E8FBFD'], [0.6, '#B9EEF3'], [1, '#86DCE6']]) + `<pattern id="${id}p" width="24" height="41.6" patternUnits="userSpaceOnUse"><path d="M12 0 L24 6.93 L24 20.8 L12 27.7 L0 20.8 L0 6.93Z M12 27.7 V41.6" fill="none" stroke="#00838F" stroke-opacity=".13" stroke-width="1"/></pattern>` + blur('b', 9) + blur('g', 2.2);
+      s = `<rect width="360" height="200" fill="${u('a')}"/><rect width="360" height="200" fill="${u('p')}"/><circle cx="70" cy="60" r="40" fill="#FF8A80" opacity=".22" filter="${u('b')}"/><circle cx="290" cy="150" r="54" fill="#26C6DA" opacity=".25" filter="${u('b')}"/><circle cx="210" cy="40" r="26" fill="#F48FB1" opacity=".2" filter="${u('b')}"/>`;
+      const ecg = 'M0 130 H90 l8 -6 l8 6 H130 l6 10 l10 -64 l10 80 l8 -26 H200 l10 -8 l12 8 H360';
+      s += `<path d="${ecg}" stroke="#00ACC1" stroke-width="5" fill="none" opacity=".35" filter="${u('g')}"/><path class="ks-ekg" d="${ecg}" stroke="#00838F" stroke-width="2.4" fill="none" stroke-linejoin="round" stroke-dasharray="520" stroke-dashoffset="520"/>`; break; }
+    case 'texnika': {
+      d = lg('a', [[0, '#123A66'], [1, '#081C36']]) + `<pattern id="${id}p" width="12" height="12" patternUnits="userSpaceOnUse"><path d="M12 0 H0 V12" fill="none" stroke="#4FC3F7" stroke-opacity=".12" stroke-width=".6"/></pattern><pattern id="${id}q" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M60 0 H0 V60" fill="none" stroke="#4FC3F7" stroke-opacity=".28" stroke-width="1"/></pattern>` + rg('g', [[0, '#4FC3F7', 0.3], [1, '#4FC3F7', 0]]);
+      s = `<rect width="360" height="200" fill="${u('a')}"/><rect width="360" height="200" fill="${u('p')}"/><rect width="360" height="200" fill="${u('q')}"/><circle cx="290" cy="70" r="110" fill="${u('g')}"/>`;
+      const gear = (x, y, r, cls) => `<g transform="translate(${x} ${y})"><g class="${cls}"><circle r="${r}" fill="none" stroke="#81D4FA" stroke-opacity=".6" stroke-width="${(r * 0.32).toFixed(1)}" stroke-dasharray="${(r * 0.36).toFixed(1)} ${(r * 0.36).toFixed(1)}"/><circle r="${(r * 0.78).toFixed(1)}" fill="#0E2A4C" stroke="#81D4FA" stroke-opacity=".7" stroke-width="2"/><circle r="${(r * 0.22).toFixed(1)}" fill="none" stroke="#B3E5FC" stroke-width="2"/><path d="M-${(r * 0.7).toFixed(1)} 0 H${(r * 0.7).toFixed(1)} M0 -${(r * 0.7).toFixed(1)} V${(r * 0.7).toFixed(1)}" stroke="#81D4FA" stroke-opacity=".5" stroke-width="1.5"/></g></g>`;
+      s += gear(286, 76, 42, 'ks-tish') + gear(226, 132, 26, 'ks-tish2') + gear(330, 152, 20, 'ks-tish2');
+      s += `<path d="M20 160 H120 V120 H170 M20 40 H80 V80" stroke="#B3E5FC" stroke-opacity=".45" stroke-width="1.6" fill="none"/><circle cx="170" cy="120" r="3.5" fill="#B3E5FC"/><circle cx="80" cy="80" r="3.5" fill="#B3E5FC"/>`; break; }
+    case 'yer': default: {
+      d = lg('a', [[0, '#2A1A33'], [0.5, '#7A3A2C'], [1, '#E07A3F']]) + rg('l', [[0, '#FFE082'], [0.4, '#FF7043', 0.9], [1, '#FF3D00', 0]]) + lg('m', [[0, '#5D4037'], [1, '#2B1A12']]) + blur('b', 6);
+      s = `<rect width="360" height="200" fill="${u('a')}"/><path d="M0 140 L60 112 L120 132 L190 100 L260 128 L360 108 V200 H0Z" fill="#4E2F28" opacity=".7"/>`;
+      s += `<circle class="ks-lava" cx="250" cy="66" r="44" fill="${u('l')}" filter="${u('b')}"/><path d="M170 200 L232 72 Q250 62 268 72 L340 200Z" fill="${u('m')}"/><path d="M236 74 Q250 66 264 74 L258 82 Q250 78 242 82Z" fill="#FF8A50"/><path d="M246 80 q-6 30 -18 48 q-6 12 -16 20" stroke="#FF7043" stroke-width="4" fill="none" stroke-linecap="round" opacity=".9"/><path d="M256 82 q6 24 14 40" stroke="#FFAB40" stroke-width="3" fill="none" stroke-linecap="round" opacity=".8"/>`;
+      s += `<g class="ks-tutun" opacity=".55"><circle cx="250" cy="44" r="14" fill="#5D4D4A" filter="${u('b')}"/><circle cx="262" cy="26" r="18" fill="#4A3C3A" filter="${u('b')}"/><circle cx="244" cy="10" r="20" fill="#3E3230" filter="${u('b')}"/></g>`;
+      s += `<path d="M0 176 Q90 166 180 172 T360 168 V200 H0Z" fill="#3B2418"/><path d="M0 184 Q100 178 200 184 T360 182" stroke="#8D5A3B" stroke-width="2" fill="none" opacity=".6"/><path d="M0 192 Q120 186 240 192 T360 190" stroke="#A86B45" stroke-width="2" fill="none" opacity=".5"/>`; break; }
+  }
+  return `<svg class="ksc-svg" viewBox="0 0 360 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs>${d}</defs>${s}</svg>`;
+}
+/* 🕌 TJ.8 vaqf belgisi — alohida nishon (Qur'on belgilari shriftga bog'liq, shuning uchun oddiy harf bilan chiziladi) */
+function vqb(x) { return `<span class="vqb vq-${x.k || 'x'}" title="${esc(x.nom || '')}"><i dir="rtl" lang="ar">${esc(x.b)}</i></span>`; }
+BJ.art = { kashfSahna, vqb, dragon, car, pegasus, island, vis, shapeSvg, race, nextReward, decor, DETAL, SH, svgImg, RANGLAR, icon, ICON_KEYS, shade, KZ, gdefs };
 BJ.vis = vis;
 })(typeof window !== 'undefined' ? window : globalThis);
 
@@ -2186,7 +2531,7 @@ Object.assign(A, { FAN, ZANJIR, BOSH, DARAJA, gl, BLOK, MANT_KUN, UZUN, XATO, TU
 /* ================= STORE ================= */
 const KEY = 'bj_state_v1'; /* HECH QACHON o'zgarmaydi: yangi versiya eski holatni migrate() bilan yangilaydi */
 const SV = 1;
-function defaults() { return { v: SV, oila: null, pin: null, pinOta: null, sozlama: { ovoz: 0.8, kamEffekt: 'auto', tanaffus: 20, oyinHar: 5, oyinDaq: 3, uyqu: '21:00', reyting: true, tjTasdiq: {}, sandiq: { bronza: 40, kumush: 90, oltin: 150, olmos: 220 }, arTasdiq: {}, alifTasdiq: false, pul: true, byudjet: 50000, kassa: true, zal: 10, bozor: true, bozorXoh: true }, bolalar: {}, tartib: [], joriy: null, duel: {}, oilaTel: {}, sovga: [], dokon: [], bozor: null, qurilma: null, lastBackup: null, seenVer: null, appVer: null }; }
+function defaults() { return { v: SV, oila: null, pin: null, pinOta: null, sozlama: { ovoz: 0.8, kamEffekt: 'auto', tanaffus: 20, oyinHar: 5, oyinDaq: 3, uyqu: '21:00', reyting: true, tjTasdiq: {}, sandiq: { bronza: 40, kumush: 90, oltin: 150, olmos: 220 }, arTasdiq: {}, alifTasdiq: false, pul: true, byudjet: 50000, kassa: true, zal: 10, bozor: true, bozorXoh: true, kashfUy: true }, bolalar: {}, tartib: [], joriy: null, duel: {}, oilaTel: {}, sovga: [], dokon: [], bozor: null, qurilma: null, lastBackup: null, seenVer: null, appVer: null }; }
 let S = load(); A.storageOK = true;
 /* Xotira tekshiruvi: brauzer yozishga ruxsat beradimi va ilova begona sayt ichida (sinov havolasi) ochilganmi */
 A.storageProbe = (function () { try { const k = 'bj_probe'; localStorage.setItem(k, String(Date.now())); const ok = !!localStorage.getItem(k); localStorage.removeItem(k); return ok; } catch (e) { return false; } })();
@@ -2222,7 +2567,7 @@ function logMerge(id, k, extra) { const key = logKey(id, k), a = readLog(id, k),
 Object.assign(A, { readLog, pushLog, flushLog, logKeys, pruneLogs, weekLog, logMerge, LOGP });
 addEventListener('pagehide', () => { flushLog(); save(true); });
 /* ================= BOLA ================= */
-function bolaDefaults() { return { id: null, kod: '', laqab: '', avatar: '🦊', daraja: 'g1', arab: 'asosiy', dunyo: null, muxlisga: true, yaratildi: null, boshlandi: null, mavzu: {}, fan: {}, harfK: 2, harfKun: null, harfSt: {}, tugun: {}, takror: [], yulduz: 0, yulduzKun: {}, arenaYulduz: {}, detal: [], kun: {}, wcpm: [], missiya: null, reja: null, shosh: false, me: {}, olqish: [], oqilgan: [], oyin: {}, arDaraja: 1, fokus: '', vazifa: [], kunDaq: null, oyinHar: null, oyinDaq: null, qoshDaq: {}, uyquOchiq: 0, komboMax: 0, kons: null, pul: null, uslub: '', xarita: null, zal: null, bozor: null }; }
+function bolaDefaults() { return { id: null, kod: '', laqab: '', avatar: '🦊', daraja: 'g1', arab: 'asosiy', dunyo: null, muxlisga: true, yaratildi: null, boshlandi: null, mavzu: {}, fan: {}, harfK: 2, harfKun: null, harfSt: {}, tugun: {}, takror: [], yulduz: 0, yulduzKun: {}, arenaYulduz: {}, detal: [], kun: {}, wcpm: [], missiya: null, reja: null, shosh: false, me: {}, olqish: [], oqilgan: [], oyin: {}, arDaraja: 1, fokus: '', vazifa: [], kunDaq: null, oyinHar: null, oyinDaq: null, qoshDaq: {}, uyquOchiq: 0, komboMax: 0, kons: null, pul: null, uslub: '', xarita: null, zal: null, bozor: null, kashfUy: [], uch: null }; }
 function newBola(o) {
   const b = fixBola(Object.assign(bolaDefaults(), o)); b.id = b.id || 'b' + rid(7).toLowerCase(); b.yaratildi = todayKey();
   if (!b.kod) { const n = Object.keys(S.bolalar).length + 1; b.kod = ({ g0: 'K', g1: 'B', g2: 'I', g3: 'U', g4: 'T' }[b.daraja] || 'B') + n; }
@@ -2366,7 +2711,9 @@ function duelWords(sana) {
   const main = ok.filter(w => w.m === topic), rest = ok.filter(w => w.m !== topic).sort(() => r() - 0.5);
   return main.sort(() => r() - 0.5).concat(rest).slice(0, Math.min(10, ok.length)).map(w => w.w);
 }
-function kashfOfDay(b) { const D = dayNo(b); const list = B.kashf; return list[((D - 1) % list.length + list.length) % list.length]; }
+function kashfOfDay(b, D0) { const D = D0 || dayNo(b); const list = B.kashf; return list[((D - 1) % list.length + list.length) % list.length]; }
+/* 0.7.0: yakshanba viktorinasi — shu haftaning mavzulari (D−6…D−1), takrorsiz */
+function haftaKashf(b) { const D = dayNo(b), ids = []; for (let j = 6; j >= 1; j--) if (D - j >= 1) { const id = kashfOfDay(b, D - j).id; if (!ids.includes(id)) ids.push(id); } return ids.length ? ids : [kashfOfDay(b).id]; }
 /* Kunlik missiya qadamlari */
 function buildMission(b) {
   const L = gl(b.daraja), D = dayNo(b), steps = [], final = A.isSunday() && D >= 3;
@@ -2396,7 +2743,7 @@ function buildFinal(b) {
 }
 /* Yakshanba finali uchun hafta tugunlari */
 function weekNodes(b) { const days = weekDays(isoWeek()); const ids = Object.keys(b.tugun).filter(id => days.some(d => b.tugun[id].kun[d]) && gen.reg[id] && !['KASHF', 'OL'].includes(id) && gen.reg[id].fan !== 'ar'); return ids.length ? ids : Object.keys(b.tugun).filter(id => gen.reg[id] && gen.reg[id].fan === 'mat'); }
-Object.assign(A, { kechaCharch, arPick, arMavjud, buildMission, buildFinal, pickNode, makeItem, letterProgress, knownLetters, harfDaraja, harfTanla, pickLetters, dueReview, duelWords, kashfOfDay, isSunday, weekNodes, letterNode });
+Object.assign(A, { kechaCharch, arPick, arMavjud, buildMission, buildFinal, pickNode, makeItem, letterProgress, knownLetters, harfDaraja, harfTanla, pickLetters, dueReview, duelWords, kashfOfDay, haftaKashf, isSunday, weekNodes, letterNode });
 /* ================= MUKOFOT, YULDUZ, SANDIQ ================= */
 function addStar(b, n, arena) { const k = todayKey(); if (arena) { const a = b.arenaYulduz[k] || 0; n = Math.max(0, Math.min(n, 20 - a)); b.arenaYulduz[k] = a + n; } if (!n) return 0; b.yulduz += n; b.yulduzKun[k] = (b.yulduzKun[k] || 0) + n; agg(b).yulduz += n; return n; }
 function weekStars(b, wk) { return sum(weekDays(wk || isoWeek()).map(k => b.yulduzKun[k] || 0)); }
@@ -2680,7 +3027,7 @@ function screenHome(b) {
   app.innerHTML = `<div class="wrap kidw"><div class="top"><button class="ib av" data-tanla aria-label="Bola almashtirish">${b.avatar}</button><div class="ttl">${esc(b.laqab)}<br>${A.verBadge()}</div><span class="sp"></span><span class="pill">⭐ ${b.yulduz}</span><span class="pill">${sq.ic}</span><button class="ib" data-ota aria-label="Ota-ona paneli">👨‍👩‍👧</button></div>
   ${A.xarita ? A.xarita.html(b) : worldScene(b, true)}<div class="bubble">${esc(A.xarita && A.xarita.qutRoyxat(b).length ? "Tumanli bekat bor — 🛟 qutqaramizmi?" : done ? 'Bugungi missiya bajarildi! Arenada mashq qilsang ham bo\'ladi.' : going ? 'Missiya kutib turibdi — davom etamiz!' : A.isSunday() && A.dayNo(b) >= 3 ? 'Bugun yakshanba — KATTA FINAL!' : 'Salom! Bugungi missiyaga tayyormisan?')}</div>
   <div class="row cta">${done ? `<button class="btn big alt" data-arena>⚔️ Arena</button>` : `<button class="btn big" data-start>${going ? '▶ Davom etish' : A.isSunday() && A.dayNo(b) >= 3 ? '🏆 Finalni boshlash' : '🚀 Missiyani boshlash'}</button>`}</div>
-  ${A.xarita ? A.xarita.qutTugma(b) : ''}<div class="row"><button class="btn ghost" data-mashq>📚 Mashq — fanni o'zing tanla</button></div>${A.bozor ? A.bozor.uyHTML(b) : ''}${A.zal ? A.zal.tugma(b) : ''}${A.garajTugma ? `<div class="row">${A.garajTugma(b)}</div>` : ''}${A.pul ? A.pul.uyHTML(b) : ''}${sovgaHTML(b)}${vazifaHTML(b)}
+  ${A.xarita ? A.xarita.qutTugma(b) : ''}<div class="row"><button class="btn ghost" data-mashq>📚 Mashq — fanni o'zing tanla</button></div>${A.bozor ? A.bozor.uyHTML(b) : ''}${A.zal ? A.zal.tugma(b) : ''}${A.garajTugma ? `<div class="row">${A.garajTugma(b)}</div>` : ''}${A.pul ? A.pul.uyHTML(b) : ''}${sovgaHTML(b)}${kashfUyHTML(b)}${vazifaHTML(b)}
   <div class="stats"><div><b>⭐ ${t.yulduz}</b><span>bugun</span></div><div><b>⏱ ${Math.round(t.faol / 60)}</b><span>daqiqa</span></div><div><b>${b.detal.length}</b><span>${b.dunyo === 'orol' ? 'bezak' : 'detal'}</span></div></div>
   ${vaqtHTML(b)}${kechagi(b) ? `<div class="note kn">${esc(kechagi(b))}</div>` : ''}
   ${b.detal.length ? `<div class="coll">${b.detal.slice(-12).map(r => `<span title="${esc(r.nom || '')}">${ART.icon(r.k, { s: 34, rang: carRang(b) }) || r.ic || '🔩'}</span>`).join('')}</div>` : ''}
@@ -2696,7 +3043,7 @@ function screenHome(b) {
   if (A.zal) A.zal.bindTugma(b);
   if (A.bozor) A.bozor.bindUy(b);
   const dkb = $('[data-dokon]'); if (dkb) dkb.onclick = () => go('dokon');
-  $$('[data-vz]').forEach(x => x.onclick = () => go('vazifa-' + x.dataset.vz));
+  $$('[data-vz]').forEach(x => x.onclick = () => go('vazifa-' + x.dataset.vz)); bindKashfUy(b);
   $$('[data-vzok]').forEach(x => x.onclick = () => { const v = (b.vazifa || []).find(y => y.id === x.dataset.vzok); if (!v) return; v.done = true; v.qolda = 1; v.doneTs = Date.now(); v.doneSana = A.todayKey(); A.addStar(b, 2); A.pushLog(b.id, { t: 'vazifa', ts: Date.now(), bola: b.id, id: v.id, fan: v.fan, n: 0, qolda: 1 }); const pv = A.pul ? A.pul.vazifa(b) : 0; A.save(true); FX.play('ding'); toast('✅ Barakalla! +2 ⭐' + (pv ? ' · 💵 +' + A.pul.som(pv) : '')); screenHome(b); });
 }
 /* ================= OVOZ (ingliz — telefon TTS) ================= */
@@ -2734,7 +3081,7 @@ function frame(b, m, title, body) {
   <div class="road"><div class="rfill" style="width:${Math.round(p * 100)}%"></div><span class="rcar svgc" style="left:calc(${Math.round(p * 100)}% - 26px)">${roadHero(b)}</span><span class="rflag">${ART.icon(b.dunyo === 'orol' ? 'qasr' : 'marra', { s: 26 })}</span></div>${m.final && A.xarita ? A.xarita.devBar(b, m) : ''}<div id="stage">${body}</div></div>`;
   $('[data-pause]').onclick = () => { endSession(b); go('uy'); };
 }
-function stepTitle(st) { if (st.arBolim) return "🕌 Arab: o'qish · yozish · tajvid"; const F = A.FAN[st.fan]; return ({ isinish: '🔥 Isinish', qayta: "💥 Qayta yig'", oqish: "⏱ 1 daqiqa o'qish", duel: '⚔️ Arab dueli', kashf: '🌍 Kun kashfiyoti', final15: '🏆 Yakshanba finali', turnir: '🧠 Olimpiada turniri', viktorina: '🌍 Hafta viktorinasi', yakun: '🏁 Final poyga' })[st.k] || (F ? F.ic + ' ' + F.nom : st.k); }
+function stepTitle(st) { if (st.arBolim) return "🕌 Arab: o'qish · yozish · tajvid"; const F = A.FAN[st.fan]; return ({ isinish: '🔥 Isinish', qayta: "💥 Qayta yig'", oqish: "📖 Uch marta o'qish", duel: '⚔️ Arab dueli', kashf: '🌍 Kun kashfiyoti', final15: '🏆 Yakshanba finali', turnir: '🧠 Olimpiada turniri', viktorina: '🌍 Hafta viktorinasi', yakun: '🏁 Final poyga' })[st.k] || (F ? F.ic + ' ' + F.nom : st.k); }
 function stepRun(b, m) {
   if (m.si >= m.steps.length) { m.done = true; A.save(true); return go('natija'); }
   const st = m.steps[m.si], res = m.res[m.si] || (m.res[m.si] = []);
@@ -2743,7 +3090,7 @@ function stepRun(b, m) {
   if (st.k === 'duel' && !st.boshlandi) return stepDuelIntro(b, m, st);
   if (st.k === 'yakun') return stepYakun(b, m, st);
   const n = st.k === 'kashf' ? (st.savollar || 1) : st.k === 'duel' ? (st.sozlar || []).length : st.k === 'qayta' ? 1 : st.n;
-  if (res.length >= n) { m.si++; m.cur = null; A.save(true); return stepRun(b, m); }
+  if (res.length >= n) { if (st.k === 'kashf' && !st.uyKor && kashfUyMumkin(b, m, st)) return stepKashfUy(b, m, st); m.si++; m.cur = null; A.save(true); return stepRun(b, m); }
   if (!m.cur || m.cur.si !== m.si) { const q = st.qoldi; if (q) delete st.qoldi; m.cur = { si: m.si, item: q || nextItem(b, m, st, res.length) }; }
   showItem(b, m, st, m.cur.item);
 }
@@ -2753,11 +3100,11 @@ function nextItem(b, m, st, i) {
   if (st.k === 'isinish') { const rev = A.dueReview(b), yest = Object.keys(b.tugun).filter(id => b.tugun[id].kun[A.addDays(A.todayKey(), -1)] && gen.reg[id] && !['KASHF', 'OL'].includes(id)); const pool = rev.length ? rev : yest.map(id => ({ tugun: id, q: b.tugun[id].q, tur: 'takror' })); sel = pool.length ? pool[i % pool.length] : { tugun: (b.fan.mat || {}).cur || 'M0.3', q: 1, tur: 'missiya' }; sel = Object.assign({}, sel, { tur: sel.tur === 'takror' ? 'takror' : 'missiya' }); }
   else if (st.k === 'blok') { sel = (st.olimp && i === st.n - 1) ? { tugun: 'OL', q: A.gl(b.daraja) === 'g0' ? 1 : A.gl(b.daraja) === 'g1' ? 2 : 3, tur: 'olimp' } : A.pickNode(b, st.fan, { mantTypes: st.mantTypes, i, bolim: st.arBolim }); }
   else if (st.k === 'qayta') { const it = gen.make('L.10', 2, { dunyo: b.dunyo }); const f = BJ.FIG.mashina; it.fig = 'mashina'; it.qism = f.p.map((p, j) => ({ id: 'p' + j, sh: p[0], x: p[1], y: p[2], w: p[3], h: p[4], rang: ART.RANGLAR[(b.detal.length + j) % ART.RANGLAR.length] })); it.sav = "💥 Sinov poygasi: mashina devorga urilib parchalandi! Detallarni joyiga sudrab qayta yig'!"; it.tur = 'missiya'; it.fan = 'mant'; return it; }
-  else if (st.k === 'kashf') { sel = { tugun: 'KASHF', q: qOfGrade(b), tur: 'kashf', kashfId: st.id, kashfSavol: i }; }
+  else if (st.k === 'kashf') { sel = { tugun: 'KASHF', q: qOfGrade(b), tur: 'kashf', kashfId: st.id, kashfSavol: (st.ksi || 0) + i }; }
   else if (st.k === 'duel') { const w = BJ.ARW.find(x => x.w === st.sozlar[i]); const it = BJ.arItem(w, 1); it.tugun = 'AR.' + w.m; it.q = 1; it.t = 'tanla'; it.gen = 'AR'; it.tur = 'duel'; it.fan = 'ar'; return it; }
   else if (st.k === 'final15') { if (!st.devIds) { st.devIds = A.xarita ? A.xarita.devTugunlar(b) : A.weekNodes(b); st.devQalqon = A.xarita ? A.xarita.qalqon(b, st.devIds) : null; } const ids = st.devIds.filter(id => gen.reg[id]).length ? st.devIds.filter(id => gen.reg[id]) : A.weekNodes(b); const id = ids[Math.floor(Math.random() * ids.length)]; sel = { tugun: id, q: Math.max(1, A.nodeSt(b, id).q), tur: 'final' }; }
   else if (st.k === 'turnir') sel = { tugun: 'OL', q: qOfGrade(b), tur: 'olimp' };
-  else if (st.k === 'viktorina') { const k = B.kashf[i % B.kashf.length]; sel = { tugun: 'KASHF', q: qOfGrade(b), tur: 'kashf', kashfId: k.id, kashfSavol: Math.floor(i / B.kashf.length) }; }
+  else if (st.k === 'viktorina') { const L = st.kList || (st.kList = A.haftaKashf(b)), k = B.kashf.find(x => x.id === L[i % L.length]) || B.kashf[0]; sel = { tugun: 'KASHF', q: qOfGrade(b), tur: 'kashf', kashfId: k.id, kashfSavol: Math.floor(i / L.length) }; }
   return A.makeItem(b, sel);
 }
 const qOfGrade = b => A.gl(b.daraja) === 'g0' ? 1 : A.gl(b.daraja) === 'g1' ? 2 : 3;
@@ -3417,11 +3764,42 @@ RENDER.daftar = (el, it, b, done, st0) => {
 };
 A.RENDER = RENDER;
 /* ================= MAXSUS QADAMLAR ================= */
+/* 🌍 0.7.0 Kashfiyot 2.0: realistik karta (kat sahnasi + shisha medalyon, ajdar yo'q) → 1 savol → «🏠 Uyda sinab ko'r» */
+const KAT = { kosmos: '🔭 Koinot', osmon: '☁️ Osmon', suv: '🌊 Suv olami', tabiat: '🌿 Tabiat', hayvon: '🐾 Hayvonlar', tana: '🫀 Tanamiz', texnika: '⚙️ Texnika', yer: '🌋 Yer sirlari' };
 function stepKashfCard(b, m, st) {
-  const kk = B.kashf.find(x => x.id === st.id), q = qOfGrade(b), d = kk.d[q - 1]; st.savollar = d.s.length;
-  frame(b, m, stepTitle(st), `<div class="kcard"><div class="kem">${kk.em}</div><h2>${esc(kk.nom)}</h2><p class="ktxt">${esc(d.t)}</p>${q === 1 ? '<div class="note">👨 Kattalar o\'qib bersin, keyin birga gaplashing.</div>' : q === 2 ? '<div class="note">📖 Birga o\'qing.</div>' : ''}
-  <button class="btn ghost" data-en>🔊 ${kk.en[1]} ${esc(kk.en[0])}</button><button class="btn big" data-go>Savollarga o'tish ➜</button></div>${ART.dragon({ dunyo: b.dunyo, scale: 0.6, mood: 'wow' })}`);
+  const kk = B.kashf.find(x => x.id === st.id) || B.kashf[0], q = qOfGrade(b), d = kk.d[q - 1];
+  if (st.savollar == null) { st.savollar = 1; st.ksi = A.dayNo(b) % d.s.length; }
+  frame(b, m, stepTitle(st), `<div class="kcard k2"><div class="ksc${FX.low ? ' low' : ''}">${ART.kashfSahna(kk.kat)}<div class="kmed"><span>${kk.em}</span></div>${kk.kat ? `<div class="kkat">${esc(KAT[kk.kat] || '')}</div>` : ''}</div>
+  <h2>${esc(kk.nom)}</h2><p class="ktxt">${esc(d.t)}</p>${q === 1 ? '<div class="note">👨 Kattalar o\'qib bersin, keyin birga gaplashing.</div>' : q === 2 ? '<div class="note">📖 Birga o\'qing.</div>' : ''}
+  <div class="row"><button class="btn ghost" data-en>🔊 ${kk.en[1]} ${esc(kk.en[0])}</button></div><button class="btn big" data-go>Savolga o'tish ➜</button></div>`);
   $('[data-en]').onclick = () => speak(kk.en[0]); $('[data-go]').onclick = () => { st.oqildi = 1; A.save(); stepRun(b, m); };
+}
+function kashfUyMumkin(b, m, st) { const kk = B.kashf.find(x => x.id === st.id); return !!(kk && kk.uy && A.S().sozlama.kashfUy !== false); }
+function stepKashfUy(b, m, st) {
+  const kk = B.kashf.find(x => x.id === st.id), u = kk.uy, g0 = A.gl(b.daraja) === 'g0';
+  frame(b, m, "🏠 Uyda sinab ko'r", `<div class="card kuy"><div class="kuyh"><span class="kuyi">${kk.em}</span><div><b>🏠 Uyda sinab ko'r!</b><div class="sm mut">${esc(kk.nom)}</div></div></div><p class="ktxt">${esc(u.t)}</p>${g0 ? '<div class="note">👨 Kattalar bilan birga qiling.</div>' : ''}<div class="note kn">📌 Bajarib bo'lgach, uy ekranida «✅ Bajardim»ni bos — +2 ⭐ (7 kun ichida).</div>
+  <button class="btn big" data-ok>📌 Eslab qoldim</button><button class="btn ghost" data-skip>⏭ Bu safar emas</button></div>`);
+  const next = eslab => { if (eslab) A.kashfUyQosh(b, kk.id); st.uyKor = 1; m.si++; m.cur = null; A.save(true); stepRun(b, m); };
+  $('[data-ok]').onclick = () => { FX.play('ding'); toast("📌 Uyda sinab ko'r — keyin «✅ Bajardim»"); next(true); }; $('[data-skip]').onclick = () => next(false);
+}
+/* b.kashfUy: [{ sana, id, holat: 'kut'|'bajardi', ts, javob, bsana }] — ≤ 7 kunlik kutayotganlari uyda ko'rinadi */
+A.kashfUyQosh = function (b, id) { if (!Array.isArray(b.kashfUy)) b.kashfUy = []; const k = A.todayKey(); if (!b.kashfUy.some(x => x.id === id && x.holat === 'kut')) b.kashfUy.push({ sana: k, id, holat: 'kut' }); if (b.kashfUy.length > 30) b.kashfUy.splice(0, b.kashfUy.length - 30); A.pushLog(b.id, { t: 'kashf', ts: Date.now(), bola: b.id, hodisa: 'eslab', id }); };
+A.kashfUyKut = function (b) { if (A.S().sozlama.kashfUy === false || !Array.isArray(b.kashfUy)) return []; const lim = A.addDays(A.todayKey(), -6); return b.kashfUy.filter(x => x.holat === 'kut' && x.sana >= lim && B.kashf.some(k => k.id === x.id && k.uy)); };
+function kashfUyHTML(b) {
+  const L = A.kashfUyKut(b).slice(-2).reverse(); if (!L.length) return '';
+  return L.map(x => { const kk = B.kashf.find(k => k.id === x.id); return `<div class="card kuy kuyc"><div class="kuyh"><span class="kuyi">${kk.em}</span><div><b>🏠 Uy tajribasi</b><div class="sm mut">${esc(kk.nom)}</div></div></div><p class="sm">${esc(kk.uy.t)}</p><button class="btn sm" data-kuy="${esc(x.id)}">✅ Bajardim</button></div>`; }).join('');
+}
+function bindKashfUy(b) {
+  $$('[data-kuy]').forEach(btn => btn.onclick = () => {
+    const e = A.kashfUyKut(b).find(x => x.id === btn.dataset.kuy), kk = B.kashf.find(k => k.id === btn.dataset.kuy); if (!e || !kk) return; const u = kk.uy;
+    sheet(`<h2>${kk.em} ${esc(kk.nom)}</h2><p><b>${esc(u.s[0])}</b></p><div class="kuyo">${u.s.slice(1).map((v, i) => `<button class="btn alt" data-v="${i}">${esc(v)}</button>`).join('')}</div><div id="kuyf"></div>`, el => {
+      $$('[data-v]', el).forEach(o => o.onclick = () => {
+        const i = +o.dataset.v, ok = u.a == null ? null : i === u.a; $$('[data-v]', el).forEach(z => { z.disabled = true; if (u.a != null && +z.dataset.v === u.a) z.classList.add('togri'); }); if (ok === false) o.classList.add('xato');
+        $('#kuyf', el).innerHTML = `<div class="explain">${ok === null ? '👀 Ajoyib kuzatuv!' : ok ? '✅ To\'g\'ri — xuddi olimlardek!' : '🤔 Qiziq natija! Olimlar ham tajribani qayta-qayta qiladi.'}<br>${esc(u.iz)}</div><button class="btn big" data-ol>⭐ +2 olish</button>`;
+        $('[data-ol]', el).onclick = () => { e.holat = 'bajardi'; e.ts = Date.now(); e.javob = i; e.bsana = A.todayKey(); A.addStar(b, 2); A.pushLog(b.id, { t: 'kashf', ts: Date.now(), bola: b.id, hodisa: 'uy', id: kk.id, javob: i, ok }); A.save(true); FX.play('ding'); toast('🏠 Barakalla, tadqiqotchi! +2 ⭐'); closeSheets(); screenHome(b); };
+      });
+    });
+  });
 }
 function stepDuelIntro(b, m, st) {
   const sana = A.todayKey(), w = A.duelWords(sana), s = A.S(); st.sozlar = w;
@@ -3432,6 +3810,7 @@ function stepDuelIntro(b, m, st) {
 }
 /* 1 daqiqalik o'qish — kattalar o'lchaydi (WCPM) */
 function stepOqish(b, m, st) {
+  if (A.uch) return A.uch.step(b, m, st, () => frame(b, m, stepTitle(st), '<div id="oq"></div>'), () => { m.res[m.si] = [{ ok: 1, ms: 0 }]; m.si++; A.save(true); stepRun(b, m); });
   const L = A.gl(b.daraja), d = L === 'g1' ? 1 : 2, pool = B.matn.filter(x => x.d === d), used = b.oqilgan || [], tx = pool.find(x => !used.includes(x.id)) || pool[Math.floor(Math.random() * pool.length)];
   oqishScreen(b, tx, (r) => { if (r) { b.oqilgan = (b.oqilgan || []).concat([tx.id]).slice(-20); } m.res[m.si] = [{ ok: 1, ms: 0 }]; m.si++; A.save(true); stepRun(b, m); }, () => frame(b, m, stepTitle(st), '<div id="oq"></div>'));
 }
@@ -5384,6 +5763,124 @@ A.xarita = { st, holat, heroI, html, bind, panel, qutRoyxat, qutTugma, qutTugadi
 })(typeof window !== 'undefined' ? window : globalThis);
 </script>
 <script>
+/* Bilimjon — 📖 UCH MARTA O'QISH (0.7.0, 3-bosqich; loyiha 06.11 — Claude qarori). Missiyadagi `oqish` qadami (g1+; g0 — yo'q).
+   Bitta matn 3 marta: bola o'zi «▶ Boshla» → ovoz chiqarib butun matn → «✓ O'qib bo'ldim»; so'z/daq = so'z·60/sek.
+   Ishonchlilik: g1 > 130, g2+ > 170 so'z/daq — «Har so'zni ovoz chiqarib o'qi», shu o'qish qayta. Ixtiyoriy «👨 Kattalar tinglaydi» (b.uch.kat):
+   har o'qishdan keyin xato so'zlar bosiladi → WCPM; 1-o'qish b.wcpm ga ham yoziladi (eski grafik uzluksiz).
+   Natija: 3 ustun (o'sish animatsiyasi), «+N%», shaxsiy rekord; keyin 1 tushunish savoli (matnning s idan).
+   b.uch = { kat, tarix: [{ sana, matn, w:[a,b,c], sav, kat }] } (≤ 30). Log { t:'oqish', tur:'uch', matn, w, sav, kat }. */
+(function (G) {
+'use strict';
+const BJ = G.BJ, A = BJ.A, FX = BJ.fx, B = BJ.bank;
+const { $, $$, esc, toast } = A;
+const LIM = { g1: 130, g2: 170 }, MIN_SEK = 4;
+const sozlar = t => String(t).split(/\s+/).filter(w => /[A-Za-z0-9ʻʼ'’ЁёА-я]/.test(w));
+const limit = b => A.gl(b.daraja) === 'g1' ? LIM.g1 : LIM.g2;
+const st0 = b => { if (!b.uch || typeof b.uch !== 'object') b.uch = { kat: false, tarix: [] }; if (!Array.isArray(b.uch.tarix)) b.uch.tarix = []; return b.uch; };
+function matnTanla(b) {
+  const L = A.gl(b.daraja), d = L === 'g1' ? 1 : 2, pool = B.matn.filter(x => x.d === d), used = (b.oqilgan || []).slice(-Math.max(1, pool.length - 1));
+  const yangi = pool.filter(x => !used.includes(x.id)); return yangi.length ? yangi[Math.floor(Math.random() * yangi.length)] : pool[Math.floor(Math.random() * pool.length)];
+}
+const rekord = b => Math.max(0, ...st0(b).tarix.map(t => Math.max(...(t.w || [0]))));
+let SES = null;
+/* host() — konteyner (#oq), fin() — qadam tugadi */
+function step(b, m, st, mk, fin) {
+  const U = st0(b); if (!st.uch || !B.matn.find(x => x.id === st.uch.matn)) st.uch = { matn: matnTanla(b).id, w: [], kat: !!U.kat, xato: [] };
+  const S = st.uch, tx = B.matn.find(x => x.id === S.matn), W = sozlar(tx.t), lim = limit(b);
+  SES = { b, S, tx, W, faza: 'kirish', t0: 0, tm: null, sek: 0, xato: new Set() };
+  mk(); const host = $('#oq') || $('#stage');
+  const textHTML = () => `<div class="oqt uch" id="uqt">${tx.t.split(/\s+/).map((w, i) => `<span class="w" data-w="${i}">${esc(w)}</span>`).join(' ')}</div>`;
+  const nuqta = () => `<div class="uchn">${[0, 1, 2].map(i => `<i class="${i < S.w.length ? 'ok' : i === S.w.length ? 'on' : ''}">${i < S.w.length ? '✓' : i + 1}</i>`).join('')}</div>`;
+  function kirish() {
+    SES.faza = 'kirish'; clearInterval(SES.tm);
+    const k = S.w.length;
+    host.innerHTML = `<div class="card uchc">${nuqta()}<h2>📖 ${k === 0 ? "Bitta matn — 3 marta o'qiymiz" : k + 1 + "-o'qish"}</h2>
+      <p class="sm">${k === 0 ? "Har safar biroz tezroq va ravonroq o'qiysan. Ovoz chiqarib, har so'zni aniq o'qi. «▶ Boshla»ni bos — o'qib bo'lgach «✓ O'qib bo'ldim»." : `Oldingi: <b>${S.w[k - 1]}</b> so'z/daqiqa. Endi yana bir bor — shoshilmasdan, ravon.`}</p>
+      <div class="uchnom">${esc(tx.nom)} · ${W.length} so'z</div>${textHTML()}
+      ${k === 0 ? `<label class="chk"><input type="checkbox" id="ukat" ${S.kat ? 'checked' : ''}> 👨 Kattalar tinglaydi (xato so'zlarni belgilaydi)</label>` : ''}
+      <div class="row"><button class="btn big" data-bosh>▶ ${k + 1}-o'qishni boshla</button></div>${k === 0 ? '<button class="btn ghost sm" data-skip>Bugun o\'tkazamiz</button>' : ''}</div>`;
+    const ck = $('#ukat', host); if (ck) ck.onchange = () => { S.kat = ck.checked; U.kat = ck.checked; A.save(); };
+    $('[data-bosh]', host).onclick = boshla;
+    const sk = $('[data-skip]', host); if (sk) sk.onclick = () => { clearInterval(SES.tm); delete st.uch; fin(null); };
+  }
+  function boshla() {
+    SES.faza = 'oqish'; SES.t0 = Date.now(); SES.xato = new Set();
+    host.innerHTML = `<div class="card uchc oqiyapti">${nuqta()}<div class="uchtm mono" id="utm">0:00</div><div class="uchnom">${esc(tx.nom)}</div>${textHTML()}<button class="btn big alt" data-tug>✓ O'qib bo'ldim</button></div>`;
+    SES.tm = setInterval(() => { const e = $('#utm', host); if (!e) return clearInterval(SES.tm); e.textContent = A.fmtMS((Date.now() - SES.t0) / 1000); }, 250);
+    $('[data-tug]', host).onclick = () => tugat();
+    try { FX.play('ding'); } catch (e) {}
+  }
+  function tugat(sekOverride) {
+    if (SES.faza !== 'oqish') return; clearInterval(SES.tm);
+    const sek = sekOverride != null ? sekOverride : (Date.now() - SES.t0) / 1000;
+    if (sek < MIN_SEK && sekOverride == null) { toast("Matnni oxirigacha o'qi, keyin bos 🙂"); SES.tm = setInterval(() => { const e = $('#utm', host); if (e) e.textContent = A.fmtMS((Date.now() - SES.t0) / 1000); }, 250); return; }
+    SES.sek = Math.max(1, sek); const wpm = Math.round(W.length * 60 / SES.sek);
+    if (wpm > lim && !S.kat) {
+      SES.faza = 'tez'; A.pushLog(b.id, { t: 'oqish', ts: Date.now(), bola: b.id, tur: 'uch_tez', matn: tx.id, k: S.w.length, wpm });
+      host.innerHTML = `<div class="card uchc">${nuqta()}<h2>🐢 Shoshilma!</h2><p>${wpm} so'z/daqiqa — bu juda tez. Har so'zni <b>ovoz chiqarib</b>, aniq o'qi — keyin tezlik o'zi keladi.</p><button class="btn big" data-qayta>🔁 ${S.w.length + 1}-o'qishni qayta boshla</button></div>`;
+      $('[data-qayta]', host).onclick = boshla; return;
+    }
+    if (S.kat) return belgila(wpm);
+    saqla(wpm, null);
+  }
+  function belgila(wpm) {
+    SES.faza = 'belgi'; const kh = $('#uqt', host);
+    host.innerHTML = `<div class="card uchc">${nuqta()}<h2>👨 Kattalar uchun</h2><p class="sm">Bola noto'g'ri o'qigan so'zlarni bosing (qizil bo'ladi), keyin saqlang. Vaqt: <b class="mono">${A.fmtMS(SES.sek)}</b></p>${textHTML()}<button class="btn big" data-saq>💾 Saqlash</button></div>`;
+    $$('#uqt .w', host).forEach(w => w.onclick = () => { const i = +w.dataset.w; SES.xato.has(i) ? SES.xato.delete(i) : SES.xato.add(i); w.classList.toggle('bad'); });
+    $('[data-saq]', host).onclick = () => { const wc = Math.max(0, Math.round((W.length - SES.xato.size) * 60 / SES.sek)); saqla(wc, SES.xato.size); };
+  }
+  function saqla(w, xato) {
+    const k = S.w.length; S.w.push(w); S.xato.push(xato);
+    if (S.kat && k === 0) { const aniq = Math.round(100 * (W.length - (xato || 0)) / W.length); b.wcpm.push({ sana: A.todayKey(), wcpm: w, aniq, matn: tx.id, sek: Math.round(SES.sek), soz: W.length, tur: 'uch' }); A.agg(b).wcpm = w; }
+    A.save(true);
+    if (S.w.length < 3) { toast(`📖 ${k + 1}-o'qish: ${w} so'z/daqiqa`); return kirish(); }
+    natija();
+  }
+  function natija() {
+    SES.faza = 'natija'; const [a, , c] = S.w, osish = a ? Math.round((c - a) * 100 / a) : 0, rek0 = rekord(b), mx = Math.max(...S.w, 1), yangiRek = Math.max(...S.w) > rek0 && U.tarix.length > 0;
+    const yoz = { sana: A.todayKey(), matn: tx.id, w: S.w.slice(), sav: null, kat: !!S.kat }; U.tarix.push(yoz); if (U.tarix.length > 30) U.tarix.splice(0, U.tarix.length - 30);
+    b.oqilgan = (b.oqilgan || []).concat([tx.id]).slice(-20); S.yozildi = 1;
+    A.pushLog(b.id, { t: 'oqish', ts: Date.now(), bola: b.id, tur: 'uch', matn: tx.id, w: S.w.slice(), kat: !!S.kat, xato: S.xato.slice(), osish });
+    A.save(true);
+    host.innerHTML = `<div class="card uchc unat"><h2>${osish > 0 ? '🚀 Ravonlik o\'sdi!' : '👏 Barakalla!'}</h2>
+      <div class="ubars">${S.w.map((w, i) => `<div class="ub"><b class="mono">${w}</b><div class="ubt"><i style="--h:${Math.round(w * 100 / mx)}%;animation-delay:${i * 0.25}s"></i></div><span>${i + 1}-o'qish</span></div>`).join('')}</div>
+      <div class="uosish ${osish > 0 ? 'ok' : ''}">${osish > 0 ? '+' + osish + '%' : osish === 0 ? 'teng' : osish + '%'}</div><p class="sm">${S.kat ? "To'g'ri o'qilgan so'z/daqiqa (kattalar tingladi)" : "So'z/daqiqa"}${yangiRek ? ' · <b>🏆 Yangi shaxsiy rekord!</b>' : rek0 ? ` · rekord: ${rek0}` : ''}</p>
+      <button class="btn big" data-sav>❓ Matn bo'yicha savol ➜</button></div>`;
+    if (osish > 0 && !FX.low) { try { const r = $('.uosish', host).getBoundingClientRect(); FX.burst(r.left + r.width / 2, r.top + 10, { tema: b.dunyo, n: yangiRek ? 60 : 30 }); FX.play(yangiRek ? 'fanfar' : 'ding'); } catch (e) {} }
+    $('[data-sav]', host).onclick = () => savol(yoz);
+  }
+  function savol(yoz) {
+    SES.faza = 'savol'; const s = tx.s[Math.floor(Math.random() * tx.s.length)], o = s.slice(1).map((v, i) => ({ v, ok: i === 0 })).sort(() => Math.random() - 0.5);
+    host.innerHTML = `<div class="card uchc"><h2>❓ ${esc(s[0])}</h2><details class="matn"><summary>📄 Matnni ko'rish</summary><p>${esc(tx.t)}</p></details><div class="uopts">${o.map((x, i) => `<button class="btn alt" data-o="${i}">${esc(x.v)}</button>`).join('')}</div><div id="ufb"></div></div>`;
+    $$('[data-o]', host).forEach(btn => btn.onclick = () => {
+      const x = o[+btn.dataset.o]; yoz.sav = x.ok ? 1 : 0; $$('[data-o]', host).forEach(e => { e.disabled = true; if (o[+e.dataset.o].ok) e.classList.add('togri'); }); if (!x.ok) btn.classList.add('xato');
+      A.pushLog(b.id, { t: 'oqish', ts: Date.now(), bola: b.id, tur: 'uch_sav', matn: tx.id, ok: yoz.sav }); A.save(true);
+      if (x.ok) { try { FX.play('ding'); } catch (e) {} }
+      $('#ufb', host).innerHTML = `<div class="explain">${x.ok ? '✅ To\'g\'ri! Diqqat bilan o\'qibsan.' : `👉 To'g'ri javob: <b>${esc(s[1])}</b>. Keyingi safar matndan topib ko'r.`}</div><button class="btn big" data-dav>Davom ➜</button>`;
+      $('[data-dav]', host).onclick = () => { SES = null; delete st.uch; fin(yoz); };
+    });
+  }
+  SES.tugat = tugat; SES.boshla = () => boshla(); SES.kirish = kirish; SES.state = () => ({ faza: SES && SES.faza, w: S.w.slice(), kat: S.kat, matn: S.matn, soz: W.length });
+  SES.xatoBos = i => { const el = $(`#uqt .w[data-w="${i}"]`, host); if (el) el.click(); };
+  if (S.yozildi) return natija2();
+  kirish();
+  function natija2() { const yoz = U.tarix[U.tarix.length - 1]; savol(yoz); }
+}
+/* Ota-ona: 1-o'qish (sovuq) grafigi + kunlik o'sish */
+function panelHTML(b, svgLine) {
+  const T = st0(b).tarix.slice(-12);
+  if (!T.length) return `<div class="card"><h3>📖 Uch marta o'qish</h3><div class="sm mut">Hali yozuv yo'q. Missiyadagi o'qish qadamida bola bitta matnni 3 marta o'qiydi.</div></div>`;
+  const sovuq = T.map(t => ({ x: t.sana.slice(5), y: t.w[0] })), os = T.map(t => ({ x: t.sana.slice(5), y: t.w[0] ? Math.round((t.w[2] - t.w[0]) * 100 / t.w[0]) : 0 }));
+  const oxirgi = T.slice(-5).reverse().map(t => { const m = B.matn.find(x => x.id === t.matn); return `<tr><td>${t.sana.slice(5)}</td><td>${esc(m ? m.nom : t.matn)}</td><td class="mono">${t.w.join(' → ')}</td><td>${t.w[0] ? '+' + Math.round((t.w[2] - t.w[0]) * 100 / t.w[0]) + '%' : '—'}</td><td>${t.sav == null ? '·' : t.sav ? '✅' : '❌'}</td><td>${t.kat ? '👨' : ''}</td></tr>`; }).join('');
+  return `<div class="card"><h3>📖 1-o'qish — «sovuq» tezlik (so'z/daq)</h3>${svgLine(sovuq, 90, "1-o'qish")}<p class="sm mut">Har kuni yangi matnning birinchi o'qilishi — haqiqiy o'sish shu grafikda ko'rinadi.</p></div>
+  <div class="card"><h3>🚀 Kunlik o'sish (1 → 3-o'qish, %)</h3>${svgLine(os, 90, "o'sish")}<div class="tw"><table class="tb"><thead><tr><th>Kun</th><th>Matn</th><th>1 → 2 → 3</th><th>O'sish</th><th>Savol</th><th></th></tr></thead><tbody>${oxirgi}</tbody></table></div>
+  <p class="sm mut">👨 — kattalar tinglagan (to'g'ri so'z/daq). Rekord: <b>${rekord(b)}</b>. Me'yor sifatida qabul qilmang — har bolaning o'z sur'ati bor.</p></div>`;
+}
+A.uch = { step, panelHTML, matnTanla, sozlar, rekord, LIM };
+if (A.TEZ) G.__bjUch = () => SES; /* faqat ?tez=1 avtomatik sinov uchun */
+})(typeof window !== 'undefined' ? window : globalThis);
+</script>
+<script>
 /* Bilimjon — ☁️ OILA AKKAUNTI va 🏆 REYTING GURUHI (0.5.0). Firebase (Auth + Firestore, bepul Spark).
    SDK faqat akkaunt ulangan telefonda (yoki ☁️ ekran ochilganda) yuklanadi — akkauntsiz oila uchun ilova avvalgidek serversiz.
    Ma'lumot: oila/{uid} {j: umumiy sozlamalar JSON, ts, q} · oila/{uid}/bolalar/{bid} {j: bola JSON, ts, q} — oxirgi yozuv ustun
@@ -5760,6 +6257,8 @@ function xulosa(b, wk) {
   if (s.ozl.length) q.push(`🚀 Yangi o'zlashtirilgan ko'nikmalar: ${s.ozl.length}`);
   if (s.charchash) q.push(`😴 Missiyaning 2-yarmida aniqlik ${s.charchash > 0 ? '+' : ''}${s.charchash} punkt o'zgargan`);
   const km = Math.max(0, ...s.days.map(k => (b.kun[k] && b.kun[k].komboMax) || 0)); if (km >= 3) q.push(`🔥 Eng uzun kombo: ${km} ta ketma-ket to'g'ri`);
+  const uyN = (b.kashfUy || []).filter(x => x.holat === 'bajardi' && s.days.includes(x.bsana)).length, uyE = (b.kashfUy || []).filter(x => s.days.includes(x.sana)).length; if (uyE) q.push(`🏠 Uy tajribalari: ${uyN} ta bajarildi (${uyE} ta eslab qolgan)`);
+  const uc = ((b.uch && b.uch.tarix) || []).filter(t => s.days.includes(t.sana)); if (uc.length) { const o = Math.round(A.sum(uc.map(t => t.w[0] ? (t.w[2] - t.w[0]) * 100 / t.w[0] : 0)) / uc.length); q.push(`📖 Uch marta o'qish: ${uc.length} kun, 1-o'qish ${uc[0].w[0]} → ${uc[uc.length - 1].w[0]} so'z/daq, kunlik o'sish o'rtacha ${o >= 0 ? '+' : ''}${o}%`); }
   if (s.charchash <= -15) t.push("Oxiriga kelib charchayapti: missiya o'zi qisqaradi, siz esa dam olish o'yinini tez-tez qiling (✏️ bola tahririda — har 3–4 savolda).");
   if (lim && kunO > lim + 10) t.push(`Kuniga ${kunO} daqiqa — chegaradan ancha ko'p. «+10 daqiqa»ni kamroq bering: charchagan bola o'rganmaydi, shunchaki bosadi.`);
   if (s.n >= 30 && s.acc1 >= 90) t.push("Aniqlik juda yuqori — savollar oson va zeriktirishi mumkin. 🎯 Fokus fan qo'ying yoki darslikdagi mavzuni oldinga suring.");
@@ -5890,18 +6389,18 @@ function mavzuPanel(b) {
 /* ================= O'QISH TEZLIGI (paneldan) ================= */
 function oqishPanel(b) {
   const L = A.gl(b.daraja), pool = B.matn.filter(x => x.d === (L === 'g0' || L === 'g1' ? 1 : 2));
-  app.innerHTML = `<div class="wrap ota">${top('📖 O\'qish tezligi — ' + b.laqab, 'ota-bola-' + b.id)}<div class="card"><label class="lb">Matn</label><select id="mt" class="inp">${pool.map(m => `<option value="${m.id}">${esc(m.nom)} (${m.t.split(/\s+/).length} so'z)</option>`).join('')}</select><button class="btn" data-go>Tanlash</button></div><div id="oq"></div></div>`;
+  app.innerHTML = `<div class="wrap ota">${top('📖 O\'qish tezligi — ' + b.laqab, 'ota-bola-' + b.id)}${A.uch ? A.uch.panelHTML(b, svgLine) : ''}<div class="card"><h3>⏱ 1 daqiqalik test (kattalar o'lchaydi)</h3><label class="lb">Matn</label><select id="mt" class="inp">${pool.map(m => `<option value="${m.id}">${esc(m.nom)} (${m.t.split(/\s+/).length} so'z)</option>`).join('')}</select><button class="btn" data-go>Tanlash</button></div><div id="oq"></div></div>`;
   bindTop(); $('[data-go]').onclick = () => { const tx = B.matn.find(m => m.id === $('#mt').value); A.oqishScreen(b, tx, () => A.go('ota-bola-' + b.id), () => {}); };
 }
 /* ================= ARAB SO'ZLARI TASDIG'I ================= */
 function arabPanel() {
   const s = S(), T = s.sozlama.arTasdiq, J = s.sozlama.tjTasdiq || (s.sozlama.tjTasdiq = {}), n = BJ.ARW.filter(w => T[w.w]).length, nI = BJ.arab ? BJ.arab.IBR.filter(w => T[w.w]).length : 0, nJ = Object.keys(J).filter(k => J[k]).length;
-  app.innerHTML = `<div class="wrap ota">${top('🕌 Arab so\'zlari', 'ota')}<div class="card"><p class="sm">Oyisi yoki ustoz har so'zni (harakat, ma'no, rasm) tekshirib ✓ qo'ysin. Tasdiqlanmagan so'z duelda va mashqlarda chiqmaydi.</p><div class="kgrid"><div><b>${n}/${BJ.ARW.length}</b><span>so'z (kamida 6)</span></div><div><b>${nI}/${BJ.arab ? BJ.arab.IBR.length : 0}</b><span>ibora (kamida 4)</span></div><div><b>${nJ}/6</b><span>tajvid bo'limi</span></div></div>
+  app.innerHTML = `<div class="wrap ota">${top('🕌 Arab so\'zlari', 'ota')}<div class="card"><p class="sm">Oyisi yoki ustoz har so'zni (harakat, ma'no, rasm) tekshirib ✓ qo'ysin. Tasdiqlanmagan so'z duelda va mashqlarda chiqmaydi.</p><div class="kgrid"><div><b>${n}/${BJ.ARW.length}</b><span>so'z (kamida 6)</span></div><div><b>${nI}/${BJ.arab ? BJ.arab.IBR.length : 0}</b><span>ibora (kamida 4)</span></div><div><b>${nJ}/${BJ.arab ? BJ.arab.TJ.length : 6}</b><span>tajvid bo'limi</span></div></div>
   <button class="btn sm" data-all>✓ Ko'rinib turganlarni tasdiqlash</button></div>
   ${B.arTartib.map(m => `<div class="card"><h3>${esc(m)}</h3>${BJ.ARW.filter(w => w.m === m).map(w => `<label class="arw"><input type="checkbox" data-w="${esc(w.w)}" ${T[w.w] ? 'checked' : ''}><span class="arab" dir="rtl" lang="ar">${w.w}</span><span class="e">${w.e}</span><span>${esc(w.uz)}</span></label>`).join('')}</div>`).join('')}
   ${BJ.arab ? `<div class="card"><h3>💬 Iboralar va gaplar (0.4.0)</h3>${BJ.arab.IBR.map(w => `<label class="arw"><input type="checkbox" data-w="${esc(w.w)}" ${T[w.w] ? 'checked' : ''}><span class="arab" dir="rtl" lang="ar">${w.w}</span><span class="e">${w.e}</span><span>${esc(w.uz)}</span></label>`).join('')}</div>
   <div class="card"><h3>📗 Tajvid (0.4.0)</h3><p class="sm">Har bo'limdagi misol va hukmni tekshiring. «✅» qo'yilgan bo'lim bolalarga ochiladi. Xato ko'rsangiz, belgilamang va Claude'ga yozing — tuzatiladi.</p>
-  ${Object.keys(BJ.arab.TJ_MISOL).map(id => `<details class="tjd"><summary><b>${esc(BJ.gen.reg[id].nom)}</b> ${J[id] ? '✅' : '⏳'}</summary>${BJ.arab.TJ_MISOL[id].map(([w, h]) => `<div class="tjm"><span class="arab" dir="rtl" lang="ar">${w}</span><span class="sm">${esc(h)}</span></div>`).join('')}<label class="chk"><input type="checkbox" data-tj="${id}" ${J[id] ? 'checked' : ''}> Misollar to'g'ri — bolalarga ochilsin</label></details>`).join('')}</div>` : ''}
+  ${Object.keys(BJ.arab.TJ_MISOL).map(id => `<details class="tjd"><summary><b>${esc(BJ.gen.reg[id].nom)}</b> ${J[id] ? '✅' : '⏳'}</summary>${BJ.arab.TJ_MISOL[id].map(([w, h]) => `<div class="tjm"><span class="arab" dir="rtl" lang="ar">${w}</span><span class="sm">${esc(h)}</span></div>`).join('')}${id === 'TJ.8' ? '<p class="sm note">📌 Qur\'oningizda boshqa vaqf belgilari (ط ، ز ، ص) bo\'lsa — Claude\'ga ayting, qo\'shamiz.</p>' : ''}<label class="chk"><input type="checkbox" data-tj="${id}" ${J[id] ? 'checked' : ''}> Misollar to'g'ri — bolalarga ochilsin</label></details>`).join('')}</div>` : ''}
   <div class="card"><h3>Alifbo harflari nomlari</h3><p class="sm">${BJ.AL.map(a => `<span class="arab" dir="rtl">${a.h}</span> ${esc(a.nom)}`).join(' · ')}</p><label class="chk"><input type="checkbox" id="alt" ${s.sozlama.alifTasdiq ? 'checked' : ''}> Harf nomlari to'g'ri (oyisi/ustoz tasdiqladi)</label></div></div>`;
   bindTop(); $$('[data-w]').forEach(c => c.onchange = () => { T[c.dataset.w] = c.checked; A.save(); });
   $$('[data-tj]').forEach(c => c.onchange = () => { J[c.dataset.tj] = c.checked; A.save(true); const sm = c.closest('details').querySelector('summary'); sm.lastChild.textContent = c.checked ? ' ✅' : ' ⏳'; });
@@ -5922,6 +6421,7 @@ function settings() {
   <p class="sm mut">Har bolaning kunlik vaqti va o'yin chastotasi — 👶 bola tahririda (✏️).</p>
   <p class="sm mut">Maktabgacha — 🏎️ poyga (shakl, rang, son, naqsh). 1-sinf va kattalar — 🧩 pazl yoki 🎨 ko'zgu rasm. O'yin faqat savollar ishlangandan keyin ochiladi va yulduz bermaydi. Missiyadagi «😴 Charchadim» bolani o'yinga emas, boshqa fanga o'tkazadi.</p>
   <label class="chk"><input type="checkbox" id="rk" ${z.reyting !== false ? 'checked' : ''}> 🏆 Bolalar o'z ekranida hafta reytingini ko'rsin</label>
+  <label class="chk"><input type="checkbox" id="ku" ${z.kashfUy !== false ? 'checked' : ''}> 🏠 Kun kashfiyotidan keyin «Uyda sinab ko'r» tajribasi (bajarsa +2 ⭐)</label>
   ${ad ? `<label class="lb">☕ Tanaffus eslatmasi (daqiqa)</label><input id="tn" class="inp" type="number" min="10" max="40" value="${z.tanaffus}">
   <label class="lb">🎁 Sandiq chegaralari (haftalik ⭐)</label><div class="sq">${['bronza', 'kumush', 'oltin', 'olmos'].map(k => `<label>${{ bronza: '🥉', kumush: '🥈', oltin: '🥇', olmos: '💎' }[k]}<input class="inp" type="number" min="1" data-sq="${k}" value="${z.sandiq[k]}"></label>`).join('')}</div>
   <label class="lb">Oila nomi</label><input id="onm" class="inp" maxlength="30" value="${esc(s.oila.nom)}">
@@ -5931,7 +6431,7 @@ function settings() {
   ${ad ? `<details class="danger"><summary>⚠️ Hamma ma'lumotni o'chirish</summary><p class="sm">Shu telefondagi oila, bolalar va hamma natija o'chadi. Avval 💾 Zaxira qiling.</p><button class="btn danger" data-wipe>🗑 Hammasini o'chirish</button></details>` : ''}</div></div>`;
   bindTop(); $('#vol').oninput = e => { $('#vv').textContent = e.target.value + '%'; FX.setVol(e.target.value / 100); };
   $('[data-test]').onclick = () => FX.boom(innerWidth / 2, innerHeight / 3, 'garaj');
-  $('[data-save]').onclick = () => { z.ovoz = $('#vol').value / 100; z.kamEffekt = $('#ke').value; if (z.kamEffekt !== 'auto') z.kamAuto = null; z.oyinHar = +$('#oh').value; z.oyinDaq = +$('#od').value; z.uyqu = $('#uq').value; z.reyting = $('#rk').checked; z.zal = +$('#zl').value;
+  $('[data-save]').onclick = () => { z.ovoz = $('#vol').value / 100; z.kamEffekt = $('#ke').value; if (z.kamEffekt !== 'auto') z.kamAuto = null; z.oyinHar = +$('#oh').value; z.oyinDaq = +$('#od').value; z.uyqu = $('#uq').value; z.reyting = $('#rk').checked; z.kashfUy = $('#ku').checked; z.zal = +$('#zl').value;
     if (ad) { z.tanaffus = Math.max(10, Math.min(40, +$('#tn').value || 20)); $$('[data-sq]').forEach(i => { z.sandiq[i.dataset.sq] = Math.max(1, +i.value || 1); }); s.oila.nom = $('#onm').value.trim() || s.oila.nom; const po = $('#po').value.trim(), pa = $('#pa').value.trim(); if (po) { if (!/^\d{4}$/.test(po)) return toast('PIN — 4 raqam'); s.pinOta = A.pinHash(po); } if (pa) { if (!/^\d{4}$/.test(pa)) return toast('PIN — 4 raqam'); s.pin = A.pinHash(pa); } }
     A.applyFX(); A.save(true); toast('Saqlandi ✓'); A.go('ota'); };
   const w = $('[data-wipe]'); if (w) w.onclick = () => sheet(`<h2>⚠️ Hammasini o'chirish</h2><input id="cf" class="inp" placeholder="Tasdiqlash: OCHIR" autocomplete="off"><div class="row"><button class="btn danger" data-ok>O'chirish</button><button class="btn ghost" data-x>Bekor</button></div>`, el => { $('[data-ok]', el).onclick = () => { if ($('#cf', el).value.trim().toUpperCase() !== 'OCHIR') return toast('OCHIR deb yozing'); A.logKeys().forEach(k => localStorage.removeItem(k)); localStorage.removeItem(A.KEY); location.hash = ''; location.reload(); }; });

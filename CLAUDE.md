@@ -102,13 +102,11 @@ Pedagogik qoidalar: sovg'a — muntazamlik uchun (tezlik uchun emas), oila umumi
 - [x] 4a. 🔤 Harf mashqlari xilma-xilligi — pastdagi bo'lim.
 - [x] 3. 🤖 Kod-yo'l `L.11` (`t:'kodyol'`, `BJ.kodRun`): q1 4×4, 3–5 qadam, takrorsiz; q2 5×5 ≤8, «×2/×3/×4», buyruq joyi = runs+1; q3 6×6 ≤11, joy = runs. To'siqlar ~30–36% (yo'lda emas). Har qanday to'g'ri dastur qabul. Urilsa — kichik portlash, boshiga qaytadi, dastur saqlanadi; 2-xatoda 1-bo'lak yo'li, 3-xatoda butun yo'l (maslahat). ≤1 xato — hali «birinchi urinish». `MANT_KUN` uchala darajada, `UZUN`, `TUR_IC 🤖`, `XATO.kod_xato`. CSS klassi `.kyc` (eski `.kc` bilan to'qnashmasin).
 - [x] 4. 🗺️ Sarguzasht xaritasi va 💖 «katta qiz» uslubi — 0.7.0 da bajarildi (06.11).
-- [ ] 5. 🌍 Kun kashfiyoti: 1 fakt + 1 savol + uyda topshiriq.
-- [ ] 5. 📖 O'qish tezligi: 1 matn 3 marta, so'z/daq o'sishi.
-- [ ] 5. 🕌 Arab: ra (tafxim/tarqiq), vaqf belgilari — yangi TJ tugunlari, DARS, tasdiq.
+- [x] 5. 🌍 Kun kashfiyoti · 📖 uch marta o'qish · 🕌 ra va vaqf — 0.7.0 3-bosqichda bajarildi (06.11).
 - [ ] 6. 🎙️ Ota-ona ovozi: MediaRecorder, 3–5 s qisqa yozuv, Firestore'da (Storage — faqat Blaze tarif!), iPhone↔Android ijro sinovi.
 - [x] 5. 💰 So'm iqtisodi — pastdagi bo'lim.
 - [x] 7. To'liq sinov (194), VER 0.6.0, main ga push («chiqar», 05.11).
-- Sinovlar 0.7.0: `sinov/v070/sinov_bosqich1.py` (50), `1b` (31), `1c` (59), `sinov_bosqich2.py` (bozor, 101).
+- Sinovlar 0.7.0: `sinov/v070/sinov_bosqich1.py` (50), `1b` (31), `1c` (59), `sinov_bosqich2.py` (bozor, 101), `sinov_bosqich3.py` (kashfiyot, uch o'qish, ra/vaqf — 64).
 - Sinovlar: `sinov/v060/sinov_bosqich1.py` (21), `sinov/v060/sinov_bosqich2.py` (13), `sinov/v060/sinov_bosqich3.py` (35), `sinov/v060/sinov_bosqich4.py` (36, harflar), `sinov/v060/sinov_bosqich5.py` (62, so'm + versiya belgisi), `sinov/bulut/sinov_bulut.py` (21), `sinov/bulut/sinov_chekka.py` (10).
 
 ## 0.7.0 — REJA («v7»; tarmoq `v0.7.0`, har bosqich shu tarmoqqa push, saytga faqat «chiqar» bilan)
@@ -117,11 +115,22 @@ Tartib (foydalanuvchi qarori, 05.11; 06.11 — rasmli dars bozordan oldinga):
 1b. [x] 🖼️ RASMLI KICHIK DARS + 🎨 realistik dizayn qatlami (06.11) — pastdagi bo'limlar, `sinov/v070/sinov_bosqich1b.py`.
 1c. [x] 🎮 O'YINLAR ZALI (06.11, u «o'zing to'g'ri bilganingni qil PY» dedi — Claude tanlovi) — pastdagi bo'lim, `sinov/v070/sinov_bosqich1c.py`.
 2. [x] 🧺 Oila bozori (06.11) — pastdagi bo'lim, `sinov/v070/sinov_bosqich2.py` (101).
-3. [ ] 🌍 Kun kashfiyoti · 📖 o'qish tezligi · 🕌 arab ra (tafxim/tarqiq) va vaqf — LOYIHA TAYYOR (pastdagi bo'lim, 06.11), KOD YO'Q.
+3. [x] 🌍 Kun kashfiyoti 2.0 · 📖 uch marta o'qish · 🕌 TJ.7 ra va TJ.8 vaqf (06.11) — pastdagi bo'lim, `sinov/v070/sinov_bosqich3.py` (64).
 4. 🎙️ Ota-ona ovozi.
 5. To'liq sinov → VER 0.7.0 → u «chiqar» desa main.
 
-## 3-bosqich — LOYIHA (06.11, Claude qarorlari; kod yozilmagan — Abdurazzoq profili limiti 97% da to'xtatildi)
+## 3-bosqich — BAJARILDI (06.11; loyiha va qarorlar — Claude, quyida; kod — Hullas profilida)
+**Qanday qilingan (qisqa):**
+- Kontent bankda alohida blok `/* ===== 0.7.0 3-bosqich ... */`: k1–k6 ga `kat`+`uy`, `B.kashf.push(k7…k30)` (har chuqurlikda 1 savol), `B.matn.push(m7…m26)` (d1 35–55 so'z, d2 70–100 so'z, 2–3 savol).
+- ART: `ART.kashfSahna(kat)` — 8 ta realistik SVG sahna (sekin animatsiya `.ks-*`, `.ksc.low` va reduced-motion'da o'chadi); `vis({k:'vaqf', p:[so'z, {k,b,nom}, …]})` + `ART.vqb` — vaqf nishoni.
+- Kid: `stepKashfCard` (shisha medalyon `.kmed`, `.kkat` yorlig'i, ajdar yo'q; `st.savollar = 1`, `st.ksi = dayNo % s.length`) → savol → `stepKashfUy` (stepRun'da `kashfUyMumkin`) → `A.kashfUyQosh`. Uyda `kashfUyHTML`/`bindKashfUy` (sheet: kuzatuv savoli → izoh → «⭐ +2 olish»). `A.kashfUyKut(b)` — ≤ 7 kunlik `kut` lar. Viktorina: `A.haftaKashf(b)` (`st.kList`).
+- Core: `sozlama.kashfUy` (true), `bolaDefaults`: `kashfUy: []`, `uch: null`; `kashfOfDay(b, D?)`.
+- 📖 Modul `A.uch` (alohida `<script>`, 🗺️ xaritadan keyin, ☁️ bulutdan oldin): `step(b, m, st, mk, fin)` — `stepOqish` shuni chaqiradi; `st.uch = {matn, w[], kat, xato[], yozildi}` (pauzadan keyin davom etadi); `MIN_SEK` 4; `panelHTML(b, svgLine)` — `ota-oqish` tepasida (eski 1 daqiqalik test pastda qoldi). Sinov: `?tez=1` da `window.__bjUch()` → `state()`, `tugat(sek)`, `xatoBos(i)`.
+- Arab: `raHukm`, `RA`/`RAV`/`RAD`, `RAS` (sabablar), `VQ`/`VQO`; `TJ` = 8 ta; `TJ_MISOL['TJ.7'|'TJ.8']`; `QADAM['TJ.7'|'TJ.8']`; tasdiq panelida «/8» va TJ.8 eslatmasi.
+- Ota-ona: ⚙️ `#ku` (Uyda sinab ko'r), 📊 hafta xulosasida «🏠 Uy tajribalari» va «📖 Uch marta o'qish» qatorlari.
+- [?] Ochiq: g0 uchun arabcha takroriy o'qish — u tasdiqlasa.
+
+### 3-bosqich loyihasi (06.11, Claude qarorlari)
 Kod joylari: bank `kashf:` va `matn:` (~657–703), `KASHF` gen (~1532), `kashfOfDay`/`buildMission` (~2369–2390), `stepRun`/`nextItem` (~2741–2760), `stepKashfCard` (~3420), `stepOqish`/`oqishScreen` (~3434–3452), `ota-oqish` (~5893), tajvid (~1642–1765). Sinov: `sinov/v070/sinov_bosqich3.py`.
 **🌍 Kashfiyot 2.0** (hozir 6 mavzu, 6 kunda takrorlanadi):
 - Mavzuga `kat` (kosmos · osmon · suv · tabiat · hayvon · tana · texnika · yer) va `uy: {t, s:[savol, v1, v2, v3], a? (kutilgan javob indeksi; yo'q bo'lsa hammasi qabul — kuzatuv), iz}`.
