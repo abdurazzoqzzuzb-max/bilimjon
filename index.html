@@ -275,6 +275,39 @@ body.th-garaj .kyb .k1{fill:#2A3141}body.th-garaj .kyb .k2{fill:#232A38}body.th-
 .dgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:6px 0}.dk{display:flex;flex-direction:column;gap:2px;align-items:flex-start;text-align:left;min-height:64px;padding:8px 10px;border-radius:14px;border:2px solid var(--line);background:var(--card);color:var(--ink)}.dk b{font-size:.92rem}.dk .nx{font-size:.8rem;color:var(--mut);font-weight:700}.dk.ega .nx{color:var(--ok)}.dk.on{border-color:var(--acc);box-shadow:0 0 0 3px rgba(255,196,0,.25)}
 .dact{margin:8px 0}.dact .btn{width:100%}.dokb{width:100%}.maqsad .tbar{margin:6px 0 4px}.warn{color:var(--no);font-weight:800}.rvpul{display:inline-block;margin:6px 0;padding:4px 14px;border-radius:999px;background:#C8F7C5;color:#14532D;font-weight:900;font-size:1.15rem;animation:pop .5s}
 .verb{display:inline-block;margin-top:2px;padding:1px 8px;border-radius:999px;font-size:.72rem;font-weight:900;background:var(--acc);color:var(--onacc);line-height:1.35;vertical-align:top}.top .ttl{line-height:1.15}
+/* 0.7.0 — 🗺️ sarguzasht xaritasi, 👹 dev, 💖 «katta qiz» uslubi */
+.xmap{position:relative;width:100%;aspect-ratio:360/330;border-radius:22px;overflow:hidden;margin:4px 0 10px;box-shadow:0 10px 28px rgba(0,0,0,.35),inset 0 0 0 1px rgba(255,255,255,.08)}
+.xmap>svg{position:absolute;inset:0;width:100%;height:100%;display:block}.xmap .xst,.xmap .mrr{cursor:pointer}
+.xkn{font:800 11px system-ui,sans-serif;fill:#fff;paint-order:stroke;stroke:rgba(0,0,0,.65);stroke-width:3px;letter-spacing:.3px}
+.xhero{position:absolute;transform:translate(-50%,calc(-100% - 9px));animation:xbob 1.9s ease-in-out infinite;pointer-events:none;filter:drop-shadow(0 6px 5px rgba(0,0,0,.45));line-height:0;z-index:2}.xhero.chap>*{transform:scaleX(-1)}
+.xcap{position:absolute;left:10px;top:10px;right:10px;display:flex;justify-content:space-between;align-items:center;gap:8px;font-weight:800;font-size:.82rem;color:#fff;pointer-events:none}
+.xcap>*{background:rgba(8,10,18,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:5px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.14)}
+.xst .puls{transform-box:fill-box;transform-origin:center;animation:xpuls 1.6s ease-out infinite}@keyframes xpuls{0%{transform:scale(.9);opacity:.95}100%{transform:scale(1.7);opacity:0}}
+.xst .tum{animation:xtum 6s ease-in-out infinite alternate}@keyframes xtum{to{transform:translateX(4px)}}
+.xst.ochil{transform-box:fill-box;transform-origin:center;animation:xoch .9s cubic-bezier(.3,1.6,.5,1)}@keyframes xoch{0%{transform:scale(.3)}100%{transform:scale(1)}}
+.dvst .dev{animation:xdev 2.4s ease-in-out infinite}@keyframes xdev{50%{transform:translateY(-3px)}}.mrr .kbk{opacity:.55;filter:grayscale(.6)}.mrr.on .kbk{opacity:1;filter:drop-shadow(0 0 8px #FFD54F)}
+.xmap.mini{aspect-ratio:360/330;border-radius:14px;margin:6px 0;box-shadow:none}.xmap.mini .xhero{transform:translate(-50%,-100%) scale(.55);transform-origin:50% 100%}
+@keyframes xbob{50%{translate:0 -3px}}.xmap .yz{animation:xyz 3s ease-in-out infinite}@keyframes xyz{50%{opacity:.15}}.xmap .oyn{animation:xyz 4s steps(2) infinite}
+.xmap .bul{animation:xbul 24s ease-in-out infinite alternate}@keyframes xbul{to{transform:translateX(18px)}}.xmap .uyz{opacity:0;animation:xuyz 7s linear infinite}@keyframes xuyz{0%,80%{opacity:0;transform:translate(0,0)}84%{opacity:1}100%{opacity:0;transform:translate(-90px,36px)}}
+.xmap .qor circle{animation:xqor 6s linear infinite}@keyframes xqor{from{transform:translateY(-40px)}to{transform:translateY(340px)}}.xmap .xflow{animation:xflow 1.2s linear infinite}@keyframes xflow{to{stroke-dashoffset:-18}}.xmap .xdn{animation:xdn 2.2s ease-in-out infinite}@keyframes xdn{50%{opacity:.45}}
+.xmap .xrw{transform-box:fill-box;transform-origin:center;animation:xrw 2.6s ease-in-out infinite}@keyframes xrw{50%{transform:scale(1.12)}}
+.xmap.low *,.xmap.low{animation:none!important}@media (prefers-reduced-motion:reduce){.xmap *,.xmap .xhero{animation:none!important}}
+.xgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.xkid{padding:10px}.xkh{display:flex;gap:6px;align-items:center;font-size:.9rem}.xkh .sp{flex:1}
+.xdots{display:flex;justify-content:space-between;gap:1px;font-size:.8rem}.xd{display:flex;flex-direction:column;align-items:center;min-width:0}.xd i{font-style:normal;font-size:.62rem;opacity:.7}
+@media (max-width:360px){.xgrid{grid-template-columns:1fr}}
+.qutb{background:linear-gradient(135deg,#FF8F00,#FF6D00);color:#fff;box-shadow:0 5px 0 #B34700}
+.devbar{display:flex;align-items:center;gap:10px;margin:6px 0 8px;padding:6px 10px;border-radius:16px;background:linear-gradient(90deg,rgba(20,24,34,.85),rgba(40,20,34,.85));color:#fff;border:1px solid rgba(255,110,64,.35)}
+.devbar .dvb{flex:1;min-width:0}.dvt{display:flex;justify-content:space-between;font-size:.85rem;gap:6px}.dvq{font-size:.72rem;opacity:.8;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.devbar .hp{height:12px;border-radius:8px;background:rgba(255,255,255,.12);overflow:hidden;margin-top:4px;box-shadow:inset 0 1px 3px rgba(0,0,0,.5)}
+.devbar .hp i{display:block;height:100%;background:linear-gradient(90deg,#FF1744,#FF9100);border-radius:8px;transition:width .5s}
+.devbar.hit .dev{animation:shk .3s}.devbar.hit .hp i{animation:xhit .5s}@keyframes xhit{0%{filter:brightness(2.2)}100%{filter:none}}.devbar.yeng{border-color:#FFD54F}.devbar.yeng .hp i{background:#FFD54F}
+body.th-orol.katta{--bg:#0B0518;--card:rgba(255,255,255,.06);--ink:#F7F1FF;--mut:#C8B6E2;--line:rgba(255,46,166,.32);--acc:#FF2EA6;--acc2:#7A0E4E;--onacc:#fff;
+ background:radial-gradient(ellipse at 15% -5%,rgba(255,46,166,.28),transparent 50%),radial-gradient(ellipse at 95% 35%,rgba(41,240,255,.14),transparent 45%),linear-gradient(#0B0518,#1B0930) fixed;letter-spacing:.2px}
+body.th-orol.katta .card{border:1px solid var(--line);backdrop-filter:blur(10px)}
+body.th-orol.katta .btn{background:linear-gradient(100deg,#FF2EA6,#8E2DE2);box-shadow:0 4px 0 #5A0F48,0 0 18px rgba(255,46,166,.35)}
+body.th-orol.katta .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);box-shadow:none}
+body.th-orol.katta .bubble{background:rgba(255,255,255,.07);color:var(--ink);border:1px solid var(--line);margin-left:0;font-weight:600}body.th-orol.katta .bubble:before,body.th-orol.katta .bubble:after{display:none}
+body.th-orol.katta .drg,body.th-orol.katta .dragon{display:none}body.th-orol.katta .pill{background:rgba(255,46,166,.12);border:1px solid var(--line)}
 </style>
 </head>
 <body class="th-neutral">
@@ -2026,7 +2059,7 @@ function logMerge(id, k, extra) { const key = logKey(id, k), a = readLog(id, k),
 Object.assign(A, { readLog, pushLog, flushLog, logKeys, pruneLogs, weekLog, logMerge, LOGP });
 addEventListener('pagehide', () => { flushLog(); save(true); });
 /* ================= BOLA ================= */
-function bolaDefaults() { return { id: null, kod: '', laqab: '', avatar: '🦊', daraja: 'g1', arab: 'asosiy', dunyo: null, muxlisga: true, yaratildi: null, boshlandi: null, mavzu: {}, fan: {}, harfK: 2, harfKun: null, harfSt: {}, tugun: {}, takror: [], yulduz: 0, yulduzKun: {}, arenaYulduz: {}, detal: [], kun: {}, wcpm: [], missiya: null, reja: null, shosh: false, me: {}, olqish: [], oqilgan: [], oyin: {}, arDaraja: 1, fokus: '', vazifa: [], kunDaq: null, oyinHar: null, oyinDaq: null, qoshDaq: {}, uyquOchiq: 0, komboMax: 0, kons: null, pul: null }; }
+function bolaDefaults() { return { id: null, kod: '', laqab: '', avatar: '🦊', daraja: 'g1', arab: 'asosiy', dunyo: null, muxlisga: true, yaratildi: null, boshlandi: null, mavzu: {}, fan: {}, harfK: 2, harfKun: null, harfSt: {}, tugun: {}, takror: [], yulduz: 0, yulduzKun: {}, arenaYulduz: {}, detal: [], kun: {}, wcpm: [], missiya: null, reja: null, shosh: false, me: {}, olqish: [], oqilgan: [], oyin: {}, arDaraja: 1, fokus: '', vazifa: [], kunDaq: null, oyinHar: null, oyinDaq: null, qoshDaq: {}, uyquOchiq: 0, komboMax: 0, kons: null, pul: null, uslub: '', xarita: null }; }
 function newBola(o) {
   const b = fixBola(Object.assign(bolaDefaults(), o)); b.id = b.id || 'b' + rid(7).toLowerCase(); b.yaratildi = todayKey();
   if (!b.kod) { const n = Object.keys(S.bolalar).length + 1; b.kod = ({ g0: 'K', g1: 'B', g2: 'I', g3: 'U', g4: 'T' }[b.daraja] || 'B') + n; }
@@ -2357,7 +2390,7 @@ function closeSheets() { $$('.scrim').forEach(x => x.remove()); }
 Object.assign(A, { $, $$, esc, toast, sheet, closeSheets, app });
 const AVATAR = ['🦊', '🐯', '🐼', '🐨', '🦁', '🐸', '🐵', '🦄', '🐙', '🐬', '🦋', '🐢', '🐧', '🦉', '🐞', '🐳'];
 A.AVATAR = AVATAR;
-function theme(t) { document.body.className = 'th-' + (t || 'neutral'); const m = $('meta[name=theme-color]'); if (m) m.content = t === 'garaj' ? '#12161F' : t === 'orol' ? '#5B2C9A' : '#2F7BEA'; }
+function theme(t) { const kb = t === 'orol' && A.bola ? A.bola() : null, katta = !!(kb && kb.dunyo === 'orol' && kb.uslub === 'katta'); document.body.className = 'th-' + (t || 'neutral') + (katta ? ' katta' : ''); const m = $('meta[name=theme-color]'); if (m) m.content = katta ? '#0B0518' : t === 'garaj' ? '#12161F' : t === 'orol' ? '#5B2C9A' : '#2F7BEA'; }
 function applyFX() { const s = S().sozlama, rm = matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches; FX.setVol(s.ovoz); FX.low = s.kamEffekt === 'on' || rm || (s.kamEffekt === 'auto' && !!s.kamAuto); }
 A.applyFX = applyFX;
 FX.onLow = fps => { const s = S().sozlama; if (s.kamEffekt === 'auto') { s.kamAuto = fps; A.save(); toast('🐢 Telefon sekinroq — «kam effekt» yoqildi'); } };
@@ -2376,7 +2409,7 @@ function render() {
   const b = A.bola(); if (!b.dunyo && h !== 'dunyo') return screenWorld(b);
   if (h === 'dunyo') return screenWorld(b);
   KOMBO.n = 0;
-  if (/^(missiya|arena|mashq|vazifa-|garaj|dokon)/.test(h)) { const m0 = b.missiya, dm = A.damHolat(b, h === 'missiya' && m0 && m0.sana === A.todayKey() && !m0.done && m0.si > 0); if (dm) return screenDam(b, dm); }
+  if (/^(missiya|arena|mashq|vazifa-|garaj|dokon|qutqar-)/.test(h)) { const m0 = b.missiya, dm = A.damHolat(b, h === 'missiya' && m0 && m0.sana === A.todayKey() && !m0.done && m0.si > 0); if (dm) return screenDam(b, dm); }
   if (h === 'missiya') return screenMission(b);
   if (h === 'arena') return screenArena(b);
   if (h === 'natija') return screenResult(b);
@@ -2385,6 +2418,7 @@ function render() {
   if (h === 'dokon') return A.pul ? A.pul.screenDokon(b) : screenHome(b);
   if ((m = h.match(/^mashq-([a-z]+)(?:-([a-z]+))?$/))) return mashqStart(b, m[1], m[2]);
   if ((m = h.match(/^vazifa-(\w+)$/))) return vazifaStart(b, m[1]);
+  if ((m = h.match(/^qutqar-(\d{4}-\d{2}-\d{2})$/))) return qutStart(b, m[1]);
   if (A.TEZ && (m = h.match(/^sinov-([A-Za-z0-9.]+)-(\d)(?:-([a-z]+))?$/))) return screenSinov(b, m[1], +m[2], m[3]);
   return screenHome(b);
 }
@@ -2479,15 +2513,16 @@ function reytingHTML(b) {
 function screenHome(b) {
   theme(b.dunyo); const t = A.agg(b), m = b.missiya, today = A.todayKey(), done = m && m.sana === today && m.done, going = m && m.sana === today && !m.done, sq = A.sandiq(b);
   app.innerHTML = `<div class="wrap kidw"><div class="top"><button class="ib av" data-tanla aria-label="Bola almashtirish">${b.avatar}</button><div class="ttl">${esc(b.laqab)}<br>${A.verBadge()}</div><span class="sp"></span><span class="pill">⭐ ${b.yulduz}</span><span class="pill">${sq.ic}</span><button class="ib" data-ota aria-label="Ota-ona paneli">👨‍👩‍👧</button></div>
-  ${worldScene(b, true)}<div class="bubble">${esc(done ? 'Bugungi missiya bajarildi! Arenada mashq qilsang ham bo\'ladi.' : going ? 'Missiya kutib turibdi — davom etamiz!' : A.isSunday() && A.dayNo(b) >= 3 ? 'Bugun yakshanba — KATTA FINAL!' : 'Salom! Bugungi missiyaga tayyormisan?')}</div>
+  ${A.xarita ? A.xarita.html(b) : worldScene(b, true)}<div class="bubble">${esc(A.xarita && A.xarita.qutRoyxat(b).length ? "Tumanli bekat bor — 🛟 qutqaramizmi?" : done ? 'Bugungi missiya bajarildi! Arenada mashq qilsang ham bo\'ladi.' : going ? 'Missiya kutib turibdi — davom etamiz!' : A.isSunday() && A.dayNo(b) >= 3 ? 'Bugun yakshanba — KATTA FINAL!' : 'Salom! Bugungi missiyaga tayyormisan?')}</div>
   <div class="row cta">${done ? `<button class="btn big alt" data-arena>⚔️ Arena</button>` : `<button class="btn big" data-start>${going ? '▶ Davom etish' : A.isSunday() && A.dayNo(b) >= 3 ? '🏆 Finalni boshlash' : '🚀 Missiyani boshlash'}</button>`}</div>
-  <div class="row"><button class="btn ghost" data-mashq>📚 Mashq — fanni o'zing tanla</button></div>${A.garajTugma ? `<div class="row">${A.garajTugma(b)}</div>` : ''}${A.pul ? A.pul.uyHTML(b) : ''}${sovgaHTML(b)}${vazifaHTML(b)}
+  ${A.xarita ? A.xarita.qutTugma(b) : ''}<div class="row"><button class="btn ghost" data-mashq>📚 Mashq — fanni o'zing tanla</button></div>${A.garajTugma ? `<div class="row">${A.garajTugma(b)}</div>` : ''}${A.pul ? A.pul.uyHTML(b) : ''}${sovgaHTML(b)}${vazifaHTML(b)}
   <div class="stats"><div><b>⭐ ${t.yulduz}</b><span>bugun</span></div><div><b>⏱ ${Math.round(t.faol / 60)}</b><span>daqiqa</span></div><div><b>${b.detal.length}</b><span>${b.dunyo === 'orol' ? 'bezak' : 'detal'}</span></div></div>
   ${vaqtHTML(b)}${kechagi(b) ? `<div class="note kn">${esc(kechagi(b))}</div>` : ''}
   ${b.detal.length ? `<div class="coll">${b.detal.slice(-12).map(r => `<span title="${esc(r.nom || '')}">${ART.icon(r.k, { s: 34, rang: carRang(b) }) || r.ic || '🔩'}</span>`).join('')}</div>` : ''}
   ${reytingHTML(b)}
   ${installTip()}</div>`;
-  sovgaBayram(b);
+  sovgaBayram(b); if (A.xarita) A.xarita.bind(b);
+  $$('[data-qut]').forEach(x => x.onclick = () => go('qutqar-' + x.dataset.qut));
   const st = $('[data-start]'); if (st) st.onclick = () => go('missiya');
   const ar = $('[data-arena]'); if (ar) ar.onclick = () => go('arena');
   $('[data-tanla]').onclick = () => go('tanla'); $('[data-ota]').onclick = () => go('ota');
@@ -2529,7 +2564,7 @@ function stepDone(m) { let d = 0; m.steps.forEach((x, i) => { if (i < m.si) d +=
 function frame(b, m, title, body) {
   const p = Math.min(1, stepDone(m) / Math.max(1, stepTotal(m))), icon = b.dunyo === 'orol' ? '🦄' : '🏎️';
   app.innerHTML = `<div class="wrap play"><div class="top"><button class="ib" data-pause aria-label="To'xtatish">⏸</button><div class="ttl">${title}</div><span class="sp"></span><span class="pill">⭐ ${A.agg(b).yulduz}</span>${A.pul ? A.pul.pill(b) : ''}</div>
-  <div class="road"><div class="rfill" style="width:${Math.round(p * 100)}%"></div><span class="rcar svgc" style="left:calc(${Math.round(p * 100)}% - 26px)">${roadHero(b)}</span><span class="rflag">${ART.icon(b.dunyo === 'orol' ? 'qasr' : 'marra', { s: 26 })}</span></div><div id="stage">${body}</div></div>`;
+  <div class="road"><div class="rfill" style="width:${Math.round(p * 100)}%"></div><span class="rcar svgc" style="left:calc(${Math.round(p * 100)}% - 26px)">${roadHero(b)}</span><span class="rflag">${ART.icon(b.dunyo === 'orol' ? 'qasr' : 'marra', { s: 26 })}</span></div>${m.final && A.xarita ? A.xarita.devBar(b, m) : ''}<div id="stage">${body}</div></div>`;
   $('[data-pause]').onclick = () => { endSession(b); go('uy'); };
 }
 function stepTitle(st) { if (st.arBolim) return "🕌 Arab: o'qish · yozish · tajvid"; const F = A.FAN[st.fan]; return ({ isinish: '🔥 Isinish', qayta: "💥 Qayta yig'", oqish: "⏱ 1 daqiqa o'qish", duel: '⚔️ Arab dueli', kashf: '🌍 Kun kashfiyoti', final15: '🏆 Yakshanba finali', turnir: '🧠 Olimpiada turniri', viktorina: '🌍 Hafta viktorinasi', yakun: '🏁 Final poyga' })[st.k] || (F ? F.ic + ' ' + F.nom : st.k); }
@@ -2553,7 +2588,7 @@ function nextItem(b, m, st, i) {
   else if (st.k === 'qayta') { const it = gen.make('L.10', 2, { dunyo: b.dunyo }); const f = BJ.FIG.mashina; it.fig = 'mashina'; it.qism = f.p.map((p, j) => ({ id: 'p' + j, sh: p[0], x: p[1], y: p[2], w: p[3], h: p[4], rang: ART.RANGLAR[(b.detal.length + j) % ART.RANGLAR.length] })); it.sav = "💥 Sinov poygasi: mashina devorga urilib parchalandi! Detallarni joyiga sudrab qayta yig'!"; it.tur = 'missiya'; it.fan = 'mant'; return it; }
   else if (st.k === 'kashf') { sel = { tugun: 'KASHF', q: qOfGrade(b), tur: 'kashf', kashfId: st.id, kashfSavol: i }; }
   else if (st.k === 'duel') { const w = BJ.ARW.find(x => x.w === st.sozlar[i]); const it = BJ.arItem(w, 1); it.tugun = 'AR.' + w.m; it.q = 1; it.t = 'tanla'; it.gen = 'AR'; it.tur = 'duel'; it.fan = 'ar'; return it; }
-  else if (st.k === 'final15') { const ids = A.weekNodes(b); const id = ids[Math.floor(Math.random() * ids.length)]; sel = { tugun: id, q: Math.max(1, A.nodeSt(b, id).q), tur: 'final' }; }
+  else if (st.k === 'final15') { if (!st.devIds) { st.devIds = A.xarita ? A.xarita.devTugunlar(b) : A.weekNodes(b); st.devQalqon = A.xarita ? A.xarita.qalqon(b, st.devIds) : null; } const ids = st.devIds.filter(id => gen.reg[id]).length ? st.devIds.filter(id => gen.reg[id]) : A.weekNodes(b); const id = ids[Math.floor(Math.random() * ids.length)]; sel = { tugun: id, q: Math.max(1, A.nodeSt(b, id).q), tur: 'final' }; }
   else if (st.k === 'turnir') sel = { tugun: 'OL', q: qOfGrade(b), tur: 'olimp' };
   else if (st.k === 'viktorina') { const k = B.kashf[i % B.kashf.length]; sel = { tugun: 'KASHF', q: qOfGrade(b), tur: 'kashf', kashfId: k.id, kashfSavol: Math.floor(i / B.kashf.length) }; }
   return A.makeItem(b, sel);
@@ -2581,7 +2616,7 @@ function showItem(b, m, st, it) {
   if (ch) $('[data-charch]').onclick = () => charchadim(b, m, st);
   const say = $('[data-say]'); if (say) { say.onclick = () => { st0.ovoz++; speak(it.tts); }; if (it.ovozKoz || it.tugun.indexOf('EN.') === 0) setTimeout(() => speak(it.tts), 350); }
   const fv = $('.flashvis'); if (fv) { const ms = +fv.dataset.ms; setTimeout(() => { fv.style.visibility = 'hidden'; }, ms); }
-  R($('#body'), it, b, (r) => onAnswer(b, m, st, it, st0, r), st0);
+  CUR.cb = (r) => onAnswer(b, m, st, it, st0, r); R($('#body'), it, b, CUR.cb, st0);
   if (st0.lock) { const ob = $('#body'); ob.classList.add('locked'); setTimeout(() => ob.classList.remove('locked'), 1500); }
 }
 /* ---------- Javob: log, statistika, effekt ---------- */
@@ -2783,7 +2818,8 @@ function showLesson(b, m, st, it, n) {
   try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) {}
 }
 A.darsQadam = darsQadam; A.mathSteps = mathSteps; A.DARS = DARS;
-if (A.TEZ) G.__bjCur = () => CUR; /* faqat ?tez=1 avtomatik sinov uchun */
+if (A.TEZ) { G.__bjCur = () => CUR; /* faqat ?tez=1 avtomatik sinov uchun */
+  G.__bjJavob = ok => { const C = CUR; if (C && C.cb) C.cb({ togri: !!ok, javob: ok ? C.it.a : '?', yakuniy: !ok }); }; }
 function onAnswer(b, m, st, it, st0, r) {
   const ctx = CUR; if (!ctx || ctx.it !== it) return;
   r.shoshildi = r.shoshildi || (!r.togri && Date.now() - st0.shown < 1200 && st0.urinish === 1);
@@ -2795,7 +2831,7 @@ function onAnswer(b, m, st, it, st0, r) {
   if (r.xato_soni) { st0.urinish = 1 + r.xato_soni; if (r.maslahat) st0.maslahat = 1; }
   const res = m && it.tur !== 'dars' ? m.res[m.si] : null; const { ev } = afterAnswer(b, it, st0, fin, m);
   if (res) { res.push({ ok: fin.togri_1 ? 1 : 0, ms: Date.now() - st0.shown, ball: it.tur === 'duel' ? duelBall(fin, Date.now() - st0.shown) : 0 }); m.oyinN = (m.oyinN || 0) + 1; }
-  if (ctx.k === 'mashq' && it.tur !== 'dars') { ctx.n++; ctx.i++; ctx.oyinN = (ctx.oyinN || 0) + 1; if (fin.togri_1) ctx.ok++; if (ctx.vz) { ctx.vz.qildi++; if (fin.togri_1) ctx.vz.ok++; } }
+  if (ctx.k === 'mashq' && it.tur !== 'dars') { ctx.n++; ctx.i++; ctx.oyinN = (ctx.oyinN || 0) + 1; if (fin.togri_1) ctx.ok++; if (ctx.vz) { ctx.vz.qildi++; if (fin.togri_1) ctx.vz.ok++; } if (ctx.qut) { ctx.qut.qildi++; if (fin.togri_1) ctx.qut.ok++; } }
   if (m) m.cur = null; A.save(true);
   const next = () => { if (CUR && CUR.k === 'missiya') missionNext(b, m); else if (CUR && CUR.k === 'arena') arenaNext(b); else if (CUR && CUR.k === 'mashq') mashqNext(b); };
   if (it.tur === 'dars' && fin.togri) setTimeout(() => toast("🎓 Barakalla! Darsdan keyin o'zing yechding!"), 250);
@@ -3094,8 +3130,9 @@ A.oqishScreen = oqishScreen;
 function stepYakun(b, m, st) {
   if (m.steps.some(x => x.k === 'duel') && !m.duelSaved) { const di = m.steps.findIndex(x => x.k === 'duel'); const r = m.res[di] || []; if (r.length) { const s = A.S(), sana = A.todayKey(); s.duel[sana] = s.duel[sana] || {}; s.duel[sana][b.id] = { togri: A.sum(r.map(x => x.ok)), ms: A.sum(r.map(x => x.ms)), ball: A.sum(r.map(x => x.ball)), ts: Date.now(), final: m.final ? 1 : 0 }; } m.duelSaved = 1; }
   if (!m.mukofot) { const r = ART.nextReward(b.dunyo, b.detal); b.detal.push({ k: r.k, t: r.t, nom: r.nom, ic: r.ic, ts: Date.now() }); m.mukofot = r; A.agg(b).missiya = 1; if (b.pul && b.pul.joy) delete b.pul.joy[r.k]; m.pulM = A.pul ? A.pul.missiya(b) : 0; A.save(true); }
+  if (m.final && A.xarita && !m.devSaved) { m.dev = A.xarita.devYakun(b, m); m.devSaved = 1; A.save(true); }
   const r = m.mukofot;
-  frame(b, m, stepTitle(st), `<div class="reveal"><div class="rv-t">🎁 Yangi ${b.dunyo === 'orol' ? 'bezak' : 'detal'}!</div><div class="rv-i">${ART.icon(r.k, { s: 92, rang: carRang(b) }) || r.ic}</div><b>${esc(r.nom)}</b>${m.pulM ? `<div class="rvpul">💵 +${A.pul.som(m.pulM)}</div>` : ''}${A.worldScene(b, false)}<button class="btn big" data-go>${b.dunyo === 'orol' ? '🦄 Parvozga!' : '🏁 Poygaga!'}</button></div>`);
+  frame(b, m, stepTitle(st), `<div class="reveal"><div class="rv-t">🎁 Yangi ${b.dunyo === 'orol' ? 'bezak' : 'detal'}!</div><div class="rv-i">${ART.icon(r.k, { s: 92, rang: carRang(b) }) || r.ic}</div><b>${esc(r.nom)}</b>${m.pulM ? `<div class="rvpul">💵 +${A.pul.som(m.pulM)}</div>` : ''}${m.dev ? `<div class="note kn${m.dev.yutdi ? ' gold' : ''}">${m.dev.yutdi ? '🏆 Devni yengding! Hafta kubogi xaritangda' : '👹 Dev bu safar qochib qoldi — keyingi hafta yana uchrashamiz!'}</div>` : ''}${A.worldScene(b, false)}<button class="btn big" data-go>${b.dunyo === 'orol' ? '🦄 Parvozga!' : '🏁 Poygaga!'}</button></div>`);
   FX.burst(innerWidth / 2, innerHeight * 0.3, { tema: b.dunyo, n: 50 }); FX.play('fanfar');
   $('[data-go]').onclick = () => { const t0 = performance.now(); ART.race(b.dunyo, bzk(b), { txt: m.final ? 'CHEMPION!' : "G'ALABA!" }).then(() => { A.agg(b).fx += Math.round(performance.now() - t0); m.si++; m.done = true; A.save(true); endSession(b); go('natija'); }); };
 }
@@ -3103,7 +3140,7 @@ function screenResult(b) {
   theme(b.dunyo); const t = A.agg(b), sq = A.sandiq(b), m = b.missiya, r = m && m.mukofot, noms = m && m.final ? A.nominatsiyalar(A.isoWeek()).filter(n => n.bola === b.id) : [];
   app.innerHTML = `<div class="wrap kidw"><div class="top"><div class="ttl">🎉 Missiya bajarildi!</div></div>${A.worldScene(b, true)}
   <div class="stats"><div><b>⭐ ${t.yulduz}</b><span>bugun</span></div><div><b>⏱ ${Math.round(t.faol / 60)}</b><span>daqiqa</span></div><div><b>${sq.ic}</b><span>${sq.nom} sandiq</span></div></div>
-  ${r ? `<div class="note kn">🎁 Yangi: ${r.ic} ${esc(r.nom)}</div>` : ''}${kechagi(b) ? `<div class="note kn">${esc(kechagi(b))}</div>` : ''}
+  ${r ? `<div class="note kn">🎁 Yangi: ${r.ic} ${esc(r.nom)}</div>` : ''}${m && m.dev ? `<div class="note kn${m.dev.yutdi ? ' gold' : ''}">${m.dev.yutdi ? '🏆 Dev yengildi — hafta kubogi seniki!' : '👹 Dev keyingi hafta qaytadi'}</div>` : ''}${kechagi(b) ? `<div class="note kn">${esc(kechagi(b))}</div>` : ''}
   ${noms.map(n => `<div class="note kn gold">${n.ic} Bu hafta: <b>${esc(n.nom)}</b>!</div>`).join('')}
   <div class="bubble">Ko'p harakat qilding — miyang bugun yanada kuchaydi! 💪</div>
   <div class="row cta"><button class="btn big alt" data-arena>⚔️ Arena</button><button class="btn big" data-home>🏠 Uyga</button></div></div>`;
@@ -3123,7 +3160,7 @@ function arenaNext(b, given) {
   app.innerHTML = `<div class="wrap play"><div class="top"><button class="ib" data-x aria-label="Chiqish">✕</button><div class="ttl">⚔️ Arena</div><span class="sp"></span><span class="pill">⭐ ${ay}/20</span></div><div class="item t-${it.t}">${headHTML(b, it)}<div id="body"></div><div id="fb"></div>${otaTip(b, it)}</div></div>`;
   $('[data-x]').onclick = () => { endSession(b); go('uy'); };
   const say = $('[data-say]'); if (say) say.onclick = () => { st0.ovoz++; speak(it.tts); };
-  (RENDER[it.t] || RENDER.tanla)($('#body'), it, b, r => onAnswer(b, null, null, it, st0, r), st0);
+  CUR.cb = r => onAnswer(b, null, null, it, st0, r); (RENDER[it.t] || RENDER.tanla)($('#body'), it, b, CUR.cb, st0);
 }
 /* ================= 📚 MASHQ va 📝 UYGA VAZIFA (0.4.0) =================
    Mashq — bola fanni (arabda bo'limni ham) o'zi tanlaydi, cheksiz savol; xato bo'lsa kichik dars, har N savolda o'yin, yulduz kunlik 20 chegarasi bilan.
@@ -3162,6 +3199,7 @@ function vazifaStart(b, id) {
 }
 function mashqItem(b, C) {
   let sel;
+  if (C.qut) { C.fan = C.qut.fans[C.i % C.qut.fans.length]; const L = A.gl(b.daraja); sel = C.fan === 'mant' ? A.pickNode(b, 'mant', { mantTypes: Array.from(new Set([].concat(...A.MANT_KUN[L]))), i: C.i }) : A.pickNode(b, C.fan, { i: C.i }); return A.makeItem(b, Object.assign({}, sel, { tur: 'mashq' })); }
   if (C.fan === 'ar' && b.arab === 'asosiy') { sel = A.arPick(b, C.bolim || 'aralash'); if (!sel) return null; }
   else if (C.fan === 'mant') { const L = A.gl(b.daraja), types = Array.from(new Set([].concat(...A.MANT_KUN[L]))); sel = A.pickNode(b, 'mant', { mantTypes: types, i: C.i }); }
   else sel = A.pickNode(b, C.fan, { i: C.i });
@@ -3170,20 +3208,21 @@ function mashqItem(b, C) {
 function mashqNext(b, given) {
   const C = CUR; if (!C || C.k !== 'mashq') return;
   if (!given && C.vz && C.vz.qildi >= C.vz.n) return vazifaDone(b, C);
+  if (!given && C.qut && C.qut.qildi >= C.qut.n) return qutDone(b, C);
   if (!given) { const dm = A.damHolat(b); if (dm) { endSession(b); return screenDam(b, dm); } }
   const har = A.oyinCfg(b).har;
   if (!given && har && A.oyin && C.oyinN >= har) { C.oyinN = 0; return A.oyin.boshla(b, C, () => { CUR = C; theme(b.dunyo); mashqNext(b); }); }
   const it = given || mashqItem(b, C);
   if (!it) { app.innerHTML = `<div class="wrap kidw"><div class="card"><h2>🔒 Hali ochilmagan</h2><p>Bu bo'lim uchun oyisi 👨‍👩‍👧 → 🕌 Arab so'zlari bo'limida so'zlar yoki tajvid misollarini tasdiqlashi kerak.</p><button class="btn big" data-back>← Orqaga</button></div></div>`; $('[data-back]').onclick = () => go('mashq'); return; }
   const st0 = { shown: Date.now(), first: null, urinish: 1, maslahat: 0, ovoz: 0, lock: b.shosh ? Date.now() + 1500 : 0 }; C.it = it; C.st = st0;
-  const ay = b.arenaYulduz[A.todayKey()] || 0, ttl = C.vz ? vzNom(C.vz) : C.fan === 'ar' && C.bolim && BJ.arab ? '🕌 ' + BJ.arab.BOLIM[C.bolim].nom : '📚 ' + A.FAN[C.fan].nom, p = C.vz ? Math.min(1, C.vz.qildi / Math.max(1, C.vz.n)) : 0;
-  app.innerHTML = `<div class="wrap play"><div class="top"><button class="ib" data-x aria-label="Chiqish">✕</button><div class="ttl">${esc(ttl)}</div><span class="sp"></span>${C.vz ? `<span class="pill">📝 ${C.vz.qildi}/${C.vz.n}</span>` : `<span class="pill">✅ ${C.n}</span><span class="pill">⭐ ${ay}/20</span>`}</div>
-  ${C.vz ? `<div class="road"><div class="rfill" style="width:${Math.round(p * 100)}%"></div><span class="rcar svgc" style="left:calc(${Math.round(p * 100)}% - 26px)">${A.roadHero(b)}</span><span class="rflag">${ART.icon(b.dunyo === 'orol' ? 'qasr' : 'marra', { s: 26 })}</span></div>` : ''}
+  const ay = b.arenaYulduz[A.todayKey()] || 0, Z = C.vz || C.qut, ttl = C.qut ? '🛟 Qutqarish · ' + C.qut.nom : C.vz ? vzNom(C.vz) : C.fan === 'ar' && C.bolim && BJ.arab ? '🕌 ' + BJ.arab.BOLIM[C.bolim].nom : '📚 ' + A.FAN[C.fan].nom, p = Z ? Math.min(1, Z.qildi / Math.max(1, Z.n)) : 0;
+  app.innerHTML = `<div class="wrap play"><div class="top"><button class="ib" data-x aria-label="Chiqish">✕</button><div class="ttl">${esc(ttl)}</div><span class="sp"></span>${Z ? `<span class="pill">${C.qut ? '🛟' : '📝'} ${Z.qildi}/${Z.n}</span>` : `<span class="pill">✅ ${C.n}</span><span class="pill">⭐ ${ay}/20</span>`}</div>
+  ${Z ? `<div class="road"><div class="rfill" style="width:${Math.round(p * 100)}%"></div><span class="rcar svgc" style="left:calc(${Math.round(p * 100)}% - 26px)">${A.roadHero(b)}</span><span class="rflag">${ART.icon(b.dunyo === 'orol' ? 'qasr' : 'marra', { s: 26 })}</span></div>` : ''}
   <div class="item t-${it.t}">${headHTML(b, it)}<div id="body"></div><div id="fb"></div>${otaTip(b, it)}</div></div>`;
-  $('[data-x]').onclick = () => { endSession(b); A.save(true); if (C.n && !C.vz) toast(`📚 ${C.n} ta savol · ${C.ok} tasi birinchi urinishda ✅`); go('uy'); };
+  $('[data-x]').onclick = () => { endSession(b); A.save(true); if (C.n && !Z) toast(`📚 ${C.n} ta savol · ${C.ok} tasi birinchi urinishda ✅`); go('uy'); };
   const say = $('[data-say]'); if (say) say.onclick = () => { st0.ovoz++; speak(it.tts); };
   if (st0.lock) { const ob = $('#body'); ob.classList.add('locked'); setTimeout(() => ob.classList.remove('locked'), 1500); }
-  (RENDER[it.t] || RENDER.tanla)($('#body'), it, b, r => onAnswer(b, null, null, it, st0, r), st0);
+  CUR.cb = r => onAnswer(b, null, null, it, st0, r); (RENDER[it.t] || RENDER.tanla)($('#body'), it, b, CUR.cb, st0);
 }
 function vazifaDone(b, C) {
   const v = C.vz;
@@ -3193,6 +3232,17 @@ function vazifaDone(b, C) {
   FX.play('fanfar'); FX.burst(innerWidth / 2, innerHeight * 0.3, { tema: b.dunyo, n: 40 }); $('[data-home]').onclick = () => go('uy');
 }
 A.mashqStart = mashqStart;
+/* 🛟 Qutqarish missiyasi (0.7.0): shanba, tumanli bekat uchun 6 savol (mat → ona tili/yozuv → mantiq aralash) */
+function qutStart(b, sana) {
+  const s = A.xarita && A.xarita.qutRoyxat(b).find(x => x.sana === sana); if (!s) { toast("🛟 Qutqarish faqat shanba kuni, o'sha kunning missiyasidan keyin"); return go('uy'); }
+  const L = A.gl(b.daraja), fans = L === 'g0' ? ['mat', 'yoz', 'mant'] : ['mat', 'til', 'mant'];
+  CUR = { k: 'mashq', b, fan: fans[0], bolim: null, vz: null, qut: { sana, nom: s.nom, n: A.TEZ ? 2 : A.xarita.QUT_N, qildi: 0, ok: 0, fans }, n: 0, ok: 0, i: 0, oyinN: 0 }; startSession(b, 'mashq'); theme(b.dunyo); mashqNext(b);
+}
+function qutDone(b, C) {
+  const q = C.qut, pul = A.xarita.qutTugadi(b, q.sana, q.n, q.ok); endSession(b); CUR = null;
+  app.innerHTML = `<div class="wrap kidw"><div class="oyfin">${A.xarita.html(b, { mini: true })}<h2>🛟 ${esc(q.nom)} bekati qutqarildi!</h2><div class="note kn">${q.ok}/${q.n} tasi birinchi urinishda · +3 ⭐${pul ? ` · 🏆 5 kun bonusi 💵 +${A.pul.som(pul)}` : ''}</div><p>Tuman tarqaldi — bekat yana yashil! 💪</p><button class="btn big" data-home>🏠 Xaritaga</button></div></div>`;
+  FX.play('fanfar'); FX.burst(innerWidth / 2, innerHeight * 0.3, { tema: b.dunyo, n: 40 }); $('[data-home]').onclick = () => go('uy');
+}
 /* Sinov ekrani (faqat ?tez=1): bitta tugunning topshirig'ini ko'rsatadi — avtomatik sinov va ko'z bilan tekshirish uchun */
 function screenSinov(b, id, q, fmt) { CUR = { k: 'arena', b }; theme(b.dunyo); const it = A.makeItem(b, { tugun: id, q, tur: 'arena', fmt: fmt || null }), st0 = { shown: Date.now(), first: null, urinish: 1, maslahat: 0, ovoz: 0 }; CUR.it = it; CUR.st = st0; CUR.fan = it.fan;
   app.innerHTML = `<div class="wrap play"><div class="top"><button class="ib" data-x aria-label="Chiqish">✕</button><div class="ttl">🧪 ${esc(id)} q${q}</div></div><div class="item t-${it.t}">${headHTML(b, it)}<div id="body"></div><div id="fb"></div>${otaTip(b, it)}</div></div>`;
@@ -3678,10 +3728,13 @@ function javob(b) {
   d.n++; const s = kirim(b, MUK(b).javob, 'javob'); if (d.n === KUN_MAX) setTimeout(() => toast(`💵 Bugungi javob puli to'ldi (${KUN_MAX} ta). Missiyani tugatsang — yana +${fmt(MUK(b).missiya)}!`), 1200); return s;
 }
 function missiya(b) {
-  if (yoq() || !b) return 0; const p = st(b), m = MUK(b), wk = A.isoWeek(); let s = kirim(b, m.missiya, 'missiya');
-  const kunlar = A.weekDays(wk).filter(k => b.kun[k] && b.kun[k].missiya).length;
-  if (kunlar >= BONUS_KUN && !p.bonus[wk]) { p.bonus[wk] = 1; s += kirim(b, m.bonus, 'bonus', `${BONUS_KUN} kun missiya`); setTimeout(() => toast(`🏆 Haftada ${BONUS_KUN} kun missiya — +${som(m.bonus)} bonus!`), 1600); }
-  return s;
+  if (yoq() || !b) return 0; return kirim(b, MUK(b).missiya, 'missiya') + bonusTek(b);
+}
+/* 5 kun bonusi: 🛟 qutqarilgan bekat ham sanaladi (0.7.0, foydalanuvchi qarori 06.11) */
+function bonusTek(b) {
+  if (yoq() || !b) return 0; const p = st(b), m = MUK(b), wk = A.isoWeek();
+  const kunlar = A.weekDays(wk).filter(k => A.xarita ? A.xarita.missiyaKun(b, k) : (b.kun[k] && b.kun[k].missiya)).length;
+  if (kunlar < BONUS_KUN || p.bonus[wk]) return 0; p.bonus[wk] = 1; const s = kirim(b, m.bonus, 'bonus', `${BONUS_KUN} kun missiya`); setTimeout(() => toast(`🏆 Haftada ${BONUS_KUN} kun missiya — +${som(m.bonus)} bonus!`), 1600); return s;
 }
 const vazifa = b => yoq() || !b ? 0 : kirim(b, MUK(b).vazifa, 'vazifa');
 /* ---------- 🐷 cho'chqa-kassa: har to'liq 7 kunda +5% ---------- */
@@ -3862,8 +3915,229 @@ function panel(top, bindTop) {
     L.push({ id: A.rid(6), kim: $('#dk').value, nom, rasm, narx, takror: $('#dt').checked, yaratildi: Date.now() }); toast("🎁 Do'konga qo'yildi"); sv(); };
 }
 const kutHisob = () => A.bolalar().reduce((a, b) => a + st(b).xarid.filter(x => x.holat === 'kutish').length, 0);
-A.pul = { st, kirim, javob, missiya, vazifa, pill, yangila, uyHTML, screenDokon, panel, tolov, kassaFoiz, kassaSol, kassaOl, ega, joyda, bezak, sovgalar, MUK, narxK, fmt, som, ajrat, pulSvg, TUN, SALON, KUN_MAX, kutHisob };
+A.pul = { st, kirim, javob, missiya, bonusTek, vazifa, pill, yangila, uyHTML, screenDokon, panel, tolov, kassaFoiz, kassaSol, kassaOl, ega, joyda, bezak, sovgalar, MUK, narxK, fmt, som, ajrat, pulSvg, TUN, SALON, KUN_MAX, kutHisob };
 A.bezak = bezak;
+})(typeof window !== 'undefined' ? window : globalThis);
+</script>
+<script>
+/* Bilimjon — 🗺️ SARGUZASHT XARITASI va 👹 YAKSHANBA DEVI (0.7.0, 1-bosqich; foydalanuvchi qarori 05–06.11: 1BC 2A 3A + 4 g'oya).
+   Hafta = 7 bekat (Du…Ya) + marra (hafta kubogi). Uy ekranida sahna o'rnida (3A). Dizayn — realistik (multfilm emas).
+   Bekat: ok — missiya · qut — shanba kuni qutqarilgan · bugun · tuman — o'tkazilgan kun (jazosiz, 1B) · kelajak · oldin — bola hali boshlamagan.
+   Qahramon (bolaning mashinasi / uchar oti) doim bugungi bekatda; missiya bajarilsa — keyingisiga yuradi (bir marta animatsiya).
+   🎁 Bugungi va oldindagi bekatlarda — o'sha kunning mukofoti (ART.nextReward ketma-ketligi), yakshanbada — kubok.
+   🏞️ Har hafta yangi manzara (isoWeek % 4): garaj — shahar · cho'l · qorli tog' · kosmos; orol — pushti · muzli · gulzor · oltin; katta qiz — 4 neon rang.
+   🛟 Qutqarish (1C): shanba, o'sha kunning missiyasidan keyin, 6 savol, haftasiga ≤ 2 bekat; qutqarilgan kun «5 kun» so'm bonusiga sanaladi.
+   👹 Dev (2A): yakshanba finalining 1-qadami — kuch chizig'i; savollar shu haftaning qiyin tugunlaridan (n ≥ 3, 1-urinish < 70%),
+   🛡 qalqon — eng qiyin mavzu nomi; 60% to'g'ri → dev yengiladi → b.xarita.kubok[wk]; yutolmasa jazosiz. Ota-ona: #ota-xarita — hamma bolalar xaritasi.
+   b.xarita = { qut{sana:{ts,n,ok,kun}}, kubok{wk:1}, dev{wk:{ok,need,yutdi,qalqon}}, yurdi: sana (animatsiya ko'rsatildi), ochildi: sana } */
+(function (G) {
+'use strict';
+const BJ = G.BJ, A = BJ.A, FX = BJ.fx, ART = BJ.art;
+const { $, $$, esc, toast } = A;
+const KUN = ['Du', 'Se', 'Ch', 'Pa', 'Ju', 'Sh', 'Ya'], KUN_TOL = ['Dushanba', 'Seshanba', 'Chorshanba', 'Payshanba', 'Juma', 'Shanba', 'Yakshanba'];
+const QUT_N = 6, QUT_MAX = 2, DEV_ULUSH = 0.6, W = 360, H = 330;
+const P = [[42, 298], [150, 282], [290, 258], [256, 190], [112, 174], [62, 108], [190, 82], [312, 46]];
+const MANZARA = { garaj: ['Tungi shahar', "Cho'l", "Qorli tog'", 'Kosmos'], orol: ['Pushti osmon', 'Muzli orol', 'Gulzor', 'Oltin shom'], katta: ['Neon pushti', 'Neon moviy', 'Neon binafsha', 'Neon oltin'] };
+const r1 = x => Math.round(x * 10) / 10;
+let UID = 0;
+function st(b) {
+  if (!b.xarita || typeof b.xarita !== 'object') b.xarita = {};
+  const x = b.xarita; ['qut', 'kubok', 'dev'].forEach(k => { if (!x[k] || typeof x[k] !== 'object') x[k] = {}; }); return x;
+}
+function tozala(x) { const lim = A.addDays(A.todayKey(), -70); Object.keys(x.qut).forEach(d => { if (d < lim) delete x.qut[d]; }); ['kubok', 'dev'].forEach(k => { const w = Object.keys(x[k]).sort(); while (w.length > 10) delete x[k][w.shift()]; }); }
+const qutKun = (b, k) => !!(b && b.xarita && b.xarita.qut && b.xarita.qut[k]);
+const missiyaKun = (b, k) => !!((b.kun[k] && b.kun[k].missiya) || qutKun(b, k));
+const shanba = () => new Date().getDay() === 6;
+const haftaNo = wk => +String(wk || A.isoWeek()).split('-W')[1] || 0;
+function holat(b, wk) {
+  wk = wk || A.isoWeek(); const T = A.todayKey(), x = st(b), bosh = b.boshlandi || b.yaratildi || T;
+  return A.weekDays(wk).map((k, i) => {
+    const ok = !!(b.kun[k] && b.kun[k].missiya);
+    const h = ok ? 'ok' : qutKun(b, k) ? 'qut' : k === T ? 'bugun' : k > T ? 'kelajak' : k < bosh ? 'oldin' : 'tuman';
+    return { sana: k, i, kun: KUN[i], nom: KUN_TOL[i], h, dev: i === 6, kubok: i === 6 && !!x.kubok[wk] };
+  });
+}
+function heroI(b) { const T = A.todayKey(), i = A.weekDays(A.isoWeek()).indexOf(T); if (i < 0) return 0; return b.kun[T] && b.kun[T].missiya ? i + 1 : i; }
+/* ---------- 🛟 qutqarish ---------- */
+function qutRoyxat(b) {
+  if (!shanba()) return []; const T = A.todayKey(); if (!(b.kun[T] && b.kun[T].missiya)) return [];
+  const Hs = holat(b), used = Hs.filter(s => s.h === 'qut').length; if (used >= QUT_MAX) return [];
+  return Hs.filter(s => s.h === 'tuman').slice(0, QUT_MAX - used);
+}
+function qutTugadi(b, sana, n, ok) {
+  const x = st(b); if (x.qut[sana]) return 0;
+  x.qut[sana] = { ts: Date.now(), n, ok, kun: A.todayKey() }; x.ochildi = sana; tozala(x);
+  A.addStar(b, 3); A.pushLog(b.id, { t: 'xarita', ts: Date.now(), bola: b.id, hodisa: 'qut', sana, n, ok });
+  const s = A.pul && A.pul.bonusTek ? A.pul.bonusTek(b) : 0; A.save(true); return s;
+}
+/* ---------- 👹 dev va 🛡 qalqon ---------- */
+function devTugunlar(b) {
+  const reg = BJ.gen.reg, s = A.weekStats(b, A.isoWeek());
+  const ids = Object.keys(s.nodes).filter(id => { const n = s.nodes[id]; return n.n >= 3 && n.ok1 / n.n < 0.7 && reg[id] && !['KASHF', 'OL'].includes(id) && reg[id].fan !== 'ar'; })
+    .sort((a, c) => s.nodes[a].ok1 / s.nodes[a].n - s.nodes[c].ok1 / s.nodes[c].n);
+  return ids.length ? ids : A.weekNodes(b);
+}
+function qalqon(b, ids) { const reg = BJ.gen.reg, id = (ids || devTugunlar(b))[0]; return id && reg[id] ? reg[id].nom : 'Hafta mavzulari'; }
+function devHolat(m) {
+  if (!m || !m.final) return null; const si = m.steps.findIndex(s => s.k === 'final15'); if (si < 0) return null;
+  const s = m.steps[si], r = m.res[si] || [], need = Math.max(1, Math.ceil(s.n * DEV_ULUSH)), ok = r.reduce((a, x) => a + (x.ok ? 1 : 0), 0);
+  return { si, need, ok, n: s.n, hp: Math.max(0, Math.round(100 - ok * 100 / need)), yengildi: ok >= need, tugadi: r.length >= s.n, qalqon: s.devQalqon || null };
+}
+function devYakun(b, m) {
+  const d = devHolat(m); if (!d) return null; const x = st(b), wk = A.isoWeek(), r = { ok: d.ok, need: d.need, yutdi: d.yengildi, qalqon: d.qalqon };
+  x.dev[wk] = r; if (r.yutdi) x.kubok[wk] = 1; tozala(x);
+  A.pushLog(b.id, { t: 'xarita', ts: Date.now(), bola: b.id, hodisa: r.yutdi ? 'dev_yutdi' : 'dev_qochdi', ok: d.ok, need: d.need, qalqon: d.qalqon }); A.save(true); return r;
+}
+/* Dev — realistik zirhli gigant (qo'rqinchli emas): po'lat dubulg'a, metall shoxlar, yonib turgan ko'zlar */
+function devSvg(s, mood) {
+  const u = 'dv' + (++UID), y = mood === 'yengildi';
+  return `<svg class="dev" viewBox="0 0 100 100" width="${s}" height="${s}" aria-hidden="true"><defs>
+  <radialGradient id="${u}a" cx="38%" cy="30%" r="75%"><stop offset="0" stop-color="#8E9AAF"/><stop offset=".45" stop-color="#4A5468"/><stop offset="1" stop-color="#1B2130"/></radialGradient>
+  <linearGradient id="${u}h" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#5C4033"/><stop offset=".6" stop-color="#D7C4A3"/><stop offset="1" stop-color="#FFF8E7"/></linearGradient>
+  <radialGradient id="${u}e" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="${y ? '#B0BEC5' : '#FFF3C4'}"/><stop offset=".5" stop-color="${y ? '#78909C' : '#FFB300'}"/><stop offset="1" stop-color="${y ? '#455A64' : '#E65100'}" stop-opacity="${y ? 1 : 0}"/></radialGradient>
+  <linearGradient id="${u}s" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".35"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>
+  <ellipse cx="50" cy="95" rx="32" ry="4.5" fill="#000" opacity=".35"/>
+  <path d="M27 34 C16 26 12 12 18 3 C22 14 30 20 38 26Z M73 34 C84 26 88 12 82 3 C78 14 70 20 62 26Z" fill="url(#${u}h)" stroke="#3E2723" stroke-width="1.2"/>
+  <path d="M50 16 C76 16 88 34 87 58 C86 80 72 92 50 92 C28 92 14 80 13 58 C12 34 24 16 50 16Z" fill="url(#${u}a)" stroke="#0D1117" stroke-width="2"/>
+  <path d="M22 44 H78 L74 58 H26Z" fill="#11151E" stroke="#6B778C" stroke-width="1.5"/><path d="M50 18 V44" stroke="#6B778C" stroke-width="3"/>
+  <circle cx="36" cy="51" r="6" fill="url(#${u}e)"/><circle cx="64" cy="51" r="6" fill="url(#${u}e)"/>
+  ${y ? '' : `<circle cx="36" cy="51" r="11" fill="#FFB300" opacity=".18"/><circle cx="64" cy="51" r="11" fill="#FFB300" opacity=".18"/>`}
+  <path d="M34 74 Q50 ${y ? 70 : 80} 66 74" fill="none" stroke="#0D1117" stroke-width="3" stroke-linecap="round"/>
+  ${[30, 40, 60, 70].map(x => `<circle cx="${x}" cy="${x < 50 ? 66 : 66}" r="1.6" fill="#A7B1C2"/>`).join('')}
+  <path d="M24 28 Q50 18 76 28" fill="none" stroke="url(#${u}s)" stroke-width="5"/>
+  ${y ? '<path d="M58 22 L48 40 L56 42 L46 60" fill="none" stroke="#FFD54F" stroke-width="2.2" stroke-linejoin="round"/>' : ''}</svg>`;
+}
+function kubokSvg(s, on) {
+  const u = 'kb' + (++UID);
+  return `<svg viewBox="0 0 60 60" width="${s}" height="${s}" aria-hidden="true" class="kbk${on ? ' on' : ''}"><defs><linearGradient id="${u}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF8D6"/><stop offset=".35" stop-color="#FFD54F"/><stop offset=".7" stop-color="#C79200"/><stop offset="1" stop-color="#7A5900"/></linearGradient></defs>
+  <ellipse cx="30" cy="56" rx="16" ry="3" fill="#000" opacity=".35"/><path d="M14 8 H46 V22 C46 33 38 40 30 40 C22 40 14 33 14 22Z" fill="url(#${u})" stroke="#5C4300" stroke-width="1.2"/>
+  <path d="M14 13 H7 C7 23 11 27 16 27 M46 13 H53 C53 23 49 27 44 27" fill="none" stroke="#B8860B" stroke-width="3"/>
+  <path d="M26 40 H34 L33 47 H27Z" fill="#B8860B"/><rect x="17" y="47" width="26" height="7" rx="1.5" fill="#3E2723"/><rect x="21" y="49" width="18" height="3" rx="1" fill="#C79200"/>
+  <path d="M19 12 Q20 26 27 33" stroke="#fff" stroke-width="2.4" fill="none" opacity=".75"/></svg>`;
+}
+/* ---------- yo'l (Catmull-Rom → Bezier) ---------- */
+function seg(i) { const p0 = P[i - 1] || P[i], p1 = P[i], p2 = P[i + 1], p3 = P[i + 2] || p2; return [p1, [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6], [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6], p2]; }
+function yol(n) { let d = `M${P[0][0]} ${P[0][1]}`; for (let i = 0; i < Math.min(n, P.length - 1); i++) { const [, c1, c2, p2] = seg(i); d += ` C${r1(c1[0])} ${r1(c1[1])} ${r1(c2[0])} ${r1(c2[1])} ${p2[0]} ${p2[1]}`; } return d; }
+function nuqta(i, t) { const [a, b, c, d] = seg(i), u = 1 - t; return [0, 1].map(j => u * u * u * a[j] + 3 * u * u * t * b[j] + 3 * u * t * t * c[j] + t * t * t * d[j]); }
+/* ---------- fon (realistik qatlamlar: osmon, uzoq va yaqin plan, yorug'lik) ---------- */
+const lg = (id, a, rot) => `<linearGradient id="${id}" x1="0" y1="0" x2="${rot ? 1 : 0}" y2="1">${a.map((c, i) => `<stop offset="${r1(i / (a.length - 1))}" stop-color="${c}"/>`).join('')}</linearGradient>`;
+function yulduzlar(n, op) { let s = ''; for (let i = 0; i < n; i++) s += `<circle${i % 4 ? '' : ` class="yz" style="animation-delay:-${(i * 0.37) % 3}s"`} cx="${(i * 97 + 13) % W}" cy="${(i * 53 + 7) % 200}" r="${i % 6 ? .7 : 1.4}" fill="#fff" opacity="${i % 3 ? op * .5 : op}"/>`; return s; }
+const uchar = (x, y, d) => `<g class="uyz" style="animation-delay:${d}s"><path d="M${x} ${y} l-46 18" stroke="#fff" stroke-width="1.6" stroke-linecap="round" opacity=".9"/></g>`;
+function qor(n) { let s = '<g class="qor">'; for (let i = 0; i < n; i++) s += `<circle cx="${(i * 71 + 9) % W}" cy="${(i * 43) % H}" r="${i % 3 ? 1.2 : 2}" fill="#fff" opacity=".8" style="animation-delay:-${(i * 0.53) % 6}s;animation-duration:${5 + i % 4}s"/>`; return s + '</g>'; }
+function fon(t, z, u) {
+  if (t === 'katta') {
+    const N = [['#FF2EA6', '#29F0FF'], ['#29C8FF', '#B388FF'], ['#B14BFF', '#FF6EC7'], ['#FFC93C', '#FF2EA6']][z];
+    return `<defs>${lg(u + 's', ['#07030F', '#140726', '#24093A'])}<filter id="${u}g" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="4"/></filter><radialGradient id="${u}r"><stop offset="0" stop-color="${N[0]}" stop-opacity=".35"/><stop offset="1" stop-color="${N[0]}" stop-opacity="0"/></radialGradient></defs>
+    <rect width="${W}" height="${H}" fill="url(#${u}s)"/>${yulduzlar(46, .9)}${uchar(330, 30, 1.5)}<circle cx="300" cy="300" r="150" fill="url(#${u}r)"/>
+    <path d="M0 250 H360 M0 280 H360 M0 310 H360" stroke="${N[1]}" stroke-width=".6" opacity=".25"/>${[40, 110, 180, 250, 320].map(x => `<path d="M${x} 230 L${x + (x - 180) * .6} 330" stroke="${N[1]}" stroke-width=".6" opacity=".2"/>`).join('')}
+    <path d="M0 232 L50 196 L95 222 L150 168 L210 214 L262 182 L320 210 L360 190 V236 H0Z" fill="#0E0620" stroke="${N[0]}" stroke-width="1" opacity=".95"/>`;
+  }
+  if (t === 'orol') {
+    const O = [['#3A1C71', '#7F3A9C', '#D76D77', '#FFAF7B'], ['#0F2B4C', '#2E6A9E', '#8EC5E8', '#E3F4FF'], ['#13311F', '#2F6B3A', '#9CCB6B', '#FFE8A3'], ['#2B1B3D', '#8A3B4A', '#E0793C', '#FFD27A']][z];
+    const bulut = (x, y, k, o) => `<g class="bul" style="animation-duration:${18 + (x % 7) * 3}s"><g opacity="${o}" transform="translate(${x} ${y}) scale(${k})"><ellipse cx="0" cy="4" rx="34" ry="9" fill="#fff" opacity=".7"/><ellipse cx="-14" cy="-3" rx="16" ry="11" fill="#fff"/><ellipse cx="8" cy="-8" rx="19" ry="14" fill="#fff"/><ellipse cx="22" cy="0" rx="13" ry="9" fill="#fff"/><ellipse cx="0" cy="6" rx="30" ry="5" fill="#000" opacity=".06"/></g></g>`;
+    return `<defs>${lg(u + 's', O)}<radialGradient id="${u}q" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#FFFDE7"/><stop offset=".3" stop-color="#FFF3B0" stop-opacity=".8"/><stop offset="1" stop-color="#FFF3B0" stop-opacity="0"/></radialGradient>
+    ${lg(u + 'o', ['#8BD66B', '#4E9F3D'])}${lg(u + 't', ['#8D6E63', '#5D4037', '#3E2723'])}</defs>
+    <rect width="${W}" height="${H}" fill="url(#${u}s)"/>${z === 1 ? yulduzlar(20, .6) + qor(18) : ''}<circle cx="296" cy="${z === 3 ? 230 : 46}" r="64" fill="url(#${u}q)"/>
+    ${bulut(70, 36, 1.1, .75)}${bulut(260, 140, .8, .55)}${bulut(330, 290, 1.2, .5)}${bulut(18, 226, .8, .45)}${bulut(180, 320, 1.4, .35)}`;
+  }
+  const C = [['#05070D', '#0F1624', '#1B2535'], ['#3B2A4F', '#C46A4B', '#F2B35E'], ['#5B7895', '#A9C3D9', '#E8F0F7'], ['#020208', '#090B1F', '#141331']][z];
+  let pl = '';
+  if (z === 0) { for (let i = 0; i < 13; i++) { const w = 22 + (i * 7) % 14, h = 44 + (i * 37) % 64, x = i * 29 - 6; pl += `<rect x="${x}" y="${126 - h}" width="${w}" height="${h + 30}" fill="${i % 2 ? '#141B28' : '#192232'}"/>`; for (let j = 0; j < 6; j++) if ((i * 3 + j) % 4) pl += `<rect x="${x + 4 + (j % 2) * 9}" y="${132 - h + Math.floor(j / 2) * 11}" width="4" height="5" fill="#FFD27A" opacity="${.35 + (j % 3) * .15}"${(i + j) % 5 ? '' : ` class="oyn" style="animation-delay:-${(i + j) % 4}s"`}/>`; } pl += `<circle cx="58" cy="32" r="13" fill="#F5F1E6"/><circle cx="62" cy="29" r="13" fill="${C[0]}" opacity=".35"/>${yulduzlar(18, .7)}`; }
+  if (z === 1) pl = `<circle cx="280" cy="96" r="30" fill="#FFE29A" opacity=".9"/><path d="M0 130 Q60 98 130 122 T260 112 T360 120 V160 H0Z" fill="#B5683F"/><path d="M0 150 Q90 120 180 146 T360 136 V170 H0Z" fill="#D18A55"/><g fill="#2F3B22">${[[40, 128], [300, 132]].map(([x, y]) => `<rect x="${x}" y="${y - 22}" width="5" height="24" rx="2"/><rect x="${x - 7}" y="${y - 14}" width="4" height="10" rx="2"/><rect x="${x + 8}" y="${y - 17}" width="4" height="9" rx="2"/>`).join('')}</g>`;
+  if (z === 2) pl = `<path d="M0 140 L70 52 L118 108 L176 30 L240 112 L296 60 L360 126 V170 H0Z" fill="#6E8BA6"/><path d="M70 52 L88 76 L78 74 L64 86 L56 70Z M176 30 L196 56 L184 54 L170 66 L160 50Z M296 60 L312 80 L300 78 L288 86Z" fill="#fff"/><path d="M0 156 Q120 132 240 150 T360 146 V176 H0Z" fill="#F4F8FB"/>${[[20, 150], [330, 148], [300, 160]].map(([x, y]) => `<path d="M${x} ${y - 26} L${x - 9} ${y} H${x + 9}Z" fill="#2E5A44"/>`).join('')}`;
+  if (z === 3) pl = `${yulduzlar(60, 1)}<circle cx="290" cy="64" r="40" fill="#5C6BC0"/><path d="M252 52 Q290 40 328 60" stroke="#9FA8DA" stroke-width="5" fill="none" opacity=".6"/><ellipse cx="290" cy="64" rx="62" ry="10" fill="none" stroke="#C5CAE9" stroke-width="2" opacity=".55"/><path d="M0 150 Q80 128 170 146 T360 140 V176 H0Z" fill="#2B2A40"/>${[[60, 150], [210, 152], [320, 146]].map(([x, y]) => `<ellipse cx="${x}" cy="${y}" rx="14" ry="4" fill="#1C1B2E"/>`).join('')}`;
+  const yer = ['#18241E', '#C98F55', '#E9EFF4', '#24233A'][z];
+  return `<defs>${lg(u + 's', C)}${lg(u + 'y', [yer, ['#0E1612', '#9E6B3D', '#C7D3DE', '#16152A'][z]])}</defs><rect width="${W}" height="${H}" fill="url(#${u}s)"/>${pl}${z === 3 ? uchar(300, 20, 2.5) : ''}<rect y="152" width="${W}" height="${H - 152}" fill="url(#${u}y)"/>${z === 2 ? qor(34) : ''}`;
+}
+function yolSvg(t, z, hi, u) {
+  const d = yol(7), dn = yol(Math.min(hi, 7));
+  if (t === 'katta') { const c = ['#FF2EA6', '#29C8FF', '#B14BFF', '#FFC93C'][z]; return `<path d="${d}" fill="none" stroke="${c}" stroke-width="8" opacity=".18" filter="url(#${u}g)"/><path d="${d}" fill="none" stroke="#fff" stroke-width="1.2" stroke-dasharray="2 8" stroke-linecap="round" opacity=".5"/><path data-dn d="${dn}" fill="none" stroke="${c}" stroke-width="3.2" stroke-linecap="round"/><path class="xdn" d="${dn}" fill="none" stroke="${c}" stroke-width="9" opacity=".45" filter="url(#${u}g)"/>`; }
+  if (t === 'orol') return `<path d="${d}" fill="none" stroke="#000" stroke-width="8" stroke-dasharray="1 13" stroke-linecap="round" opacity=".18" transform="translate(1.5 3)"/><path class="xflow" d="${d}" fill="none" stroke="#FFFDF5" stroke-width="7" stroke-dasharray="1 13" stroke-linecap="round"/><path data-dn d="${dn}" fill="none" stroke="#FFD54F" stroke-width="4.5" stroke-linecap="round" opacity=".95"/>`;
+  const asf = ['#2B313C', '#4A3A30', '#3C434D', '#262838'][z], chet = ['#5B6576', '#8C6A4E', '#F7FAFC', '#5C5F8A'][z];
+  return `<path d="${d}" fill="none" stroke="#000" stroke-width="34" stroke-linecap="round" opacity=".28" transform="translate(0 4)"/><path d="${d}" fill="none" stroke="${chet}" stroke-width="31" stroke-linecap="round"/>
+  <path d="${d}" fill="none" stroke="#C62828" stroke-width="31" stroke-dasharray="6 6" opacity=".55"/><path d="${d}" fill="none" stroke="${asf}" stroke-width="25" stroke-linecap="round"/>
+  <path d="${d}" fill="none" stroke="#fff" stroke-width="25" stroke-linecap="round" opacity=".04" transform="translate(-1 -2)"/><path class="xflow" d="${d}" fill="none" stroke="#FFD54F" stroke-width="1.6" stroke-dasharray="9 9" opacity=".85"/>
+  <path data-dn class="xdn" d="${dn}" fill="none" stroke="#00E676" stroke-width="3" stroke-linecap="round" opacity=".8"/>`;
+}
+function orolTag(x, y, u) { return `<g transform="translate(${x} ${y + 13})"><ellipse cx="0" cy="34" rx="16" ry="3" fill="#000" opacity=".15"/><path d="M-24 0 C-18 14 -10 26 0 34 C10 26 18 14 24 0Z" fill="url(#${u}t)"/><path d="M-12 8 L-6 22 M8 6 L4 20" stroke="#2E1B12" stroke-width="1.2" opacity=".6"/><path d="M-26 0 Q0 -9 26 0 Q0 8 -26 0Z" fill="url(#${u}o)"/><path d="M-20 -1 Q0 -6 20 -1" stroke="#C5F0A4" stroke-width="1.2" fill="none"/></g>`; }
+function mukofot(b, Hs) {
+  const out = {}; let j = 0; const have = (b.detal || []).length;
+  Hs.forEach(s => { if (s.dev) return; if (s.h === 'bugun' || s.h === 'kelajak') { out[s.i] = ART.nextReward(b.dunyo, { length: have + j }); j++; } }); return out;
+}
+function bekat(s, t, belgi, u, rw, b) {
+  const [x, y] = P[s.i], katta = t === 'katta';
+  const pal = { ok: ['#69F0AE', '#00A651', '#00692F'], qut: ['#64FFDA', '#00A88F', '#005F50'], bugun: ['#FFE082', '#FFA000', '#B26A00'], tuman: ['#C5CAD3', '#7C8597', '#4A5162'], kelajak: ['#59637A', '#343C4D', '#1D2330'], oldin: ['#3E4555', '#2A3040', '#1A1F2A'] }[s.h];
+  const kp = katta && (s.h === 'ok' || s.h === 'qut') ? ['#FFB3E0', '#FF2EA6', '#8A0F57'] : katta && s.h === 'bugun' ? ['#B8FBFF', '#29F0FF', '#0A7C85'] : pal;
+  let g = t === 'orol' ? orolTag(x, y, u) : '';
+  if (s.dev) {
+    g += `<g class="xst dvst${s.h === 'bugun' ? ' bug' : ''}" data-xs="${s.i}"><circle cx="${x}" cy="${y}" r="29" fill="${s.kubok ? '#FFD54F' : katta ? '#FF2EA6' : '#FF3D00'}" opacity=".2"/><circle cx="${x}" cy="${y}" r="22" fill="none" stroke="${s.kubok ? '#FFD54F' : '#FF6E40'}" stroke-width="1.5" opacity=".6"/><foreignObject x="${x - 27}" y="${y - 31}" width="54" height="54">${devSvg(54, s.kubok ? 'yengildi' : '')}</foreignObject>`;
+  } else {
+    const gid = u + 'b' + s.i;
+    g += `<g class="xst${s.h === 'bugun' ? ' bug' : ''}${belgi === s.sana ? ' ochil' : ''}" data-xs="${s.i}"><defs><radialGradient id="${gid}" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="${kp[0]}"/><stop offset=".55" stop-color="${kp[1]}"/><stop offset="1" stop-color="${kp[2]}"/></radialGradient></defs>
+    ${s.h === 'bugun' ? `<circle cx="${x}" cy="${y}" r="19" fill="none" stroke="${kp[1]}" stroke-width="3" class="puls"/>` : ''}<ellipse cx="${x}" cy="${y + 15}" rx="13" ry="3" fill="#000" opacity=".35"/>
+    <circle cx="${x}" cy="${y}" r="16" fill="url(#${gid})" stroke="${s.h === 'kelajak' || s.h === 'oldin' ? '#77819A' : katta ? '#fff' : '#F5F7FA'}" stroke-width="${s.h === 'kelajak' ? 1.4 : 2.2}"${s.h === 'kelajak' ? ' stroke-dasharray="4 3"' : ''} opacity="${s.h === 'oldin' ? .5 : 1}"/>
+    <ellipse cx="${x - 5}" cy="${y - 7}" rx="7" ry="3.5" fill="#fff" opacity=".35"/>
+    ${s.h === 'ok' || s.h === 'qut' ? `<path d="M${x - 7} ${y + 1} l5 5 l9 -10" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>` : ''}
+    ${s.h === 'qut' ? `<circle cx="${x + 12}" cy="${y - 12}" r="6.5" fill="#FF6D00" stroke="#fff" stroke-width="1.6"/><circle cx="${x + 12}" cy="${y - 12}" r="2.4" fill="#fff"/>` : ''}
+    ${s.h === 'tuman' ? `<g class="tum"><ellipse cx="${x - 9}" cy="${y + 2}" rx="15" ry="7" fill="#EEF1F5" opacity=".72"/><ellipse cx="${x + 9}" cy="${y - 3}" rx="15" ry="8" fill="#F7F9FB" opacity=".78"/><ellipse cx="${x}" cy="${y + 8}" rx="19" ry="6" fill="#DDE2EA" opacity=".6"/></g>` : ''}`;
+    const r = rw[s.i]; if (r) { const ic = ART.icon(r.k, { s: 20, rang: A.carRang ? A.carRang(b) : undefined }); const bx = x + 25, by = y + 2; g += `<g class="xrw"><circle cx="${bx}" cy="${by}" r="11" fill="#0D1117" opacity=".72" stroke="#FFD54F" stroke-width="1.2"/>${ic ? `<foreignObject x="${bx - 10}" y="${by - 10}" width="20" height="20">${ic}</foreignObject>` : `<text x="${bx}" y="${by + 4}" text-anchor="middle" font-size="12">${r.ic}</text>`}</g>`; }
+  }
+  return g + `<text x="${x}" y="${y + (s.dev ? 35 : 31)}" text-anchor="middle" class="xkn">${s.kun}</text></g>`;
+}
+function tema(b) { return b.dunyo === 'orol' ? (b.uslub === 'katta' ? 'katta' : 'orol') : 'garaj'; }
+function html(b, o) {
+  o = o || {}; const x = st(b), T = A.todayKey(), Hs = holat(b), t = tema(b), z = haftaNo() % 4, hi = heroI(b), wk = A.isoWeek(), u = 'xm' + (++UID);
+  const anim = !o.mini && hi > 0 && Hs[hi - 1] && Hs[hi - 1].sana === T && x.yurdi !== T, from = anim ? hi - 1 : hi, [hx, hy] = P[from];
+  const nx = P[Math.min(from + 1, 7)], pv = P[Math.max(from - 1, 0)], chap = from === 7 ? P[7][0] < pv[0] : nx[0] < hx;
+  const n = Hs.filter(s => s.h === 'ok' || s.h === 'qut').length, rw = o.mini ? {} : mukofot(b, Hs);
+  return `<div class="xmap x-${t}${o.mini ? ' mini' : ''}${FX.low ? ' low' : ''}" data-xmap${o.mini ? '-mini' : ''}><svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Hafta xaritasi: ${n} / 7 bekat">${fon(t, z, u)}${yolSvg(t, z, anim ? hi - 1 : hi, u)}
+  <g class="mrr${x.kubok[wk] ? ' on' : ''}" data-xs="7"><foreignObject x="${P[7][0] - 24}" y="${P[7][1] - 30}" width="48" height="48">${kubokSvg(48, !!x.kubok[wk])}</foreignObject></g>${Hs.map(s => bekat(s, t, x.ochildi, u, rw, b)).join('')}</svg>
+  <div class="xhero${chap ? ' chap' : ''}" style="left:${r1(hx / W * 100)}%;top:${r1(hy / H * 100)}%">${b.dunyo === 'orol' && ART.pegasus && A.bezak ? ART.pegasus(A.bezak(b), { w: o.mini ? 44 : 64 }) : A.roadHero(b)}</div>
+  ${o.mini ? '' : `<div class="xcap"><span>🗺️ ${esc(MANZARA[t][z])} · <b>${n}/7</b></span></div>`}</div>`;
+}
+function bind(b) {
+  const box = $('[data-xmap]'); if (!box) return; const x = st(b), T = A.todayKey(), hi = heroI(b), Hs = holat(b), rw = mukofot(b, Hs);
+  $$('[data-xs]', box).forEach(g => g.onclick = () => {
+    const i = +g.dataset.xs; if (i === 7) return toast(x.kubok[A.isoWeek()] ? '🏆 Hafta kubogi seniki!' : '🏆 Hafta kubogi — yakshanba devini yengsang, shu yerga tushadi');
+    const s = Hs[i], m = { ok: '✅ bajarildi', qut: '🛟 qutqarilgan', bugun: '⭐ bugun — missiya kutyapti', tuman: "🌫️ tuman — shanba kuni qutqarsa bo'ladi", kelajak: '🔒 hali oldinda', oldin: '— sen hali boshlamagan eding' }[s.h];
+    if (s.dev && s.h !== 'ok') return toast(`👹 ${s.nom}: dev seni kutyapti! 🛡 Qalqoni: «${qalqon(b)}»`);
+    toast(`${s.nom}: ${m}${rw[i] ? ` · 🎁 ${rw[i].nom}` : ''}`);
+  });
+  if (x.ochildi) { delete x.ochildi; A.save(); setTimeout(() => { if (!FX.low) FX.play('ding'); }, 300); }
+  if (!(hi > 0 && Hs[hi - 1] && Hs[hi - 1].sana === T && x.yurdi !== T)) return;
+  const h = $('.xhero', box), i = hi - 1, dur = FX.low ? 0 : 1600, dp = box.querySelector('path[data-dn]'); let t0 = 0, fr = 0;
+  /* yurish tugagandagina belgilanadi — ekran oraliqda qayta chizilsa, animatsiya to'liq qaytadan ko'rsatiladi */
+  const qadam = now => {
+    if (!h.isConnected) return; if (!t0) t0 = now; fr++;
+    const k = dur ? Math.min(1, Math.max(now - t0, fr * 8.3) / dur) : 1, e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2, [px, py] = nuqta(i, e), [qx] = nuqta(i, Math.min(1, e + .02));
+    h.style.left = r1(px / W * 100) + '%'; h.style.top = r1(py / H * 100) + '%'; if (Math.abs(qx - px) > .01) h.classList.toggle('chap', qx < px);
+    if (k < 1) return requestAnimationFrame(qadam);
+    if (dp) dp.setAttribute('d', yol(hi)); x.yurdi = T; A.save(true);
+    const r = h.getBoundingClientRect(); if (!FX.low) { FX.burst(r.left + r.width / 2, r.top + r.height / 2, { tema: b.dunyo, n: 36 }); FX.play('fanfar'); }
+    toast(hi === 7 ? '🏁 Hafta xaritasi tugadi!' : `🚩 ${Hs[i].nom} bekati ochildi!`);
+  };
+  setTimeout(() => requestAnimationFrame(qadam), 450);
+}
+function qutTugma(b) { return qutRoyxat(b).map(s => `<div class="row"><button class="btn big qutb" data-qut="${s.sana}">🛟 Qutqar: ${s.nom} · ${A.TEZ ? 2 : QUT_N} savol</button></div>`).join(''); }
+function devBar(b, m) {
+  const d = devHolat(m); if (!d || m.si !== d.si) return '';
+  const hit = m.devHp != null && d.hp < m.devHp; m.devHp = d.hp;
+  if (d.yengildi && !m.devYengildi) { m.devYengildi = 1; setTimeout(() => { if (!FX.low) { FX.burst(innerWidth / 2, 120, { tema: b.dunyo, n: 70 }); FX.shake(300, 6); FX.play('fanfar'); } toast('💥 DEV YENGILDI! Qolgan savollar — bonus uchun'); }, 150); }
+  return `<div class="devbar${hit ? ' hit' : ''}${d.yengildi ? ' yeng' : ''}">${devSvg(46, d.yengildi ? 'yengildi' : '')}<div class="dvb"><div class="dvt"><b>👹 Dev</b><span>${d.yengildi ? '🛡 qalqon sindi!' : `yana ${d.need - d.ok} ta to'g'ri`}</span></div><div class="hp"><i style="width:${d.hp}%"></i></div>${d.qalqon ? `<div class="dvq">🛡 ${esc(d.qalqon)}</div>` : ''}</div></div>`;
+}
+/* ---------- 👨‍👩‍👧 ota-ona: hamma bolalar xaritasi yonma-yon ---------- */
+const HIC = { ok: '✅', qut: '🛟', bugun: '⭐', tuman: '🌫️', kelajak: '·', oldin: '–' };
+function panel(top, bindTop) {
+  const L = A.bolalar(), wk = A.isoWeek();
+  A.app.innerHTML = `<div class="wrap">${top('🗺️ Bolalar xaritasi', 'ota')}<p class="sm mut">Shu hafta — ${esc(A.weekDays(wk)[0])} … ${esc(A.weekDays(wk)[6])}. ✅ missiya · 🛟 qutqarilgan · 🌫️ o'tkazilgan (jazosiz) · 👹 yakshanba devi.</p>
+  <div class="xgrid">${L.map(b => { const Hs = holat(b), x = st(b), n = Hs.filter(s => s.h === 'ok' || s.h === 'qut').length, d = x.dev[wk];
+    return `<div class="card xkid"><div class="xkh"><span>${b.avatar}</span><b>${esc(b.laqab)}</b><span class="sp"></span><b>${n}/7</b></div>${html(b, { mini: true })}
+    <div class="xdots">${Hs.map(s => `<span class="xd ${s.h}" title="${s.nom}">${s.dev && s.h !== 'ok' ? '👹' : HIC[s.h]}<i>${s.kun}</i></span>`).join('')}</div>
+    <div class="sm">${d ? (d.yutdi ? `🏆 Devni yengdi (${d.ok}/${d.need})` : `👹 Dev qochdi (${d.ok}/${d.need})`) : `🛡 Dev qalqoni: ${esc(qalqon(b))}`}${Hs.some(s => s.h === 'qut') ? ` · 🛟 ${Hs.filter(s => s.h === 'qut').length}` : ''}</div></div>`; }).join('') || '<p>Hali bola yo\'q.</p>'}</div>
+  <div class="card"><p class="sm">💡 Maqtovni joyga emas, harakatga bering: «bu hafta 5 bekat — barakalla!». Tumanli bekat jazo emas: shanba kuni bola o'zi qutqaradi.</p></div></div>`;
+  bindTop();
+}
+A.xarita = { st, holat, heroI, html, bind, panel, qutRoyxat, qutTugma, qutTugadi, qutKun, missiyaKun, devTugunlar, qalqon, devHolat, devYakun, devBar, devSvg, kubokSvg, mukofot, P, QUT_N, QUT_MAX, DEV_ULUSH, KUN_TOL, MANZARA };
 })(typeof window !== 'undefined' ? window : globalThis);
 </script>
 <script>
@@ -4160,6 +4434,7 @@ A.screenOta = function (h) {
   if (h === 'ota-vazifa') return vazifaPanel();
   if (h === 'ota-sovga') return sovgaPanel();
   if (h === 'ota-hisobot') return hisobotPanel();
+  if (h === 'ota-xarita') return A.xarita ? A.xarita.panel(top, bindTop) : weekPanel();
   if (h === 'ota-pul') return A.pul ? A.pul.panel(top, bindTop) : weekPanel();
   return weekPanel();
 };
@@ -4272,7 +4547,7 @@ function weekPanel() {
     <div class="kgrid"><div><b class="mono">${A.fmtHMS(s.faol)}</b><span>faol vaqt</span></div><div><b>${s.kunlar}/7</b><span>kun</span></div><div><b>${s.n ? s.acc1 + '%' : '—'}</b><span>aniqlik</span></div><div><b>${s.med ? (s.med / 1000).toFixed(1) + ' s' : '—'}</b><span>median</span></div><div><b>+${s.ozl.length} 🟢</b><span>o'sish</span></div><div><b>${s.wcpm ? s.wcpm[1] : '—'}</b><span>WCPM</span></div></div>
     <div class="lvl"><span class="sm">O'z darajasida (matematika): ${levelPct(b)}%</span><div class="tbar"><i style="width:${levelPct(b)}%"></i></div></div>${b.qisqaKun === A.todayKey() ? '<div class="sm">😴 Oxirgi missiyada charchadi — bugungisi 25% qisqaroq</div>' : ''}</button>`; }).join('') || '<div class="card">Hali bola yo\'q.</div>'}
   ${noms.length ? `<div class="card"><h3>🏆 Hafta nominatsiyalari (shu telefondagi bolalar)</h3>${noms.map(n => `<div class="nr">${n.ic} <b>${esc(n.nom)}</b>: ${n.bola ? esc(A.bola(n.bola).laqab) : '<span class="mut">sifat sharti bajarilmadi — summa keyingi haftaga</span>'}</div>`).join('')}<p class="sm mut">Boshqa telefonlardagi bolalar bilan solishtirish — 📲 Oila reytingi.</p></div>` : ''}
-  <div class="menu">${isAdmin() ? '<button class="btn" data-go="ota-qosh">➕ Bola qo\'shish</button>' : ''}<button class="btn" data-go="ota-qiyin">📚 Bugungi qiyinlar</button><button class="btn" data-go="ota-hisobot">📊 Hafta xulosasi${A.isoWeek() === WK && new Date().getDay() % 6 === 0 ? ' 🔔' : ''}</button><button class="btn" data-go="ota-sovga">🎁 Sovg'alar</button><button class="btn" data-go="ota-pul">💰 Pul va do'kon${A.pul && A.pul.kutHisob() ? ' 🔔 ' + A.pul.kutHisob() : ''}</button><button class="btn" data-go="ota-vazifa">📝 Uyga vazifa</button><button class="btn" data-go="ota-bulut">☁️ Oila akkaunti</button><button class="btn" data-go="ota-reyting">📲 Oila reytingi</button><button class="btn" data-go="ota-eksport">🤖 Claude uchun hafta</button><button class="btn" data-go="ota-arab">🕌 Arab so'zlari</button><button class="btn" data-go="ota-zaxira">💾 Zaxira</button><button class="btn" data-go="ota-sozlama">⚙️ Sozlamalar</button><button class="btn ghost" data-out>🔒 Paneldan chiqish</button></div>
+  <div class="menu">${isAdmin() ? '<button class="btn" data-go="ota-qosh">➕ Bola qo\'shish</button>' : ''}<button class="btn" data-go="ota-qiyin">📚 Bugungi qiyinlar</button><button class="btn" data-go="ota-hisobot">📊 Hafta xulosasi${A.isoWeek() === WK && new Date().getDay() % 6 === 0 ? ' 🔔' : ''}</button><button class="btn" data-go="ota-xarita">🗺️ Bolalar xaritasi</button><button class="btn" data-go="ota-sovga">🎁 Sovg'alar</button><button class="btn" data-go="ota-pul">💰 Pul va do'kon${A.pul && A.pul.kutHisob() ? ' 🔔 ' + A.pul.kutHisob() : ''}</button><button class="btn" data-go="ota-vazifa">📝 Uyga vazifa</button><button class="btn" data-go="ota-bulut">☁️ Oila akkaunti</button><button class="btn" data-go="ota-reyting">📲 Oila reytingi</button><button class="btn" data-go="ota-eksport">🤖 Claude uchun hafta</button><button class="btn" data-go="ota-arab">🕌 Arab so'zlari</button><button class="btn" data-go="ota-zaxira">💾 Zaxira</button><button class="btn" data-go="ota-sozlama">⚙️ Sozlamalar</button><button class="btn ghost" data-out>🔒 Paneldan chiqish</button></div>
   <p class="sm mut">Versiya ${A.VERK} · ${A.storageOK ? 'xotira ✓' : '⚠️ xotiraga yozib bo\'lmadi'}</p></div>`;
   bindTop(); $$('[data-wk]').forEach(x => x.onclick = () => { const d = +x.dataset.wk; WK = d < 0 ? A.prevWeek(WK) : A.isoWeek(A.addDays(A.weekDays(WK)[6], 1)); weekPanel(); });
   $$('[data-b]').forEach(x => x.onclick = () => A.go('ota-bola-' + x.dataset.b)); $$('[data-go]').forEach(x => x.onclick = () => A.go(x.dataset.go));
@@ -4344,6 +4619,7 @@ function childForm(b) {
   <label class="lb">⏱ O'yin davomiyligi — shu bola uchun</label><select id="fp" class="inp"><option value="">Oila sozlamasi</option>${[1, 2, 3, 4, 5].map(n => `<option value="${n}" ${v.oyinDaq === n ? 'selected' : ''}>${n} daqiqa</option>`).join('')}</select>
   <p class="sm mut">Tavsiya: maktabgacha bolaga dam har 3–4 savolda, maktab o'quvchisiga har 6–8 savolda.</p>
   <label class="lb">Dunyo</label><select id="fw" class="inp"><option value="">Bolaning o'zi tanlaydi</option><option value="garaj" ${v.dunyo === 'garaj' ? 'selected' : ''}>🏎️ Turbo garaj</option><option value="orol" ${v.dunyo === 'orol' ? 'selected' : ''}>🦄 Pushti uchar ot oroli</option></select>
+  <label class="lb">💖 Uslub (orol dunyosi uchun)</label><select id="fu" class="inp"><option value="">Standart — rang-barang</option><option value="katta" ${v.uslub === 'katta' ? 'selected' : ''}>«Katta qiz» — neon, kamroq multfilm</option></select>
   <label class="lb">Qisqa kod — Claude hisobotida ism o'rniga (masalan Q2). Bo'sh qolsa, ilova o'zi beradi</label><input id="fk" class="inp mono" maxlength="6" value="${esc(v.kod)}" autocomplete="off">
   <label class="chk"><input type="checkbox" id="fm" ${v.muxlisga ? 'checked' : ''}> Muxlislarga (qarindoshlarga) ko'rinsin — 2-bosqichda</label>
   <button class="btn big" data-save>${nw ? '➕ Qo\'shish' : '💾 Saqlash'}</button>
@@ -4351,7 +4627,7 @@ function childForm(b) {
   ${!nw ? `<details class="danger"><summary>⚠️ Xavfli amallar</summary><button class="btn ghost" data-rk>↺ Kalibrlashni qayta boshlash</button><button class="btn danger" data-del>🗑 Bolani va uning ma'lumotini o'chirish</button></details>` : ''}</div></div>`;
   bindTop(); let av = v.avatar;
   $$('[data-a]').forEach(x => x.onclick = () => { av = x.dataset.a; $$('.avb').forEach(y => y.classList.toggle('on', y === x)); });
-  $('[data-save]').onclick = () => { const laqab = $('#fl').value.trim(); if (!laqab) return toast('Laqab yozing'); const o = { laqab, avatar: av, daraja: $('#fd').value, arab: $('#fa').value, arDaraja: +$('#fq').value || 1, fokus: $('#ff').value, kunDaq: $('#fz').value === '' ? null : +$('#fz').value, oyinHar: $('#fo').value === '' ? null : +$('#fo').value, oyinDaq: $('#fp').value === '' ? null : +$('#fp').value, dunyo: $('#fw').value || null, kod: $('#fk').value.trim().toUpperCase(), muxlisga: $('#fm').checked };
+  $('[data-save]').onclick = () => { const laqab = $('#fl').value.trim(); if (!laqab) return toast('Laqab yozing'); const o = { laqab, avatar: av, daraja: $('#fd').value, arab: $('#fa').value, arDaraja: +$('#fq').value || 1, fokus: $('#ff').value, kunDaq: $('#fz').value === '' ? null : +$('#fz').value, oyinHar: $('#fo').value === '' ? null : +$('#fo').value, oyinDaq: $('#fp').value === '' ? null : +$('#fp').value, dunyo: $('#fw').value || null, uslub: $('#fu').value || '', kod: $('#fk').value.trim().toUpperCase(), muxlisga: $('#fm').checked };
     if (nw) { const nb = A.newBola(o); toast('✓ ' + nb.laqab + ' qo\'shildi'); } else { const ch = o.daraja !== b.daraja || o.arab !== b.arab; Object.assign(b, o); if (ch) A.initFan(b); A.save(true); toast('Saqlandi ✓'); } A.go('ota'); };
   const nm = $('[data-namuna]'); if (nm) nm.onclick = () => { NAMUNA.forEach(o => A.newBola(Object.assign({}, o))); toast('5 bola qo\'shildi — laqablarini tahrirlang'); A.go('ota'); };
   const rk = $('[data-rk]'); if (rk) rk.onclick = () => { b.boshlandi = null; b.fan = {}; A.initFan(b); A.save(true); toast('Kalibrlash qayta boshlanadi (D1–D2)'); };

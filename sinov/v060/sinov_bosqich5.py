@@ -121,7 +121,7 @@ with sync_playwright() as p:
     pg.click('.sheet [data-t="1"]'); pg.wait_for_timeout(150); pg.click('.sheet [data-ok]'); pg.wait_for_timeout(200); pg.click('.sheet [data-q="2000"]'); pg.wait_for_timeout(500)
     r = ev(f"(()=>{{const b=BJ.A.S().bolalar['{Q}'], p=BJ.A.pul.st(b); return [p.h, p.ega.taqa, p.joy.taqa, BJ.A.bezak(b).taqa]}})()")
     ok(r == [3000, [1], 1, 1], f"Oltin taqa sotib olindi va o'rnatildi {r}")
-    NAV(pg, 'uy', 400); ok('#FFD54F' in pg.inner_html('.scene.orol'), "Bola uyidagi uchar otda oltin taqa")
+    NAV(pg, 'uy', 400); ok('#FFD54F' in pg.inner_html('[data-xmap] .xhero'), "Bola uyidagi uchar otda oltin taqa (0.7.0 dan — xaritadagi qahramon)")
     # ---- 🐷 cho'chqa-kassa: solish, 14 kunda 2 marta +5%, olish
     r = ev(f"""(()=>{{const A=BJ.A, b=A.S().bolalar['{Q}'], p=A.pul.st(b); p.h=10000; const s=A.pul.kassaSol(b,5000); p.kassaTs=A.addDays(A.todayKey(),-14);
       const f=A.pul.kassaFoiz(b), k=p.kassa, ts=p.kassaTs===A.todayKey(), o=A.pul.kassaOl(b); return [s,f,k,ts,o,p.h,p.kassa]}})()""")

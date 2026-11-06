@@ -101,8 +101,7 @@ Pedagogik qoidalar: sovg'a — muntazamlik uchun (tezlik uchun emas), oila umumi
 - [x] 3. 🔧 Garaj (`A.garaj`, alohida `<script>`; faqat garaj dunyosi): `b.kons = {n, kerak 10–15 (?tez — 2), li, q[], tayyor[{li, holat 'butun'|'buzuq', krash, yig}]}`. Hook: `onAnswer` → `A.konsJavob(b)` (birinchi urinishda to'g'ri). Loyihalar `LOY`: bolid (6 qism) → monster-trak (7) → raketa-mashina (8) → 2-avlod… Qism rasmlari `ART_Q[loy][qism](u)` mashina koordinatasida (0..200×0..110), `box` — yig'ish uyasi. `#garaj` (router, kun chegarasi amal qiladi; CUR.fan='oyin'), uyda `A.garajTugma`. Yig'ish: soya-uyalar (`filter: brightness(0)`), sudrash yoki bosib-tanlash, `slotAt(q, x, y)` — sig'adigan uyalar ichidan; bir xil o'lchamli g'ildiraklar almashadi. 💥 `krashTest` — `FX.bigScene` ≤7,4 s: tezlanish → g'isht devor → qismlar fizikasi (tortishish, sakrash, aylanish) → «Qayta yig'!» → yig'ish ekrani. Log `{t:'kons'}`, `{t:'garaj', hodisa:'yigdi'|'krash'}`.
 - [x] 4a. 🔤 Harf mashqlari xilma-xilligi — pastdagi bo'lim.
 - [x] 3. 🤖 Kod-yo'l `L.11` (`t:'kodyol'`, `BJ.kodRun`): q1 4×4, 3–5 qadam, takrorsiz; q2 5×5 ≤8, «×2/×3/×4», buyruq joyi = runs+1; q3 6×6 ≤11, joy = runs. To'siqlar ~30–36% (yo'lda emas). Har qanday to'g'ri dastur qabul. Urilsa — kichik portlash, boshiga qaytadi, dastur saqlanadi; 2-xatoda 1-bo'lak yo'li, 3-xatoda butun yo'l (maslahat). ≤1 xato — hali «birinchi urinish». `MANT_KUN` uchala darajada, `UZUN`, `TUR_IC 🤖`, `XATO.kod_xato`. CSS klassi `.kyc` (eski `.kc` bilan to'qnashmasin).
-- [ ] 4. 🗺️ Sarguzasht xaritasi: hafta = 7 bekat, yakshanba — boss/final.
-- [ ] 4. 💖 «Katta qiz» uslubi (orol uchun ixtiyoriy tema: neon-pushti, kamroq multfilm).
+- [x] 4. 🗺️ Sarguzasht xaritasi va 💖 «katta qiz» uslubi — 0.7.0 da bajarildi (06.11).
 - [ ] 5. 🌍 Kun kashfiyoti: 1 fakt + 1 savol + uyda topshiriq.
 - [ ] 5. 📖 O'qish tezligi: 1 matn 3 marta, so'z/daq o'sishi.
 - [ ] 5. 🕌 Arab: ra (tafxim/tarqiq), vaqf belgilari — yangi TJ tugunlari, DARS, tasdiq.
@@ -112,14 +111,25 @@ Pedagogik qoidalar: sovg'a — muntazamlik uchun (tezlik uchun emas), oila umumi
 - Sinovlar: `sinov/v060/sinov_bosqich1.py` (21), `sinov/v060/sinov_bosqich2.py` (13), `sinov/v060/sinov_bosqich3.py` (35), `sinov/v060/sinov_bosqich4.py` (36, harflar), `sinov/v060/sinov_bosqich5.py` (62, so'm + versiya belgisi), `sinov/bulut/sinov_bulut.py` (21), `sinov/bulut/sinov_chekka.py` (10).
 
 ## 0.7.0 — REJA («v7»; tarmoq `v0.7.0`, har bosqich shu tarmoqqa push, saytga faqat «chiqar» bilan)
-Tartib (foydalanuvchi qarori, 05.11):
-1. 🗺️ Sarguzasht xaritasi (hafta = 7 bekat, yakshanba — boss/final) + 💖 «katta qiz» uslubi.
+Tartib (foydalanuvchi qarori, 05.11; 06.11 — rasmli dars bozordan oldinga):
+1. [x] 🗺️ Sarguzasht xaritasi + 💖 «katta qiz» uslubi + 4 g'oya (06.11) — pastdagi bo'lim, `sinov/v070/sinov_bosqich1.py` (50).
+1b. 🖼️ RASMLI KICHIK DARS (06.11, foydalanuvchi so'rovi): 2 xatodan keyingi dars bolalarga matn bilan tushunarsiz — qoida rasm/animatsiya bilan, matn minimal, ovoz bilan; bola o'zi tushunsin. Mantiqni ham to'g'rilab «ideal» qilish (u: «logikasini to'g'rilab ideal qil»).
 2. 🧺 Oila bozori — xaritadan KEYIN (pastdagi bo'lim).
 3. 🌍 Kun kashfiyoti · 📖 o'qish tezligi · 🕌 arab ra (tafxim/tarqiq) va vaqf.
 4. 🎙️ Ota-ona ovozi.
 5. To'liq sinov → VER 0.7.0 → u «chiqar» desa main.
 
-## 🗺️ Sarguzasht xaritasi — TASDIQLANDI (05.11: 1BC, 2A, 3A; foydalanuvchiga inline namunasi ko'rsatildi)
+## 🗺️ Sarguzasht xaritasi — BAJARILDI (06.11, tarmoq `v0.7.0`; qarorlar 05–06.11: 1BC, 2A, 3A=A, qutqarish 6 savol ≤2 bekat, qutqarilgan kun 5-kun bonusiga sanaladi)
+- Modul `A.xarita` (alohida `<script>`, 💰 so'mdan keyin, ☁️ bulutdan oldin). `b.xarita = {qut{sana:{ts,n,ok,kun}}, kubok{wk}, dev{wk:{ok,need,yutdi,qalqon}}, yurdi, ochildi}`; `b.uslub` ('' | 'katta'). Firestore qoidalari o'zgarmadi (bola JSON ichida).
+- `holat(b)` → 7 bekat: ok · qut · bugun · tuman (o'tkazilgan, jazosiz) · kelajak · oldin (bola hali boshlamagan kun — tuman emas). `heroI(b)` — qahramon bugungi bekatda, missiya bajarilsa keyingisida (yakshanba → marra 7). Yurish animatsiyasi bir marta (`yurdi` faqat animatsiya OXIRIDA yoziladi — qayta chizilsa to'liq qaytadan).
+- Uy ekranida `worldScene` o'rnida `A.xarita.html(b)` + `bind(b)`; bekat bosilsa toast (tuman → «shanba qutqar», yakshanba → dev qalqoni, kubok). Dizayn realistik (foydalanuvchi 2 marta so'radi): qatlamli fon, gradient-medalyon bekatlar, asfalt+bordyur yo'l, zirhli dev, oltin kubok; ambient animatsiyalar (yulduz, bulut, qor, uchar yulduz, oqayotgan yo'l chizig'i, qahramon tebranishi), `FX.low` va reduced-motion'da o'chadi.
+- 🎁 Mukofot belgisi: bugungi va oldindagi bekatlarda — `ART.nextReward` ketma-ketligi (`mukofot(b, Hs)`).
+- 🏞️ Manzara `isoWeek % 4` (`MANZARA`): garaj — Tungi shahar · Cho'l · Qorli tog' · Kosmos; orol — Pushti osmon · Muzli orol · Gulzor · Oltin shom; katta — 4 neon rang.
+- 🛟 Qutqarish: `qutRoyxat(b)` — faqat shanba, bugungi missiya bajarilgandan keyin, tumanli bekatlar, haftasiga ≤ `QUT_MAX` 2. Uyda `qutTugma` → `#qutqar-YYYY-MM-DD` → kid `qutStart` (mashq dvigateli, `CUR.qut`, 6 savol: g0 mat/yoz/mant, boshqalar mat/til/mant) → `qutDone` → `A.xarita.qutTugadi` (+3 ⭐, log `{t:'xarita',hodisa:'qut'}`, `A.pul.bonusTek`). Qutqarilgan kun FAQAT xarita va 5-kun so'm bonusida sanaladi (`A.xarita.missiyaKun`); reyting, sovg'a va `weekStats.missiya` — o'zgarmaydi.
+- 👹 Dev: final `final15` qadami `st.devIds = devTugunlar(b)` (shu hafta n≥3 va 1-urinish <70%, eng qiyini birinchi; bo'lmasa `weekNodes`), `st.devQalqon = qalqon(b)` (eng qiyin tugun nomi). `frame()` da `devBar(b, m)`: kuch = 100 − ok·100/need, need = ⌈n·0,6⌉; yengilganda effekt + toast. `stepYakun` → `devYakun` → `x.dev[wk]`, yutsa `x.kubok[wk]` (xaritada kubok yonadi), log `dev_yutdi|dev_qochdi`; reveal va natija ekranida yozuv. Yutolmasa jazosiz.
+- 💖 «Katta qiz»: bola tahririda `#fu`; faqat orol dunyosida — `theme()` body'ga `.katta` (neon qora-pushti, shisha kartalar, gradient tugmalar, ajdar yashirin), xarita `x-katta`.
+- 👨‍👩‍👧 `#ota-xarita` (`A.xarita.panel`): hamma bolalar mini-xaritasi 2 ustunda + 7 kun belgilari + dev natijasi/qalqoni + 🛟 soni.
+- Sinov uchun: `?tez=1` da `window.__bjJavob(true|false)` — joriy savolga javob (`CUR.cb`); sanani `page.clock.set_fixed_time` bilan.
 - Hafta = 7 bekat (Du…Ya), har hafta yangi xarita. Garaj dunyosi — bolaning o'z mashinasi (`A.roadHero`/`A.bezak`), orol dunyosi — uchar ot + «katta qiz» uslubi (neon-pushti, kamroq multfilm).
 - Missiya bajarildi → bekat ochiladi (yashil), qahramon keyingi bekatga yuradi. Mavjud so'm mukofoti (+2 000, 5-kun +10 000) o'zgarmaydi.
 - 1B: o'tkazilgan kun — kulrang «tuman», jazosiz; qahramon baribir bugungi kunda turadi (orqada qolib ketmaydi).
@@ -153,6 +163,11 @@ Tartib (foydalanuvchi qarori, 05.11):
 - Yangi harf: eng yangisida ≥6 urinish va ≥85% → kuniga 2 tagacha (`b.harfKun`, `b.harfKunN`).
 - 🔤 Bilgan harflari testi (ota-ona → bola sahifasi, faqat maktabgacha; `#ota-harf-<id>`, `harfTest`): joriy harfdan boshlab, kattalar ✅/❌ bosadi, 2 ketma-ket ❌ yoki 3 daqiqa → birinchi ❌ gacha bo'lganlar ochiladi (takrorga qo'shiladi), log `{t:'harfTest'}`.
 - Dars egizagi o'sha harf va formatda (`twinItem` → `fmt`). Sinov ekrani formati bilan: `#sinov-H0.1-3-ovchi`.
+
+## 🎮 O'yinlar zali — G'OYA (06.11, u «PY» so'radi; hozirgilardan KEYIN, tanlovi kutilmoqda [?])
+- Maktabgacha uchun yangi: 1 🏁 Turbo gonka (barmoq bilan boshqarish, raqam/rang darvozalari, nitro, 👻 arvoh mashina — o'z rekordi) · 2 🚦 Svetofor · 3 🅿️ Parkovka · 4 🧱 Devor sindirish · 5 🔢 Raqamli trek · 6 🃏 Garaj xotirasi. Mavjud poyga/pazl/ko'zgu ham zalga.
+- Bola o'zi tanlaydi; har o'yinda shaxsiy 🏆 rekord + guvohnoma; oila rekordlar taxtasi yosh bo'yicha alohida.
+- Taklif (tasdiqlanmagan): zal missiyadan keyin ochiladi, kuniga ≤ 10 daq (sozlamada); muqobil — so'mga «chipta».
 
 ## KEYINGI (g'oyalar, foydalanuvchi tasdig'isiz qilinmaydi)
 - ⚔️ Jonli duel (ikki oila, videoqo'ng'iroqda) — 0.6.0 ga kirmadi.
