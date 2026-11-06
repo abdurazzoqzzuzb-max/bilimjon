@@ -56,7 +56,8 @@ with sync_playwright() as p:
     # ---- uy ekrani: hamyon pill, do'kon tugmasi
     NAV(pg, 'uy', 400)
     ok('200' in pg.inner_text('[data-dokon]'), "Uyda do'kon tugmasida hamyon summasi (💵 200)")
-    ok(pg.locator('.top .verb').inner_text() == 'v6' and pg.locator('.top .verb').is_visible(), "Uyda tepada oddiy versiya belgisi «v6» ko'rinadi")
+    vk = pg.evaluate("'v' + BJ.A.VERK")  # 0.7.1: belgi joriy versiyadan (0.6.0 da «v6» edi)
+    ok(pg.locator('.top .verb').inner_text() == vk and pg.locator('.top .verb').is_visible(), f"Uyda tepada oddiy versiya belgisi «{vk}» ko'rinadi")
     bb = ev("(()=>{const r=document.querySelector('.top [data-ota]').getBoundingClientRect(); return r.right})()"); ok(bb <= 390, f"Uy tepasidagi 👨‍👩‍👧 tugmasi ekrandan chiqmaydi (o'ng chet {bb})")
     ok(pg.locator('[data-dokon]').count() == 1, "Uyda «🛒 Do'kon» tugmasi")
     # ---- missiya mukofoti + 5 kun bonusi + o'rnatilgan detal tanlovi yangisiga bo'shaydi

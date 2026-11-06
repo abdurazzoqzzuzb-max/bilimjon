@@ -161,6 +161,13 @@ body.th-orol .road{background:rgba(255,255,255,.18)}
 .skip{min-height:56px;padding:8px 16px;border-radius:999px;border:2px solid rgba(255,255,255,.5);background:rgba(0,0,0,.45);color:#fff;font-weight:800}
 /* --- 🎮 dam olish o'yinlari va 😴 charchadim (0.3.0) --- */
 .charch{display:block;margin:18px auto 4px;font-size:1rem;min-height:48px;padding:8px 18px;width:auto}
+/* 🤔 0.7.1: «Tushunmadim» + «Charchadim» qatori, so'ralgan savol belgisi, soddaroq varag'i, 🙋 ota-ona paneli */
+.qrow{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px auto 4px}.qrow .btn{display:inline-flex;align-items:center;justify-content:center;margin:0;width:auto;min-height:48px;padding:8px 16px;font-size:1rem}
+.sorab{background:linear-gradient(135deg,#FFF3E0,#FFE0B2);color:#5D3A00;border:1px solid #FFB74D;border-radius:14px;padding:8px 12px;font-weight:800;margin-bottom:8px}
+.tushs{border-color:#26A69A}.tushs .tqo{font-size:.92rem;font-weight:700;color:#37474F;background:#ECEFF1;border-radius:12px;padding:8px 10px;line-height:1.4}.tushs .tsq{margin:0;text-align:center}.tushs>.btn{width:100%}
+.sork{display:grid;gap:8px}.sork .sq{font-weight:800;font-size:1.05rem}.sork .sj{background:#E7F7EA;color:#172033;border:1px solid #2E9E5B;border-radius:12px;padding:6px 10px;font-weight:800}.sork .sh{display:inline-block;border-radius:999px;padding:2px 10px;font-size:.8rem;font-weight:800;background:rgba(255,255,255,.12)}.sork .sh.kut{background:#FFE0B2;color:#5D3A00}.sork .sh.ok{background:#C8E6C9;color:#1B5E20}.sork .sh.qiy{background:#FFCDD2;color:#B71C1C}.sork.kor{opacity:.72}.sork ol{margin:0;padding-left:1.3em;display:grid;gap:4px}
+/* 🛡️ 0.7.1: ruxsat tizimi */
+.rxl{display:grid;gap:8px}.rxi{border:1px solid var(--line);border-radius:14px;padding:8px 10px;display:grid;gap:6px}.rxi .rxe{font-weight:800;word-break:break-all}.rxi .row{gap:6px}.rxh{display:inline-block;border-radius:999px;padding:1px 9px;font-size:.78rem;font-weight:800}.rxh.kutish{background:#FFE0B2;color:#5D3A00}.rxh.ok{background:#C8E6C9;color:#1B5E20}.rxh.rad,.rxh.blok{background:#FFCDD2;color:#B71C1C}
 .pill.kam{background:#FFF4D6;color:#4A3500;border-color:#F2A900;animation:blink 1s infinite}
 .oyhero{display:flex;align-items:flex-end;gap:4px}.oyhero .bubble{margin:0 0 18px 6px;flex:1}
 .ogrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
@@ -2493,7 +2500,7 @@ BJ.vis = vis;
 (function (G) {
 'use strict';
 const BJ = G.BJ, A = BJ.A = {}, gen = BJ.gen, B = BJ.bank;
-A.VER = '0.7.0';
+A.VER = '0.7.1';
 /* Oddiy versiya nomi (foydalanuvchi so'rovi, 05.11): 0.6.0 → «6», 0.6.1 → «6.1», 1.2.0 → «1.2». Ekranda shu ko'rinadi, ichkarida A.VER qoladi. */
 A.VERK = (() => { const p = A.VER.split('.').map(Number); return p[0] ? p[0] + '.' + p[1] : p[1] + (p[2] ? '.' + p[2] : ''); })();
 A.verBadge = () => `<span class="verb" title="Versiya ${A.VER}">v${A.VERK}</span>`;
@@ -2536,7 +2543,7 @@ Object.assign(A, { FAN, ZANJIR, BOSH, DARAJA, gl, BLOK, MANT_KUN, UZUN, XATO, TU
 const BETA = A.BETA = typeof location !== 'undefined' && /\/beta\/(index\.html)?$/.test(location.pathname);
 const KEY = BETA ? 'bj_beta_state_v1' : 'bj_state_v1'; /* asosiy kalit HECH QACHON o'zgarmaydi: yangi versiya eski holatni migrate() bilan yangilaydi */
 const SV = 1;
-function defaults() { return { v: SV, oila: null, pin: null, pinOta: null, sozlama: { ovoz: 0.8, kamEffekt: 'auto', tanaffus: 20, oyinHar: 5, oyinDaq: 3, uyqu: '21:00', reyting: true, tjTasdiq: {}, sandiq: { bronza: 40, kumush: 90, oltin: 150, olmos: 220 }, arTasdiq: {}, alifTasdiq: false, pul: true, byudjet: 50000, kassa: true, zal: 10, bozor: true, bozorXoh: true, kashfUy: true }, bolalar: {}, tartib: [], joriy: null, duel: {}, oilaTel: {}, sovga: [], dokon: [], bozor: null, qurilma: null, lastBackup: null, seenVer: null, appVer: null }; }
+function defaults() { return { v: SV, oila: null, pin: null, pinOta: null, sozlama: { ovoz: 0.8, kamEffekt: 'auto', tanaffus: 20, oyinHar: 5, oyinDaq: 3, uyqu: '21:00', reyting: true, tjTasdiq: {}, sandiq: { bronza: 40, kumush: 90, oltin: 150, olmos: 220 }, arTasdiq: {}, alifTasdiq: false, pul: true, byudjet: 50000, kassa: true, zal: 10, bozor: true, bozorXoh: true, kashfUy: true, tush: true }, bolalar: {}, tartib: [], joriy: null, duel: {}, oilaTel: {}, sovga: [], dokon: [], bozor: null, qurilma: null, lastBackup: null, seenVer: null, appVer: null }; }
 let S = load(); A.storageOK = true;
 /* Xotira tekshiruvi: brauzer yozishga ruxsat beradimi va ilova begona sayt ichida (sinov havolasi) ochilganmi */
 A.storageProbe = (function () { try { const k = 'bj_probe'; localStorage.setItem(k, String(Date.now())); const ok = !!localStorage.getItem(k); localStorage.removeItem(k); return ok; } catch (e) { return false; } })();
@@ -2572,7 +2579,7 @@ function logMerge(id, k, extra) { const key = logKey(id, k), a = readLog(id, k),
 Object.assign(A, { readLog, pushLog, flushLog, logKeys, pruneLogs, weekLog, logMerge, LOGP });
 addEventListener('pagehide', () => { flushLog(); save(true); });
 /* ================= BOLA ================= */
-function bolaDefaults() { return { id: null, kod: '', laqab: '', avatar: '🦊', daraja: 'g1', arab: 'asosiy', dunyo: null, muxlisga: true, yaratildi: null, boshlandi: null, mavzu: {}, fan: {}, harfK: 2, harfKun: null, harfSt: {}, tugun: {}, takror: [], yulduz: 0, yulduzKun: {}, arenaYulduz: {}, detal: [], kun: {}, wcpm: [], missiya: null, reja: null, shosh: false, me: {}, olqish: [], oqilgan: [], oyin: {}, arDaraja: 1, fokus: '', vazifa: [], kunDaq: null, oyinHar: null, oyinDaq: null, qoshDaq: {}, uyquOchiq: 0, komboMax: 0, kons: null, pul: null, uslub: '', xarita: null, zal: null, bozor: null, kashfUy: [], uch: null }; }
+function bolaDefaults() { return { id: null, kod: '', laqab: '', avatar: '🦊', daraja: 'g1', arab: 'asosiy', dunyo: null, muxlisga: true, yaratildi: null, boshlandi: null, mavzu: {}, fan: {}, harfK: 2, harfKun: null, harfSt: {}, tugun: {}, takror: [], yulduz: 0, yulduzKun: {}, arenaYulduz: {}, detal: [], kun: {}, wcpm: [], missiya: null, reja: null, shosh: false, me: {}, olqish: [], oqilgan: [], oyin: {}, arDaraja: 1, fokus: '', vazifa: [], kunDaq: null, oyinHar: null, oyinDaq: null, qoshDaq: {}, uyquOchiq: 0, komboMax: 0, kons: null, pul: null, uslub: '', xarita: null, zal: null, bozor: null, kashfUy: [], uch: null, sora: [] }; }
 function newBola(o) {
   const b = fixBola(Object.assign(bolaDefaults(), o)); b.id = b.id || 'b' + rid(7).toLowerCase(); b.yaratildi = todayKey();
   if (!b.kod) { const n = Object.keys(S.bolalar).length + 1; b.kod = ({ g0: 'K', g1: 'B', g2: 'I', g3: 'U', g4: 'T' }[b.daraja] || 'B') + n; }
@@ -3086,8 +3093,9 @@ function frame(b, m, title, body) {
   <div class="road"><div class="rfill" style="width:${Math.round(p * 100)}%"></div><span class="rcar svgc" style="left:calc(${Math.round(p * 100)}% - 26px)">${roadHero(b)}</span><span class="rflag">${ART.icon(b.dunyo === 'orol' ? 'qasr' : 'marra', { s: 26 })}</span></div>${m.final && A.xarita ? A.xarita.devBar(b, m) : ''}<div id="stage">${body}</div></div>`;
   $('[data-pause]').onclick = () => { endSession(b); go('uy'); };
 }
-function stepTitle(st) { if (st.arBolim) return "🕌 Arab: o'qish · yozish · tajvid"; const F = A.FAN[st.fan]; return ({ isinish: '🔥 Isinish', qayta: "💥 Qayta yig'", oqish: "📖 Uch marta o'qish", duel: '⚔️ Arab dueli', kashf: '🌍 Kun kashfiyoti', final15: '🏆 Yakshanba finali', turnir: '🧠 Olimpiada turniri', viktorina: '🌍 Hafta viktorinasi', yakun: '🏁 Final poyga' })[st.k] || (F ? F.ic + ' ' + F.nom : st.k); }
+function stepTitle(st) { if (st.arBolim) return "🕌 Arab: o'qish · yozish · tajvid"; const F = A.FAN[st.fan]; return ({ isinish: '🔥 Isinish', qayta: "💥 Qayta yig'", oqish: "📖 Uch marta o'qish", duel: '⚔️ Arab dueli', kashf: '🌍 Kun kashfiyoti', final15: '🏆 Yakshanba finali', turnir: '🧠 Olimpiada turniri', viktorina: '🌍 Hafta viktorinasi', yakun: '🏁 Final poyga', sora: '🙋 Ota-ona bilan' })[st.k] || (F ? F.ic + ' ' + F.nom : st.k); }
 function stepRun(b, m) {
+  { const sq = soraNavbat(m); if (sq && (m.si >= m.steps.length || m.steps[m.si].k === 'yakun')) return soraKor(b, m, sq); }
   if (m.si >= m.steps.length) { m.done = true; A.save(true); return go('natija'); }
   const st = m.steps[m.si], res = m.res[m.si] || (m.res[m.si] = []);
   if (st.k === 'oqish') return stepOqish(b, m, st);
@@ -3129,10 +3137,9 @@ function otaTip(b, it) { if (A.gl(b.daraja) !== 'g0' && !it.diktant) return ''; 
 function showItem(b, m, st, it) {
   const st0 = { shown: Date.now(), first: null, urinish: 1, maslahat: 0, ovoz: 0, lock: b.shosh ? Date.now() + 1500 : 0 };
   CUR.it = it; CUR.st = st0; CUR.fan = it.fan;
-  const R = RENDER[it.t] || RENDER.tanla;
-  const ch = charchOk(m, st, it);
-  frame(b, m, stepTitle(st), `<div class="item t-${it.t}">${headHTML(b, it)}<div id="body"></div><div id="fb"></div>${otaTip(b, it)}</div>${ch ? '<button class="btn ghost charch" data-charch>😴 Charchadim</button>' : ''}`);
-  if (ch) $('[data-charch]').onclick = () => charchadim(b, m, st);
+  const R = RENDER[it.t] || RENDER.tanla; if (it.tur === 'sora') st0.maslahat = 1;
+  frame(b, m, stepTitle(st), `<div class="item t-${it.t}">${soraBanner(it)}${headHTML(b, it)}<div id="body"></div><div id="fb"></div>${otaTip(b, it)}</div>${qrowHTML(b, m, st, it)}`);
+  qrowBind(b, m, st, it, st0);
   const say = $('[data-say]'); if (say) { say.onclick = () => { st0.ovoz++; speak(it.tts); }; if (it.ovozKoz || it.tugun.indexOf('EN.') === 0) setTimeout(() => speak(it.tts), 350); }
   const fv = $('.flashvis'); if (fv) { const ms = +fv.dataset.ms; setTimeout(() => { fv.style.visibility = 'hidden'; }, ms); }
   CUR.cb = (r) => onAnswer(b, m, st, it, st0, r); R($('#body'), it, b, CUR.cb, st0);
@@ -3155,7 +3162,7 @@ function afterAnswer(b, it, st0, r, m) {
   /* shoshilish nazorati: oxirgi 20 javob */
   b.shL = (b.shL || []).concat([e.shoshildi]).slice(-20); const sr = A.sum(b.shL) / b.shL.length; if (b.shL.length >= 10) { if (sr > 0.15) b.shosh = true; else if (sr < 0.05) b.shosh = false; }
   if (e.togri_1) A.addStar(b, 1, it.tur === 'arena' || it.tur === 'mashq');
-  if (e.togri_1 && it.tur !== 'dars' && A.pul) A.pul.javob(b);
+  if (e.togri_1 && it.tur !== 'dars' && it.tur !== 'sora' && A.pul) A.pul.javob(b);
   A.save(); return { e, ev };
 }
 /* ================= KICHIK DARS (0.2.0) =================
@@ -3468,7 +3475,7 @@ function showLesson(b, m, st, it, n) {
   <p class="dnext">${n === 1 ? "Endi xuddi shunday savolni o'zing yech! 💪" : "Yana bittasini mashq qilamiz — bu safar osonrog'i."}</p>
   <button class="btn big" data-twin disabled>Men tayyorman ✍️ <span data-c></span></button></div>`;
   const host = $('.item'); if (host) host.outerHTML = html; else { const s = $('#stage') || app; s.innerHTML = html; }
-  const chb = $('[data-charch]'); if (chb) chb.remove();
+  qrowOl();
   const dsy = $('[data-dsay]'); if (dsy) { dsy.onclick = () => speak(it.tts); setTimeout(() => speak(it.tts), 400); }
   const btn = $('[data-twin]'), c = $('[data-c]'); let k = A.TEZ ? 0 : 5;
   const tick = () => { if (!document.body.contains(btn)) return; if (k <= 0) { btn.disabled = false; c.textContent = ''; return; } c.textContent = '(' + k + ')'; k--; setTimeout(tick, 1000); };
@@ -3485,7 +3492,7 @@ function showKinoLesson(b, m, st, it, n, sc, d, qoida, qad) {
   ${qoida.length || qad.length ? `<details class="dmatn"><summary>📄 Kattalar uchun — matnli yechim</summary>${qoida.length ? `<div class="dq">${qoida.map(escB).join('<br>')}</div>` : ''}${qad.length ? `<ol class="dsteps">${qad.map(x => `<li>${escB(x)}</li>`).join('')}</ol>` : ''}</details>` : ''}
   <button class="btn big" data-twin disabled>${n === 1 ? "Endi o'zim yechaman ✍️" : 'Yana bittasi — osonrog\'i ✍️'}</button></div>`;
   const host = $('.item'); if (host) host.outerHTML = html; else { const s = $('#stage') || app; s.innerHTML = html; }
-  const chb = $('[data-charch]'); if (chb) chb.remove();
+  qrowOl();
   const btn = $('[data-twin]'), go2 = () => { if (btn.disabled) return; const tw = twinItem(b, it, n); if (CUR && CUR.k === 'missiya') showItem(b, m, st, tw); else if (CUR && CUR.k === 'mashq') mashqNext(b, tw); else arenaNext(b, tw); };
   btn.onclick = go2;
   kinoPlay($('[data-kh]'), sc, { done: () => { btn.disabled = false; const a = $('[data-dans]'); if (a) a.classList.remove('kyash'); }, tushundim: go2 });
@@ -3506,14 +3513,15 @@ function onAnswer(b, m, st, it, st0, r) {
     return; }
   const fin = { togri: !!r.togri, togri_1: !!r.togri && st0.urinish === 1 && !r.xato_soni, javob: r.javob, xato_turi: r.togri && st0.urinish === 1 ? (r.xato_turi || null) : (st0.x1 || r.xato_turi || null), shoshildi: r.shoshildi };
   if (r.xato_soni) { st0.urinish = 1 + r.xato_soni; if (r.maslahat) st0.maslahat = 1; }
-  const res = m && it.tur !== 'dars' ? m.res[m.si] : null; const { ev } = afterAnswer(b, it, st0, fin, m);
+  const res = m && it.tur !== 'dars' && it.tur !== 'sora' ? m.res[m.si] : null; const { ev } = afterAnswer(b, it, st0, fin, m); if (it.tur === 'sora') soraNatija(b, m, it, fin);
   if (res) { res.push({ ok: fin.togri_1 ? 1 : 0, ms: Date.now() - st0.shown, ball: it.tur === 'duel' ? duelBall(fin, Date.now() - st0.shown) : 0 }); m.oyinN = (m.oyinN || 0) + 1; }
-  if (ctx.k === 'mashq' && it.tur !== 'dars') { ctx.n++; ctx.i++; ctx.oyinN = (ctx.oyinN || 0) + 1; if (fin.togri_1) ctx.ok++; if (ctx.vz) { ctx.vz.qildi++; if (fin.togri_1) ctx.vz.ok++; } if (ctx.qut) { ctx.qut.qildi++; if (fin.togri_1) ctx.qut.ok++; } }
+  if (ctx.k === 'mashq' && it.tur !== 'dars' && it.tur !== 'sora') { ctx.n++; ctx.i++; ctx.oyinN = (ctx.oyinN || 0) + 1; if (fin.togri_1) ctx.ok++; if (ctx.vz) { ctx.vz.qildi++; if (fin.togri_1) ctx.vz.ok++; } if (ctx.qut) { ctx.qut.qildi++; if (fin.togri_1) ctx.qut.ok++; } }
   if (m) m.cur = null; A.save(true);
   const next = () => { if (CUR && CUR.k === 'missiya') missionNext(b, m); else if (CUR && CUR.k === 'arena') arenaNext(b); else if (CUR && CUR.k === 'mashq') mashqNext(b); };
   if (it.tur === 'dars' && fin.togri) setTimeout(() => toast("🎓 Barakalla! Darsdan keyin o'zing yechding!"), 250);
-  if (it.tur !== 'dars') { if (KOMBO.id !== b.id) KOMBO = { id: b.id, n: 0 }; KOMBO.n = fin.togri_1 ? KOMBO.n + 1 : 0; const dd = A.agg(b); if (KOMBO.n > (dd.komboMax || 0)) dd.komboMax = KOMBO.n; if (KOMBO.n > (b.komboMax || 0)) b.komboMax = KOMBO.n; if (fin.togri_1 && A.konsJavob) A.konsJavob(b); }
-  if (fin.togri_1) { const el = r.el || $('#body'); const bb = el.getBoundingClientRect(); const t0 = performance.now(); if (it.tur !== 'dars' && komboMarra(KOMBO.n)) komboFX(b, KOMBO.n, bb.left + bb.width / 2, bb.top + Math.min(bb.height / 2, 160), ctx.k === 'arena' || ctx.k === 'mashq'); FX.boom(bb.left + bb.width / 2, bb.top + Math.min(bb.height / 2, 160), b.dunyo).then(() => { A.agg(b).fx += Math.round(performance.now() - t0); if (ev === 'ozl') toast('🟢 Yangi ko\'nikma o\'zlashtirildi!'); next(); }); return; }
+  if (it.tur === 'sora' && fin.togri) setTimeout(() => toast('🙋 Barakalla! Endi tushunding 💪'), 250);
+  if (it.tur !== 'dars' && it.tur !== 'sora') { if (KOMBO.id !== b.id) KOMBO = { id: b.id, n: 0 }; KOMBO.n = fin.togri_1 ? KOMBO.n + 1 : 0; const dd = A.agg(b); if (KOMBO.n > (dd.komboMax || 0)) dd.komboMax = KOMBO.n; if (KOMBO.n > (b.komboMax || 0)) b.komboMax = KOMBO.n; if (fin.togri_1 && A.konsJavob) A.konsJavob(b); }
+  if (fin.togri_1) { const el = r.el || $('#body'); const bb = el.getBoundingClientRect(); const t0 = performance.now(); if (it.tur !== 'dars' && it.tur !== 'sora' && komboMarra(KOMBO.n)) komboFX(b, KOMBO.n, bb.left + bb.width / 2, bb.top + Math.min(bb.height / 2, 160), ctx.k === 'arena' || ctx.k === 'mashq'); FX.boom(bb.left + bb.width / 2, bb.top + Math.min(bb.height / 2, 160), b.dunyo).then(() => { A.agg(b).fx += Math.round(performance.now() - t0); if (ev === 'ozl') toast('🟢 Yangi ko\'nikma o\'zlashtirildi!'); next(); }); return; }
   if (fin.togri) { FX.play('ding'); $('#fb').innerHTML = `<div class="good">✅ ${esc(pickA(PRAISE1))}</div>`; setTimeout(next, A.TEZ ? 200 : 1300); return; }
   /* 0.2.0: 2-xatoda javob shunchaki ko'rsatilmaydi — kichik dars → egizak savol */
   if (darsMumkin(it, r)) return darsFlow(b, m, st, it, next);
@@ -3536,7 +3544,7 @@ function missionNext(b, m) {
   if (oyinKerak(b, m)) { m.oyinN = 0; m.oyinSoni = (m.oyinSoni || 0) + 1; A.save(true); return A.oyin.boshla(b, m, () => { CUR = { k: 'missiya', b, m }; theme(b.dunyo); stepRun(b, m); }); }
   stepRun(b, m);
 }
-function charchOk(m, st, it) { return !!(m && !m.done && st && !st.kechik && it.tur !== 'dars' && !['yakun', 'oqish'].includes(st.k)); }
+function charchOk(m, st, it) { return !!(m && !m.done && st && !st.kechik && it.tur !== 'dars' && it.tur !== 'sora' && !['yakun', 'oqish', 'sora'].includes(st.k)); }
 /* Qadamni yakundan oldinga ko'chirish; natijalar (m.res — indeks bo'yicha) ham birga ko'chadi */
 function moveLater(m, i) {
   const arr = m.steps.map((_, k) => m.res[k]), yi = m.steps.findIndex((x, k) => k > i && x.k === 'yakun'), to = yi < 0 ? m.steps.length - 1 : yi - 1;
@@ -3560,6 +3568,120 @@ function charchDo(b, m, st) {
   moveLater(m, m.si); m.cur = null; A.save(true); FX.play('ding');
   toast('👉 ' + stepTitle(m.steps[m.si])); stepRun(b, m);
 }
+/* ================= 🤔 TUSHUNMADIM va 🙋 OTA-ONAMDAN SO'RAYMAN (0.7.1) =================
+   Savol tushunarsiz bo'lsa — javob berishdan OLDIN «🤔 Tushunmadim»: savol soddaroq so'zlar bilan + o'xshash OSON misolning yechimi
+   (rasmli kino yoki qadamlar). Joriy savolning javobi ochilmaydi. Shunda ham tushunmasa — «🙋 Ota-onamdan so'rayman»: savol hozir
+   o'tkaziladi va missiya (vazifa) oxirida qaytadi, mashqda — 5 savoldan keyin; ota-ona panelida 🔔 + kattalar uchun yechim.
+   Qarorlar (06.11): missiya, mashq, uyga vazifada bor; duel, final, kashfiyot, turnir, qutqarish, arenada yo'q; «so'rayman» —
+   bir missiyada ko'pi bilan 3, mashq + vazifada kuniga 3. Tushunmadim bosilgan savol «maslahat bilan» deb yoziladi. */
+const SORA_MAX = 3, SORA_KECH = A.TEZ ? 2 : 5, MASALA = ['M1.12', 'M2.4'], TUSH_YOQ = ['yakun', 'oqish', 'duel', 'final15', 'kashf', 'viktorina', 'qayta', 'turnir', 'sora'];
+function tushOk(b, st, it) {
+  const C = CUR; if (!C || !it || A.S().sozlama.tush === false || it.tur === 'dars' || it.tur === 'sora') return false;
+  if (C.k === 'missiya') return !!(st && !TUSH_YOQ.includes(st.k));
+  return C.k === 'mashq' && !C.qut;
+}
+function soraQolgan(b) { const C = CUR; if (!C) return 0; const n = C.k === 'missiya' ? ((C.m && C.m.soraN) || 0) : (A.agg(b).soraM || 0); return Math.max(0, SORA_MAX - n); }
+function qrowHTML(b, m, st, it) {
+  const t = tushOk(b, st, it), ch = m ? charchOk(m, st, it) : false; if (!t && !ch) return '';
+  return `<div class="qrow">${t ? '<button class="btn ghost tush" data-tush>🤔 Tushunmadim</button>' : ''}${ch ? '<button class="btn ghost charch" data-charch>😴 Charchadim</button>' : ''}</div>`;
+}
+function qrowBind(b, m, st, it, st0) {
+  const c = $('[data-charch]'); if (c) c.onclick = () => charchadim(b, m, st);
+  const t = $('[data-tush]'); if (t) t.onclick = () => tushunmadim(b, m, st, it, st0);
+}
+function qrowOl() { $$('.qrow, [data-charch], [data-tush]').forEach(x => x.remove()); }
+const soraBanner = it => it.tur === 'sora' ? `<div class="sorab">🙋 Bu savolni ota-onangdan so'ragan eding. Endi birga yechinglar!</div>` : '';
+/* Savol turi bo'yicha «nima qilish kerak» — oddiy so'zlar bilan */
+const NIMA = { tanla: "Pastdagi javoblardan BITTASINI tanlab bos.", yoz: "Javobni pastdagi tugmalardan yig' — harfma-harf yoki raqamma-raqam.", tartib: "Bo'laklarni to'g'ri tartibda bos: birinchisi, keyin ikkinchisi…",
+  farq: "Ikki rasmni solishtir: qayeri boshqacha bo'lsa — o'sha joyni bos.", labirint: "Yo'lni top: mashinani devorga urilmasdan marraga olib bor.", sudoku: "Har qatorda va har ustunda har bir belgi faqat BIR marta bo'lsin.",
+  xotira: "Kartalarni eslab qol, keyin bir xil juftini top.", iz: "Nuqtali chiziq ustidan barmog'ing bilan yurib chiq.", yigish: "Bo'laklarni rasmdagi o'z joyiga sudrab qo'y.",
+  arharf: "Harf kartochkalarini to'g'ri tartibda bos — so'z yig'iladi (arabchada o'ngdan chapga).", daftar: "So'zni daftaringga chiroyli qilib yoz, keyin o'zing tekshir.",
+  ovchi: "Panjaradagi KERAKLI harflarning HAMMASINI top va bos.", kodyol: "Strelkalardan dastur tuz: robot to'siqqa urilmasdan bayroqqa yetsin." };
+function soddaLines(b, it) {
+  if (Array.isArray(it.sodda) && it.sodda.length) return it.sodda.slice(0, 4);
+  const out = [], ex = it.ex || {}, a = +ex.a, c = +ex.b;
+  if ((ex.op === '+' || ex.op === '−') && isFinite(a) && isFinite(c) && ex.a != null && ex.b != null) {
+    const v = ex.op === '+' ? a + c : a - c, em = kinoEm(b, it);
+    if (ex.yoq === 'b') out.push(ex.op === '+' ? `${a} ga qaysi sonni qo'shsak, ${v} bo'ladi? □ — shu yashiringan son.` : `${a} dan nechtasini olsak, ${v} qoladi? □ — shu yashiringan son.`);
+    else if (ex.yoq) out.push(ex.op === '+' ? `Qaysi songa ${c} ni qo'shsak, ${v} bo'ladi?` : `Qaysi sondan ${c} ni olsak, ${v} qoladi?`);
+    else if (it.matn === 1 || MASALA.includes(it.tugun)) out.push("Masalani 2 bo'lakka bo'l: 1) Boshida nechta edi? 2) Keyin nima bo'ldi — ko'paydimi (qo'shildi, keldi) yoki kamaydimi (berdi, ketdi)?");
+    else if (a <= 20 && c <= 20) out.push(ex.op === '+' ? `${a} ta ${em} bor edi. Yana ${c} ta keldi. Hammasi nechta bo'ldi?` : `${a} ta ${em} bor edi. ${c} tasi ketdi. Nechta qoldi?`);
+    else out.push(ex.op === '+' ? `${a} ga ${c} ni qo'shamiz. Natija nechchi?` : `${a} dan ${c} ni ayiramiz. Natija nechchi?`);
+  }
+  if (typeof it.matn === 'string') out.push("Avval matnni yana bir marta sekin o'qi — javob matnning ichida yozilgan.");
+  if (!out.length && it.hint && it.hint.sav) out.push(it.hint.sav);
+  out.push(NIMA[it.t] || NIMA.tanla);
+  return out;
+}
+/* O'xshash OSON misol: shu mavzudan bir pog'ona osonroq, boshqa sonlar/so'zlar bilan (joriy javob ochilib qolmasin).
+   matn: 1 — matnli masala (shunday misol afzal), matn: '…' — o'qish matni (misol yo'q: boshqa matn juda uzun bo'lardi) */
+function osonMisol(b, it) {
+  if (!(it.t === 'tanla' || it.t === 'yoz') || typeof it.matn === 'string' || !gen.reg[it.tugun] || ['KASHF', 'OL'].includes(it.tugun)) return null;
+  const hx = b.harfOxirgi, q = Math.max(1, (it.q || 1) - 1), boshqa = x => x.sig && it.sig ? x.sig !== it.sig : (x.sav !== it.sav || x.tts !== it.tts || JSON.stringify(x.vis || 0) !== JSON.stringify(it.vis || 0));
+  /* sonli misolda — eng kichik sonlisi (joriy savoldan katta emas): «oson» haqiqatan osonroq bo'lsin */
+  const kat = x => { const e = x.ex || {}, a = +e.a, c = +e.b; return isFinite(a) && isFinite(c) && e.a != null && e.b != null ? Math.max(a, c, e.op === '+' ? a + c : a) : null; }, k0 = kat(it), C = [];
+  for (let k = 0; k < 20 && C.length < 10; k++) { let x = null; try { x = A.makeItem(b, { tugun: it.tugun, q, tur: 'dars', fmt: it.fmt || null }); } catch (e) { break; }
+    if (x && x.tugun === it.tugun && typeof x.matn !== 'string' && x.sav && boshqa(x) && String(x.a) !== String(it.a)) C.push(x); }
+  b.harfOxirgi = hx; if (!C.length) return null;
+  const tur = C.filter(x => !!x.matn === !!it.matn), P = tur.length ? tur : C;
+  let tw = P[0]; if (k0 != null) { const S2 = P.filter(x => kat(x) != null).sort((x, y) => kat(x) - kat(y)); if (S2.length) tw = S2.find(x => kat(x) <= k0) || S2[0]; }
+  tw.tur = 'dars'; return tw;
+}
+function tushunmadim(b, m, st, it, st0) {
+  if (!CUR || CUR.it !== it) return;
+  st0.maslahat = 1; st0.tush = (st0.tush || 0) + 1; const d = A.agg(b); d.tush = (d.tush || 0) + 1;
+  A.pushLog(b.id, { t: 'tush', ts: Date.now(), bola: b.id, sessiya: b.sessiya || null, fan: it.fan, tugun: it.tugun, q: it.q || 1, tur: CUR.k === 'missiya' ? 'missiya' : CUR.vz ? 'vazifa' : 'mashq', n: st0.tush, savol: String(it.savLog || it.sav || '').slice(0, 80) });
+  A.save(); FX.play('yumshoq');
+  const kat = A.gl(b.daraja) === 'g0', sod = soddaLines(b, it), om = osonMisol(b, it), sc = om ? kino(b, om) : null, qad = om && !sc ? darsQadam(om) : [], qol = soraQolgan(b);
+  const qoida = (DARS[it.tugun] || DARS_FAN[it.fan] || []).slice(0, 2);
+  const misol = !om ? '' : `<div class="dex"><div class="dl">✏️ O'xshash oson misol — birga yechamiz:</div><div class="dsav">${esc(om.sav)}</div>${om.tts ? `<button class="btn ghost say" data-tsay>🔊 ${esc(om.tts)}</button>` : ''}${sc ? '<div data-tkh></div>' : `${om.vis ? `<div class="visw">${ART.vis(om.vis)}</div>` : ''}${qad.length ? `<ol class="dsteps">${qad.map(x => `<li>${escB(x)}</li>`).join('')}</ol>` : ''}`}<div class="dans${sc ? ' kyash' : ''}" data-tans>✅ Javob: ${javobHTML(om)}</div></div>`;
+  sheet(`<div class="dars tushs" role="region" aria-label="Soddaroq tushuntirish"><div class="dh"><span>🤔</span><span>Keling, soddaroq</span></div>${kat ? `<div class="dkat">👨‍👩‍👦 Kattalar o'qib bersin</div>` : ''}
+    <div class="dq">${sod.map(escB).join('<br>')}</div>${qoida.length ? `<div class="tqo">💡 ${qoida.map(escB).join(' ')}</div>` : ''}${misol}
+    <button class="btn big" data-tok>✍️ Endi o'zim urinaman</button>
+    ${qol ? `<button class="btn ghost" data-sora disabled>🙋 Ota-onamdan so'rayman <span class="sm" data-sc></span></button><p class="sm mut tsq">Savol hozircha o'tkaziladi, ${CUR.k === 'missiya' ? 'missiya oxirida' : CUR.vz ? 'vazifa oxirida' : 'biroz keyin'} qaytadi. Yana ${qol} marta so'rash mumkin.</p>`
+      : `<p class="sm tsq">🙋 Bugun ${SORA_MAX} marta so'rading — bunisini o'zing urinib ko'r. Xato qilsang, kichik dars yordam beradi 💪</p>`}</div>`, el => {
+    if (sc) kinoPlay($('[data-tkh]', el), sc, { mini: 1, done: () => { const a = $('[data-tans]', el); if (a) a.classList.remove('kyash'); } });
+    $('[data-tok]', el).onclick = closeSheets; const ts = $('[data-tsay]', el); if (ts) ts.onclick = () => speak(om.tts);
+    const sb = $('[data-sora]', el), c = $('[data-sc]', el); if (!sb) return;
+    let k = A.TEZ ? 0 : 4; const tk = () => { if (!el.isConnected) return; if (k <= 0) { sb.disabled = false; c.textContent = ''; return; } c.textContent = '(' + k + ')'; k--; setTimeout(tk, 1000); }; tk();
+    sb.onclick = () => { if (sb.disabled) return; closeSheets(); soraQil(b, m, st, it); };
+  });
+}
+/* 🙋 so'rov yozuvi — bola JSON ichida (b.sora, ≤ 30): ota-ona panelida savol, javob va kattalar uchun yechim */
+function soraYoz(b, it, joy) {
+  const sm = v => { if (v == null) return null; try { const j = JSON.stringify(v); return j && j.length <= 4000 ? v : null; } catch (e) { return null; } };
+  const o = it.t === 'tanla' && Array.isArray(it.o) ? it.o.find(x => x.v === String(it.a)) : null;
+  const r = { id: A.rid(6), ts: Date.now(), sana: A.todayKey(), joy, tugun: it.tugun, fan: it.fan, q: it.q || 1, t: it.t, sav: String(it.sav || '').slice(0, 300), sav2: it.sav2 ? String(it.sav2).slice(0, 200) : '', matn: typeof it.matn === 'string' ? it.matn.slice(0, 900) : '', vis: sm(it.vis), arab: it.arab ? 1 : 0,
+    jv: String(o ? (o.h != null ? o.h : o.v) : (it.aLabel != null ? it.aLabel : it.a)).slice(0, 120), jvis: o && o.vis ? sm(o.vis) : null, yechim: darsQadam(it).slice(0, 6), qoida: (DARS[it.tugun] || DARS_FAN[it.fan] || []).slice(0, 3), ota: it.ota ? String(it.ota).slice(0, 300) : '', tushun: it.tushun ? String(it.tushun).slice(0, 300) : '', holat: 'kut' };
+  b.sora = (b.sora || []).concat([r]);
+  while (b.sora.length > 30) { const i = b.sora.findIndex(x => x.kor); b.sora.splice(i >= 0 ? i : 0, 1); }
+  return r;
+}
+function soraQil(b, m, st, it) {
+  const C = CUR; if (!C || C.it !== it) return;
+  if (!soraQolgan(b)) return toast(`Bugun ${SORA_MAX} marta so'rading — o'zing urinib ko'r 💪`);
+  const joy = C.k === 'missiya' ? 'missiya' : C.vz ? 'vazifa' : 'mashq', r = soraYoz(b, it, joy), d = A.agg(b), q = { id: r.id, it: JSON.parse(JSON.stringify(it)) };
+  d.sora = (d.sora || 0) + 1; if (joy !== 'missiya') d.soraM = (d.soraM || 0) + 1;
+  A.pushLog(b.id, { t: 'sora', ts: Date.now(), bola: b.id, sessiya: b.sessiya || null, hodisa: 'sorandi', id: r.id, fan: it.fan, tugun: it.tugun, joy });
+  FX.play('ding');
+  if (joy === 'missiya') { m.soraQ = (m.soraQ || []).concat([q]); m.soraN = (m.soraN || 0) + 1; m.cur = null; A.save(true); toast("🙋 Savol ota-onangga yuborildi — missiya oxirida birga yechasizlar"); return stepRun(b, m); }
+  q.n0 = C.n; C.soraQ = (C.soraQ || []).concat([q]); A.save(true);
+  toast(C.vz ? "🙋 Savol ota-onangga yuborildi — vazifa oxirida birga yechasizlar" : "🙋 Savol ota-onangga yuborildi — biroz keyin yana chiqadi"); mashqNext(b);
+}
+const soraNavbat = m => ((m && m.soraQ) || []).find(x => !x.qaytdi) || null;
+function soraItem(q) { const it = JSON.parse(JSON.stringify(q.it)); it.tur = 'sora'; it.soraId = q.id; return it; }
+function soraTayyor(C) { return (C.soraQ || []).find(x => !x.qaytdi && (C.vz ? C.vz.qildi >= C.vz.n : C.n - (x.n0 || 0) >= SORA_KECH)) || null; }
+function soraKor(b, m, sq) {
+  const it = m.cur && m.cur.sora === sq.id ? m.cur.item : soraItem(sq); m.cur = { si: m.si, sora: sq.id, item: it }; A.save();
+  showItem(b, m, { k: 'sora', fan: it.fan }, it);
+}
+function soraNatija(b, m, it, fin) {
+  const Q = (m && m.soraQ) || (CUR && CUR.soraQ) || [], q = Q.find(x => x.id === it.soraId); if (q) q.qaytdi = 1;
+  const r = (b.sora || []).find(x => x.id === it.soraId); if (r) { r.holat = fin.togri ? 'yechdi' : 'qiyin'; r.hal = Date.now(); r.ok1 = fin.togri_1 ? 1 : 0; }
+  A.pushLog(b.id, { t: 'sora', ts: Date.now(), bola: b.id, sessiya: b.sessiya || null, hodisa: 'qaytdi', id: it.soraId, tugun: it.tugun, ok: fin.togri ? 1 : 0 });
+}
+A.soraKut = () => A.bolalar().reduce((n, b) => n + (b.sora || []).filter(x => !x.kor).length, 0);
+A.tushSinov = { soddaLines, osonMisol, NIMA, SORA_MAX };
 A.setCur = c => { CUR = c; }; A.moveLater = moveLater; A.stepTitle = stepTitle;
 function duelBall(fin, ms) { if (!fin.togri_1) return 0; const bonus = Math.max(0, Math.min(5, Math.round(5 - (ms - 2000) / 1000))); return 10 + bonus; }
 /* ================= TOPSHIRIQ TURLARI ================= */
@@ -3916,18 +4038,20 @@ function mashqItem(b, C) {
 }
 function mashqNext(b, given) {
   const C = CUR; if (!C || C.k !== 'mashq') return;
-  if (!given && C.vz && C.vz.qildi >= C.vz.n) return vazifaDone(b, C);
+  const sq = given ? null : soraTayyor(C); /* 🙋 0.7.1: so'ralgan savol — vazifa oxirida / mashqda 5 savoldan keyin */
+  if (!given && !sq && C.vz && C.vz.qildi >= C.vz.n) return vazifaDone(b, C);
   if (!given && C.qut && C.qut.qildi >= C.qut.n) return qutDone(b, C);
   if (!given) { const dm = A.damHolat(b); if (dm) { endSession(b); return screenDam(b, dm); } }
   const har = A.oyinCfg(b).har;
-  if (!given && har && A.oyin && C.oyinN >= har) { C.oyinN = 0; return A.oyin.boshla(b, C, () => { CUR = C; theme(b.dunyo); mashqNext(b); }); }
-  const it = given || mashqItem(b, C);
+  if (!given && !sq && har && A.oyin && C.oyinN >= har) { C.oyinN = 0; return A.oyin.boshla(b, C, () => { CUR = C; theme(b.dunyo); mashqNext(b); }); }
+  const it = given || (sq ? soraItem(sq) : mashqItem(b, C));
   if (!it) { app.innerHTML = `<div class="wrap kidw"><div class="card"><h2>🔒 Hali ochilmagan</h2><p>Bu bo'lim uchun oyisi 👨‍👩‍👧 → 🕌 Arab so'zlari bo'limida so'zlar yoki tajvid misollarini tasdiqlashi kerak.</p><button class="btn big" data-back>← Orqaga</button></div></div>`; $('[data-back]').onclick = () => go('mashq'); return; }
-  const st0 = { shown: Date.now(), first: null, urinish: 1, maslahat: 0, ovoz: 0, lock: b.shosh ? Date.now() + 1500 : 0 }; C.it = it; C.st = st0;
+  const st0 = { shown: Date.now(), first: null, urinish: 1, maslahat: 0, ovoz: 0, lock: b.shosh ? Date.now() + 1500 : 0 }; C.it = it; C.st = st0; if (it.tur === 'sora') st0.maslahat = 1;
   const ay = b.arenaYulduz[A.todayKey()] || 0, Z = C.vz || C.qut, ttl = C.qut ? '🛟 Qutqarish · ' + C.qut.nom : C.vz ? vzNom(C.vz) : C.fan === 'ar' && C.bolim && BJ.arab ? '🕌 ' + BJ.arab.BOLIM[C.bolim].nom : '📚 ' + A.FAN[C.fan].nom, p = Z ? Math.min(1, Z.qildi / Math.max(1, Z.n)) : 0;
   app.innerHTML = `<div class="wrap play"><div class="top"><button class="ib" data-x aria-label="Chiqish">✕</button><div class="ttl">${esc(ttl)}</div><span class="sp"></span>${Z ? `<span class="pill">${C.qut ? '🛟' : '📝'} ${Z.qildi}/${Z.n}</span>` : `<span class="pill">✅ ${C.n}</span><span class="pill">⭐ ${ay}/20</span>`}</div>
   ${Z ? `<div class="road"><div class="rfill" style="width:${Math.round(p * 100)}%"></div><span class="rcar svgc" style="left:calc(${Math.round(p * 100)}% - 26px)">${A.roadHero(b)}</span><span class="rflag">${ART.icon(b.dunyo === 'orol' ? 'qasr' : 'marra', { s: 26 })}</span></div>` : ''}
-  <div class="item t-${it.t}">${headHTML(b, it)}<div id="body"></div><div id="fb"></div>${otaTip(b, it)}</div></div>`;
+  <div class="item t-${it.t}">${soraBanner(it)}${headHTML(b, it)}<div id="body"></div><div id="fb"></div>${otaTip(b, it)}</div>${qrowHTML(b, null, null, it)}</div>`;
+  qrowBind(b, null, null, it, st0);
   $('[data-x]').onclick = () => { endSession(b); A.save(true); if (C.n && !Z) toast(`📚 ${C.n} ta savol · ${C.ok} tasi birinchi urinishda ✅`); go('uy'); };
   const say = $('[data-say]'); if (say) say.onclick = () => { st0.ovoz++; speak(it.tts); };
   if (st0.lock) { const ob = $('#body'); ob.classList.add('locked'); setTimeout(() => ob.classList.remove('locked'), 1500); }
@@ -5970,7 +6094,7 @@ async function logOl(kunOldin) {
 }
 /* ---------- YUBORISH (har 6 s, sahifa yashirilganda darhol) ---------- */
 async function tick() {
-  if (!user || band || birinchiBand || !online()) return; band = true;
+  if (!user || !SYNC || !RX.ok || band || birinchiBand || !online()) return; band = true;
   try {
     A.flushLog(); const { doc, setDoc, deleteDoc, arrayUnion } = fb.fs, s = S(), sy = L.sync, now = Date.now(), ish = [];
     const uj = JSON.stringify(umumiy()), uh = hsh(uj);
@@ -5986,11 +6110,11 @@ async function tick() {
     const g = s.guruh && s.guruh.kod; if (g) guruhYuborIsh(g, ish);
     if (ish.length) { await Promise.all(ish); sy.logHammasi = false; L.oxirgi = Date.now(); xato = ''; lsave(); }
     else if (!L.oxirgi) { L.oxirgi = Date.now(); lsave(); }
-  } catch (e) { xato = xabar(e); console.warn('bulut', e); }
+  } catch (e) { xato = xabar(e); console.warn('bulut', e); if (e && e.code === 'permission-denied') rxQayta(); }
   finally { band = false; }
 }
 function tickBosh() { clearInterval(tickT); tickT = setInterval(tick, TICK); setTimeout(tick, 400); }
-document.addEventListener('visibilitychange', () => { if (!user) return; if (document.visibilityState === 'hidden') tick(); else { logOl(2).then(n => { if (n) qaytaChiz(); }).catch(() => {}); tick(); } });
+document.addEventListener('visibilitychange', () => { if (!user || !SYNC || !RX.ok) return; if (document.visibilityState === 'hidden') tick(); else { logOl(2).then(n => { if (n) qaytaChiz(); }).catch(() => {}); tick(); } });
 addEventListener('online', () => { if (user) tick(); });
 /* ---------- QABUL (boshqa telefon yozganda) ---------- */
 function obuna() {
@@ -6013,12 +6137,18 @@ function obuna() {
 /* ---------- ULANISH ---------- */
 async function ulan(u) {
   user = u; const yangi = !L || L.uid !== u.uid;
-  if (yangi) { L = { uid: u.uid, email: u.email || '', ulandi: Date.now(), oxirgi: 0, sync: syBosh() }; lsave(); await birinchi(); }
+  /* 0.7.1: «bosh» — birinchi kirish (bulutdan olish / yuklash) hali bajarilmagan; ruxsat kutilsa — ruxsatdan keyin bajariladi */
+  if (yangi) { L = { uid: u.uid, email: u.email || '', ulandi: Date.now(), oxirgi: 0, sync: syBosh(), bosh: 1 }; lsave(); }
   else { L.email = u.email || L.email; lsave(); }
+  await ruxsatTekshir(u).catch(() => {}); if (user !== u) return;
+  if (RX.admin) rxAdminObuna();
+  if (!RX.ok) { syncTo(); rxKuzat(); qayta(); return; }
+  if (!SYNC) { qayta(); return; }
+  if (L.bosh) { await birinchi(); if (L && L.uid === u.uid) { delete L.bosh; lsave(); } }
   obuna(); guruhObuna(); tickBosh(); logOl(7).then(n => { if (n) qaytaChiz(); }).catch(() => {});
   qayta();
 }
-function uzil() { user = null; unsub.forEach(f => { try { f(); } catch (e) {} }); unsub = []; if (gUnsub) { try { gUnsub(); } catch (e) {} gUnsub = null; } clearInterval(tickT); qayta(); }
+function uzil() { user = null; syncTo(); rxTo(); RX = { faol: null, admin: false, holat: null, d: null, ok: true }; rxQoida = null; qayta(); }
 const ball = b => Object.values(b.tugun || {}).reduce((a, t) => a + (t.n || 0), 0) + (b.yulduz || 0);
 async function birinchi() {
   birinchiBand = true;
@@ -6045,6 +6175,118 @@ function sorash(nB, nL) {
   <button class="btn" data-k="bulut">☁️ Bulutdagini olish (tavsiya)</button><p class="sm mut">Shu telefondagi natijalar bulutdagi bilan almashadi (eski nusxasi telefonda zaxira sifatida qoladi). PIN ham bulutdagi bo'ladi.</p>
   <button class="btn ghost" data-k="birlashtir">➕ Birlashtirish</button><p class="sm mut">Ikkala tomondagi bolalar ham qoladi. Bir xil bola ikki marta chiqsa — keraksizini o'chirasiz.</p>`, el => { $$('[data-k]', el).forEach(b => b.onclick = () => { closeSheets(); res(b.dataset.k); }); }, { lock: true }));
 }
+/* ---------- 🛡️ RUXSAT TIZIMI (0.7.1) ----------
+   Yangi oila bulutga faqat Bilimjon egasining (admin) tasdig'i bilan ulanadi: ruxsat/{uid} {email, oila, ts, holat: kutish|ok|rad|blok, hal}.
+   Admin — firestore.rules dagi admin(): akkaunt ID sini qoidaga ilovaning o'zi qo'yadi (☁️ → 🛡️ → «📋 Qoidalarni nusxalash»); repo'da — namuna.
+   Qoidalar hali eski bo'lsa (ruxsat/ o'qilmaydi) — tizim «yoqilmagan», ilova 0.7.0 dagidek ishlaydi.
+   Ruxsatni faqat «admin telefoni» beradi (S.adminTel — oila darajasida sinxron): boshqa telefonda ro'yxat faqat ko'rinadi.
+   🧪 Sinov rejimida (beta) bulut sinxroni o'chiq, lekin ruxsat tizimi ishlaydi — so'rovchi va admin tomonini sinash uchun. */
+const SYNC = !A.BETA;
+let RX = { faol: null, admin: false, holat: null, d: null, ok: true }, rxU = null, rxLU = null, rxList = [], rxQT = 0, rxQoida = null;
+function rxSaqla() { if (L && user && L.uid === user.uid) { L.rx = { faol: RX.faol, admin: RX.admin, holat: RX.holat, ts: Date.now() }; lsave(); } }
+async function ruxsatTekshir(u) {
+  const { doc, getDoc, collection, getDocs, query, limit } = fb.fs, r = { faol: null, admin: false, holat: null, d: null };
+  try { const d = await getDoc(doc(db, 'ruxsat', u.uid)); r.faol = true; r.d = d.exists() ? d.data() : null; r.holat = r.d ? r.d.holat || null : null; }
+  catch (e) { if (e && e.code === 'permission-denied') r.faol = false; else { const c = L && L.uid === u.uid && L.rx; if (c) { Object.assign(r, c); r.kesh = true; } else r.noma = true; } }
+  if (r.faol === true && !r.kesh) { try { await getDocs(query(collection(db, 'ruxsat'), limit(1))); r.admin = true; } catch (e) { r.admin = false; } }
+  r.ok = r.faol !== true || r.admin || r.holat === 'ok';
+  RX = r; if (!r.kesh && !r.noma) rxSaqla(); return r;
+}
+function syncTo() { clearInterval(tickT); unsub.forEach(f => { try { f(); } catch (e) {} }); unsub = []; if (gUnsub) { try { gUnsub(); } catch (e) {} gUnsub = null; } }
+function rxTo() { [rxU, rxLU].forEach(f => { if (f) try { f(); } catch (e) {} }); rxU = rxLU = null; rxList = []; }
+/* So'rovchi: o'z hujjatini kuzatadi — admin ruxsat bersa, bulut o'zi ulanadi */
+function rxKuzat() {
+  if (rxU) { try { rxU(); } catch (e) {} rxU = null; }
+  if (!user || RX.faol !== true || RX.ok) return;
+  const { doc, onSnapshot } = fb.fs, u = user;
+  rxU = onSnapshot(doc(db, 'ruxsat', u.uid), d => { if (user !== u) return; const x = d.exists() ? d.data() : null, h = x ? x.holat || null : null; if (h === RX.holat) return;
+    RX.d = x; RX.holat = h; RX.ok = h === 'ok'; rxSaqla();
+    if (RX.ok) { try { rxU(); } catch (e) {} rxU = null; toast('✅ Ruxsat berildi! Bulut ulanmoqda…'); ulan(u).catch(e => { xato = xabar(e); qayta(); }); } else qayta(); }, () => {});
+}
+async function rxSorov(nom) {
+  const { doc, setDoc } = fb.fs, d = { email: user.email || '', oila: tozala(nom) || 'Oila', ts: Date.now(), holat: 'kutish' };
+  await setDoc(doc(db, 'ruxsat', user.uid), d); RX.d = d; RX.holat = 'kutish'; rxSaqla(); rxKuzat();
+}
+/* Admin: hamma so'rovlar jonli; yangi so'rov kelsa admin telefonida xabar */
+const qNom = () => IOS ? 'iPhone' : /Android/i.test(navigator.userAgent) ? 'Android' : 'kompyuter';
+const adminTelMi = () => { const t = S().adminTel; return !!(t && t.q === qid()); };
+function rxAdminObuna() {
+  if (rxLU) { try { rxLU(); } catch (e) {} rxLU = null; }
+  if (!user || !RX.admin) return;
+  const { collection, onSnapshot } = fb.fs; let bir = true;
+  rxLU = onSnapshot(collection(db, 'ruxsat'), snap => { const arr = [], old = new Set(rxList.filter(x => x.holat === 'kutish').map(x => x.uid));
+    snap.forEach(d => { const x = d.data() || {}; arr.push({ uid: d.id, email: String(x.email || ''), oila: String(x.oila || ''), ts: +x.ts || 0, holat: x.holat || 'kutish', hal: +x.hal || 0 }); });
+    const T = { kutish: 0, ok: 1, rad: 2, blok: 2 }; rxList = arr.sort((p, q) => (T[p.holat] - T[q.holat]) || (q.ts - p.ts));
+    const kut = rxList.filter(x => x.holat === 'kutish'), yangi = bir ? kut.filter(x => x.ts > ((L && L.rxKor) || 0)) : kut.filter(x => !old.has(x.uid));
+    if (yangi.length && adminTelMi()) toast(yangi.length === 1 ? '🛡️ Yangi ruxsat so\'rovi: ' + yangi[0].email : `🛡️ ${yangi.length} ta ruxsat so'rovi kutyapti`);
+    bir = false; qayta(); }, () => {});
+}
+async function rxHal(uid, holat) { const { doc, setDoc } = fb.fs; await setDoc(doc(db, 'ruxsat', uid), { holat, hal: Date.now() }, { merge: true }); }
+async function rxOchir(uid) { const { doc, deleteDoc } = fb.fs; await deleteDoc(doc(db, 'ruxsat', uid)); }
+function rxQayta() {
+  if (!user || !fb || Date.now() - rxQT < 30000) return; rxQT = Date.now(); const u = user;
+  ruxsatTekshir(u).then(r => { if (user !== u) return; if (r.admin) rxAdminObuna(); if (!r.ok) { syncTo(); rxKuzat(); } qayta(); }).catch(() => {});
+}
+/* Qoidalar matni: sayt bilan birga keladigan firestore.rules + shu akkaunt ID si (oldindan yuklanadi — iPhone nusxani faqat bosish paytida beradi) */
+function rxQoidaYukla() {
+  if (rxQoida || !user) return; const u = user;
+  rxQoida = fetch('firestore.rules', { cache: 'no-store' }).then(r => { if (!r.ok) throw new Error('fayl'); return r.text(); }).then(t => { if (t.indexOf('__ADMIN_UID__') < 0) throw new Error('joy'); return t.split('__ADMIN_UID__').join(u.uid); })
+    .then(t => { rxQoida = t; const ta = $('[data-rxt]'); if (ta) ta.value = t; return t; }).catch(() => { rxQoida = null; });
+}
+async function nusxa(t) { try { await navigator.clipboard.writeText(t); toast('📋 Nusxalandi ✓'); return true; } catch (e) { const ta = $('[data-rxt]'); if (ta) { ta.closest('details').open = true; ta.focus(); ta.select(); } toast('Matnni belgilab, qo\'lda nusxa oling'); return false; } }
+async function ulash(t, nom) { try { if (navigator.share) { await navigator.share({ title: nom, text: t }); return; } } catch (e) { if (e && e.name === 'AbortError') return; } nusxa(t); }
+const vaqtQ = t => { if (!t) return '—'; const d = new Date(t), z = n => String(n).padStart(2, '0'); return `${z(d.getDate())}.${z(d.getMonth() + 1)}.${d.getFullYear()} ${z(d.getHours())}:${z(d.getMinutes())}`; };
+const RXH = { kutish: '⏳ kutyapti', ok: '✅ ruxsat', rad: '❌ rad etilgan', blok: '🚫 to\'xtatilgan' };
+function rxYoqishHTML() {
+  rxQoidaYukla();
+  return `<div class="card"><h3>🛡️ Ruxsat tizimi — yoqilmagan</h3><p class="sm">Yoqilsa, yangi oila bulutga faqat sizning tasdig'ingiz bilan ulanadi. Shu akkaunt — admin: oilangiz uchun hech narsa o'zgarmaydi. <span class="mut">Faqat Firebase konsoliga kira oladigan Bilimjon egasi uchun.</span></p>
+  <details><summary><b>Qanday yoqiladi (bir marta, ~3 daqiqa)</b></summary><ol class="sm"><li>«📋 Qoidalarni nusxalash» — matn ichida sizning akkaunt ID'ingiz bor.</li><li>console.firebase.google.com → <b>bilimjon-4c008</b> → Firestore Database → <b>Rules</b> (Правила).</li><li>Eski matnni to'liq o'chiring, nusxani qo'ying → <b>Publish</b> (Опубликовать).</li><li>Shu yerga qaytib «🔄 Tekshirish» — «✅ Siz — admin» chiqishi kerak.</li></ol>
+  <p class="sm mut">Muammo bo'lsa — «↩ Eski qoidalar»ni xuddi shunday qo'ying: hammasi 0.7.0 dagidek bo'ladi.</p></details>
+  <div class="row"><button class="btn" data-rxc>📋 Qoidalarni nusxalash</button><button class="btn ghost" data-rxs>📤 Ulashish</button></div>
+  <details><summary class="sm">Matnni ko'rish</summary><textarea class="inp mono" rows="8" readonly data-rxt aria-label="Qoidalar matni">${esc(typeof rxQoida === 'string' ? rxQoida : '')}</textarea></details>
+  <div class="row"><button class="btn ghost" data-rxk>🔄 Tekshirish</button><button class="btn sm ghost" data-rxe>↩ Eski qoidalar</button></div></div>`;
+}
+function rxAdminHTML() {
+  const t = S().adminTel, men = adminTelMi(), dis = men ? '' : ' disabled';
+  const tel = men ? `<p class="sm">📱 Admin telefoni: <b>shu telefon</b> ✓</p>` : t ? `<p class="sm">📱 Ruxsat faqat admin telefonida beriladi (${esc(t.nom || 'telefon')}, ${vaqtQ(t.ts)} dan). Bu yerda ro'yxat faqat ko'rinadi.</p><button class="btn sm ghost" data-rxtel>↪ Shu telefonni admin telefoni qilish</button>` : `<p class="sm">📱 Admin telefoni hali belgilanmagan. Ruxsat faqat bitta telefondan berilishi uchun o'z telefoningizni belgilang.</p><button class="btn" data-rxtel>📱 Shu telefon — admin telefoni</button>`;
+  const qator = x => { const bt = x.holat === 'kutish' ? `<button class="btn sm" data-rxa="ok|${esc(x.uid)}"${dis}>✅ Ruxsat berish</button><button class="btn sm ghost" data-rxa="rad|${esc(x.uid)}"${dis}>❌ Rad etish</button>`
+      : x.holat === 'ok' ? `<button class="btn sm ghost" data-rxa="blok|${esc(x.uid)}"${dis}>🚫 To'xtatish</button>` : `<button class="btn sm" data-rxa="ok|${esc(x.uid)}"${dis}>↩ Ruxsat berish</button><button class="btn sm ghost" data-rxa="del|${esc(x.uid)}"${dis}>🗑 O'chirish</button>`;
+    return `<div class="rxi"><div class="rxe">${esc(x.email || '—')}</div><div class="sm">Oila: <b>${esc(x.oila || '—')}</b> · ${vaqtQ(x.ts)} · <span class="rxh ${esc(x.holat)}">${RXH[x.holat] || esc(x.holat)}</span></div><div class="row">${bt}</div></div>`; };
+  const n = rxList.filter(x => x.holat === 'kutish').length;
+  if (user && L) { L.rxKor = Math.max(L.rxKor || 0, ...rxList.map(x => x.ts)); lsave(); }
+  return `<div class="card"><h3>🛡️ Ruxsatlar <span class="sm mut">· siz — admin</span></h3>${tel}
+  ${rxList.length ? `<p class="sm">${n ? `⏳ Kutayotgan: <b>${n}</b> · ` : ''}Jami: ${rxList.length}</p><div class="rxl">${rxList.map(qator).join('')}</div>` : `<p class="sm mut">Hali so'rov yo'q. Yangi oila ☁️ da ro'yxatdan o'tib «📨 Ruxsat so'rash»ni bosadi — shu yerda chiqadi.</p>`}
+  <details><summary class="sm">⚙️ Qoidalar</summary><p class="sm mut">Qoidalar yangilanganda (yangi versiyada) — shu yerdan qayta nusxa olib, konsolga qo'yiladi.</p><div class="row"><button class="btn sm" data-rxc>📋 Qoidalarni nusxalash</button><button class="btn sm ghost" data-rxs>📤 Ulashish</button><button class="btn sm ghost" data-rxe>↩ Eski qoidalar</button></div><textarea class="inp mono" rows="6" readonly data-rxt aria-label="Qoidalar matni">${esc(typeof rxQoida === 'string' ? rxQoida : '')}</textarea></details></div>`;
+}
+function rxSorovHTML() {
+  const h = RX.holat, d = RX.d || {}, nom = (S().oila && S().oila.nom) || '';
+  if (!h) return `<div class="card"><h3>🛡️ Ruxsat kerak</h3><p class="sm">Bilimjon — yopiq oilaviy ilova: yangi oila bulutga faqat Bilimjon egasining ruxsati bilan ulanadi. Ilova shu telefonda hozir ham to'liq ishlaydi — ruxsatdan keyin ikkinchi telefon va reyting guruhi ham ochiladi.</p>
+    <label class="lb" for="rxn">Oila nomi (egasi tanishi uchun)</label><input id="rxn" class="inp" maxlength="24" value="${esc(nom)}" autocomplete="off"><button class="btn big" data-rxq>📨 Ruxsat so'rash</button></div>`;
+  if (h === 'kutish') return `<div class="card"><h3>⏳ Ruxsat kutilmoqda</h3><p class="sm">So'rov yuborildi: ${vaqtQ(d.ts)}. Bilimjon egasiga xabar bering — u tasdiqlashi bilan shu ekran o'zi yangilanadi va bulut ulanadi.</p><div class="row"><button class="btn" data-rxm>📤 Egasiga xabar</button><button class="btn ghost" data-rxk>🔄 Tekshirish</button></div></div>`;
+  if (h === 'rad') return `<div class="card"><h3>❌ Ruxsat berilmadi</h3><p class="sm">Savol bo'lsa — Bilimjon egasiga yozing. Ilova shu telefonda bulutsiz ishlayveradi.</p><button class="btn ghost" data-rxk>🔄 Tekshirish</button></div>`;
+  return `<div class="card"><h3>🚫 Bulut to'xtatilgan</h3><p class="sm">Bu akkaunt uchun bulut to'xtatilgan. Ma'lumotlar shu telefonda qoladi. Savol bo'lsa — Bilimjon egasiga yozing.</p><button class="btn ghost" data-rxk>🔄 Tekshirish</button></div>`;
+}
+function rxBind(redraw) {
+  const on = (sel, fn) => $$(sel).forEach(el => { el.onclick = () => fn(el); });
+  const ish = async (p, ok) => { try { await p(); if (ok) toast(ok); } catch (e) { toast('⚠️ ' + xabar(e)); } redraw(); };
+  on('[data-rxc]', () => { if (typeof rxQoida === 'string') nusxa(rxQoida); else { rxQoidaYukla(); toast('⏳ Qoidalar yuklanmoqda — 2 soniyadan keyin yana bosing'); } });
+  on('[data-rxs]', () => { if (typeof rxQoida === 'string') ulash(rxQoida, 'Bilimjon — Firestore qoidalari'); else { rxQoidaYukla(); toast('⏳ Qoidalar yuklanmoqda — 2 soniyadan keyin yana bosing'); } });
+  on('[data-rxe]', () => sheet(`<h2>↩ Eski qoidalar (0.7.0)</h2><p class="sm">Ruxsat tizimini o'chiradi: hamma akkaunt avvalgidek o'z bulutiga yoza oladi. Faqat muammo bo'lsa ishlating.</p><button class="btn" data-ok>📋 Nusxalash</button><button class="btn ghost" data-x>Bekor</button>`, el => {
+    const p = fetch('qoidalar/firestore-0.5.0.rules', { cache: 'no-store' }).then(r => r.ok ? r.text() : Promise.reject(new Error('fayl'))).catch(() => null);
+    $('[data-ok]', el).onclick = async () => { const t = await p; if (!t) return toast("⚠️ Fayl ochilmadi — internetni tekshiring"); nusxa(t); }; }));
+  on('[data-rxk]', () => ish(async () => { rxQT = 0; const r = await ruxsatTekshir(user); if (r.admin) rxAdminObuna(); if (r.ok && !r.admin && r.faol) { await ulan(user); }
+    toast(r.noma || r.kesh ? "📴 Internet yo'q — keyin tekshiring" : r.faol === false ? 'ℹ️ Firebase\'da hali eski qoidalar' : r.admin ? '✅ Siz — admin. Ruxsat tizimi ishlayapti' : r.ok ? '✅ Ruxsat bor' : RX.holat === 'kutish' ? '⏳ Hali tasdiqlanmagan' : 'ℹ️ Holat: ' + (RX.holat || "so'rov yo'q")); }));
+  on('[data-rxq]', () => { const n = ($('#rxn') || {}).value || ''; if (!n.trim()) return toast('Oila nomini yozing'); ish(() => rxSorov(n), '📨 So\'rov yuborildi'); });
+  on('[data-rxm]', () => ulash(`Assalomu alaykum! Bilimjon'da ruxsat so'radim: ${user && user.email ? user.email : ''}${RX.d && RX.d.oila ? ', oila: ' + RX.d.oila : ''}. 👨‍👩‍👧 → ☁️ Oila akkaunti → 🛡️ Ruxsatlar.`, 'Bilimjon ruxsat'));
+  on('[data-rxtel]', () => sheet(`<h2>📱 Admin telefoni</h2><p>Ruxsat berish faqat shu telefondan bo'ladi (${esc(qNom())}).${S().adminTel ? ' Avvalgi telefonda tugmalar o\'chadi.' : ''}</p><div class="row"><button class="btn" data-ok>✅ Ha, shu telefon</button><button class="btn ghost" data-x>Bekor</button></div>`, el => {
+    $('[data-ok]', el).onclick = () => { closeSheets(); S().adminTel = { q: qid(), nom: qNom(), ts: Date.now() }; A.save(true); toast('📱 Admin telefoni: shu telefon ✓'); redraw(); }; }));
+  on('[data-rxa]', el => { if (el.disabled) return; const [h, uid] = el.dataset.rxa.split('|'), x = rxList.find(y => y.uid === uid); if (!x || !adminTelMi()) return;
+    if (h === 'ok') return ish(() => rxHal(uid, 'ok'), '✅ Ruxsat berildi: ' + x.email);
+    const M = { rad: ['❌ Rad etish', "Bu oila bulutga ulanmaydi (ilovasi telefonda ishlayveradi)."], blok: ["🚫 To'xtatish", "Bu oilaning bulut sinxroni darhol to'xtaydi. Ma'lumoti o'chmaydi — keyin «↩ Ruxsat berish» bilan qaytarasiz."], del: ["🗑 O'chirish", "So'rov ro'yxatdan o'chadi. U yana so'rashi mumkin."] }[h];
+    sheet(`<h2>${M[0]}</h2><p><b>${esc(x.email)}</b> · ${esc(x.oila)}</p><p class="sm">${M[1]}</p><div class="row"><button class="btn danger" data-ok>${M[0]}</button><button class="btn ghost" data-x>Bekor</button></div>`, sh => {
+      $('[data-ok]', sh).onclick = () => { closeSheets(); ish(() => h === 'del' ? rxOchir(uid) : rxHal(uid, h), '✓ Bajarildi'); }; }); });
+}
+A.rxBelgi = () => { if (!user) return ''; if (RX.admin) { const n = rxList.filter(x => x.holat === 'kutish').length; return n ? ' 🔔 ' + n : ''; } return RX.faol === true && !RX.ok ? (RX.holat === 'kutish' ? ' ⏳' : ' 🛡️') : ''; };
 /* ---------- 🏆 REYTING GURUHI ---------- */
 function guruhYuborIsh(kod, ish) {
   const { doc, setDoc } = fb.fs, s = S(), wk = A.isoWeek(), sy = L.sync;
@@ -6096,17 +6338,19 @@ A.bulutPanel = function (top, bindTop) {
   let body;
   if (!fb && !yuklanmadi) { body = '<div class="card"><p>⏳ Yuklanmoqda…</p></div>'; yukla().then(qayta, qayta); }
   else if (!fb) body = `<div class="card"><p>⚠️ Bulut xizmati yuklanmadi — internetni tekshiring.</p><button class="btn" data-retry>🔄 Qayta urinish</button></div>`;
-  else if (!user) body = `<div class="card"><p class="sm">Akkaunt bilan bolalar <b>dadasi va oyisining telefonida</b> o'ynaydi: qayerda to'xtasa, ikkinchi telefonda aynan o'sha joydan davom etadi. Natijalar bulutda ham saqlanadi.</p></div>
+  else if (!user) body = `${A.BETA ? `<div class="card"><h3>🧪 Sinov rejimi</h3><p class="sm">Bu yerda bulut sinxroni o'chiq — faqat 🛡️ ruxsat tizimini sinaysiz:<br>• oila emaili bilan «Kirish» → admin tomoni (so'rovlar ro'yxati);<br>• boshqa (sinov) email bilan «Ro'yxatdan o'tish» → yangi oila tomoni («📨 Ruxsat so'rash»).</p></div>` : ''}<div class="card"><p class="sm">Akkaunt bilan bolalar <b>dadasi va oyisining telefonida</b> o'ynaydi: qayerda to'xtasa, ikkinchi telefonda aynan o'sha joydan davom etadi. Natijalar bulutda ham saqlanadi.</p></div>
     <div class="card"><h3>✉️ Email va parol <span class="sm mut">(tavsiya)</span></h3><input id="be" class="inp" type="email" autocomplete="username" inputmode="email" autocapitalize="off" placeholder="email@gmail.com"><input id="bp" class="inp" type="password" autocomplete="current-password" placeholder="Parol (kamida 6 belgi)">
     <p class="sm mut">Birinchi marta — «Ro'yxatdan o'tish» (parolni o'zingiz o'ylab topasiz, bu Gmail paroli emas). Boshqa telefonlarda — xuddi shu email va parol bilan «Kirish».</p>
     <div class="row"><button class="btn" data-in>Kirish</button><button class="btn ghost" data-up>Ro'yxatdan o'tish</button></div><button class="btn sm ghost" data-reset>Parolni unutdim</button></div>
     ${IOS ? `<div class="card"><p class="sm mut">📱 iPhone'da Google orqali kirish ishlamaydi (Apple cheklovi: Google oynasi javobni ilovaga qaytarmaydi) — yuqoridagi email bilan kiring.</p></div>`
       : `<div class="card"><button class="btn ghost" data-google>🇬 Google bilan kirish</button><p class="sm mut">Oilada iPhone bo'lsa — hamma telefonda email + parol ishlating: bitta oila, bitta usul.</p></div>`}
     <div class="card"><p class="sm mut">⚠️ Har oila — o'z akkaunti. Bitta akkauntni boshqa oila bilan bo'lishmang: ular sizning bolalaringiz natijasini ko'radi va o'zgartira oladi.</p></div>`;
-  else { const s = S(), n = Object.keys(s.bolalar).length;
-    body = `<div class="card"><h3>✅ Ulangan</h3><p><b>${esc(user.email || L.email || 'Google akkaunt')}</b></p><p class="sm">Bolalar: ${n} · Oxirgi sinxron: <b>${vaqt(L && L.oxirgi)}</b>${online() ? '' : ' · 📴 internet yo\'q'}</p>${xato ? `<p class="sm">⚠️ ${esc(xato)}</p>` : ''}
+  else if (RX.faol === true && !RX.ok) body = `${rxSorovHTML()}<div class="card"><p class="sm">Akkaunt: <b>${esc(user.email || L.email || '')}</b></p><button class="btn ghost" data-out>🚪 Chiqish</button></div>`;
+  else if (A.BETA) body = `<div class="card"><h3>🧪 Sinov rejimi</h3><p><b>${esc(user.email || '')}</b></p><p class="sm">Bulut sinxroni bu yerda o'chiq: oila ma'lumotiga hech narsa yozilmaydi. Faqat 🛡️ ruxsat tizimini sinash mumkin.</p><button class="btn ghost" data-out>🚪 Chiqish</button></div>${RX.admin ? rxAdminHTML() : RX.faol === false ? rxYoqishHTML() : RX.faol === true ? '<div class="card"><p>✅ Bu akkauntga ruxsat berilgan.</p></div>' : ''}`;
+  else { const s = S(), n = Object.keys(s.bolalar).length, kutRx = RX.admin && rxList.some(x => x.holat === 'kutish');
+    body = `${kutRx ? rxAdminHTML() : ''}<div class="card"><h3>✅ Ulangan</h3><p><b>${esc(user.email || L.email || 'Google akkaunt')}</b></p><p class="sm">Bolalar: ${n} · Oxirgi sinxron: <b>${vaqt(L && L.oxirgi)}</b>${online() ? '' : ' · 📴 internet yo\'q'}</p>${xato ? `<p class="sm">⚠️ ${esc(xato)}</p>` : ''}
     <div class="row"><button class="btn" data-sync>🔄 Hozir sinxronla</button><button class="btn ghost" data-out>🚪 Chiqish</button></div></div>
-    <div class="card"><p class="sm">Ikkinchi telefonda: Bilimjon → 👨‍👩‍👧 → ☁️ Oila akkaunti → xuddi shu akkaunt bilan kiring. Yangi telefonda oila yaratish shart emas — birinchi ekrandagi «☁️ Akkauntim bor» tugmasi.</p><p class="sm mut">Ikkala telefonda bir vaqtda bitta bola o'ynasa — oxirgi o'ynalgani saqlanadi.</p></div>`; }
+    <div class="card"><p class="sm">Ikkinchi telefonda: Bilimjon → 👨‍👩‍👧 → ☁️ Oila akkaunti → xuddi shu akkaunt bilan kiring. Yangi telefonda oila yaratish shart emas — birinchi ekrandagi «☁️ Akkauntim bor» tugmasi.</p><p class="sm mut">Ikkala telefonda bir vaqtda bitta bola o'ynasa — oxirgi o'ynalgani saqlanadi.</p></div>${RX.admin && !kutRx ? rxAdminHTML() : RX.faol === false ? rxYoqishHTML() : ''}`; }
   app.innerHTML = `<div class="wrap ota">${hdr}${body}</div>`;
   if (ota) bindTop(); else { const bk = $('[data-bk]'); if (bk) bk.onclick = () => { location.hash = ''; }; }
   const on = (sel, fn) => { const el = $(sel); if (el) el.onclick = fn; };
@@ -6118,11 +6362,13 @@ A.bulutPanel = function (top, bindTop) {
   on('[data-up]', () => { const [e, p] = ep(); ish(() => fb.au.createUserWithEmailAndPassword(auth, e, p)); });
   on('[data-reset]', () => { const [e] = ep(); if (!e) return toast('Avval emailni yozing'); ish(() => fb.au.sendPasswordResetEmail(auth, e), '✉️ Parolni tiklash xati yuborildi'); });
   on('[data-sync]', () => ish(async () => { if (band) throw new Error('⏳ Oldingi yuborish hali tugamadi — internet sekin, o\'zi davom etadi'); await logOl(7); await tick(); if (xato) throw new Error(xato); }, '✓ Sinxronlandi'));
+  rxBind(() => A.bulutPanel(top, bindTop));
   on('[data-out]', () => sheet(`<h2>🚪 Akkauntdan chiqish</h2><p>Natijalar shu telefonda qoladi, lekin ikkinchi telefon bilan sinxron to'xtaydi.</p><div class="row"><button class="btn danger" data-ok>Chiqish</button><button class="btn ghost" data-x>Bekor</button></div>`, el => { $('[data-ok]', el).onclick = async () => { closeSheets(); await tick(); L = null; lsave(); pending = {}; await fb.au.signOut(auth).catch(() => {}); toast('Chiqildi'); qayta(); }; }));
 };
 /* ---------- REYTING PANELIGA: 🏆 Reyting guruhi kartasi ---------- */
 A.guruhHTML = function () {
   const s = S(), kod = s.guruh && s.guruh.kod;
+  if (user && !RX.ok) return `<div class="card"><h3>🏆 Reyting guruhi</h3><p class="sm">Guruh uchun avval 🛡️ ruxsat kerak — ☁️ Oila akkaunti bo'limida.</p><button class="btn" data-gb>☁️ Oila akkaunti</button></div>`;
   if (!user) return `<div class="card"><h3>🏆 Reyting guruhi (avtomatik)</h3><p class="sm">Do'st va qarindosh oilalar bilan reyting kod almashmasdan, o'zi yangilanadi. Buning uchun avval ☁️ Oila akkauntiga kiring.</p><button class="btn" data-gb>☁️ Oila akkaunti</button></div>`;
   if (!kod) return `<div class="card"><h3>🏆 Reyting guruhi (avtomatik)</h3><p class="sm">Guruh yarating va kodini boshqa oilaga yuboring — yoki ular yuborgan kod bilan qo'shiling. Guruhga faqat laqab, avatar va haftalik ⭐ chiqadi.</p>
     <button class="btn" data-gy>➕ Guruh yaratish</button><input id="gk" class="inp mono" maxlength="12" placeholder="Guruh kodi (10 belgi)" autocomplete="off" style="text-transform:uppercase"><button class="btn ghost" data-gk>🔗 Qo'shilish</button></div>`;
@@ -6143,12 +6389,10 @@ A.guruhBind = function (redraw) {
 };
 /* ---------- ISHGA TUSHIRISH: faqat akkaunt ulangan telefonda SDK yuklanadi ---------- */
 A.bulutStart = function () { if (L && L.uid) yukla().catch(() => {}); };
-if (A.BETA) { /* 🧪 sinov rejimi: bulutga hech narsa yozilmaydi va o'qilmaydi */
-  A.bulutStart = () => {}; A.guruhHTML = () => '';
-  A.bulutPanel = function (top, bindTop) { A.app.innerHTML = `<div class="wrap ota">${top ? top('☁️ Oila akkaunti', 'ota') : '<div class="top"><button class="ib" data-bk aria-label="Orqaga">←</button><div class="ttl">☁️ Oila akkaunti</div></div>'}<div class="card"><h2>🧪 Sinov rejimi</h2><p>Bu — sinov nusxasi. Bulut (oila akkaunti, reyting guruhi) bu yerda o'chiq: oila ma'lumotiga hech narsa yozilmaydi.</p></div></div>`; if (bindTop) bindTop(); const bk = A.$('[data-bk]'); if (bk) bk.onclick = () => A.go('uy'); };
-}
-A.bulutHolat = () => ({ ulangan: !!user, email: user && user.email, oxirgi: L && L.oxirgi, xato, yuklandi: !!fb, band });
-BJ.bulut = { yukla, tick, logOl, holat: A.bulutHolat };
+/* 🧪 sinov rejimi: oila ma'lumoti bulutga yozilmaydi va o'qilmaydi (SYNC = false) — faqat 🛡️ ruxsat tizimi ishlaydi */
+if (A.BETA) A.guruhHTML = () => '';
+A.bulutHolat = () => ({ ulangan: !!user, email: user && user.email, oxirgi: L && L.oxirgi, xato, yuklandi: !!fb, band, rx: RX, rxList });
+BJ.bulut = { yukla, tick, logOl, holat: A.bulutHolat, rx: () => RX, rxList: () => rxList, ruxsatTekshir: () => user ? ruxsatTekshir(user) : null };
 })(window);
 </script>
 <script>
@@ -6181,6 +6425,7 @@ A.screenOta = function (h) {
   if (h === 'ota-reyting') return reytingPanel();
   if (h === 'ota-bulut') return A.bulutPanel(top, bindTop);
   if (h === 'ota-vazifa') return vazifaPanel();
+  if (h === 'ota-sora') return soraPanel();
   if (h === 'ota-sovga') return sovgaPanel();
   if (h === 'ota-hisobot') return hisobotPanel();
   if (h === 'ota-xarita') return A.xarita ? A.xarita.panel(top, bindTop) : weekPanel();
@@ -6299,7 +6544,7 @@ function weekPanel() {
     <div class="kgrid"><div><b class="mono">${A.fmtHMS(s.faol)}</b><span>faol vaqt</span></div><div><b>${s.kunlar}/7</b><span>kun</span></div><div><b>${s.n ? s.acc1 + '%' : '—'}</b><span>aniqlik</span></div><div><b>${s.med ? (s.med / 1000).toFixed(1) + ' s' : '—'}</b><span>median</span></div><div><b>+${s.ozl.length} 🟢</b><span>o'sish</span></div><div><b>${s.wcpm ? s.wcpm[1] : '—'}</b><span>WCPM</span></div></div>
     <div class="lvl"><span class="sm">O'z darajasida (matematika): ${levelPct(b)}%</span><div class="tbar"><i style="width:${levelPct(b)}%"></i></div></div>${b.qisqaKun === A.todayKey() ? '<div class="sm">😴 Oxirgi missiyada charchadi — bugungisi 25% qisqaroq</div>' : ''}</button>`; }).join('') || '<div class="card">Hali bola yo\'q.</div>'}
   ${noms.length ? `<div class="card"><h3>🏆 Hafta nominatsiyalari (shu telefondagi bolalar)</h3>${noms.map(n => `<div class="nr">${n.ic} <b>${esc(n.nom)}</b>: ${n.bola ? esc(A.bola(n.bola).laqab) : '<span class="mut">sifat sharti bajarilmadi — summa keyingi haftaga</span>'}</div>`).join('')}<p class="sm mut">Boshqa telefonlardagi bolalar bilan solishtirish — 📲 Oila reytingi.</p></div>` : ''}
-  <div class="menu">${isAdmin() ? '<button class="btn" data-go="ota-qosh">➕ Bola qo\'shish</button>' : ''}<button class="btn" data-go="ota-qiyin">📚 Bugungi qiyinlar</button><button class="btn" data-go="ota-hisobot">📊 Hafta xulosasi${A.isoWeek() === WK && new Date().getDay() % 6 === 0 ? ' 🔔' : ''}</button><button class="btn" data-go="ota-xarita">🗺️ Bolalar xaritasi</button><button class="btn" data-go="ota-sovga">🎁 Sovg'alar</button><button class="btn" data-go="ota-pul">💰 Pul va do'kon${A.pul && A.pul.kutHisob() ? ' 🔔 ' + A.pul.kutHisob() : ''}</button><button class="btn" data-go="ota-bozor">🧺 Oila bozori</button><button class="btn" data-go="ota-vazifa">📝 Uyga vazifa</button><button class="btn" data-go="ota-bulut">☁️ Oila akkaunti</button><button class="btn" data-go="ota-reyting">📲 Oila reytingi</button><button class="btn" data-go="ota-eksport">🤖 Claude uchun hafta</button><button class="btn" data-go="ota-arab">🕌 Arab so'zlari</button><button class="btn" data-go="ota-zaxira">💾 Zaxira</button><button class="btn" data-go="ota-sozlama">⚙️ Sozlamalar</button><button class="btn ghost" data-out>🔒 Paneldan chiqish</button></div>
+  <div class="menu">${isAdmin() ? '<button class="btn" data-go="ota-qosh">➕ Bola qo\'shish</button>' : ''}<button class="btn" data-go="ota-sora">🙋 Bola savollari${A.soraKut && A.soraKut() ? ' 🔔 ' + A.soraKut() : ''}</button><button class="btn" data-go="ota-qiyin">📚 Bugungi qiyinlar</button><button class="btn" data-go="ota-hisobot">📊 Hafta xulosasi${A.isoWeek() === WK && new Date().getDay() % 6 === 0 ? ' 🔔' : ''}</button><button class="btn" data-go="ota-xarita">🗺️ Bolalar xaritasi</button><button class="btn" data-go="ota-sovga">🎁 Sovg'alar</button><button class="btn" data-go="ota-pul">💰 Pul va do'kon${A.pul && A.pul.kutHisob() ? ' 🔔 ' + A.pul.kutHisob() : ''}</button><button class="btn" data-go="ota-bozor">🧺 Oila bozori</button><button class="btn" data-go="ota-vazifa">📝 Uyga vazifa</button><button class="btn" data-go="ota-bulut">☁️ Oila akkaunti${A.rxBelgi ? A.rxBelgi() : ''}</button><button class="btn" data-go="ota-reyting">📲 Oila reytingi</button><button class="btn" data-go="ota-eksport">🤖 Claude uchun hafta</button><button class="btn" data-go="ota-arab">🕌 Arab so'zlari</button><button class="btn" data-go="ota-zaxira">💾 Zaxira</button><button class="btn" data-go="ota-sozlama">⚙️ Sozlamalar</button><button class="btn ghost" data-out>🔒 Paneldan chiqish</button></div>
   <p class="sm mut">Versiya ${A.VERK} · ${A.storageOK ? 'xotira ✓' : '⚠️ xotiraga yozib bo\'lmadi'}</p></div>`;
   bindTop(); $$('[data-wk]').forEach(x => x.onclick = () => { const d = +x.dataset.wk; WK = d < 0 ? A.prevWeek(WK) : A.isoWeek(A.addDays(A.weekDays(WK)[6], 1)); weekPanel(); });
   $$('[data-b]').forEach(x => x.onclick = () => A.go('ota-bola-' + x.dataset.b)); $$('[data-go]').forEach(x => x.onclick = () => A.go(x.dataset.go));
@@ -6431,6 +6676,7 @@ function settings() {
   <p class="sm mut">Maktabgacha — 🏎️ poyga (shakl, rang, son, naqsh). 1-sinf va kattalar — 🧩 pazl yoki 🎨 ko'zgu rasm. O'yin faqat savollar ishlangandan keyin ochiladi va yulduz bermaydi. Missiyadagi «😴 Charchadim» bolani o'yinga emas, boshqa fanga o'tkazadi.</p>
   <label class="chk"><input type="checkbox" id="rk" ${z.reyting !== false ? 'checked' : ''}> 🏆 Bolalar o'z ekranida hafta reytingini ko'rsin</label>
   <label class="chk"><input type="checkbox" id="ku" ${z.kashfUy !== false ? 'checked' : ''}> 🏠 Kun kashfiyotidan keyin «Uyda sinab ko'r» tajribasi (bajarsa +2 ⭐)</label>
+  <label class="chk"><input type="checkbox" id="tu" ${z.tush !== false ? 'checked' : ''}> 🤔 «Tushunmadim» va 🙋 «Ota-onamdan so'rayman» tugmalari (missiya, mashq, uyga vazifa)</label>
   ${ad ? `<label class="lb">☕ Tanaffus eslatmasi (daqiqa)</label><input id="tn" class="inp" type="number" min="10" max="40" value="${z.tanaffus}">
   <label class="lb">🎁 Sandiq chegaralari (haftalik ⭐)</label><div class="sq">${['bronza', 'kumush', 'oltin', 'olmos'].map(k => `<label>${{ bronza: '🥉', kumush: '🥈', oltin: '🥇', olmos: '💎' }[k]}<input class="inp" type="number" min="1" data-sq="${k}" value="${z.sandiq[k]}"></label>`).join('')}</div>
   <label class="lb">Oila nomi</label><input id="onm" class="inp" maxlength="30" value="${esc(s.oila.nom)}">
@@ -6440,7 +6686,7 @@ function settings() {
   ${ad ? `<details class="danger"><summary>⚠️ Hamma ma'lumotni o'chirish</summary><p class="sm">Shu telefondagi oila, bolalar va hamma natija o'chadi. Avval 💾 Zaxira qiling.</p><button class="btn danger" data-wipe>🗑 Hammasini o'chirish</button></details>` : ''}</div></div>`;
   bindTop(); $('#vol').oninput = e => { $('#vv').textContent = e.target.value + '%'; FX.setVol(e.target.value / 100); };
   $('[data-test]').onclick = () => FX.boom(innerWidth / 2, innerHeight / 3, 'garaj');
-  $('[data-save]').onclick = () => { z.ovoz = $('#vol').value / 100; z.kamEffekt = $('#ke').value; if (z.kamEffekt !== 'auto') z.kamAuto = null; z.oyinHar = +$('#oh').value; z.oyinDaq = +$('#od').value; z.uyqu = $('#uq').value; z.reyting = $('#rk').checked; z.kashfUy = $('#ku').checked; z.zal = +$('#zl').value;
+  $('[data-save]').onclick = () => { z.ovoz = $('#vol').value / 100; z.kamEffekt = $('#ke').value; if (z.kamEffekt !== 'auto') z.kamAuto = null; z.oyinHar = +$('#oh').value; z.oyinDaq = +$('#od').value; z.uyqu = $('#uq').value; z.reyting = $('#rk').checked; z.kashfUy = $('#ku').checked; z.tush = $('#tu').checked; z.zal = +$('#zl').value;
     if (ad) { z.tanaffus = Math.max(10, Math.min(40, +$('#tn').value || 20)); $$('[data-sq]').forEach(i => { z.sandiq[i.dataset.sq] = Math.max(1, +i.value || 1); }); s.oila.nom = $('#onm').value.trim() || s.oila.nom; const po = $('#po').value.trim(), pa = $('#pa').value.trim(); if (po) { if (!/^\d{4}$/.test(po)) return toast('PIN — 4 raqam'); s.pinOta = A.pinHash(po); } if (pa) { if (!/^\d{4}$/.test(pa)) return toast('PIN — 4 raqam'); s.pin = A.pinHash(pa); } }
     A.applyFX(); A.save(true); toast('Saqlandi ✓'); A.go('ota'); };
   const w = $('[data-wipe]'); if (w) w.onclick = () => sheet(`<h2>⚠️ Hammasini o'chirish</h2><input id="cf" class="inp" placeholder="Tasdiqlash: OCHIR" autocomplete="off"><div class="row"><button class="btn danger" data-ok>O'chirish</button><button class="btn ghost" data-x>Bekor</button></div>`, el => { $('[data-ok]', el).onclick = () => { if ($('#cf', el).value.trim().toUpperCase() !== 'OCHIR') return toast('OCHIR deb yozing'); A.logKeys().forEach(k => localStorage.removeItem(k)); localStorage.removeItem(A.KEY); location.hash = ''; location.reload(); }; });
@@ -6450,13 +6696,14 @@ let QKUN = null;
 function qiyinMatn(kun) {
   const L = A.bolalar(), out = [`BILIMJON-QIYIN|v${A.VER}|${kun}|bolalar=${L.length}`], odam = [];
   L.forEach(b => {
-    const log = A.readLog(b.id, kun), ans = log.filter(e => e.t === 'ans'), dars = log.filter(e => e.t === 'dars'), ch = log.filter(e => e.t === 'charch').map(e => e.fan || e.k), oy = log.filter(e => e.t === 'oyin'), g = {};
+    const log = A.readLog(b.id, kun), ans = log.filter(e => e.t === 'ans'), dars = log.filter(e => e.t === 'dars'), ch = log.filter(e => e.t === 'charch').map(e => e.fan || e.k), oy = log.filter(e => e.t === 'oyin'), tu = log.filter(e => e.t === 'tush'), so = log.filter(e => e.t === 'sora' && e.hodisa === 'sorandi'), g = {};
     const G0 = id => g[id] || (g[id] = { n: 0, xato: 0, dars: 0, egz: 0, egzOk: 0, ex: [] });
     ans.forEach(e => { const x = G0(e.tugun); x.n++; if (e.tur === 'dars') { x.egz++; if (e.togri) x.egzOk++; } if (!e.togri_1) { x.xato++; if (x.ex.length < 3) x.ex.push(e); } });
-    dars.forEach(e => { G0(e.tugun).dars++; });
-    const ids = Object.keys(g).filter(id => g[id].xato || g[id].dars).sort((p, q) => g[q].xato - g[p].xato);
-    out.push(`BOLA|${b.kod}|daraja=${b.daraja}|javob=${ans.length}|xato=${ans.filter(e => !e.togri_1).length}|dars=${dars.length}|charch=${ch.join(',') || '-'}|oyin=${oy.length}`);
-    ids.forEach(id => { const x = g[id], nom = (BJ.gen.reg[id] || {}).nom || id; out.push(`Q|${id}|${nom}|n=${x.n}|xato=${x.xato}|dars=${x.dars}|egizak=${x.egzOk}/${x.egz}`); x.ex.forEach(e => out.push(`  e|${e.savol}|bola=${e.javob}|togri=${e.togri_javob}|xato_turi=${e.xato_turi || '-'}`)); });
+    dars.forEach(e => { G0(e.tugun).dars++; }); tu.forEach(e => { G0(e.tugun).tush = (G0(e.tugun).tush || 0) + 1; });
+    const ids = Object.keys(g).filter(id => g[id].xato || g[id].dars || g[id].tush).sort((p, q) => g[q].xato - g[p].xato);
+    out.push(`BOLA|${b.kod}|daraja=${b.daraja}|javob=${ans.length}|xato=${ans.filter(e => !e.togri_1).length}|dars=${dars.length}|charch=${ch.join(',') || '-'}|oyin=${oy.length}|tush=${tu.length}|sora=${so.length}`);
+    ids.forEach(id => { const x = g[id], nom = (BJ.gen.reg[id] || {}).nom || id; out.push(`Q|${id}|${nom}|n=${x.n}|xato=${x.xato}|dars=${x.dars}|egizak=${x.egzOk}/${x.egz}${x.tush ? '|tush=' + x.tush : ''}`); x.ex.forEach(e => out.push(`  e|${e.savol}|bola=${e.javob}|togri=${e.togri_javob}|xato_turi=${e.xato_turi || '-'}`)); });
+    (b.sora || []).filter(x => x.sana === kun).forEach(x => out.push(`SORA|${x.tugun}|${x.joy}|holat=${x.holat}${x.kor ? '|tushuntirildi' : ''}|${String(x.sav).replace(/[|\n]/g, ' ').slice(0, 80)}|togri=${String(x.jv).replace(/[|\n]/g, ' ')}`));
     (b.vazifa || []).filter(v => v.berildi === kun || v.doneSana === kun || (!v.done && v.muddat >= kun)).forEach(v => out.push(`VZ|fan=${v.fan}${v.bolim ? '|bolim=' + v.bolim : ''}|n=${v.n}|qildi=${v.qildi}|ok=${v.ok}|holat=${v.done ? 'bajarildi' : v.muddat < kun ? 'kechikdi' : 'jarayonda'}`));
     odam.push({ b, ids: ids.map(id => (BJ.gen.reg[id] || {}).nom || id), ch: ch.map(f => (A.FAN[f] || { nom: f === 'isinish' ? 'Isinish' : f }).nom) });
   });
@@ -6474,6 +6721,31 @@ function qiyinPanel() {
   $$('[data-d]').forEach(x => x.onclick = () => { if (x.disabled) return; QKUN = A.addDays(kun, +x.dataset.d); qiyinPanel(); });
   $('[data-copy]').onclick = () => copyText(r.txt);
   $('[data-share]').onclick = () => shareText(r.txt, 'Bilimjon — qiyinlar ' + kun);
+}
+/* ================= 🙋 BOLA SAVOLLARI (0.7.1): «Ota-onamdan so'rayman» bosilgan savollar + kattalar uchun yechim ================= */
+const SORA_JOY = { missiya: '🗺️ missiya', mashq: '📚 mashq', vazifa: '📝 uyga vazifa' };
+const SORA_H = { kut: ['kut', '⏳ Hali qaytmadi'], yechdi: ['ok', '✅ Keyin o\'zi yechdi'], qiyin: ['qiy', '🔴 Yana qiyin bo\'ldi'] };
+function tushStat(b, kunlar) {
+  const g = {}; kunlar.forEach(k => A.readLog(b.id, k).forEach(e => { if (e.t !== 'tush') return; const x = g[e.tugun] || (g[e.tugun] = { n: 0, sav: e.savol || '' }); x.n++; })); return Object.keys(g).map(id => ({ id, nom: (gen.reg[id] || {}).nom || id, n: g[id].n, sav: g[id].sav })).sort((p, q) => q.n - p.n);
+}
+function soraPanel() {
+  const L = A.bolalar(), kunlar = Array.from({ length: 7 }, (_, i) => A.addDays(A.todayKey(), -i)), vq = t => { const d = new Date(t), z = n => String(n).padStart(2, '0'); return `${z(d.getDate())}.${z(d.getMonth() + 1)} ${z(d.getHours())}:${z(d.getMinutes())}`; };
+  const karta = (b, x) => { const H = SORA_H[x.holat] || SORA_H.kut;
+    return `<div class="card sork${x.kor ? ' kor' : ''}"><div class="sm">${esc(b.avatar + ' ' + b.laqab)} · ${vq(x.ts)} · ${esc(SORA_JOY[x.joy] || x.joy)} · <span class="sh ${H[0]}">${H[1]}</span></div>
+    <div class="sm mut">${esc((gen.reg[x.tugun] || {}).nom || x.tugun)}</div>${x.matn ? `<details class="sm"><summary>📄 Matn</summary>${esc(x.matn)}</details>` : ''}
+    <div class="sq"${x.arab ? ' dir="rtl" lang="ar"' : ''}>${esc(x.sav)}</div>${x.sav2 ? `<div class="sm">${esc(x.sav2)}</div>` : ''}${x.vis ? `<div class="visw">${ART.vis(x.vis)}</div>` : ''}
+    <div class="sj">✅ To'g'ri javob: ${x.jvis ? `<span class="ov">${ART.vis(x.jvis)}</span>` : esc(x.jv)}</div>
+    ${x.qoida.length || x.yechim.length || x.ota || x.tushun ? `<details open><summary><b>👨 Kattalar uchun — qanday tushuntirish</b></summary>${x.qoida.length ? `<p class="sm">${x.qoida.map(esc).join('<br>')}</p>` : ''}${x.yechim.length ? `<ol class="sm">${x.yechim.map(s => `<li>${esc(s)}</li>`).join('')}</ol>` : ''}${x.ota ? `<p class="sm">💡 ${esc(x.ota)}</p>` : ''}${x.tushun ? `<p class="sm">${esc(x.tushun)}</p>` : ''}</details>` : ''}
+    ${x.kor ? `<p class="sm mut">✓ Tushuntirilgan · ${vq(x.kor)}</p>` : `<button class="btn" data-sk="${esc(b.id)}|${esc(x.id)}">✅ Tushuntirdim</button>`}</div>`; };
+  const bolim = L.map(b => { const R = (b.sora || []).slice().reverse(), yangi = R.filter(x => !x.kor), eski = R.filter(x => x.kor), ts = tushStat(b, kunlar);
+    return `<h3 class="msh">${esc(b.avatar + ' ' + b.laqab)}${yangi.length ? ` · 🔔 ${yangi.length}` : ''}</h3>
+    ${ts.length ? `<div class="card"><p class="sm"><b>🤔 Tushunmadim (7 kun):</b> ${ts.slice(0, 6).map(t => `${esc(t.nom)} — ${t.n}`).join(' · ')}</p></div>` : ''}
+    ${yangi.map(x => karta(b, x)).join('') || (R.length ? '' : '<div class="card"><p class="sm mut">Hali so\'ralgan savol yo\'q.</p></div>')}
+    ${eski.length ? `<details class="card"><summary>✓ Tushuntirilganlar (${eski.length})</summary>${eski.map(x => karta(b, x)).join('')}</details>` : ''}`; }).join('');
+  app.innerHTML = `<div class="wrap ota">${top("🙋 Bola savollari", 'ota')}
+  <div class="card"><p class="sm">Bola savolda «🤔 Tushunmadim»ni bosadi — ilova savolni soddaroq aytadi va o'xshash oson misolni yechib ko'rsatadi. Shunda ham tushunmasa «🙋 Ota-onamdan so'rayman» bosiladi: savol shu yerga tushadi, bolaga esa missiya (vazifa) oxirida qaytadi. Missiyada ko'pi bilan ${(A.tushSinov && A.tushSinov.SORA_MAX) || 3} marta.</p></div>${bolim || '<div class="card">Hali bola yo\'q.</div>'}</div>`;
+  bindTop();
+  $$('[data-sk]').forEach(x => x.onclick = () => { const [bid, id] = x.dataset.sk.split('|'), b = A.bola(bid), r = b && (b.sora || []).find(y => y.id === id); if (!r) return; r.kor = Date.now(); A.pushLog(b.id, { t: 'sora', ts: Date.now(), bola: b.id, hodisa: 'tushuntirildi', id, tugun: r.tugun }); A.save(true); toast('✓ Belgilandi'); soraPanel(); });
 }
 /* ================= EKSPORT: BJW2 + CSV (6.6) ================= */
 function exportPanel() {
@@ -6585,7 +6857,7 @@ function start() {
   BJ.debug = { state: () => A.S(), fx: FX.stats, A, gen: BJ.gen };
   A.render();
   try { if (A.bulutStart) A.bulutStart(); } catch (e) { console.warn(e); }
-  if (oldVer && oldVer !== A.VER) setTimeout(() => toast('🆕 Bilimjon v7: 🗺️ sarguzasht xaritasi, 🎮 o\'yinlar zali, 🧺 oila bozori, 🌍 30 ta kashfiyot, 📖 uch marta o\'qish!'), 900);
+  if (oldVer && oldVer !== A.VER) setTimeout(() => toast(oldVer.indexOf('0.7.') === 0 ? '🆕 Bilimjon v7.1: 🤔 «Tushunmadim» tugmasi va 🙋 ota-onadan so\'rash!' : '🆕 Bilimjon v7.1: 🗺️ sarguzasht xaritasi, 🎮 o\'yinlar zali, 🧺 oila bozori, 🤔 «Tushunmadim» tugmasi!'), 900);
 }
 start();
 })(window);

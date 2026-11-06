@@ -4,12 +4,13 @@ Yangi chat shu fayldan davom etadi. Javoblar o'zbekcha. Repo PUBLIC: bu yerga is
 
 ## Loyiha
 - Oilaviy o'yin-darslik (PWA). Sayt: https://abdurazzoqzzuzb-max.github.io/bilimjon/ (GitHub Pages, main / root).
-- Fayllar: `index.html` (butun ilova, ichida 18 ta `<script>` moduli), `sw.js` (network-first kesh; Firebase SDK cache-first), `manifest.webmanifest`, `icon.svg`, `icon-192.png`, `icon-512.png`, `firestore.rules` (konsoldagi qoidalar nusxasi), `sinov/bulut/` (soxta Firebase bilan sinov).
+- Fayllar: `index.html` (butun ilova, ichida 22 ta `<script>` moduli), `sw.js` (network-first kesh; Firebase SDK cache-first), `manifest.webmanifest`, `icon.svg`, `icon-192.png`, `icon-512.png`, `firestore.rules` (0.7.1 dan — NAMUNA: admin ID o'rnida `__ADMIN_UID__`, haqiqiy matnni ilova o'zi beradi), `qoidalar/firestore-0.5.0.rules` (eski qoidalar — orqaga qaytish uchun), `sinov/bulut/` (soxta Firebase bilan sinov), `sinov/beta/beta_yig.py` (🧪 beta papkasini yig'ish).
 - **Haqiqat manbai — shu repo.** Kompyuterdagi `Desktop\Claude outputs\Bilimjon` (ko'p faylli manba va v0.1.1 ZIP) ESKI, ishlatilmaydi.
 - Hamma oilalar uchun bitta umumiy versiya. Yangilanish telefonga o'zi keladi (ilovani yopib qayta ochganda), natijalar telefonda (localStorage) qoladi; ☁️ akkaunt ulangan oilada Firestore'da ham.
 
 ## Versiya
-- Hozir: **0.7.0** («v7», 06.11.2026 — foydalanuvchi «chiqar» dedi). 🧪 Sinov rejimi: `…/bilimjon/beta/` (main'dagi `beta/` papkasi, `python3 sinov/beta/beta_yig.py <tarmoq> beta`; xotira `bj_beta_*`, kirish — asosiy ilovaning admin PIN'i, bulut o'chiq). Keyingi versiyalar avval beta'ga, u sinagach «chiqar».
+- Saytda (main): **0.7.0** («v7», 06.11.2026). Tarmoq `v0.7.1`: **0.7.1** («v7.1» — 🤔 Tushunmadim + 🛡️ ruxsat tizimi), 🧪 beta'da sinovda; main'ga faqat «chiqar» bilan.
+- 🧪 Sinov rejimi: `…/bilimjon/beta/` (main'dagi `beta/` papkasi). Yig'ish (main'da): `git fetch origin v0.7.1 && python3 sinov/beta/beta_yig.py origin/v0.7.1 beta` → faqat `beta/` commit + push. Xotira `bj_beta_*`, kirish — asosiy ilovaning admin PIN'i. Bulut SINXRONI o'chiq (`SYNC = !A.BETA`), lekin 🛡️ ruxsat tizimi ishlaydi (sinash uchun). Keyingi versiyalar avval beta'ga, u sinagach «chiqar».
 - Har chiqarishda ikkalasi birga oshiriladi: `index.html` → `VER = 'x.y.z'`, `sw.js` → `const V = 'bj-vx.y.z'`.
 - Ekranda oddiy nom (foydalanuvchi so'rovi, 05.11): `A.VERK` — 0.6.0 → «v6», 0.6.1 → «v6.1» (`A.verBadge()`), uy va bola tanlash ekranida tepada ism ostida; ota-ona panelida «Versiya 6». Keyingi katta versiya — 0.7.0 → «v7».
 
@@ -118,6 +119,25 @@ Tartib (foydalanuvchi qarori, 05.11; 06.11 — rasmli dars bozordan oldinga):
 3. [x] 🌍 Kun kashfiyoti 2.0 · 📖 uch marta o'qish · 🕌 TJ.7 ra va TJ.8 vaqf (06.11) — pastdagi bo'lim, `sinov/v070/sinov_bosqich3.py` (64).
 4. 🎙️ Ota-ona ovozi.
 5. To'liq sinov → VER 0.7.0 → u «chiqar» desa main.
+
+
+## 0.7.1 — 🤔 TUSHUNMADIM va 🛡️ RUXSAT TIZIMI (tarmoq `v0.7.1`, 06.11; qarorlar: 1a–6a va 1A)
+**🤔 Tushunmadim + 🙋 Ota-onamdan so'rayman** (kid modul, `/* ===== 🤔 TUSHUNMADIM … */` bloki, `charchDo` dan keyin):
+- Tugma `qrowHTML/qrowBind` — savol ostida «🤔 Tushunmadim» + «😴 Charchadim» bitta `.qrow` qatorda; darsda `qrowOl()` olib tashlaydi. `tushOk`: missiya (TUSH_YOQ qadamlaridan tashqari: yakun, oqish, duel, final15, kashf, viktorina, qayta, turnir, sora), mashq va vazifa (qutqarishda yo'q), arenada yo'q; `sozlama.tush` (⚙️ `#tu`, standart true).
+- Varaq (`tushunmadim`): `soddaLines` (it.sodda bo'lsa — o'sha; sonli misol → hayotiy jumla (≤20 — narsalar bilan), □ → «qaysi sonni qo'shsak…», masala (`matn: 1` yoki M1.12/M2.4) → «2 bo'lakka bo'l…»; o'qish matni (`typeof matn === 'string'`) → «matnni qayta o'qi»; + `NIMA[it.t]` — nima qilish kerak) + DARS qoidasi (2 qator) + `osonMisol` (shu tugun, q−1, 20 urinish: sig/javob boshqa, matnli masalaga matnli masala, sonlisida eng kichigi) → kino (`kinoPlay` mini) yoki qadamlar + javob; 🔊 (tts bo'lsa). Joriy savol javobi ochilmaydi. `st0.maslahat = 1` (statistikada yordam), log `{t:'tush'}`, `agg.tush`.
+- «🙋 Ota-onamdan so'rayman» (4 s dan keyin ochiladi): `soraQil` → `soraYoz` → `b.sora[]` (≤30: {id, ts, sana, joy, tugun, fan, q, t, sav, sav2, matn, vis, arab, jv, jvis, yechim, qoida, ota, tushun, holat kut|yechdi|qiyin, hal, ok1, kor}) + navbat: missiyada `m.soraQ[{id, it}]` (`m.soraN` ≤ 3), savol o'rniga shu qadamga yangi savol; `stepRun` boshida `soraNavbat` → yakun qadamidan (yoki oxiridan) oldin `soraKor` (st = {k:'sora'}, `it.tur = 'sora'`, `.sorab` belgisi, sarlavha «🙋 Ota-ona bilan»). Mashq/vazifa: `C.soraQ` (n0), `soraTayyor` — vazifa tugagach / mashqda `SORA_KECH` (5; ?tez=1 — 2) savoldan keyin; kunlik `agg.soraM` ≤ 3.
+- `tur: 'sora'` — `dars` kabi: `m.res`, mashq hisoblari, kombo, so'm (`A.pul.javob`) ga kirmaydi; recordAnswer bor (maslahat=1). `soraNatija` → holat, log `{t:'sora', hodisa: sorandi|qaytdi|tushuntirildi}`.
+- Ota-ona: `#ota-sora` (`soraPanel`): har bola — «🤔 Tushunmadim (7 kun)» tugunlar bo'yicha, kartalar (savol, vis, to'g'ri javob, «👨 Kattalar uchun — qanday tushuntirish»: qoida + `darsQadam` + ota/tushun), «✅ Tushuntirdim» → `kor`. Menyuda «🙋 Bola savollari 🔔 N» (`A.soraKut`). «📚 Bugungi qiyinlar»: BOLA qatoriga `|tush=N|sora=M`, Q qatoriga `|tush=`, `SORA|tugun|joy|holat|savol|togri=`.
+- Ovoz (savolni o'zbekcha o'qish, maktabgachaga avtomatik) — HALI YO'Q: ovoz namunalari pc1 da (edge-tts) tayyorlanadi, u tanlaydi (OXIRGI.md navbati).
+
+**🛡️ Ruxsat tizimi** (☁️ bulut moduli, `/* ---------- 🛡️ RUXSAT TIZIMI */`):
+- `ruxsat/{uid}` {email, oila, ts, holat: kutish|ok|rad|blok, hal}. Qoidalar (`firestore.rules`): `admin()` — bitta akkaunt ID (bepul, hujjat o'qilmaydi); `ruxsatli()` = admin yoki o'z ruxsat hujjati `ok` (1 o'qish). oila/** yozish, guruh yaratish/qo'shilish/azo yozish — `ruxsatli()`. ruxsat: o'zi — faqat `kutish` yaratadi/yangilaydi (email == token.email, maydonlar cheklangan), get — o'zi yoki admin, list/holat/o'chirish — admin.
+- Ilova: `ruxsatTekshir` (o'z hujjati: rad → «tizim yoqilmagan» = eski qoidalar, ilova 0.7.0 dagidek; list ruxsati → admin), natija `L.rx` keshida (internetsiz). `ulan`: ruxsatsiz → sinxron yo'q, `rxKuzat` (o'z hujjatini jonli kuzatadi, «ok» bo'lsa o'zi ulanadi); `L.bosh` — birinchi kirish (bulutdan olish/yuklash) ruxsatdan keyin. tick'da permission-denied → `rxQayta` (30 s da 1) → to'xtatilgan bo'lsa `syncTo`.
+- Ekranlar (`bulutPanel`): so'rovchi — «🛡️ Ruxsat kerak» (oila nomi → 📨), «⏳ kutilmoqda» (📤 egasiga xabar), «❌ rad», «🚫 to'xtatilgan»; admin — «🛡️ Ruxsatlar» (✅ ruxsat / ❌ rad / 🚫 to'xtatish / ↩ / 🗑, kutayotgan bo'lsa karta tepada, menyuda 🔔 N, admin telefonida yangi so'rov toast'i); tizim yoqilmagan — «📋 Qoidalarni nusxalash» (sayt bilan keladigan `firestore.rules` + `user.uid`, oldindan yuklanadi — iPhone clipboard), «📤 Ulashish», «🔄 Tekshirish», «↩ Eski qoidalar».
+- 📱 Admin telefoni: `S.adminTel = {q, nom, ts}` (oila darajasida sinxron); tugmalar faqat `adminTelMi()` telefonida, boshqasida faqat ko'rish + «↪ Shu telefonni admin telefoni qilish» (tasdiq bilan).
+- YOQISH TARTIBI (foydalanuvchi): beta yoki saytda oila akkaunti bilan ☁️ → 🛡️ → nusxa → Firebase konsoli → Firestore → Rules → qo'yish → Publish → «🔄 Tekshirish» → «✅ Siz — admin» → «📱 Shu telefon — admin telefoni». Muammo bo'lsa — «↩ Eski qoidalar». Haqiqiy qoidalar konsolga qo'yilgandan keyin sinaladi (emulyator bu muhitda yuklanmadi — storage.googleapis.com yopiq); mantiq `sinov_v071.py` da Python nusxasi bilan sinalgan.
+- Xavf/eslatma: Firebase Auth akkaunt ochishni to'xtatmaydi (Spark) — ruxsatsiz akkaunt faqat o'z so'rovini yozadi. Oila emaili bitta telefonda qolib ketsa ham, ruxsat tugmalari faqat admin telefonida.
+- Sinov: `python3 sinov/v071/sinov_v071.py` — A) Tushunmadim (47) · B) ruxsat (35; soxta Firebase + qoidalar Python'da, 4 telefon + beta). `sinov/bulut/fs.js` endi har so'rovga joriy akkauntni qo'shadi va `{__err}` → rad (eski sinovlar o'zgarishsiz o'tadi).
 
 ## 3-bosqich — BAJARILDI (06.11; loyiha va qarorlar — Claude, quyida; kod — Hullas profilida)
 **Qanday qilingan (qisqa):**
