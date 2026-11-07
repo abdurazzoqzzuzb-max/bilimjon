@@ -1,4 +1,4 @@
 Bilimjon sinov rejimi
 tarmoq: v0.7.1
-commit: 584b08f
+commit: 760f508
 VER: 0.7.1
