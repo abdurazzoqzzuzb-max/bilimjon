@@ -1,0 +1,50 @@
+rules_version = '2';
+// Bilimjon 0.5.0 — Firestore xavfsizlik qoidalari (Firebase konsoli → Firestore → Rules ga shu matn qo'yilgan).
+// oila/{uid}/** — faqat shu akkaunt egasi. guruh/{kod} — faqat a'zo oilalar o'qiydi; har oila faqat o'z bolalarining haftalik xulosasini yozadi.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function kirgan() { return request.auth != null; }
+    function ozi(uid) { return kirgan() && request.auth.uid == uid; }
+
+    match /oila/{uid} {
+      allow read, write: if ozi(uid);
+      match /{qism=**} {
+        allow read, write: if ozi(uid);
+      }
+    }
+
+    match /guruh/{kod} {
+      function azomi() {
+        return kirgan() && exists(/databases/$(database)/documents/guruh/$(kod)/oilalar/$(request.auth.uid));
+      }
+      allow get: if azomi();
+      allow create: if kirgan() && kod.matches('^[A-Z2-9]{10}$')
+        && request.resource.data.keys().hasOnly(['yaratdi', 'ts'])
+        && request.resource.data.yaratdi == request.auth.uid;
+
+      match /oilalar/{uid} {
+        allow read: if azomi();
+        allow create, update: if ozi(uid)
+          && request.resource.data.keys().hasOnly(['ts'])
+          && exists(/databases/$(database)/documents/guruh/$(kod));
+        allow delete: if ozi(uid);
+      }
+
+      match /azo/{bid} {
+        function togri() {
+          let d = request.resource.data;
+          return d.keys().hasOnly(['uid', 'oila', 'av', 'laqab', 'daraja', 'yulduz', 'kun', 'osish', 'detal', 'missiya', 'wk', 'ts'])
+            && d.uid == request.auth.uid
+            && d.laqab is string && d.laqab.size() <= 24
+            && d.oila is string && d.oila.size() <= 24
+            && d.av is string && d.av.size() <= 8
+            && d.yulduz is int && d.kun is int && d.osish is int;
+        }
+        allow read: if azomi();
+        allow create: if azomi() && togri();
+        allow update: if azomi() && togri() && resource.data.uid == request.auth.uid;
+        allow delete: if kirgan() && resource.data.uid == request.auth.uid;
+      }
+    }
+  }
+}

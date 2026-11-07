@@ -5,9 +5,13 @@ export function doc(db, ...p) { return { path: P(p), id: p[p.length - 1] }; }
 export function collection(db, ...p) { return { path: P(p), col: true }; }
 export function where(f, op, v) { return { f, op, v }; }
 export function query(c, ...w) { return { path: c.path, col: true, w }; }
+export function limit(n) { return { lim: n }; }
+export function orderBy(f, d) { return { ord: f, d }; }
 export function arrayUnion(...v) { return { __au: v }; }
 const snapDoc = (path, d) => ({ id: path.split('/').pop(), exists: () => d != null, data: () => d == null ? undefined : JSON.parse(JSON.stringify(d)), metadata: { hasPendingWrites: false } });
-async function call(...a) { const r = await window.__fs(JSON.stringify(a)); return r == null ? null : JSON.parse(r); }
+/* 0.7.1: so'rovga joriy (soxta) akkaunt qo'shiladi — Python tomonida qoidalar (ruxsat tizimi) sinaladi; {__err} → rad */
+const kim = () => { try { return JSON.parse(localStorage.getItem('fake_user') || 'null'); } catch (e) { return null; } };
+async function call(...a) { const r = await window.__fs(JSON.stringify(a.concat([kim()]))); const x = r == null ? null : JSON.parse(r); if (x && typeof x === 'object' && !Array.isArray(x) && x.__err) throw { code: x.__err }; return x; }
 export async function getDoc(ref) { return snapDoc(ref.path, await call('get', ref.path)); }
 export async function setDoc(ref, data, opt) { if (window.__fsFail) throw { code: 'unavailable' }; await call('set', ref.path, data, !!(opt && opt.merge)); }
 export async function deleteDoc(ref) { await call('del', ref.path); }
