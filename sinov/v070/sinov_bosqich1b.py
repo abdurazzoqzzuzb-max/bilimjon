@@ -51,7 +51,11 @@ try:
     ok(r['bus'] == [4, '8 − 3 + 4 = 9'], f"Avtobus masalasi: 4 sahna {r['bus']}")
 
     # ---- oqim: 2 xato → rasmli dars
-    setj(Q); NAV('sinov-M2.2-2', 500)
+    # M2.2 q2 ba'zan «Qaysi misolning javobi N?» turini beradi — unda kino yo'q (oddiy dars). Kinoli savol chiqquncha qayta ochiladi (07.11: sinov tasodifan yiqilardi)
+    setj(Q)
+    for _ in range(15):
+        NAV('sinov-M2.2-2', 500)
+        if ev("!!BJ.A.kino(BJ.A.bola(), window.__bjCur().it)"): break
     ev("window.__bjCur().cb({togri:false, javob:'1'})"); pg.wait_for_timeout(300)
     ok(pg.locator('#fb .hint').count() == 1 and pg.locator('.kino').count() == 0, "1-xato: oddiy maslahat (kino yo'q)")
     ev("window.__bjCur().cb({togri:false, javob:'2'})"); pg.wait_for_timeout(500)
