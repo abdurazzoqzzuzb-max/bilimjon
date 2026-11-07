@@ -1,0 +1,28 @@
+# Bilimjon 🔊 — neyron ovoz fayllari (edge-tts). ovoz/iboralar.json o'zgarsa yoki qo'lda ishga tushirilsa — yo'q fayllar yasalib, main'ga qo'shiladi.
+name: ovoz
+on:
+  push:
+    branches: [main]
+    paths: ['ovoz/iboralar.json', 'ovoz/skript/yasa.py']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency: { group: ovoz, cancel-in-progress: false }
+jobs:
+  yasa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: pip install edge-tts==7.0.2
+      - run: python ovoz/skript/yasa.py
+      - name: commit
+        run: |
+          git config user.name "bilimjon-ovoz"
+          git config user.email "actions@users.noreply.github.com"
+          git add ovoz
+          if git diff --cached --quiet; then echo "o'zgarish yo'q"; exit 0; fi
+          git commit -m "🔊 ovoz: neyron fayllar (avtomatik)"
+          for i in 1 2 3; do git pull --rebase origin main && git push origin HEAD:main && exit 0; sleep 5; done; exit 1

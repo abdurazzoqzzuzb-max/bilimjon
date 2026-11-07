@@ -1,0 +1,14 @@
+{"v": 1,
+ "ovozlar": {
+  "madina": {"voice": "uz-UZ-MadinaNeural", "rate": "-6%", "nom": "Madina (ayol)"},
+  "madina_sekin": {"voice": "uz-UZ-MadinaNeural", "rate": "-18%", "nom": "Madina — sekinroq"},
+  "sardor": {"voice": "uz-UZ-SardorNeural", "rate": "-6%", "nom": "Sardor (erkak)"}
+ },
+ "namuna": {
+  "n1": "Malikada to'qqizta yong'oq bor edi. Yettitasini do'stiga berdi. Nechta yong'oq qoldi?",
+  "n2": "O'n uchdan sakkizni ayirsak, nechchi bo'ladi?",
+  "n3": "«Oyoq» so'zi qaysi harf bilan boshlanadi?",
+  "n4": "Barakalla! Juda yaxshi. Endi keyingisiga o'tamiz."
+ },
+ "iboralar": {}
+}
