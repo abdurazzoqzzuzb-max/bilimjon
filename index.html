@@ -4853,7 +4853,7 @@ const damQol = S0 => Math.max(0, Math.ceil((S0.dam.end - Date.now()) / 1000));
 function tick(S0) {
   if (SES !== S0 || S0.fin) return clearInterval(S0.iv);
   const D = S0.dam;
-  if (location.hash.slice(1) !== (D ? D.hash : 'zal-' + S0.tur)) { tashla(S0); if (D) D.done({ k: 'chiqdi' }); return; } /* bola boshqa ekranga o'tib ketdi */
+  if (location.hash.slice(1) !== (D ? D.hash : 'zal-' + S0.tur) || (D && !$('[data-zq]'))) { tashla(S0); if (D) D.done({ k: 'chiqdi' }); return; } /* bola boshqa ekranga o'tib ketdi */
   const now = Date.now(), dt = Math.min(2, (now - S0.last) / 1000); S0.last = now;
   if (!D && document.visibilityState === 'visible') { const z = st(S0.b), k = today(); z.sek[k] = (z.sek[k] || 0) + dt; const g = A.agg(S0.b); g.zalSek = (g.zalSek || 0) + dt; }
   const q = D ? damQol(S0) : qoldi(S0.b), el = $('[data-zq]'); if (el) { el.textContent = '⏱ ' + A.fmtMS(q); el.classList.toggle('kam', q <= 30); }
@@ -4925,6 +4925,7 @@ function chiptaOch(b) {
   if (!chiptaMumkin(b)) return toast('🎟️ Bugungi chiptalar tugadi');
   const it = chiptaItem(b); if (!it) return toast('🎟️ Savol topilmadi — keyinroq');
   const st0 = { shown: Date.now(), first: null, urinish: 1, maslahat: 0, ovoz: 0, lock: 0 }; let javob = false;
+  if (A.TEZ) G.__bjChipta = it; /* faqat ?tez=1 avtomatik sinov uchun */
   const head = A.headHTML ? A.headHTML(b, it) : `<div class="q">${esc(it.sav)}</div>`;
   A.sheet(`<div class="zchs"><div class="zchh"><span>🎟️ Bilim chiptasi</span><small>${chiptaKun(b).n + 1}/${CHIPTA_MAX}</small><button class="ib" data-x aria-label="Keyinroq">✕</button></div><div class="item t-tanla">${head}<div id="zchb"></div><div class="zchf" data-f></div></div></div>`, el => {
     const R = (A.RENDER && A.RENDER.tanla);
