@@ -100,6 +100,28 @@ const xato = async (b, x) => { try { await run(b, x); return null; } catch (e) {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'bjz')); L.length = 0; const f = await run('zaxira', { ZAXIRA_PAPKA: tmp });
   const z = JSON.parse(zlib.gunzipSync(fs.readFileSync(f)));
   ok(Object.keys(z.oila).length === 3 && z.oila.UjavUID.bolalar.s1 && Object.keys(z.oila.UjavUID.log).length === 1 && z.ruxsat.UjavUID && z.guruh.ABCDEFGH23.oilalar.UadminUID, 'zaxira: oila (bola, log), ruxsat, guruh — hammasi faylda');
+  // 🏆 0.7.6: guruh <email1> <email2> — ikki oilani bitta reyting guruhiga ulash
+  ok(/Ikkita email/.test(await xato('guruh', { A1: 'admin@test.uz' }) || ''), "guruh: 2-email yo'q — tushunarli xato");
+  USERS.push(user('UbosUID', 'bos@test.uz'));
+  ok(/bulutda oila yo'q/.test(await xato('guruh', { A1: 'admin@test.uz', A2: 'bos@test.uz' }) || ''), "guruh: bulutda oilasi yo'q akkaunt — xato (hech narsa yozilmaydi)");
+  const jA = j => JSON.parse(ST['oila/' + j].j);
+  ST['oila/UadminUID'].j = JSON.stringify(Object.assign(jA('UadminUID'), { guruh: { kod: 'ABCDEFGH23', qoshildi: 1 } }));
+  const tsA = ST['oila/UadminUID'].ts; L.length = 0; await run('guruh', { A1: 'admin@test.uz', A2: 'javlon2@test.uz' });
+  ok(jA('Ujav2UID').guruh.kod === 'ABCDEFGH23' && ST['oila/Ujav2UID'].q === 'admin' && ST['guruh/ABCDEFGH23/oilalar/Ujav2UID'] && ST['oila/UadminUID'].ts === tsA && jA('Ujav2UID').oila.nom === 'Javlon oila' && ST['oila/Ujav2UID'].v === '0.7.4',
+    "guruh: 1-oilaning mavjud guruhi (ABCDEFGH23) — 2-oila qo'shildi, oila hujjati (j) faqat guruh bilan o'zgardi, admin hujjati tegmadi");
+  ok(/ABCDEFGH23/.test(L.join('\n')) && /Javlon oila/.test(L.join('\n')), 'guruh: logda kod va oila nomlari');
+  // boshqa guruhdan ko'chirish: javlon ZZZZZZZZZ2 da edi (o'z bolasi + begona a'zo)
+  ST['oila/UjavUID'].j = JSON.stringify(Object.assign(jA('UjavUID'), { guruh: { kod: 'ZZZZZZZZZ2' } }));
+  ST['guruh/ZZZZZZZZZ2'] = { yaratdi: 'Ux', ts: 1 }; ST['guruh/ZZZZZZZZZ2/oilalar/UjavUID'] = { ts: 1 }; ST['guruh/ZZZZZZZZZ2/azo/s1'] = { uid: 'UjavUID', laqab: 'Sabo' }; ST['guruh/ZZZZZZZZZ2/azo/x9'] = { uid: 'Ux', laqab: 'Begona' };
+  await run('guruh', { A1: 'admin@test.uz', A2: 'javlon@test.uz' });
+  ok(jA('UjavUID').guruh.kod === 'ABCDEFGH23' && !ST['guruh/ZZZZZZZZZ2/oilalar/UjavUID'] && !ST['guruh/ZZZZZZZZZ2/azo/s1'] && ST['guruh/ZZZZZZZZZ2/azo/x9'] && ST['guruh/ABCDEFGH23/oilalar/UjavUID'],
+    "guruh: boshqa guruhdagi oila — u yerdan chiqarildi (faqat o'z a'zo yozuvi o'chdi), yangisiga qo'shildi");
+  // ikkalasida ham guruh yo'q — yangi kod
+  ST['oila/UadminUID'].j = JSON.stringify(Object.assign(jA('UadminUID'), { guruh: null })); ST['oila/Ujav2UID'].j = JSON.stringify(Object.assign(jA('Ujav2UID'), { guruh: null }));
+  await run('guruh', { A1: 'admin@test.uz', A2: 'javlon2@test.uz' }); const yk = jA('UadminUID').guruh && jA('UadminUID').guruh.kod;
+  ok(/^[A-Z2-9]{10}$/.test(yk || '') && yk !== 'ABCDEFGH23' && jA('Ujav2UID').guruh.kod === yk && ST['guruh/' + yk].yaratdi === 'UadminUID' && ST['guruh/' + yk + '/oilalar/UadminUID'] && ST['guruh/' + yk + '/oilalar/Ujav2UID'],
+    `guruh: ikkalasida guruh yo'q — yangi kod ${yk}, guruh hujjati va ikkala oila`);
+  L.length = 0; await run('holat'); ok(L.join('\n').includes('🏆 guruh ' + yk), "holat: oila qatorida 🏆 guruh kodi");
   ok(/Noma'lum buyruq/.test(await xato('salom') || ''), "noma'lum buyruq — xato");
   L.length = 0; await run('yordam'); ok(L.join('').includes('statistika') && L.join('').includes('qoidalar'), 'yordam: buyruqlar ro\'yxati');
   console.log(XATO ? `\n${XATO} ta xato` : '\nHAMMASI OK'); process.exit(XATO ? 1 : 0);

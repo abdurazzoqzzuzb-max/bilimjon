@@ -19,6 +19,8 @@
      qoidalar <admin_email>         — firestore.rules ni Firebase'ga qo'yish (__ADMIN_UID__ → shu akkaunt)
      qoidalar - eski                — ORQAGA: eski 0.5.0 qoidalari (ruxsat tizimisiz, hamma oila o'z bulutiga yozadi)
      zaxira                         — hamma Firestore ma'lumoti → zaxira/bilimjon_YYYY-MM-DD.json.gz (Actions artifact, 90 kun)
+     guruh <email1> <email2>        — ikki oilani bitta 🏆 reyting guruhiga ulash (1-oilaning guruhi; yo'q bo'lsa — yangi kod).
+                                      Telefonlar o'zi oladi (ilovani yopib qayta ochish); a'zo yozuvlarini har oila telefoni o'zi yozadi.
 */
 'use strict';
 const fs = require('fs'), path = require('path'), zlib = require('zlib');
@@ -74,7 +76,7 @@ B.holat = async ({ auth, db, log }) => {
     log(`${i + 1}. ${u.email || '(emailsiz)'}${adm ? '  👑 ADMIN' : ''}${u.disabled ? '  ⛔ O\'CHIRILGAN' : ''}`);
     log(`   uid: ${u.uid} · ochilgan: ${vaqt(Date.parse(u.metadata.creationTime))} · oxirgi kirish: ${vaqt(Date.parse(u.metadata.lastSignInTime || '') || 0)}`);
     log(`   ruxsat: ${r.holat ? RXH[r.holat] || r.holat : "so'ralmagan"}${r.oila ? ' («' + r.oila + '»)' : ''}`);
-    if (o.bor) log(`   oila: «${(o.j.oila && o.j.oila.nom) || '—'}» · bolalar: ${o.bolalar.map(b => b.laqab).join(', ') || '—'} · oxirgi sinxron: ${vaqt(o.x.ts)} · v${o.x.v || '?'}`);
+    if (o.bor) log(`   oila: «${(o.j.oila && o.j.oila.nom) || '—'}» · bolalar: ${o.bolalar.map(b => b.laqab).join(', ') || '—'} · oxirgi sinxron: ${vaqt(o.x.ts)} · v${o.x.v || '?'}${o.j.guruh && o.j.guruh.kod ? ' · 🏆 guruh ' + o.j.guruh.kod : ''}`);
     else log(`   oila: bulutda ma'lumot yo'q`);
   });
   const yetim = Object.keys(rx).filter(uid => !users.some(u => u.uid === uid));
@@ -202,6 +204,38 @@ B.zaxira = async ({ db, log, ZAXIRA_PAPKA }) => {
   fs.writeFileSync(f, buf);
   log(`💾 Zaxira: ${Object.keys(out.oila).length} oila, ${Object.keys(out.ruxsat).length} ruxsat, ${Object.keys(out.guruh).length} guruh → ${path.basename(f)} (${Math.round(buf.length / 1024)} KB)`);
   return f;
+};
+
+/* 🏆 0.7.6: ikki oilani bitta reyting guruhiga ulash. guruh/{kod} {yaratdi, ts}, guruh/{kod}/oilalar/{uid} {ts}, oila/{uid}.j.guruh = {kod, qoshildi}.
+   Kod: 1-oilaniki → bo'lmasa 2-oilaniki → bo'lmasa yangi (10 belgi, A-Z2-9). Boshqa guruhda bo'lgan oila u yerdan chiqariladi (oilalar + o'z bolalarining azo yozuvlari).
+   Telefon oila hujjatini onSnapshot bilan oladi (q:'admin'); a'zo (azo) yozuvlarini — o'zi (keyingi sinxronda). */
+const KOD_ALF = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+const yangiKod = () => Array.from(require('crypto').randomBytes(10), x => KOD_ALF[x % KOD_ALF.length]).join('');
+B.guruh = async ({ auth, db, log, A1, A2 }) => {
+  if (!A2) throw new Error('Ikkita email kerak: guruh <email1> <email2>');
+  const u1 = await foydalanuvchi(auth, A1), u2 = await foydalanuvchi(auth, A2);
+  if (u1.uid === u2.uid) throw new Error('Bir xil akkaunt');
+  const U = [u1, u2], O = [];
+  for (const u of U) { const o = await db.doc('oila/' + u.uid).get(); if (!o.exists) throw new Error(`${u.email}: bulutda oila yo'q — avval ilovaga shu akkaunt bilan kirsin (☁️ Oila akkaunti)`); O.push({ x: o.data(), j: json((o.data() || {}).j, null) }); }
+  if (O.some(o => !o.j || typeof o.j !== 'object')) throw new Error("Oila hujjati o'qilmadi (j buzuq)");
+  const ok = k => typeof k === 'string' && /^[A-Z2-9]{10}$/.test(k), k1 = O[0].j.guruh && O[0].j.guruh.kod, k2 = O[1].j.guruh && O[1].j.guruh.kod;
+  let kod = ok(k1) ? k1 : ok(k2) ? k2 : null, yangi = false; const now = Date.now();
+  if (kod && !(await db.doc('guruh/' + kod).get()).exists) { await db.doc('guruh/' + kod).set({ yaratdi: u1.uid, ts: now }); log(`ℹ️ guruh/${kod} hujjati yo'q edi — yaratildi`); }
+  if (!kod) { do { kod = yangiKod(); } while ((await db.doc('guruh/' + kod).get()).exists); await db.doc('guruh/' + kod).set({ yaratdi: u1.uid, ts: now }); yangi = true; }
+  for (let i = 0; i < 2; i++) {
+    const u = U[i], o = O[i], eski = o.j.guruh && o.j.guruh.kod;
+    if (eski && eski !== kod) {   /* boshqa guruhdan chiqarish: oilalar yozuvi va shu oila bolalarining a'zo yozuvlari */
+      await db.doc('guruh/' + eski + '/oilalar/' + u.uid).delete().catch(() => {});
+      let n = 0; for (const d of (await db.collection('guruh/' + eski + '/azo').get()).docs) { if ((d.data() || {}).uid === u.uid) { await db.doc('guruh/' + eski + '/azo/' + d.id).delete(); n++; } }
+      log(`↪ ${u.email}: eski guruh ${eski} dan chiqarildi (${n} a'zo yozuvi)`);
+    }
+    await db.doc('guruh/' + kod + '/oilalar/' + u.uid).set({ ts: now });
+    if (eski !== kod) { o.j.guruh = { kod, qoshildi: now }; await db.doc('oila/' + u.uid).set({ j: JSON.stringify(o.j), ts: now, q: 'admin' }, { merge: true }); }
+  }
+  const azo = (await db.collection('guruh/' + kod + '/azo').get()).docs.map(d => d.data() || {});
+  log(`🏆 Reyting guruhi ${kod}${yangi ? ' (yangi)' : ''}: «${(O[0].j.oila && O[0].j.oila.nom) || u1.email}» + «${(O[1].j.oila && O[1].j.oila.nom) || u2.email}»`);
+  log(`   a'zo yozuvlari hozir: ${azo.length} ta (${U.map(u => u.email + ': ' + azo.filter(a => a.uid === u.uid).length).join(', ')}) — qolganini telefonlar ilova ochilganda o'zi yozadi.`);
+  log('   Telefonlarda: ilovani yopib qayta ochish → bola uyidagi 🏆 hafta reytingida va 🎮 o\'yinlar reytingida boshqa oila ko\'rinadi.');
 };
 
 async function ishla(buyruq, deps) {

@@ -2587,7 +2587,7 @@ Object.assign(A, { FAN, ZANJIR, BOSH, DARAJA, gl, BLOK, MANT_KUN, UZUN, XATO, TU
 const BETA = A.BETA = typeof location !== 'undefined' && /\/beta\/(index\.html)?$/.test(location.pathname);
 const KEY = BETA ? 'bj_beta_state_v1' : 'bj_state_v1'; /* asosiy kalit HECH QACHON o'zgarmaydi: yangi versiya eski holatni migrate() bilan yangilaydi */
 const SV = 1;
-function defaults() { return { v: SV, oila: null, pin: null, pinOta: null, sozlama: { ovoz: 0.8, kamEffekt: 'auto', tanaffus: 20, oyinHar: 5, oyinDaq: 3, uyqu: '21:00', reyting: true, tjTasdiq: {}, sandiq: { bronza: 40, kumush: 90, oltin: 150, olmos: 220 }, arTasdiq: {}, alifTasdiq: false, pul: true, byudjet: 50000, kassa: true, zal: 10, zalOchish: 'missiya', zalChipta: true, bozor: true, bozorXoh: true, kashfUy: true, tush: true, nutq: { nom: 'madina_jonli', avto: true, variant: true, v: 2 } }, bolalar: {}, tartib: [], joriy: null, duel: {}, oilaTel: {}, sovga: [], dokon: [], bozor: null, qurilma: null, lastBackup: null, seenVer: null, appVer: null }; }
+function defaults() { return { v: SV, oila: null, pin: null, pinOta: null, sozlama: { ovoz: 0.8, kamEffekt: 'auto', tanaffus: 20, oyinHar: 5, oyinDaq: 3, uyqu: '21:00', reyting: true, tjTasdiq: {}, sandiq: { bronza: 40, kumush: 90, oltin: 150, olmos: 220 }, arTasdiq: {}, alifTasdiq: false, pul: true, byudjet: 50000, kassa: true, zal: 10, bozor: true, bozorXoh: true, kashfUy: true, tush: true, nutq: { nom: 'madina_jonli', avto: true, variant: true, v: 2 } }, bolalar: {}, tartib: [], joriy: null, duel: {}, oilaTel: {}, sovga: [], dokon: [], bozor: null, qurilma: null, lastBackup: null, seenVer: null, appVer: null }; }
 let S = load(); A.storageOK = true;
 /* Xotira tekshiruvi: brauzer yozishga ruxsat beradimi va ilova begona sayt ichida (sinov havolasi) ochilganmi */
 A.storageProbe = (function () { try { const k = 'bj_probe'; localStorage.setItem(k, String(Date.now())); const ok = !!localStorage.getItem(k); localStorage.removeItem(k); return ok; } catch (e) { return false; } })();
@@ -6877,7 +6877,10 @@ function obuna() {
   unsub.push(onSnapshot(doc(db, 'oila', user.uid), d => { if (!d.exists() || d.metadata.hasPendingWrites) return; const x = d.data(); if (!x || x.q === my || typeof x.j !== 'string') return;
     /* 0.6.0: vaqt (ts) solishtirilmaydi — telefon soatlari farq qilsa yangilanish yo'qolardi. Mazmun hashi: shu holat allaqachon bormi? */
     const rh = hsh(x.j); if (rh === L.sync.s.r) return;
-    if (hsh(JSON.stringify(umumiy())) !== L.sync.s.h) return; /* bu telefonda ham o'zgargan — o'zimiznikini yuboramiz */
+    if (hsh(JSON.stringify(umumiy())) !== L.sync.s.h) { /* bu telefonda ham o'zgargan — o'zimiznikini yuboramiz */
+      /* 0.7.6: admin (Claude «guruh» buyrug'i) qo'ygan reyting guruhi yo'qolmasin — faqat shu maydon olinadi */
+      if (x.q === 'admin') try { const cj = JSON.parse(x.j), g = cj && cj.guruh; if (g && g.kod && (S().guruh || {}).kod !== g.kod) { S().guruh = g; A.save(true); L.sync.g = {}; lsave(); guruhObuna(); } } catch (e) {}
+      return; }
     try { umumiyQabul(JSON.parse(x.j), rh); qaytaChiz(); } catch (e) {} }, e => { xato = xabar(e); }));
   unsub.push(onSnapshot(collection(db, 'oila', user.uid, 'bolalar'), snap => { let n = 0;
     snap.docChanges().forEach(ch => { const d = ch.doc, bid = d.id; if (d.metadata.hasPendingWrites) return;
