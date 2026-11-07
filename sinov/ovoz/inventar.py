@@ -20,6 +20,7 @@ JS = r"""(N) => {
  for (let k = 1; k <= 30; k++) ['inchi', 'tasi', 'tasini'].forEach(s => add(NQ.sonQism(k, s)));
  for (let y = 1; y <= 9; y++) ['', 'ga', 'ni', 'dan'].forEach(s => { add(NQ.sonQism(y * 100, s)); add(NQ.sonQism(y * 1000, s)); });
  NQ.ISMLAR.forEach(i => ['', 'niki', 'ning', 'dan', 'da', 'ga', 'ni'].forEach(s => add(NQ.reja(i + s))));
+ Object.keys(NQ.HARF_NOM).forEach(k => add([NQ.harfQism(k)]));   // 07.11: harflar nomi (a, be, de …) — hammasi kafolatli
  return { n, ib };
 }"""
 srv = subprocess.Popen([sys.executable, '-m', 'http.server', str(PORT)], cwd=SITE, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL); time.sleep(1)
