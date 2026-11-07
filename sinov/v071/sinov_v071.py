@@ -315,6 +315,16 @@ try:
     ok(not any(btb in w[1] for w in WRITES) and not any(btb in k for k in STORE), "B: beta oila ma'lumotini bulutga YOZMADI (bola hujjati yo'q)")
     ok(not any('"yulduz":99' in (v.get('j') or '') for k, v in STORE.items() if k.startswith('oila/')), "B: bulutda beta o'zgarishi yo'q")
     SHOT(BT, '10_beta')
+    # 🛡️ PIN'siz yo'l: asosiy ilova sozlanmagan brauzer (iPhone Safari) — beta eshigidan to'g'ri «Ruxsat tizimi»
+    SF = tel(br, 'SAFARI', BU + 'beta/'); SF.wait_for_timeout(400)
+    ok("sozlanmagan" in TXT(SF) and SF.locator('[data-rxk]').count() == 1, "B: PIN'siz brauzerda ham «🛡️ Ruxsat tizimini yoqish» tugmasi bor")
+    SHOT(SF, '11_eshik')
+    SF.click('[data-rxk]'); ok(kut(SF, "!!document.querySelector('#be')", 8000), "B: tugma → to'g'ri kirish oynasi (PIN so'ralmaydi)")
+    SF.fill('#be', 'admin@test.uz'); SF.fill('#bp', 'parol123'); SF.click('[data-in]')
+    ok(kut(SF, "document.body.innerText.includes('Ruxsatlar') && document.body.innerText.includes('siz — admin')", 8000), "B: oila emaili bilan kirildi → admin paneli (beta, PIN'siz)")
+    SF.reload(); SF.wait_for_timeout(600)
+    ok(kut(SF, "document.body.innerText.includes('Ruxsatlar')", 8000), "B: sahifa yangilansa ham shu ekran (#bulut)")
+    SF.click('[data-bk]'); SF.wait_for_timeout(900); ok(SF.locator('[data-rxk]').count() == 1, "B: ← orqaga — sinov eshigiga qaytadi")
     br.close()
 finally:
     srv.terminate(); srv2.terminate(); shutil.rmtree(TMP, ignore_errors=True)
