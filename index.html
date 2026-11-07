@@ -1683,7 +1683,7 @@ B.enTartib.forEach(topic => {
     const find = v => list.find(x => x.w === v) || ALL_EN.find(x => x.w === v) || {};
     if (q === 1) { const o = opts(w.w, ds, 3).map(x => Object.assign(x, { h: find(x.v).e })); return { sav: '🔊 Eshit va rasmini top', tts: w.w, ovozKoz: w.w, o, a: w.w, rasmEmoji: 1, k: w.w, sig: 'e' + w.w + o.map(x => x.v).join(), ota: `Telefon ovozi bo'lmasa, siz ayting: «${w.w}».`, ex: { w: w.w, t: topic } }; }
     if (q === 2) { const o = opts(w.w, ds, 4).map(x => Object.assign(x, { h: find(x.v).e })); return { sav: w.w, sav2: "So'zni o'qi (🔊 eshit) va rasmini top", tts: w.w, o, a: w.w, rasmEmoji: 1, big: 1, k: 'r' + w.w, sig: 'r' + w.w + o.map(x => x.v).join(), ex: { w: w.w, t: topic } }; }
-    if (R.f() < 0.35 && B.enIbora.length) { const ib = pick(B.enIbora), o = opts(ib[0], sample(B.enIbora.filter(x => x !== ib), 3).map(x => ({ v: x[0], x: 'ibora_adashdi' })), 3); return { sav: `${ib[1]}  «${ib[2]}» — inglizcha qanday?`, tts: ib[0], o: o.map(x => Object.assign(x, { h: x.v })), a: ib[0], k: 'i' + ib[0], sig: 'i' + ib[0] + o.map(x => x.v).join(), ex: { ib: ib[0] } }; }
+    if (R.f() < 0.35 && B.enIbora.length) { const ib = pick(B.enIbora), o = opts(ib[0], sample(B.enIbora.filter(x => x !== ib), 3).map(x => ({ v: x[0], x: 'ibora_adashdi' })), 3); return { sav: `${ib[1]}  «${ib[2]}» — inglizcha qanday?`, tts: ib[0], ttsKeyin: 1, o: o.map(x => Object.assign(x, { h: x.v })), a: ib[0], k: 'i' + ib[0], sig: 'i' + ib[0] + o.map(x => x.v).join(), ex: { ib: ib[0] } }; }
     const o = opts(w.w, ds, 4).map(x => Object.assign(x, { h: x.v })); return { sav: `${w.e}  Bu inglizcha qanday?`, tts: w.w, ttsKeyin: 1, o, a: w.w, k: 'w' + w.w, sig: 'w' + w.w + o.map(x => x.v).join(), ex: { w: w.w, t: topic } };
   }, chk: it => it.ex.ib ? B.enIbora.some(x => x[0] === it.a) : (B.en[it.ex.t].some(x => x[0] === it.a) || 'en') });
 });
@@ -2533,7 +2533,7 @@ BJ.vis = vis;
 (function (G) {
 'use strict';
 const BJ = G.BJ, A = BJ.A = {}, gen = BJ.gen, B = BJ.bank;
-A.VER = '0.7.2';
+A.VER = '0.7.3';
 /* Oddiy versiya nomi (foydalanuvchi so'rovi, 05.11): 0.6.0 → «6», 0.6.1 → «6.1», 1.2.0 → «1.2». Ekranda shu ko'rinadi, ichkarida A.VER qoladi. */
 A.VERK = (() => { const p = A.VER.split('.').map(Number); return p[0] ? p[0] + '.' + p[1] : p[1] + (p[2] ? '.' + p[2] : ''); })();
 A.verBadge = () => `<span class="verb" title="Versiya ${A.VER}">v${A.VERK}</span>`;
@@ -3093,10 +3093,18 @@ function screenHome(b) {
 }
 /* ================= OVOZ (ingliz — telefon TTS) ================= */
 let spk = null;
-function speak(txt, lang) { try { const u = new SpeechSynthesisUtterance(txt); u.lang = lang || 'en-US'; u.rate = 0.85; const vs = speechSynthesis.getVoices().filter(v => v.lang && v.lang.indexOf((lang || 'en').slice(0, 2)) === 0); if (vs.length) u.voice = vs[0]; speechSynthesis.cancel(); speechSynthesis.speak(u); spk = u; return true; } catch (e) { return false; } }
+/* 0.7.3: inglizcha so'z — A.ovoz.ingliz (neyron fayl, iPhone'da media pleyer — jim tugma to'smaydi); el — yonib turadigan tugma. Zaxira — telefon ovozi */
+function speak(txt, lang, el) { if (A.ovoz && A.ovoz.ingliz && (!lang || /^en/i.test(lang))) { A.ovoz.ingliz(txt, el || null); return true; } try { const u = new SpeechSynthesisUtterance(txt); u.lang = lang || 'en-US'; u.rate = 0.85; const vs = speechSynthesis.getVoices().filter(v => v.lang && v.lang.indexOf((lang || 'en').slice(0, 2)) === 0); if (vs.length) u.voice = vs[0]; speechSynthesis.cancel(); speechSynthesis.speak(u); spk = u; return true; } catch (e) { return false; } }
 function stopSpeak() { try { speechSynthesis.cancel(); } catch (e) {} }
 const hasTTS = () => typeof speechSynthesis !== 'undefined';
 A.speak = speak;
+/* 0.7.3: «🔊 Eshitish/Talaffuz» tugmasi — bosilsa aytadi, fayl oldindan yuklanadi. Natija: o'zbekcha savoldan KEYIN o'zi aytish funksiyasi (EN) yoki null */
+function sayBind(it, st0) {
+  const say = $('[data-say]'); if (!say) return null;
+  say.onclick = () => { st0.ovoz = (st0.ovoz || 0) + 1; speak(it.tts, 0, say); };
+  if (A.ovoz && A.ovoz.enOldin) A.ovoz.enOldin(it.tts);
+  return it.ovozKoz || String(it.tugun || '').indexOf('EN.') === 0 ? () => { if (CUR && CUR.it === it && say.isConnected) speak(it.tts, 0, say); } : null;
+}
 /* ================= MISSIYA PLEYERI ================= */
 /* 💥 KOMBO (0.6.0): ketma-ket birinchi urinishda to'g'ri. 3, 5, 8, 12, 16… da kattalashuvchi portlash; 5+ da bonus ⭐ (1/2/3). Xato — jim nolga. */
 let KOMBO = { id: null, n: 0 };
@@ -3162,7 +3170,7 @@ function headHTML(b, it) {
   if (it.matn) h += `<details class="matn" open><summary>📄 ${esc(it.matnNom || 'Matn')}</summary><p>${esc(it.matn)}</p></details>`;
   h += `<div class="q${big}${ar}"${it.arab ? ' dir="rtl" lang="ar"' : ''}>${esc(it.sav)}</div>`;
   if (it.sav2) h += `<div class="q2">${esc(it.sav2)}</div>`;
-  if (it.tts) h += `<button class="btn ghost say" data-say>🔊 ${it.ovozKoz ? 'Eshitish' : 'Talaffuz'}</button>${it.ovozKoz ? `<details class="otatip"><summary>👁 Kattalar uchun (ovoz chiqmasa o'qib bering)</summary><b>${esc(it.tts)}</b></details>` : ''}`;
+  if (it.tts && !it.ttsKeyin) h += `<button class="btn ghost say" data-say>🔊 ${it.ovozKoz ? 'Eshitish' : 'Talaffuz'}</button>${it.ovozKoz ? `<details class="otatip"><summary>👁 Kattalar uchun (ovoz chiqmasa o'qib bering)</summary><b>${esc(it.tts)}</b></details>` : ''}`;
   if (it.vis) h += `<div class="visw">${ART.vis(it.vis)}</div>`;
   return h;
 }
@@ -3174,10 +3182,9 @@ function showItem(b, m, st, it) {
   frame(b, m, stepTitle(st), `<div class="item t-${it.t}">${soraBanner(it)}${headHTML(b, it)}<div id="body"></div><div id="fb"></div>${otaTip(b, it)}</div>${qrowHTML(b, m, st, it)}`);
   qrowBind(b, m, st, it, st0);
   /* inglizcha so'z avtomatik aytiladi — o'zbekcha savol ovozidan KEYIN (A.ovoz.bind → keyin) */
-  const say = $('[data-say]'), enAvto = !!(say && (it.ovozKoz || it.tugun.indexOf('EN.') === 0)); if (say) say.onclick = () => { st0.ovoz++; speak(it.tts); };
+  const enKeyin = sayBind(it, st0);
   const fv = $('.flashvis'); if (fv) { const ms = +fv.dataset.ms; setTimeout(() => { fv.style.visibility = 'hidden'; }, ms); }
   CUR.cb = (r) => onAnswer(b, m, st, it, st0, r); R($('#body'), it, b, CUR.cb, st0);
-  const enKeyin = enAvto ? () => { if (CUR.it === it) speak(it.tts); } : null;
   if (A.ovoz) A.ovoz.bind(b, it, st0, $('.item'), { keyin: enKeyin }); else if (enKeyin) setTimeout(enKeyin, 350);
   if (st0.lock) { const ob = $('#body'); ob.classList.add('locked'); setTimeout(() => ob.classList.remove('locked'), 1500); }
 }
@@ -3512,7 +3519,7 @@ function showLesson(b, m, st, it, n) {
   <button class="btn big" data-twin disabled>Men tayyorman ✍️ <span data-c></span></button></div>`;
   const host = $('.item'); if (host) host.outerHTML = html; else { const s = $('#stage') || app; s.innerHTML = html; }
   qrowOl();
-  const dsy = $('[data-dsay]'); if (dsy) { dsy.onclick = () => speak(it.tts); setTimeout(() => speak(it.tts), 400); }
+  const dsy = $('[data-dsay]'); if (dsy) { dsy.onclick = () => speak(it.tts, 0, dsy); setTimeout(() => { if (dsy.isConnected) speak(it.tts, 0, dsy); }, 400); }
   const btn = $('[data-twin]'), c = $('[data-c]'); let k = A.TEZ ? 0 : 5;
   const tick = () => { if (!document.body.contains(btn)) return; if (k <= 0) { btn.disabled = false; c.textContent = ''; return; } c.textContent = '(' + k + ')'; k--; setTimeout(tick, 1000); };
   tick();
@@ -3558,13 +3565,15 @@ function onAnswer(b, m, st, it, st0, r) {
   if (it.tur === 'sora' && fin.togri) setTimeout(() => toast('🙋 Barakalla! Endi tushunding 💪'), 250);
   if (it.tur !== 'dars' && it.tur !== 'sora') { if (KOMBO.id !== b.id) KOMBO = { id: b.id, n: 0 }; KOMBO.n = fin.togri_1 ? KOMBO.n + 1 : 0; const dd = A.agg(b); if (KOMBO.n > (dd.komboMax || 0)) dd.komboMax = KOMBO.n; if (KOMBO.n > (b.komboMax || 0)) b.komboMax = KOMBO.n; if (fin.togri_1 && A.konsJavob) A.konsJavob(b); }
   if (fin.togri_1) { const el = r.el || $('#body') || app; const bb = el.getBoundingClientRect(); const t0 = performance.now(); if (it.tur !== 'dars' && it.tur !== 'sora' && komboMarra(KOMBO.n)) komboFX(b, KOMBO.n, bb.left + bb.width / 2, bb.top + Math.min(bb.height / 2, 160), ctx.k === 'arena' || ctx.k === 'mashq'); FX.boom(bb.left + bb.width / 2, bb.top + Math.min(bb.height / 2, 160), b.dunyo).then(() => { A.agg(b).fx += Math.round(performance.now() - t0); if (ev === 'ozl') toast('🟢 Yangi ko\'nikma o\'zlashtirildi!'); next(); }); return; }
-  if (fin.togri) { FX.play('ding'); $('#fb').innerHTML = `<div class="good">✅ ${esc(pickA(PRAISE1))}</div>`; setTimeout(next, A.TEZ ? 200 : 1300); return; }
+  /* 0.7.3: inglizcha so'z javobning o'zi bo'lsa (ttsKeyin) — oldindan aytilmaydi, javobdan keyin to'g'ri talaffuz eshitiladi */
+  const keyinAyt = it.ttsKeyin && it.tts ? () => setTimeout(() => { if (CUR && CUR.it === it) speak(it.tts, 0, $('#fb .good,#fb .explain')); }, 250) : null;
+  if (fin.togri) { FX.play('ding'); $('#fb').innerHTML = `<div class="good">✅ ${esc(pickA(PRAISE1))}</div>`; if (keyinAyt) keyinAyt(); setTimeout(next, keyinAyt ? (A.TEZ ? 1200 : 2100) : A.TEZ ? 200 : 1300); return; }
   /* 0.2.0: 2-xatoda javob shunchaki ko'rsatilmaydi — kichik dars → egizak savol */
   if (darsMumkin(it, r)) return darsFlow(b, m, st, it, next);
   /* 2-xato: to'g'ri javob tushuntiriladi → takrorga */
   FX.play('yumshoq'); $$('.opt').forEach(o => { if (o.dataset.v === String(it.a)) o.classList.add('ok'); });
   $('#fb').innerHTML = `<div class="explain">${r.yakuniy ? '🙂 Bu mashq hozircha qiyin bo\'ldi.' : `👉 To'g'ri javob: <b>${esc(it.aLabel || it.a)}</b>`}${it.tushun ? '<br>' + esc(it.tushun) : ''}<br><span class="sm">Bu mashq keyinroq yana chiqadi — eslab qolamiz.</span></div><button class="btn big" data-next>Davom ➜</button>`;
-  $('[data-next]').onclick = next;
+  $('[data-next]').onclick = next; if (keyinAyt) keyinAyt();
 }
 /* ================= 🎮 O'YIN NAVBATI va 😴 CHARCHADIM (0.3.0) =================
    Har N ta missiya savolidan keyin (⚙️ oyinHar, 0 — o'chiq) dam olish o'yini ochiladi. Dars egizagi sanalmaydi, faqat yakun qolganda o'yin chiqmaydi.
@@ -3677,7 +3686,7 @@ function tushunmadim(b, m, st, it, st0) {
     ${qol ? `<button class="btn ghost" data-sora disabled>🙋 Ota-onamdan so'rayman <span class="sm" data-sc></span></button><p class="sm mut tsq">Savol hozircha o'tkaziladi, ${CUR.k === 'missiya' ? 'missiya oxirida' : CUR.vz ? 'vazifa oxirida' : 'biroz keyin'} qaytadi. Yana ${qol} marta so'rash mumkin.</p>`
       : `<p class="sm tsq">🙋 Bugun ${SORA_MAX} marta so'rading — bunisini o'zing urinib ko'r. Xato qilsang, kichik dars yordam beradi 💪</p>`}</div>`, el => {
     if (sc) kinoPlay($('[data-tkh]', el), sc, { mini: 1, done: () => { const a = $('[data-tans]', el); if (a) a.classList.remove('kyash'); } });
-    $('[data-tok]', el).onclick = closeSheets; const ts = $('[data-tsay]', el); if (ts) ts.onclick = () => speak(om.tts);
+    $('[data-tok]', el).onclick = closeSheets; const ts = $('[data-tsay]', el); if (ts) { ts.onclick = () => speak(om.tts, 0, ts); if (A.ovoz && A.ovoz.enOldin) A.ovoz.enOldin(om.tts); }
     const sb = $('[data-sora]', el), c = $('[data-sc]', el); if (!sb) return;
     let k = A.TEZ ? 0 : 4; const tk = () => { if (!el.isConnected) return; if (k <= 0) { sb.disabled = false; c.textContent = ''; return; } c.textContent = '(' + k + ')'; k--; setTimeout(tk, 1000); }; tk();
     sb.onclick = () => { if (sb.disabled) return; closeSheets(); soraQil(b, m, st, it); };
@@ -3935,7 +3944,7 @@ function stepKashfCard(b, m, st) {
   frame(b, m, stepTitle(st), `<div class="kcard k2"><div class="ksc${FX.low ? ' low' : ''}">${ART.kashfSahna(kk.kat)}<div class="kmed"><span>${kk.em}</span></div>${kk.kat ? `<div class="kkat">${esc(KAT[kk.kat] || '')}</div>` : ''}</div>
   <h2>${esc(kk.nom)}</h2><p class="ktxt">${esc(d.t)}</p>${q === 1 ? '<div class="note">👨 Kattalar o\'qib bersin, keyin birga gaplashing.</div>' : q === 2 ? '<div class="note">📖 Birga o\'qing.</div>' : ''}
   <div class="row"><button class="btn ghost" data-en>🔊 ${kk.en[1]} ${esc(kk.en[0])}</button></div><button class="btn big" data-go>Savolga o'tish ➜</button></div>`);
-  $('[data-en]').onclick = () => speak(kk.en[0]); $('[data-go]').onclick = () => { st.oqildi = 1; A.save(); stepRun(b, m); };
+  $('[data-en]').onclick = e => speak(kk.en[0], 0, e.currentTarget); if (A.ovoz && A.ovoz.enOldin) A.ovoz.enOldin(kk.en[0]); $('[data-go]').onclick = () => { st.oqildi = 1; A.save(); stepRun(b, m); };
 }
 function kashfUyMumkin(b, m, st) { const kk = B.kashf.find(x => x.id === st.id); return !!(kk && kk.uy && A.S().sozlama.kashfUy !== false); }
 function stepKashfUy(b, m, st) {
@@ -4026,8 +4035,8 @@ function arenaNext(b, given) {
   CUR.it = it; CUR.st = st0; CUR.fan = it.fan;
   app.innerHTML = `<div class="wrap play"><div class="top"><button class="ib" data-x aria-label="Chiqish">✕</button><div class="ttl">⚔️ Arena</div><span class="sp"></span><span class="pill">⭐ ${ay}/20</span></div><div class="item t-${it.t}">${headHTML(b, it)}<div id="body"></div><div id="fb"></div>${otaTip(b, it)}</div></div>`;
   $('[data-x]').onclick = () => { endSession(b); go('uy'); };
-  const say = $('[data-say]'); if (say) say.onclick = () => { st0.ovoz++; speak(it.tts); };
-  CUR.cb = r => onAnswer(b, null, null, it, st0, r); (RENDER[it.t] || RENDER.tanla)($('#body'), it, b, CUR.cb, st0); if (A.ovoz) A.ovoz.bind(b, it, st0, $('.item'));
+  const enKeyin = sayBind(it, st0);
+  CUR.cb = r => onAnswer(b, null, null, it, st0, r); (RENDER[it.t] || RENDER.tanla)($('#body'), it, b, CUR.cb, st0); if (A.ovoz) A.ovoz.bind(b, it, st0, $('.item'), { keyin: enKeyin }); else if (enKeyin) setTimeout(enKeyin, 350);
 }
 /* ================= 📚 MASHQ va 📝 UYGA VAZIFA (0.4.0) =================
    Mashq — bola fanni (arabda bo'limni ham) o'zi tanlaydi, cheksiz savol; xato bo'lsa kichik dars, har N savolda o'yin, yulduz kunlik 20 chegarasi bilan.
@@ -4089,9 +4098,9 @@ function mashqNext(b, given) {
   <div class="item t-${it.t}">${soraBanner(it)}${headHTML(b, it)}<div id="body"></div><div id="fb"></div>${otaTip(b, it)}</div>${qrowHTML(b, null, null, it)}</div>`;
   qrowBind(b, null, null, it, st0);
   $('[data-x]').onclick = () => { endSession(b); A.save(true); if (C.n && !Z) toast(`📚 ${C.n} ta savol · ${C.ok} tasi birinchi urinishda ✅`); go('uy'); };
-  const say = $('[data-say]'); if (say) say.onclick = () => { st0.ovoz++; speak(it.tts); };
+  const enKeyin = sayBind(it, st0);
   if (st0.lock) { const ob = $('#body'); ob.classList.add('locked'); setTimeout(() => ob.classList.remove('locked'), 1500); }
-  CUR.cb = r => onAnswer(b, null, null, it, st0, r); (RENDER[it.t] || RENDER.tanla)($('#body'), it, b, CUR.cb, st0); if (A.ovoz) A.ovoz.bind(b, it, st0, $('.item'));
+  CUR.cb = r => onAnswer(b, null, null, it, st0, r); (RENDER[it.t] || RENDER.tanla)($('#body'), it, b, CUR.cb, st0); if (A.ovoz) A.ovoz.bind(b, it, st0, $('.item'), { keyin: enKeyin }); else if (enKeyin) setTimeout(enKeyin, 350);
 }
 function vazifaDone(b, C) {
   const v = C.vz;
@@ -4115,7 +4124,7 @@ function qutDone(b, C) {
 /* Sinov ekrani (faqat ?tez=1): bitta tugunning topshirig'ini ko'rsatadi — avtomatik sinov va ko'z bilan tekshirish uchun */
 function screenSinov(b, id, q, fmt) { CUR = { k: 'arena', b }; theme(b.dunyo); const it = A.makeItem(b, { tugun: id, q, tur: 'arena', fmt: fmt || null }), st0 = { shown: Date.now(), first: null, urinish: 1, maslahat: 0, ovoz: 0 }; CUR.it = it; CUR.st = st0; CUR.fan = it.fan;
   app.innerHTML = `<div class="wrap play"><div class="top"><button class="ib" data-x aria-label="Chiqish">✕</button><div class="ttl">🧪 ${esc(id)} q${q}</div></div><div class="item t-${it.t}">${headHTML(b, it)}<div id="body"></div><div id="fb"></div>${otaTip(b, it)}</div></div>`;
-  $('[data-x]').onclick = () => go('uy'); CUR.cb = r => { CUR.sinovNatija = r; onAnswer(b, null, null, it, st0, r); }; (RENDER[it.t] || RENDER.tanla)($('#body'), it, b, CUR.cb, st0); if (A.ovoz) A.ovoz.bind(b, it, st0, $('.item')); }
+  $('[data-x]').onclick = () => go('uy'); const enKeyin = sayBind(it, st0); CUR.cb = r => { CUR.sinovNatija = r; onAnswer(b, null, null, it, st0, r); }; (RENDER[it.t] || RENDER.tanla)($('#body'), it, b, CUR.cb, st0); if (A.ovoz) A.ovoz.bind(b, it, st0, $('.item'), { keyin: enKeyin }); }
 /* ================= SESSIYA va TAYMERLAR (6.1, 6.2) ================= */
 let lastAct = Date.now(), contSec = 0, pauseFlag = false;
 ['pointerdown', 'keydown'].forEach(ev => document.addEventListener(ev, () => { lastAct = Date.now(); pauseFlag = false; }, { passive: true }));
@@ -6298,7 +6307,7 @@ function kes(ab) {
   const o = ctx().createBuffer(1, z - a + 1, sr); o.getChannelData(0).set(d.subarray(a, z + 1)); return o;
 }
 function yuk(mb, id) {
-  const nom = cfg().nom, k = mb + '|' + (mb === 'ney' ? nom : '') + '|' + id;
+  const nom = mb === 'en' ? EN_NOM : cfg().nom, k = mb + '|' + (mb === 'ota' ? '' : nom) + '|' + id;
   if (KESH.has(k)) return KESH.get(k);
   const p = (mb === 'ota' ? A.ovoz.otaManba.ol(id) : fetch(BASE + nom + '/' + id + '.mp3').then(r => { if (!r.ok) throw new Error('fayl yo\'q: ' + id); return r.arrayBuffer(); }))
     .then(dekod).then(kes).catch(e => { KESH.delete(k); throw e; });
@@ -6315,7 +6324,7 @@ function tegHint(el) {
 }
 /* teginish javob bo'lsa (variant bosildi) — eski savol o'qilmaydi: 150 ms dan keyin javob belgisi bormi, tekshiriladi */
 function kutDavom() { const k = KUT; if (!k) return; KUT = null; setTimeout(() => { const it = k.el && k.el.closest ? k.el.closest('.item') : null;
-  if (k.el && k.el.isConnected && !(it && it.querySelector('.opt.ok,.opt.no,.ok,.no'))) oqi(k.r, k.el, k.opt).then(k.res); else k.res(false); }, 150); }
+  if (k.el && k.el.isConnected && !(it && it.querySelector('.opt.ok,.opt.no,.ok,.no'))) (k.fn ? k.fn() : oqi(k.r, k.el, k.opt)).then(k.res); else k.res(false); }, 150); }
 FX.onUnlock = kutDavom;
 function toxta() {
   IJ++; KUT = null; NODES.forEach(n => { try { n.stop(); } catch (e) {} }); NODES = []; clearTimeout(TM); belgi(EL, false); EL = null;
@@ -6366,6 +6375,61 @@ function ijro(bufs, pz, el, id, kut) {
 }
 /* oldindan yuklab qo'yish (tugma bosilganda darhol chiqsin) */
 function oldin(r) { const mb = manba(r); if (mb === 'ney' || mb === 'ota') r.forEach(x => yuk(mb, x.id).catch(() => {})); return mb; }
+/* ---------- 0.7.3: 🇬🇧 INGLIZCHA SO'Z («🔊 Eshitish» / «Talaffuz», javobdan keyingi talaffuz, darsda) ----------
+   07.11 (u, iPhone: «jim rejimda ham savollar o'qilyapti, lekin Eshitish tugmasini bossam ishlamayapti»): inglizcha so'z telefon ovozi
+   (speechSynthesis) bilan aytilardi — iPhone'da u yon tomondagi jim tugmaga bo'ysunadi. Endi neyron fayl ovoz/en_jenny/<id>.mp3
+   (edge en-US-JennyNeural, GitHub Actions yasaydi) savol kabi media yo'l (iPhone) yoki WebAudio bilan o'ynaladi.
+   Fayl yo'q / yuklanmadi — eski telefon ovozi (zaxira). «Savol ovozi» o'chirilgan bo'lsa ham ishlaydi (alohida, o'quv tugmasi).
+   id = 'e' + fnv-1a(base36) matnning o'zidan (bo'shliqlar tekislanadi) — inventar (sinov/ovoz/inventar.py) shu funksiya bilan yig'adi. */
+const EN_NOM = 'en_jenny', ENR = { ids: null, n: 0, ts: 0, p: null };
+const enNorm = t => String(t == null ? '' : t).replace(/\s+/g, ' ').trim();
+function enId(t) { t = enNorm(t); let h = 2166136261; for (let i = 0; i < t.length; i++) { h ^= t.charCodeAt(i); h = Math.imul(h, 16777619); } return 'e' + (h >>> 0).toString(36); }
+function enQabul(d) { if (!d || !Array.isArray(d.id)) return false; ENR.ids = new Set(d.id); ENR.n = d.id.length; return true; }
+function enTayyor(majbur) {
+  if (!ENR.ids) { try { enQabul(JSON.parse(localStorage.getItem(LKR(EN_NOM)) || 'null')); } catch (e) {} }
+  const ol = () => ENR.p || (ENR.p = fetch(BASE + EN_NOM + '/royxat.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : null).then(d => {
+    if (d && enQabul(d)) { ENR.ts = Date.now(); try { localStorage.setItem(LKR(EN_NOM), JSON.stringify(d)); } catch (e) {} } return ENR.ids;
+  }).catch(() => ENR.ids).then(x => { ENR.p = null; return x; }));
+  if (ENR.ids && !majbur) { if (Date.now() - ENR.ts > 6 * 3600e3) ol(); return Promise.resolve(ENR.ids); }
+  return ol();
+}
+const enBor = t => !!(ENR.ids && ENR.ids.has(enId(t)));
+/* ilovadagi hamma inglizcha aytiladigan matn: so'zlar (B.en), iboralar (B.enIbora), kashfiyot so'zi (B.kashf[].en) */
+function enMatnlar() {
+  const B = (G.BJ && G.BJ.bank) || {}, out = new Set(), q = t => { t = enNorm(t); if (t) out.add(t); };
+  Object.keys(B.en || {}).forEach(k => (B.en[k] || []).forEach(w => q(w[0])));
+  (B.enIbora || []).forEach(x => q(x[0])); (B.kashf || []).forEach(k => { if (k && k.en) q(k.en[0]); });
+  return [...out];
+}
+/* oldindan yuklab qo'yish — tugma bosilganda darhol chiqsin */
+function enOldin(t) { t = enNorm(t); if (!t) return; enTayyor().then(() => { if (enBor(t)) yuk('en', enId(t)).catch(() => {}); }); }
+/* zaxira: telefon ovozi (iPhone'da jim tugma yoqilgan bo'lsa eshitilmaydi) */
+function enTel(t, el) {
+  try { const u = new SpeechSynthesisUtterance(t), vs = (speechSynthesis.getVoices() || []).filter(v => /^en/i.test(v.lang || '')); u.lang = 'en-US'; u.rate = 0.85; if (vs.length) u.voice = vs.find(v => /^en.US/i.test(v.lang)) || vs[0];
+    const id = IJ; EL = el; belgi(el, true); u.onend = u.onerror = () => { if (id === IJ) { belgi(el, false); EL = null; } }; speechSynthesis.cancel(); speechSynthesis.speak(u); ENR.tel = (ENR.tel || 0) + 1; return true; } catch (e) { return false; }
+}
+/* aytish: Promise<boolean>. iPhone (media yo'l) hali ochilmagan bo'lsa — teginishgacha navbat (savol kabi) */
+async function ingliz(t, el, opt) {
+  opt = opt || {}; t = enNorm(t); if (!t) return false;
+  if (el && EL === el && el.classList.contains('gapir')) { toxta(); return false; }   /* aytayotganda qayta bosildi — to'xtaydi */
+  toxta(); const id = IJ;
+  await enTayyor(); if (id !== IJ) return false;
+  const ac = ctx(); if (!enBor(t) || !ac) return enTel(t, el);
+  const media = mediaYol(), kut = res => ({ el, fn: () => ingliz(t, el, opt), res });
+  if (media) {
+    /* teginish ichida ochilgan jim tovush (FX.onGesture) tugashini qisqa kutamiz — aks holda ikki play() bir-birini to'xtatadi */
+    if (!MEo) await new Promise(z => { let n = 0; const iv = setInterval(() => { if (MEo || ++n > 12 || id !== IJ) { clearInterval(iv); z(); } }, 50); });
+  } else {
+    try { if (navigator.audioSession && navigator.audioSession.type !== 'playback') navigator.audioSession.type = 'playback'; } catch (e) {}
+    if (ac.state !== 'running') { try { const p = ac.resume(); if (p && p.then) await Promise.race([p.catch(() => {}), new Promise(z => setTimeout(z, 450))]); } catch (e) {} }
+    if (ac.state !== 'running') { if (id !== IJ) return false; return enTel(t, el); }
+  }
+  if (id !== IJ) return false;
+  EL = el; belgi(el, true);
+  let buf; try { buf = await yuk('en', enId(t)); } catch (e) { if (id !== IJ) return false; belgi(el, false); EL = null; return enTel(t, el); }
+  if (id !== IJ) return false;
+  return ijro([buf], () => 0, el, id, opt.navbat === false ? null : kut).then(ok => { if (ok) ENR.ok = (ENR.ok || 0) + 1; return ok; });
+}
 /* ---------- savol ekrani: 🔊 tugma, savol o'zi o'qiladi (07.11 — HAMMA bolaga), variantni bosib turish ---------- */
 /* opt.keyin — o'zbekcha savol o'qilgandan keyin (inglizcha so'zni telefon aytadi); o'qilmasa 350 ms da */
 function bind(b, it, st0, item, opt) {
@@ -6422,19 +6486,20 @@ async function tekshir(box, bt) {
   if (FX.unlock) FX.unlock();
   bt.disabled = true; box.innerHTML = '<p class="sm">⏳ Tekshirilmoqda…</p>';
   const ios = iosVer(), qur = ios ? 'iPhone, iOS ' + ios : /Android/i.test(navigator.userAgent) ? 'Android' : 'kompyuter', pwa = !!(navigator.standalone || (G.matchMedia && matchMedia('(display-mode: standalone)').matches));
-  const ney = await neyTayyor(true), L = [];
+  const ney = await neyTayyor(true), en = await enTayyor(true), L = [];
   let fayl = 'yoq', dek = 0;
   try { const t0 = Date.now(); const b = await yuk('ney', 'n5'); dek = Date.now() - t0; fayl = b && b.duration > 0.1 ? 'ok' : 'bosh'; } catch (e) { fayl = 'xato'; }
   const fx = FX.audioInfo ? FX.audioInfo() : {}, holat = ac ? ac.state : 'yoq', media = mediaYol();
   let ijr = '-';
   if (fayl === 'ok' && (media || holat === 'running')) { const ok = await Promise.race([oqi(NUTQ.reja('5'), bt, { mb: 'ney' }), new Promise(z => setTimeout(() => z('kut'), 6000))]); ijr = ok === true ? 'ok' : ok === 'kut' ? 'kut' : 'yoq'; }
-  const kod = `OVOZ|${qur}|${pwa ? 'ilova' : 'brauzer'}|yol=${media ? 'media' : 'webaudio'}|me=${MEo ? 'ochiq' : 'yopiq'}|ijro=${ijr}|session=${fx.session || '-'}|holat=${ac ? ac.state : 'yoq'}|jim=${fx.jim || '-'}|royxat=${ney ? NEY.n : 0}|fayl=${fayl}|${dek}ms|v=${A.VER}`;
+  const kod = `OVOZ|${qur}|${pwa ? 'ilova' : 'brauzer'}|yol=${media ? 'media' : 'webaudio'}|me=${MEo ? 'ochiq' : 'yopiq'}|ijro=${ijr}|session=${fx.session || '-'}|holat=${ac ? ac.state : 'yoq'}|jim=${fx.jim || '-'}|royxat=${ney ? NEY.n : 0}|fayl=${fayl}|${dek}ms|en=${en ? ENR.n : 0}|v=${A.VER}`;
   L.push(`📱 ${qur} · ${pwa ? 'uy ekranidagi ilova' : 'brauzer'}`);
   L.push(media ? `🎵 Usul: media pleyer${cfg().yol ? '' : ' (iPhone uchun avtomatik)'} — jim tugma to'smaydi ✓` : `🎵 Usul: WebAudio${cfg().yol ? '' : ' (avtomatik)'}`);
   if (!media) L.push(ios && +ios.split('.')[0] < 17 ? (fx.jim === 'ishlayapti' ? '🔈 iOS 17 dan eski: jim tugma aylanib o\'tildi ✓' : '⚠️ iOS 17 dan eski: yon tomondagi jim tugmasini (beshik) o\'chiring') : (fx.session === 'playback' ? '🔈 Jim tugma ovozni to\'smaydi ✓' : ios ? '⚠️ Jim tugma ovozni to\'sishi mumkin — yon tugmani tekshiring' : '🔈 Ovoz rejimi ✓'));
   L.push(media ? (MEo ? '🎚️ Media pleyer ochiq ✓' : '⚠️ Media pleyer hali ochilmagan — ekranga bir marta tegib, qayta bosing') : holat === 'running' ? '🎚️ Ovoz tizimi ochiq ✓' : '⚠️ Ovoz tizimi yopiq — ekranga bir marta tegib, qayta bosing');
   L.push(ney ? `📋 Ro'yxat: ${NEY.n.toLocaleString('ru-RU')} ta ibora ✓` : "⚠️ Ro'yxat yuklanmadi — internetni tekshiring");
   L.push(fayl === 'ok' ? `🎧 Fayl yuklandi va o'qildi ✓ (${dek} ms)` : '⚠️ Ovoz fayli yuklanmadi — internetni tekshiring');
+  L.push(en ? `🇬🇧 Inglizcha so'zlar: ${ENR.n} ta tayyor ✓` : "⚠️ Inglizcha so'zlar ro'yxati yuklanmadi — telefon ovozi ishlatiladi");
   bt.disabled = false;
   box.innerHTML = `<div class="sm">${L.map(esc).join('<br>')}</div><p class="sm"><b>«Besh» so'zini eshitdingizmi?</b></p><div class="row"><button class="btn sm" data-eh="1">✅ Ha</button><button class="btn sm ghost" data-eh="0">❌ Yo'q</button></div><div data-ehn></div>`;
   $$('[data-eh]', box).forEach(x => x.onclick = () => {
@@ -6450,7 +6515,7 @@ function panel(top, bindTop) {
   const c = cfg(), app = A.app, yoq = !!c.nom;
   const holat = !yoq ? "🔇 O'chiq — savollar o'qilmaydi" : NEY.ids && NEY.nom === c.nom ? `✅ ${NEY.n.toLocaleString('ru-RU')} ta ibora tayyor` : "⏳ Ro'yxat yuklanmoqda…";
   app.innerHTML = `<div class="wrap ota">${top('🔊 Savol ovozi', 'ota')}
-  <div class="card"><p class="sm">Savol o'zbekcha ovozda <b>o'zi</b> o'qiladi — hamma bolaga (maktabgacha, 1–2-sinf) va hamma joyda: missiya, mashq, uyga vazifa, arena. 🔊 tugmasi — qayta eshitish. O'qilmaydi: o'qish sinovidagi so'z (bola o'zi o'qiydi), arabcha so'z; inglizcha so'zni telefon o'zi aytadi.</p></div>
+  <div class="card"><p class="sm">Savol o'zbekcha ovozda <b>o'zi</b> o'qiladi — hamma bolaga (maktabgacha, 1–2-sinf) va hamma joyda: missiya, mashq, uyga vazifa, arena. 🔊 tugmasi — qayta eshitish. O'qilmaydi: o'qish sinovidagi so'z (bola o'zi o'qiydi), arabcha so'z. Inglizcha so'z — alohida inglizcha ovozda («🔊 Eshitish», javobdan keyin talaffuz); bu tugma «Savol ovozi» o'chiq bo'lsa ham ishlaydi.</p></div>
   <div class="card"><h3>Ovoz: Madina</h3>
     <label class="uzr"><input type="checkbox" data-yoq${yoq ? ' checked' : ''}> Savol ovozi yoqilgan</label>
     <div class="row"><button class="btn sm ghost" data-nam>▶ Namuna</button></div>
@@ -6470,8 +6535,8 @@ function panel(top, bindTop) {
   if (c.nom && !(NEY.ids && NEY.nom === c.nom)) neyTayyor(true).then(x => { if (x && location.hash === '#ota-ovoz') { const h = $('[data-uzh]'); if (h) h.textContent = `✅ ${NEY.n.toLocaleString('ru-RU')} ta ibora tayyor`; } });
 }
 /* ilova ochilganda ro'yxatni fonda yangilash (internet bo'lsa) */
-setTimeout(() => { try { if (cfg().nom) neyTayyor(); } catch (e) {} }, 1500);
-A.ovoz = { NUTQ, reja, savolMatn, savolReja, variantMatn, manba, oqi, toxta, bind, panel, neyTayyor, cfg, NOMLAR, STANDART, holat: () => ({ nom: NEY.nom, n: NEY.n, kesh: KESH.size, kut: !!KUT, yol: mediaYol() ? 'media' : 'webaudio', me: MEo, mn: MEn, msrc: ME && ME.src ? String(ME.src).slice(0, 5) : '' }), otaManba: null };
+setTimeout(() => { try { if (cfg().nom) neyTayyor(); enTayyor(); } catch (e) {} }, 1500);
+A.ovoz = { NUTQ, reja, savolMatn, savolReja, variantMatn, manba, oqi, toxta, bind, panel, neyTayyor, cfg, NOMLAR, STANDART, ingliz, enId, enMatnlar, enOldin, enTayyor, EN_NOM, holat: () => ({ nom: NEY.nom, n: NEY.n, kesh: KESH.size, kut: !!KUT, yol: mediaYol() ? 'media' : 'webaudio', me: MEo, mn: MEn, msrc: ME && ME.src ? String(ME.src).slice(0, 5) : '', en: ENR.n, enOk: ENR.ok || 0, enTel: ENR.tel || 0 }), otaManba: null };
 })(window);
 </script>
 <script>
@@ -7346,7 +7411,7 @@ function start() {
   BJ.debug = { state: () => A.S(), fx: FX.stats, A, gen: BJ.gen };
   A.render();
   try { if (A.bulutStart) A.bulutStart(); } catch (e) { console.warn(e); }
-  if (oldVer && oldVer !== A.VER) setTimeout(() => toast(oldVer === '0.7.1' ? '🆕 Bilimjon v7.2: 🔊 iPhone\'da savol ovozi tuzatildi (jim rejimda ham eshitiladi)' : oldVer.indexOf('0.7.') === 0 ? '🆕 Bilimjon v7.2: 🔊 savollar o\'zbekcha ovozda o\'qiladi, 🤔 «Tushunmadim» tugmasi va 🙋 ota-onadan so\'rash!' : '🆕 Bilimjon v7.2: 🔊 savollar ovozda, 🗺️ sarguzasht xaritasi, 🎮 o\'yinlar zali, 🧺 oila bozori, 🤔 «Tushunmadim» tugmasi!'), 900);
+  if (oldVer && oldVer !== A.VER) setTimeout(() => toast(oldVer === '0.7.2' ? '🆕 Bilimjon v7.3: 🇬🇧 «🔊 Eshitish» — inglizcha so\'z yangi ovozda (iPhone jim rejimida ham)' : oldVer === '0.7.1' ? '🆕 Bilimjon v7.3: 🔊 iPhone\'da savol va inglizcha so\'z ovozi tuzatildi (jim rejimda ham eshitiladi)' : oldVer.indexOf('0.7.') === 0 ? '🆕 Bilimjon v7.3: 🔊 savollar o\'zbekcha ovozda o\'qiladi, 🤔 «Tushunmadim» tugmasi va 🙋 ota-onadan so\'rash!' : '🆕 Bilimjon v7.3: 🔊 savollar ovozda, 🗺️ sarguzasht xaritasi, 🎮 o\'yinlar zali, 🧺 oila bozori, 🤔 «Tushunmadim» tugmasi!'), 900);
 }
 start();
 })(window);
