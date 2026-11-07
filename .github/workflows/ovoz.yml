@@ -18,6 +18,8 @@ jobs:
         with: { python-version: '3.12' }
       - run: pip install -U edge-tts
       - run: python ovoz/skript/yasa.py
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       - name: commit
         run: |
           git config user.name "bilimjon-ovoz"

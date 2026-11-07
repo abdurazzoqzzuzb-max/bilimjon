@@ -1,28 +1,52 @@
 {
-"v": 2,
+"v": 3,
 "ovozlar": {
+"madina_sekin": {
+"dvigatel": "edge",
+"voice": "uz-UZ-MadinaNeural",
+"rate": "-18%",
+"nom": "Madina — sekinroq (tanlangan, 07.11)",
+"toliq": true,
+"imlo": 2
+},
+"madina_jonli": {
+"dvigatel": "edge",
+"voice": "uz-UZ-MadinaNeural",
+"rate": "-12%",
+"pitch": "+12Hz",
+"nom": "Madina — jonliroq (bolalarga)",
+"imlo": 2
+},
 "madina": {
+"dvigatel": "edge",
 "voice": "uz-UZ-MadinaNeural",
 "rate": "-6%",
 "nom": "Madina (ayol)",
-"toliq": true
-},
-"madina_sekin": {
-"voice": "uz-UZ-MadinaNeural",
-"rate": "-18%",
-"nom": "Madina — sekinroq"
+"imlo": 2
 },
 "sardor": {
+"dvigatel": "edge",
 "voice": "uz-UZ-SardorNeural",
 "rate": "-6%",
-"nom": "Sardor (erkak)"
+"nom": "Sardor (erkak)",
+"imlo": 2
+},
+"gemini_kore": {
+"dvigatel": "gemini",
+"model": "gemini-3.8-flash-tts",
+"voice": "Kore",
+"nom": "Gemini — his-tuyg'uli (sinov)",
+"imlo": 2,
+"style": "Warm, cheerful and gentle, like a kind kindergarten teacher talking to a 5-year-old child. Native Uzbek pronunciation, natural expressive intonation, smiling voice, not robotic."
 }
 },
 "namuna": {
 "n1": "Malikada to'qqizta yong'oq bor edi. Yettitasini do'stiga berdi. Nechta yong'oq qoldi?",
 "n2": "O'n uchdan sakkizni ayirsak, nechchi bo'ladi?",
 "n3": "«Oyoq» so'zi qaysi harf bilan boshlanadi?",
-"n4": "Barakalla! Juda yaxshi. Endi keyingisiga o'tamiz."
+"n4": "Barakalla! Juda yaxshi. Endi keyingisiga o'tamiz.",
+"n5": "O'g'il bola bog'chaga bordi. G'oz va qo'zichoq o'tloqda o'ynayapti. To'g'ri javobni top!",
+"n6": "Voy, zo'r-ku! Barakalla, qahramon! Yana bitta savol qoldi, qani, ko'ramiz!"
 },
 "iboralar": {
 "h1": "yuz",
