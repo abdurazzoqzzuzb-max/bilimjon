@@ -17,6 +17,7 @@
      akkaunt <email> <yoq|ochir|ochirish>   — o'chirib qo'yish / yoqish / butunlay o'chirish (ochirish — TASDIQ=HA)
      kochir <eski_email> <yangi_email>      — oila bulut ma'lumotini yangi akkauntga (TASDIQ=HA)
      qoidalar <admin_email>         — firestore.rules ni Firebase'ga qo'yish (__ADMIN_UID__ → shu akkaunt)
+     qoidalar - eski                — ORQAGA: eski 0.5.0 qoidalari (ruxsat tizimisiz, hamma oila o'z bulutiga yozadi)
      zaxira                         — hamma Firestore ma'lumoti → zaxira/bilimjon_YYYY-MM-DD.json.gz (Actions artifact, 90 kun)
 */
 'use strict';
@@ -155,7 +156,13 @@ B.kochir = async ({ auth, db, log, A1, A2, TASDIQ }) => {
   log(`🔁 ${s.email} → ${d.email}: oila + ${nb} bola + ${nl} kunlik log ko'chirildi. Yangi akkaunt egasi ilovani yopib qayta ochsin.`);
 };
 
-B.qoidalar = async ({ auth, db, rules, log, A1, QOIDA_FAYL }) => {
+B.qoidalar = async ({ auth, db, rules, log, A1, A2, QOIDA_FAYL }) => {
+  if (String(A2 || '').toLowerCase() === 'eski') {   /* orqaga qaytish: qoidalar/firestore-0.5.0.rules (admin/ruxsat yo'q) */
+    const ef = path.join(path.dirname(QOIDA_FAYL), 'qoidalar', 'firestore-0.5.0.rules');
+    if (!fs.existsSync(ef)) throw new Error('Eski qoidalar fayli yo\'q: qoidalar/firestore-0.5.0.rules');
+    await rules.releaseFirestoreRulesetFromSource(fs.readFileSync(ef, 'utf8'));
+    return log('↩ Eski (0.5.0) qoidalar qo\'yildi: ruxsat tizimi o\'chdi, har oila o\'z bulutiga avvalgidek yozadi.');
+  }
   /* beta/firestore.rules — eng yangi qoidalar (beta har doim saytdagidan yangi yoki teng; qoidalar eski ilova bilan ham ishlaydi) */
   const fayl = [QOIDA_FAYL, path.join(path.dirname(QOIDA_FAYL), 'beta', 'firestore.rules')].reverse().find(f => f && fs.existsSync(f)) || QOIDA_FAYL;
   const u = await foydalanuvchi(auth, A1), t = fs.readFileSync(fayl, 'utf8');

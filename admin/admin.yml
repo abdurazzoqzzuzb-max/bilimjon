@@ -46,6 +46,7 @@ jobs:
             admin
             firestore.rules
             beta/firestore.rules
+            qoidalar
       - uses: actions/setup-node@v4
         with: { node-version: 20 }
       - name: firebase-admin
