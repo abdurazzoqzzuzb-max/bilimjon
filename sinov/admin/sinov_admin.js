@@ -92,6 +92,11 @@ const xato = async (b, x) => { try { await run(b, x); return null; } catch (e) {
   ok(r1.status === 0 && r1.stdout.includes('yopiq repodagi fayl') && r1.stdout.includes('bilimjon-4c008') && !r1.stdout.includes('PRIVATE KEY'), "admin.js: yuklangan fayl bilan ishga tushadi, kalit logga chiqmaydi");
   const r2 = cp.spawnSync('node', [A], { env: Object.assign({}, process.env, { NODE_PATH: nm, BUYRUQ: 'yordam', SA_PAPKA: nm, FIREBASE_SA: '' }), encoding: 'utf8' });
   ok(r2.status === 1 && r2.stderr.includes("Kalit yo'q"), "admin.js: kalitsiz — tushunarli xato");
+  // orqaga: qoidalar - eski → qoidalar/firestore-0.5.0.rules (o'zgarishsiz)
+  fs.mkdirSync(path.join(qd, 'qoidalar')); fs.writeFileSync(path.join(qd, 'qoidalar', 'firestore-0.5.0.rules'), '// eski 0.5.0');
+  L.length = 0; await run('qoidalar', { A1: '-', A2: 'eski', QOIDA_FAYL: path.join(qd, 'firestore.rules') });
+  ok(QOYILDI === '// eski 0.5.0' && /Eski \(0\.5\.0\)/.test(L.join('')), "qoidalar eski: 0.5.0 qoidalariga qaytish (email kerak emas)");
+  ok(fs.existsSync(path.join(R0, 'qoidalar', 'firestore-0.5.0.rules')), 'repoda qoidalar/firestore-0.5.0.rules bor');
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'bjz')); L.length = 0; const f = await run('zaxira', { ZAXIRA_PAPKA: tmp });
   const z = JSON.parse(zlib.gunzipSync(fs.readFileSync(f)));
   ok(Object.keys(z.oila).length === 3 && z.oila.UjavUID.bolalar.s1 && Object.keys(z.oila.UjavUID.log).length === 1 && z.ruxsat.UjavUID && z.guruh.ABCDEFGH23.oilalar.UadminUID, 'zaxira: oila (bola, log), ruxsat, guruh — hammasi faylda');
