@@ -1,9 +1,9 @@
 rules_version = '2';
-// Bilimjon 0.7.1 — Firestore xavfsizlik qoidalari (Firebase konsoli → Firestore → Rules ga qo'yiladi).
+// Bilimjon 0.7.5 — Firestore xavfsizlik qoidalari (Firebase konsoli → Firestore → Rules ga qo'yiladi).
 // 🛡️ RUXSAT TIZIMI: yangi oila bulutga faqat admin (Bilimjon egasi) tasdig'i bilan yoza oladi — ruxsat/{uid}.holat == 'ok'.
 // admin() dagi ID — admin akkaunt ID si. Uni QO'LDA yozmang: ilova o'zi qo'yadi (👨‍👩‍👧 → ☁️ Oila akkaunti → 🛡️ → «📋 Qoidalarni nusxalash»).
 // Bu fayl repo'da namuna sifatida turadi. Eski (0.5.0–0.7.0) qoidalar: qoidalar/firestore-0.5.0.rules
-// oila/{uid}/** — faqat shu akkaunt egasi (yozish — ruxsat bilan). guruh/{kod} — faqat a'zo oilalar o'qiydi; har oila faqat o'z bolalarining haftalik xulosasini yozadi.
+// oila/{uid}/** — shu akkaunt egasi (yozish — ruxsat bilan) va admin (👨‍👩‍👧 Hamma oilalar: ko'rish, ma'lumotni yangi akkauntga ko'chirish). guruh/{kod} — faqat a'zo oilalar o'qiydi; har oila faqat o'z bolalarining haftalik xulosasini yozadi.
 service cloud.firestore {
   match /databases/{database}/documents {
     function kirgan() { return request.auth != null; }
@@ -15,11 +15,11 @@ service cloud.firestore {
     }
 
     match /oila/{uid} {
-      allow read: if ozi(uid);
-      allow write: if ozi(uid) && ruxsatli();
+      allow read: if ozi(uid) || admin();
+      allow write: if (ozi(uid) && ruxsatli()) || admin();
       match /{qism=**} {
-        allow read: if ozi(uid);
-        allow write: if ozi(uid) && ruxsatli();
+        allow read: if ozi(uid) || admin();
+        allow write: if (ozi(uid) && ruxsatli()) || admin();
       }
     }
 
