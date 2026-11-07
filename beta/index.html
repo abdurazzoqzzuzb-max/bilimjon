@@ -515,7 +515,7 @@ body:not(.th-garaj):not(.th-orol) .zbig{color:#B9800F;background:none}
 .betab{position:fixed;left:8px;bottom:8px;z-index:9999;border:0;border-radius:999px;padding:5px 11px;font:900 .74rem/1.2 system-ui,sans-serif;color:#fff;background:linear-gradient(180deg,#FF9100,#E65100);box-shadow:0 6px 16px -6px rgba(230,81,0,.9);opacity:.94}
 .betag{text-align:center}.betag .btn{width:100%;margin-top:8px}body.beta .wrap{padding-bottom:44px}
 .item{position:relative}.uzb{position:absolute;right:-2px;top:-2px;z-index:3;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:linear-gradient(180deg,rgba(47,123,234,.95),rgba(25,82,178,.95));color:#fff;font-size:1.25rem;line-height:1;box-shadow:0 6px 16px -6px rgba(25,82,178,.9);display:flex;align-items:center;justify-content:center;padding:0}
-.uzb.kut{opacity:.35}.uzb:active{transform:scale(.94)}.item.uzq>.q{padding-left:44px;padding-right:44px}
+.uzb.kut{opacity:.35}.uzb.teg{animation:uzteg 1.1s ease-in-out infinite}@keyframes uzteg{0%,100%{box-shadow:0 0 0 0 rgba(47,123,234,.75)}50%{box-shadow:0 0 0 12px rgba(47,123,234,0)}}.uzb:active{transform:scale(.94)}.item.uzq>.q{padding-left:44px;padding-right:44px}
 .q.gapir{animation:uzg 1.2s ease-in-out infinite}@keyframes uzg{0%,100%{text-shadow:0 0 0 rgba(255,213,79,0)}50%{text-shadow:0 0 14px rgba(255,213,79,.85)}}
 .opt.uzv{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}.opt.uzlp,.opt.gapir{outline:3px solid #FFD54F;outline-offset:2px}
 .uzrow{display:flex;justify-content:space-between;align-items:center;gap:8px}.uzr{display:flex;gap:10px;align-items:center;margin:8px 0;font-weight:600}.uzr input{width:20px;height:20px}
@@ -2127,8 +2127,33 @@ function shake(ms, mag) { const el = document.getElementById('app'); if (!el) re
 function vibrate(p) { try { if (navigator.vibrate) navigator.vibrate(p); } catch (e) {} }
 /* ---------- ovoz: WebAudio sintez (fayl yo'q) ---------- */
 let ac = null, master = null;
-function audio() { if (ac) return ac; try { ac = new (G.AudioContext || G.webkitAudioContext)(); master = ac.createGain(); master.gain.value = FX.vol; master.connect(ac.destination); } catch (e) { ac = null; } return ac; }
-['pointerdown', 'keydown'].forEach(ev => G.addEventListener && G.addEventListener(ev, () => { const a = audio(); if (a && a.state === 'suspended') a.resume(); }, { passive: true }));
+/* 0.7.1 (07.11, iPhone'da ovoz chiqmasdi): 1) iPhone jim (beshik) tugmasi WebAudio'ni o'chiradi — iOS 17+ da audioSession 'playback' AudioContext dan OLDIN;
+   eski iOS'da — jim <audio> sikl (HTML media kanali WebAudio'ni ham ochadi). 2) Ochish (unlock) faqat haqiqiy harakatda: touchend / pointerup / click / keydown —
+   sensorli ekranda pointerdown foydalanuvchi harakati HISOBLANMAYDI (avval faqat pointerdown edi → iPhone'da AudioContext ochilmasdi). 3) 'interrupted' holat ham ochiladi. */
+const IOSF = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+function asPlay() { try { if (navigator.audioSession && navigator.audioSession.type !== 'playback') navigator.audioSession.type = 'playback'; } catch (e) {} }
+asPlay();
+let jimEl = null, ochildi = false;
+function jimWav() { const n = 4000, b = new Uint8Array(44 + n), v = new DataView(b.buffer), w = (o, t) => { for (let i = 0; i < t.length; i++) b[o + i] = t.charCodeAt(i); };
+  w(0, 'RIFF'); v.setUint32(4, 36 + n, true); w(8, 'WAVE'); w(12, 'fmt '); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true); v.setUint32(24, 8000, true); v.setUint32(28, 8000, true); v.setUint16(32, 1, true); v.setUint16(34, 8, true); w(36, 'data'); v.setUint32(40, n, true); b.fill(128, 44);
+  let s = ''; for (let i = 0; i < b.length; i++) s += String.fromCharCode(b[i]); return 'data:audio/wav;base64,' + btoa(s); }
+function jimAudio() {
+  if (!IOSF || navigator.audioSession) return;
+  try { if (!jimEl) { jimEl = document.createElement('audio'); jimEl.setAttribute('playsinline', ''); jimEl.setAttribute('x-webkit-airplay', 'deny'); jimEl.loop = true; jimEl.preload = 'auto'; jimEl.src = jimWav(); }
+    if (jimEl.paused) { const p = jimEl.play(); if (p && p.catch) p.catch(() => {}); } } catch (e) {}
+}
+function audio() { if (ac) return ac; asPlay(); try { ac = new (G.AudioContext || G.webkitAudioContext)(); master = ac.createGain(); master.gain.value = FX.vol; master.connect(ac.destination); } catch (e) { ac = null; } return ac; }
+function unlock() {
+  const a = audio(); if (!a) return; asPlay(); jimAudio();
+  if (a.state !== 'running') { try { const p = a.resume(); if (p && p.then) p.then(() => { if (a.state === 'running' && FX.onUnlock) FX.onUnlock(); }, () => {}); } catch (e) {} }
+  else if (FX.onUnlock) FX.onUnlock();
+  if (!ochildi) { try { const s = a.createBufferSource(); s.buffer = a.createBuffer(1, 1, 22050); s.connect(a.destination); s.start(0); ochildi = true; } catch (e) {} }
+}
+['touchend', 'pointerup', 'click', 'keydown'].forEach(ev => G.addEventListener && G.addEventListener(ev, unlock, { passive: true, capture: true }));
+G.addEventListener && G.addEventListener('pointerdown', e => { if (e.pointerType === 'mouse') unlock(); else audio(); }, { passive: true, capture: true });
+document.addEventListener('visibilitychange', () => { if (document.hidden) { ochildi = false; if (jimEl && !jimEl.paused) try { jimEl.pause(); } catch (e) {} } });
+FX.audioInfo = () => ({ ios: IOSF, session: navigator.audioSession ? navigator.audioSession.type : null, holat: ac ? ac.state : 'yoq', jim: jimEl ? (jimEl.paused ? 'pauza' : 'ishlayapti') : null });
+FX.unlock = unlock;
 function noise(dur) { const b = ac.createBuffer(1, ac.sampleRate * dur, ac.sampleRate), d = b.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1; const s = ac.createBufferSource(); s.buffer = b; return s; }
 function env(node, t, a, peak, dec) { const gn = ac.createGain(); gn.gain.setValueAtTime(0.0001, t); gn.gain.exponentialRampToValueAtTime(peak, t + a); gn.gain.exponentialRampToValueAtTime(0.0001, t + a + dec); node.connect(gn); gn.connect(master); return gn; }
 function tone(f, t, dur, type, peak, f2) { const o = ac.createOscillator(); o.type = type || 'sine'; o.frequency.setValueAtTime(f, t); if (f2) o.frequency.exponentialRampToValueAtTime(f2, t + dur); env(o, t, 0.01, peak || 0.3, dur); o.start(t); o.stop(t + dur + 0.05); }
@@ -2550,7 +2575,7 @@ Object.assign(A, { FAN, ZANJIR, BOSH, DARAJA, gl, BLOK, MANT_KUN, UZUN, XATO, TU
 const BETA = A.BETA = typeof location !== 'undefined' && /\/beta\/(index\.html)?$/.test(location.pathname);
 const KEY = BETA ? 'bj_beta_state_v1' : 'bj_state_v1'; /* asosiy kalit HECH QACHON o'zgarmaydi: yangi versiya eski holatni migrate() bilan yangilaydi */
 const SV = 1;
-function defaults() { return { v: SV, oila: null, pin: null, pinOta: null, sozlama: { ovoz: 0.8, kamEffekt: 'auto', tanaffus: 20, oyinHar: 5, oyinDaq: 3, uyqu: '21:00', reyting: true, tjTasdiq: {}, sandiq: { bronza: 40, kumush: 90, oltin: 150, olmos: 220 }, arTasdiq: {}, alifTasdiq: false, pul: true, byudjet: 50000, kassa: true, zal: 10, bozor: true, bozorXoh: true, kashfUy: true, tush: true, nutq: { nom: 'madina_jonli', avto: true, variant: true, tugma: true } }, bolalar: {}, tartib: [], joriy: null, duel: {}, oilaTel: {}, sovga: [], dokon: [], bozor: null, qurilma: null, lastBackup: null, seenVer: null, appVer: null }; }
+function defaults() { return { v: SV, oila: null, pin: null, pinOta: null, sozlama: { ovoz: 0.8, kamEffekt: 'auto', tanaffus: 20, oyinHar: 5, oyinDaq: 3, uyqu: '21:00', reyting: true, tjTasdiq: {}, sandiq: { bronza: 40, kumush: 90, oltin: 150, olmos: 220 }, arTasdiq: {}, alifTasdiq: false, pul: true, byudjet: 50000, kassa: true, zal: 10, bozor: true, bozorXoh: true, kashfUy: true, tush: true, nutq: { nom: 'madina_jonli', avto: true, variant: true, v: 2 } }, bolalar: {}, tartib: [], joriy: null, duel: {}, oilaTel: {}, sovga: [], dokon: [], bozor: null, qurilma: null, lastBackup: null, seenVer: null, appVer: null }; }
 let S = load(); A.storageOK = true;
 /* Xotira tekshiruvi: brauzer yozishga ruxsat beradimi va ilova begona sayt ichida (sinov havolasi) ochilganmi */
 A.storageProbe = (function () { try { const k = 'bj_probe'; localStorage.setItem(k, String(Date.now())); const ok = !!localStorage.getItem(k); localStorage.removeItem(k); return ok; } catch (e) { return false; } })();
@@ -3147,10 +3172,12 @@ function showItem(b, m, st, it) {
   const R = RENDER[it.t] || RENDER.tanla; if (it.tur === 'sora') st0.maslahat = 1;
   frame(b, m, stepTitle(st), `<div class="item t-${it.t}">${soraBanner(it)}${headHTML(b, it)}<div id="body"></div><div id="fb"></div>${otaTip(b, it)}</div>${qrowHTML(b, m, st, it)}`);
   qrowBind(b, m, st, it, st0);
-  const say = $('[data-say]'); if (say) { say.onclick = () => { st0.ovoz++; speak(it.tts); }; if (it.ovozKoz || it.tugun.indexOf('EN.') === 0) setTimeout(() => speak(it.tts), 350); }
+  /* inglizcha so'z avtomatik aytiladi — o'zbekcha savol ovozidan KEYIN (A.ovoz.bind → keyin) */
+  const say = $('[data-say]'), enAvto = !!(say && (it.ovozKoz || it.tugun.indexOf('EN.') === 0)); if (say) say.onclick = () => { st0.ovoz++; speak(it.tts); };
   const fv = $('.flashvis'); if (fv) { const ms = +fv.dataset.ms; setTimeout(() => { fv.style.visibility = 'hidden'; }, ms); }
   CUR.cb = (r) => onAnswer(b, m, st, it, st0, r); R($('#body'), it, b, CUR.cb, st0);
-  if (A.ovoz) A.ovoz.bind(b, it, st0, $('.item'));
+  const enKeyin = enAvto ? () => { if (CUR.it === it) speak(it.tts); } : null;
+  if (A.ovoz) A.ovoz.bind(b, it, st0, $('.item'), { keyin: enKeyin }); else if (enKeyin) setTimeout(enKeyin, 350);
   if (st0.lock) { const ob = $('#body'); ob.classList.add('locked'); setTimeout(() => ob.classList.remove('locked'), 1500); }
 }
 /* ---------- Javob: log, statistika, effekt ---------- */
@@ -6024,8 +6051,10 @@ if (A.TEZ) G.__bjUch = () => SES; /* faqat ?tez=1 avtomatik sinov uchun */
    Neyron fayllar: ovoz/<nom>/<id>.mp3 + ovoz/<nom>/royxat.json — GitHub Actions (edge-tts) yasaydi, kompyuter shart emas (.github/workflows/ovoz.yml, ovoz/iboralar.json).
    Bitta gapda ovozlar ARALASHMAYDI: gapning hamma bo'lagi bitta manbada bo'lsa — o'sha; aks holda keyingi qavat; hech biri bo'lmasa 🔊 chiqmaydi (kattalar o'qib beradi).
    Ota-ona ovozi (1-qavat) — keyinroq (foydalanuvchi 07.11: «ota-ona ovozi keyinroq»): A.ovoz.otaManba ilgagi tayyor.
-   Nima O'QILMAYDI (pedagogik qoida): o'qish sinovidagi so'z (bola o'zi o'qiydi), arabcha va inglizcha so'zlar, bitta harf («N» harfini top — kattalar TOVUSH bilan aytadi),
-   imlo/bo'g'in variantlari, raqam va harf variantlari. Diktantda so'z ikki marta aytiladi. */
+   Nima O'QILMAYDI (pedagogik qoida): o'qish sinovidagi so'z (bola o'zi o'qiydi), arabcha va inglizcha so'zlar (inglizchani telefon aytadi),
+   imlo/bo'g'in variantlari, raqam va harf variantlari. Diktantda so'z ikki marta aytiladi.
+   07.11 (u beta'ni sinab: «hamma joyda o'zi o'qisin, bitta ovoz — Madina jonli, iPhone'da ovoz chiqmayapti»): savol HAMMA bolaga o'zi o'qiladi; harf topshiriqlari ham
+   («A» → harf nomi: a, be, de …); iPhone: FX da ochish touchend/click'da, audioSession 'playback', eski iOS — jim <audio>; ochilmagan bo'lsa — navbat (KUT). */
 (function (G) {
 'use strict';
 const BJ = G.BJ, A = BJ.A, FX = BJ.fx;
@@ -6130,7 +6159,14 @@ const NUTQ = (() => {
     }
     if (i < str.length) out.push(str.slice(i)); return out;
   }
-  /* bo'laklar: matnlar birlashtiriladi, normallashtiriladi; sonlar va ismlar alohida */
+  /* qo'shtirnoqdagi bitta harf («A», «g'», «Sh») — harf NOMI bilan alohida bo'lak (h_a, h_b …). Nomlar — 1995 yilgi alifbo qonunidagi nomlar
+     (lex.uz: be, de, ef, ge, he, je, ka, qa, xa, ye, ze, che …); 07.11 u: «hamma joyda savol o'zi o'qilsin» → harf topshiriqlari ham o'qiladi. */
+  const HARF_NOM = { a: 'a', b: 'be', d: 'de', e: 'e', f: 'ef', g: 'ge', h: 'he', i: 'i', j: 'je', k: 'ka', l: 'el', m: 'em', n: 'en', o: 'o', p: 'pe', q: 'qa', r: 'er', s: 'es', t: 'te',
+    u: 'u', v: 've', x: 'xa', y: 'ye', z: 'ze', "o'": "o'", "g'": "g'e", sh: 'she', ch: 'che', ng: 'nge' };
+  const HARF_ID = { "o'": 'oo', "g'": 'gg' };
+  function harfKey(y) { const k = String(y || '').trim().toLowerCase().replace(/[ʻ’‘`]/g, "'"); return Object.prototype.hasOwnProperty.call(HARF_NOM, k) ? k : null; }
+  const harfQism = k => ({ k: 'h', id: 'h_' + (HARF_ID[k] || k), t: HARF_NOM[k] });
+  /* bo'laklar: matnlar birlashtiriladi, normallashtiriladi; sonlar, ismlar va harflar alohida */
   /* p: 1 — bo'lakdan OLDIN pauza (vergul, nuqta, qavs) — pleyer oraliqni uzaytiradi */
   function reja(t) {
     const out = []; let mb = '', pz = 0;
@@ -6138,25 +6174,27 @@ const NUTQ = (() => {
       if (/^[,.;:!?…–—-]/.test(s)) pz = /^[.!?…]/.test(s) ? '.' : ','; s = s.replace(/^[\s,.;:!?–—-]+/, '').replace(/\s+([,.?!;:])/g, '$1').replace(/([,.?!;:])(?:\s*[,;:])+/g, '$1').replace(/[,;:]\s*([.?!])/g, '$1').replace(/[,;:]\s*$/, () => { pz = 2; return ''; }).trim();
       const kp = pz === 2 ? ',' : 0; if (s && /[a-zA-Z]/.test(s)) { out.push({ k: 'm', id: hid(s), t: s, p: pz && pz !== 2 ? pz : 0 }); pz = /[.!?…]$/.test(s) ? '.' : kp; } else if (s || kp) pz = /[.!?…]/.test(s) ? '.' : ','; };
     const tok = []; tokenlar(t).forEach(x => { if (typeof x === 'string') tok.push(...ajrat(x)); else tok.push(x); });
-    tok.forEach(x => { if (typeof x === 'string') { x.split('\u0004').forEach((y, j) => { if (j) push(); mb += (mb && !/^[,.?!]/.test(y) ? ' ' : '') + y; }); } else { push(); (x.i ? [{ k: 'i', id: 'i_' + x.i.toLowerCase(), t: x.i }] : sonQism(x.s, x.q)).forEach(y => { y.p = pz; pz = 0; out.push(y); }); } });
+    let ich = false; const seg = a => a.forEach(y => { y.p = pz; pz = 0; out.push(y); });
+    tok.forEach(x => { if (typeof x === 'string') { x.split('\u0004').forEach((y, j) => { if (j) { push(); ich = !ich; } const hk = ich ? harfKey(y) : null; if (hk) { push(); seg([harfQism(hk)]); return; } mb += (mb && !/^[,.?!]/.test(y) ? ' ' : '') + y; }); } else { push(); seg(x.i ? [{ k: 'i', id: 'i_' + x.i.toLowerCase(), t: x.i }] : sonQism(x.s, x.q)); } });
     push(); return out;
   }
   const matn = r => r.map((x, i) => (i && x.p ? x.p + ' ' : i ? ' ' : '') + x.t).join('').replace(/([.!?…])[.,] /g, '$1 ').replace(/\s+([,.?!])/g, '$1');
-  return { reja, matn, sozlar, qosh, sonQism, hid, tozala, SUF, ISMLAR, sozQiymat };
+  return { reja, matn, sozlar, qosh, sonQism, hid, tozala, SUF, ISMLAR, sozQiymat, HARF_NOM, harfKey, harfQism };
 })();
 
 /* ---------- nima o'qiladi (pedagogik qoida) ---------- */
 const OQISH_SINOV = /^\s*(So'zni o'qi|O'qi va rasmini top|O'qi: ma'nosi nima)/i;
-const HARF1 = /«\s*(?:[A-Za-z]|[OoGg]['ʻ’‘]|Sh|SH|sh|Ch|CH|ch|Ng|ng)\s*»/;
-const SAVOLSIZ = new Set(['H0.3']);                                   /* «N + U = ?» — harflar: kattalar tovush bilan aytadi */
+/* «N + U = ?» (bo'g'in yig'ish) → «N bilan U qo'shilsa, qanday o'qiladi?» — harflar nomi bilan */
+const BOGIN = /^\s*([A-Z][a-zA-Z'ʻ’]?)\s*\+\s*([A-Z][a-zA-Z'ʻ’]?)\s*=\s*\?\s*$/;
 const VARIANTSIZ = new Set(['H0.1', 'H0.2', 'H0.3', 'H0.5', 'H1.1', 'H1.2', 'H2.2', 'H2.3', 'H2.4', 'L.9', 'AL.7']);  /* harf, bo'g'in, imlo — variant o'qilsa javob aytilib qoladi */
 const nuqta = t => /[.!?…:]$/.test(t) ? t : t + '.';
 /* savol qismlari (har biri alohida bo'laklanadi — so'z × ko'rsatma kombinatsiyasi fayl sonini oshirmasin) */
 function savolMatn(it) {
   if (!it || it.tur === 'duel') return [];
-  const sv = String(it.sav || '').trim(), s2 = String(it.sav2 || '').trim(), q = [];
-  const sinov = OQISH_SINOV.test(s2);
-  if (sv && !sinov && !SAVOLSIZ.has(it.tugun) && !HARF1.test(sv) && !/^[A-Z][a-zA-Z'ʻ]?\s*\+\s*[A-Z]/.test(sv)) q.push(nuqta(sv));
+  let sv = String(it.sav || '').trim(); const s2 = String(it.sav2 || '').trim(), q = [];
+  const sinov = OQISH_SINOV.test(s2), bg = sv.match(BOGIN);
+  if (bg) sv = `«${bg[1]}» bilan «${bg[2]}» qo'shilsa, qanday o'qiladi?`;
+  if (sv && !sinov) q.push(nuqta(sv));
   if (s2) q.push(nuqta(s2.replace(/\s*\(🔊[^)]*\)/, '')));
   if (it.diktant && it.a) { q.push(nuqta(String(it.a))); q.push(nuqta(String(it.a))); }
   return q;
@@ -6170,26 +6208,24 @@ function variantMatn(it, o) {
 }
 const reja = t => t ? NUTQ.reja(t) : [];
 /* ---------- sozlama (S.sozlama.nutq) ---------- */
-/* 07.11: u avval «Madina sekin», keyin namunalarni solishtirib «Madina jonli» (C: −12%, +12Hz) ni tanladi — standart.
-   To'liq to'plam: madina_jonli va madina_sekin; qolganlari faqat namuna (to'liq — ovoz/iboralar.json da toliq: true). His-tuyg'uli Gemini — keyinroq. */
+/* 07.11 (u beta'ni tekshirib chiqdi): «bitta ovoz qolsin — Madina jonli; savol HAMMA joyda, hamma bolaga (maktabgacha, 1–2-sinf) o'zi o'qilsin».
+   Sozlama v: 2 — eski sozlamalar (boshqa ovoz tanlovi, avto faqat maktabgachaga) e'tiborga olinmaydi. O'chirish — ota-ona panelida («🔊 Savol ovozi»). */
 const STANDART = 'madina_jonli';
-const NOMLAR = { madina_jonli: 'Madina — jonli', madina_sekin: 'Madina — sekinroq', madina: 'Madina (ayol)', sardor: 'Sardor (erkak)' };
-const cfg = () => { const s = (S().sozlama || {}).nutq || {}, c = Object.assign({ nom: STANDART, avto: true, variant: true, tugma: true }, s); if (!s.tanlandi && c.nom) c.nom = STANDART; return c; };
+const NOMLAR = { madina_jonli: 'Madina' };
+const cfg = () => { const s0 = (S().sozlama || {}).nutq || {}, s = s0.v === 2 ? s0 : {}, c = Object.assign({ nom: STANDART, avto: true, variant: true }, s); if (c.nom) c.nom = STANDART; return c; };
 const BASE = (A.BETA ? '../' : '') + 'ovoz/';
-const g0 = b => A.gl(b.daraja) === 'g0';
-/* ---------- 2-qavat: neyron fayllar ro'yxati (ovoz/<nom>/royxat.json; keshi localStorage, internetsiz ham) ---------- */
+/* ---------- 2-qavat: neyron fayllar ro'yxati (ovoz/<nom>/royxat.json; keshi localStorage — darhol ishlaydi, internet fonda yangilaydi) ---------- */
 const NEY = { nom: null, ids: null, n: 0, p: null, ts: 0 };
 const LKR = nom => 'bj_ovoz_royxat_' + nom;
 function neyQabul(nom, d) { if (!d || !Array.isArray(d.id)) return false; NEY.nom = nom; NEY.ids = new Set(d.id); NEY.n = d.id.length; return true; }
 function neyTayyor(majbur) {
   const nom = cfg().nom; if (!nom || !NOMLAR[nom]) { NEY.nom = null; NEY.ids = null; return Promise.resolve(null); }
-  if (NEY.nom !== nom) { NEY.ids = null; NEY.p = null; try { neyQabul(nom, JSON.parse(localStorage.getItem(LKR(nom)) || 'null')); } catch (e) {} }
-  if (NEY.p && !majbur) return NEY.p;
-  if (NEY.ids && !majbur && Date.now() - NEY.ts < 6 * 3600e3) return Promise.resolve(NEY);
-  NEY.p = fetch(BASE + nom + '/royxat.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : null).then(d => {
+  if (NEY.nom !== nom) { NEY.ids = null; NEY.p = null; NEY.ts = 0; try { neyQabul(nom, JSON.parse(localStorage.getItem(LKR(nom)) || 'null')); } catch (e) {} }
+  const ol = () => NEY.p || (NEY.p = fetch(BASE + nom + '/royxat.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : null).then(d => {
     if (d && neyQabul(nom, d)) { NEY.ts = Date.now(); try { localStorage.setItem(LKR(nom), JSON.stringify(d)); } catch (e) {} } return NEY.ids ? NEY : null;
-  }).catch(() => NEY.ids ? NEY : null).then(x => { NEY.p = null; return x; });
-  return NEY.p;
+  }).catch(() => NEY.ids ? NEY : null).then(x => { NEY.p = null; return x; }));
+  if (NEY.ids && !majbur) { if (Date.now() - NEY.ts > 6 * 3600e3) ol(); return Promise.resolve(NEY); }
+  return ol();
 }
 /* ---------- 3-qavat: telefon ovozi (o'zbekcha ovoz o'rnatilgan telefonda) ---------- */
 function telOvoz() { try { return (speechSynthesis.getVoices() || []).find(v => /^uz/i.test(v.lang || '')) || null; } catch (e) { return null; } }
@@ -6228,10 +6264,19 @@ function yuk(mb, id) {
   KESH.set(k, p); if (KESH.size > 400) KESH.delete(KESH.keys().next().value);
   return p;
 }
-let IJ = 0, NODES = [], TM = null, EL = null;
-function belgi(el, on) { if (el) el.classList.toggle('gapir', !!on); }
+let IJ = 0, NODES = [], TM = null, EL = null, KUT = null, HINT = 0;
+function belgi(el, on) { if (el) el.classList.toggle('gapir', !!on); if (on) $$('.uzb.teg').forEach(x => x.classList.remove('teg')); }
+/* iPhone: ovoz faqat ekranga tegilgandan keyin ochiladi (Safari qoidasi). Savol ochilganda hali ochilmagan bo'lsa — navbatga qo'yiladi,
+   🔊 tugma yonib-o'chadi, birinchi teginishda (FX.onUnlock) o'zi o'qiladi */
+function tegHint(el) {
+  const it = el && el.closest ? el.closest('.item') : null, bt = it ? $('.uzb', it) : null; if (bt) bt.classList.add('teg');
+  if (!HINT) { HINT = 1; toast('🔊 Ovoz uchun ekranga bir marta teging'); }
+}
+/* teginish javob bo'lsa (variant bosildi) — eski savol o'qilmaydi: 150 ms dan keyin javob belgisi bormi, tekshiriladi */
+FX.onUnlock = () => { const k = KUT; if (!k) return; KUT = null; setTimeout(() => { const it = k.el && k.el.closest ? k.el.closest('.item') : null;
+  if (k.el && k.el.isConnected && !(it && it.querySelector('.opt.ok,.opt.no,.ok,.no'))) oqi(k.r, k.el, k.opt).then(k.res); else k.res(false); }, 150); };
 function toxta() {
-  IJ++; NODES.forEach(n => { try { n.stop(); } catch (e) {} }); NODES = []; clearTimeout(TM); belgi(EL, false); EL = null;
+  IJ++; KUT = null; NODES.forEach(n => { try { n.stop(); } catch (e) {} }); NODES = []; clearTimeout(TM); belgi(EL, false); EL = null;
   try { if (G.speechSynthesis && speechSynthesis.speaking) speechSynthesis.cancel(); } catch (e) {}
 }
 /* gapni o'qish: r — bo'laklar; el — yonib turadigan element. Natija: Promise<boolean> (o'qildimi) */
@@ -6243,8 +6288,11 @@ async function oqi(r, el, opt) {
   }
   const ac = ctx(); if (!ac) return false;
   try { if (navigator.audioSession && navigator.audioSession.type !== 'playback') navigator.audioSession.type = 'playback'; } catch (e) {}
-  if (ac.state !== 'running') { try { await ac.resume(); } catch (e) {} }
-  let bufs; try { bufs = await Promise.all(r.map(x => yuk(mb, x.id))); } catch (e) { if (id === IJ) belgi(el, false); console.warn('ovoz', e); return false; }
+  /* resume() iPhone'da ruxsatsiz holatda hech qachon tugamasligi mumkin — 450 ms dan ortiq kutilmaydi */
+  if (ac.state !== 'running') { try { const p = ac.resume(); if (p && p.then) await Promise.race([p.catch(() => {}), new Promise(z => setTimeout(z, 450))]); } catch (e) {} }
+  if (id !== IJ) return false;
+  if (ac.state !== 'running') { EL = null; tegHint(el); return new Promise(res => { KUT = { r, el, opt: Object.assign({}, opt, { mb }), res }; }); }
+  let bufs; try { bufs = await Promise.all(r.map(x => yuk(mb, x.id))); } catch (e) { if (id === IJ) belgi(el, false); console.warn('ovoz', e); if (opt.qol) toast("🔊 Ovoz yuklanmadi — internetni tekshiring"); return false; }
   if (id !== IJ) return false;
   let t = ac.currentTime + 0.04;
   bufs.forEach((b, i) => { if (i) t += r[i].p === '.' ? 0.32 : r[i].p ? 0.22 : 0.07; const s = ac.createBufferSource(); s.buffer = b; s.connect(VG); s.start(t); NODES.push(s); t += b.duration; });
@@ -6253,23 +6301,25 @@ async function oqi(r, el, opt) {
 }
 /* oldindan yuklab qo'yish (tugma bosilganda darhol chiqsin) */
 function oldin(r) { const mb = manba(r); if (mb === 'ney' || mb === 'ota') r.forEach(x => yuk(mb, x.id).catch(() => {})); return mb; }
-/* ---------- savol ekrani: 🔊 tugma, maktabgachaga avtomatik o'qish, variantni bosib turish ---------- */
-function bind(b, it, st0, item) {
-  toxta(); if (!item || !b) return;
-  const c = cfg(); if (!c.nom) return;
-  const r = savolReja(it), kichik = g0(b);
-  const varOk = kichik && c.variant && it.t === 'tanla' && Array.isArray(it.o);
-  if (!r.length && !varOk) return;
-  if (!kichik && !c.tugma) return;
+/* ---------- savol ekrani: 🔊 tugma, savol o'zi o'qiladi (07.11 — HAMMA bolaga), variantni bosib turish ---------- */
+/* opt.keyin — o'zbekcha savol o'qilgandan keyin (inglizcha so'zni telefon aytadi); o'qilmasa 350 ms da */
+function bind(b, it, st0, item, opt) {
+  toxta(); opt = opt || {};
+  const keyin = typeof opt.keyin === 'function' ? opt.keyin : null, kech = () => { if (keyin) setTimeout(() => { if (item && item.isConnected) keyin(); }, 350); };
+  if (!item || !b) return kech();
+  const c = cfg(); if (!c.nom) return kech();
+  const r = savolReja(it), varOk = c.variant && it.t === 'tanla' && Array.isArray(it.o);
+  if (!r.length && !varOk) return kech();
   let btn = null;
   if (r.length) { item.classList.add('uzq'); item.insertAdjacentHTML('afterbegin', '<button class="uzb kut" type="button" data-uzs aria-label="Savolni eshitish" disabled>🔊</button>'); btn = $('[data-uzs]', item); }
-  const qel = $('.q', item) || item;
+  const qel = $('.q', item) || item, avto = c.avto && !it.uzOqildi;
   neyTayyor().then(() => {
     if (!item.isConnected) return;
     const mb = r.length ? oldin(r) : null;
-    if (btn) { if (!mb) { btn.remove(); item.classList.remove('uzq'); } else { btn.disabled = false; btn.classList.remove('kut'); btn.onclick = () => { if (EL === qel) return toxta(); st0.ovoz = (st0.ovoz || 0) + 1; oqi(r, qel, { mb }); }; } }
-    /* 2A: maktabgachaga savol o'zi o'qiladi — faqat birinchi ko'rsatishda (pauzadan qaytganda qayta o'qilmaydi); inglizcha so'z o'zi aytiladigan savollarda emas */
-    if (mb && kichik && c.avto && !it.uzOqildi && !(it.tts && (it.ovozKoz || String(it.tugun).indexOf('EN.') === 0))) setTimeout(() => { if (item.isConnected && !it.uzOqildi) { it.uzOqildi = 1; oqi(r, qel, { mb }); } }, 380);
+    if (btn) { if (!mb) { btn.remove(); item.classList.remove('uzq'); } else { btn.disabled = false; btn.classList.remove('kut'); btn.onclick = () => { if (EL === qel) return toxta(); st0.ovoz = (st0.ovoz || 0) + 1; oqi(r, qel, { mb, qol: 1 }); }; } }
+    /* 2A (07.11 — hamma bolaga): savol ochilishi bilan o'zi o'qiladi — faqat birinchi ko'rsatishda (pauzadan qaytganda qayta emas) */
+    if (mb && avto) setTimeout(() => { if (!item.isConnected || it.uzOqildi) return; it.uzOqildi = 1; oqi(r, qel, { mb }).then(ok => { if (keyin && item.isConnected) setTimeout(keyin, ok ? 150 : 0); }); }, 380);
+    else kech();
     if (varOk) variantlar(it, item);
   });
 }
@@ -6290,38 +6340,70 @@ function variantlar(it, item) {
 }
 addEventListener('hashchange', toxta);
 document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') toxta(); });
-/* ---------- 👨‍👩‍👧 ota-ona: 🔊 Savol ovozi paneli (#ota-ovoz) ---------- */
+/* ---------- 👨‍👩‍👧 ota-ona: 🔊 Savol ovozi paneli (#ota-ovoz) — 07.11: bitta ovoz (Madina), yoqish/o'chirish, 🔧 tekshiruv ---------- */
+function namunaOqi(bt) {
+  if (bt.classList.contains('gapir')) return toxta();
+  toxta(); const id = IJ, ac = ctx(); if (!ac) return toast('Bu telefonda ovoz chiqmaydi');
+  try { if (ac.state !== 'running') ac.resume(); } catch (e) {}
+  belgi(bt, true); EL = bt;
+  return Promise.all(['n5', 'n2', 'n6'].map(n => fetch(BASE + 'namuna/' + STANDART + '_' + n + '.mp3').then(r => { if (!r.ok) throw 0; return r.arrayBuffer(); }).then(dekod).then(kes))).then(bufs => {
+    if (id !== IJ) return; let t = ac.currentTime + 0.05; bufs.forEach(b => { const s = ac.createBufferSource(); s.buffer = b; s.connect(VG); s.start(t); NODES.push(s); t += b.duration + 0.6; });
+    TM = setTimeout(() => { if (id === IJ) { belgi(bt, false); EL = null; } }, (t - ac.currentTime) * 1000);
+  }).catch(() => { belgi(bt, false); toast('Namuna yuklanmadi — internetni tekshiring'); });
+}
+/* 🔧 tekshiruv: telefon ovozni qanday chiqarayotgani — natija qatori Claude'ga yuboriladi */
+function iosVer() { const m = navigator.userAgent.match(/(?:iPhone OS|CPU OS) (\d+)[._](\d+)/) || (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1 && navigator.userAgent.match(/Version\/(\d+)\.(\d+)/)); return m ? m[1] + '.' + m[2] : ''; }
+async function tekshir(box, bt) {
+  const ac = ctx(); try { if (ac && ac.state !== 'running') ac.resume(); } catch (e) {}
+  if (FX.unlock) FX.unlock();
+  bt.disabled = true; box.innerHTML = '<p class="sm">⏳ Tekshirilmoqda…</p>';
+  const ios = iosVer(), qur = ios ? 'iPhone, iOS ' + ios : /Android/i.test(navigator.userAgent) ? 'Android' : 'kompyuter', pwa = !!(navigator.standalone || (G.matchMedia && matchMedia('(display-mode: standalone)').matches));
+  const ney = await neyTayyor(true), L = [];
+  let fayl = 'yoq', dek = 0;
+  try { const t0 = Date.now(); const b = await yuk('ney', 'n5'); dek = Date.now() - t0; fayl = b && b.duration > 0.1 ? 'ok' : 'bosh'; } catch (e) { fayl = 'xato'; }
+  const fx = FX.audioInfo ? FX.audioInfo() : {}, holat = ac ? ac.state : 'yoq';
+  if (fayl === 'ok' && holat === 'running') { await oqi(NUTQ.reja('5'), bt, { mb: 'ney' }); }
+  const kod = `OVOZ|${qur}|${pwa ? 'ilova' : 'brauzer'}|session=${fx.session || '-'}|holat=${ac ? ac.state : 'yoq'}|jim=${fx.jim || '-'}|royxat=${ney ? NEY.n : 0}|fayl=${fayl}|${dek}ms|v=${A.VER}`;
+  L.push(`📱 ${qur} · ${pwa ? 'uy ekranidagi ilova' : 'brauzer'}`);
+  L.push(ios && +ios.split('.')[0] < 17 ? (fx.jim === 'ishlayapti' ? '🔈 iOS 17 dan eski: jim tugma aylanib o\'tildi ✓' : '⚠️ iOS 17 dan eski: yon tomondagi jim tugmasini (beshik) o\'chiring') : (fx.session === 'playback' ? '🔈 Jim tugma ovozni to\'smaydi ✓' : ios ? '⚠️ Jim tugma ovozni to\'sishi mumkin — yon tugmani tekshiring' : '🔈 Ovoz rejimi ✓'));
+  L.push(holat === 'running' ? '🎚️ Ovoz tizimi ochiq ✓' : '⚠️ Ovoz tizimi yopiq — ekranga bir marta tegib, qayta bosing');
+  L.push(ney ? `📋 Ro'yxat: ${NEY.n.toLocaleString('ru-RU')} ta ibora ✓` : "⚠️ Ro'yxat yuklanmadi — internetni tekshiring");
+  L.push(fayl === 'ok' ? `🎧 Fayl yuklandi va o'qildi ✓ (${dek} ms)` : '⚠️ Ovoz fayli yuklanmadi — internetni tekshiring');
+  bt.disabled = false;
+  box.innerHTML = `<div class="sm">${L.map(esc).join('<br>')}</div><p class="sm"><b>«Besh» so'zini eshitdingizmi?</b></p><div class="row"><button class="btn sm" data-eh="1">✅ Ha</button><button class="btn sm ghost" data-eh="0">❌ Yo'q</button></div><div data-ehn></div>`;
+  $$('[data-eh]', box).forEach(x => x.onclick = () => {
+    const ha = x.dataset.eh === '1', kk = kod + '|eshitdi=' + (ha ? 'ha' : 'yoq');
+    $('[data-ehn]', box).innerHTML = (ha ? `<p class="sm">✅ Ovoz ishlayapti.</p>` : `<p class="sm">Tekshiring: 1) telefonning ovoz balandligi tugmasi (+) — o'yin ochiq turganda bosing; 2) Bluetooth quloqchin ulangan bo'lmasin; 3) iPhone'da yon tomondagi jim tugmasi; 4) ilovani yopib qayta oching.</p>`) +
+      `<p class="sm mut">Natija qatori (Claude'ga yuboring):</p><input class="inp mono" readonly value="${esc(kk)}"><button class="btn sm ghost" data-ehk>📋 Nusxalash</button>`;
+    const nk = $('[data-ehk]', box); nk.onclick = () => { const inp = $('input', $('[data-ehn]', box)); try { navigator.clipboard.writeText(kk).then(() => toast('📋 Nusxalandi'), () => { inp.select(); document.execCommand('copy'); toast('📋 Nusxalandi'); }); } catch (e) { inp.select(); try { document.execCommand('copy'); } catch (er) {} toast('📋 Nusxalandi'); } };
+  });
+}
 function panel(top, bindTop) {
-  const c = cfg(), app = A.app;
-  const holat = NEY.ids && NEY.nom === c.nom ? `✅ ${NEY.n.toLocaleString('ru-RU')} ta ibora tayyor` : c.nom === STANDART || c.nom === 'madina_sekin' ? "⏳ Fayllar hali tayyorlanmoqda — tayyor bo'lgach savollar o'zi o'qiladi" : c.nom ? "⏳ Bu ovozning to'liq to'plami hali yo'q (faqat namuna) — kerak bo'lsa Claude'ga ayting" : '🔇 O\'chiq';
+  const c = cfg(), app = A.app, yoq = !!c.nom;
+  const holat = !yoq ? "🔇 O'chiq — savollar o'qilmaydi" : NEY.ids && NEY.nom === c.nom ? `✅ ${NEY.n.toLocaleString('ru-RU')} ta ibora tayyor` : "⏳ Ro'yxat yuklanmoqda…";
   app.innerHTML = `<div class="wrap ota">${top('🔊 Savol ovozi', 'ota')}
-  <div class="card"><p class="sm">Savol o'zbekcha ovozda o'qiladi: maktabgacha bolaga — o'zi, kattalarga — 🔊 tugmasi bilan. O'qish sinovidagi so'z, arabcha/inglizcha so'z va harflar o'qilmaydi — ularni bola o'zi o'qiydi yoki siz tovush bilan aytasiz.</p></div>
-  <div class="card"><h3>Ovoz</h3>${Object.keys(NOMLAR).map(k => `<div class="uzrow"><label class="uzr"><input type="radio" name="uzn" value="${k}"${c.nom === k ? ' checked' : ''}> ${esc(NOMLAR[k])}</label><button class="btn sm ghost" data-nam="${k}">▶ Namuna</button></div>`).join('')}
-    <div class="uzrow"><label class="uzr"><input type="radio" name="uzn" value=""${!c.nom ? ' checked' : ''}> 🔇 O'chiq</label></div>
+  <div class="card"><p class="sm">Savol o'zbekcha ovozda <b>o'zi</b> o'qiladi — hamma bolaga (maktabgacha, 1–2-sinf) va hamma joyda: missiya, mashq, uyga vazifa, arena. 🔊 tugmasi — qayta eshitish. O'qilmaydi: o'qish sinovidagi so'z (bola o'zi o'qiydi), arabcha so'z; inglizcha so'zni telefon o'zi aytadi.</p></div>
+  <div class="card"><h3>Ovoz: Madina</h3>
+    <label class="uzr"><input type="checkbox" data-yoq${yoq ? ' checked' : ''}> Savol ovozi yoqilgan</label>
+    <div class="row"><button class="btn sm ghost" data-nam>▶ Namuna</button></div>
     <p class="sm" data-uzh>${esc(holat)}</p></div>
   <div class="card"><h3>Qachon o'qiladi</h3>
-    <label class="uzr"><input type="checkbox" data-k="avto"${c.avto ? ' checked' : ''}> Maktabgacha bolaga savol o'zi o'qilsin</label>
-    <label class="uzr"><input type="checkbox" data-k="variant"${c.variant ? ' checked' : ''}> Maktabgacha: variantni bosib tursa o'qilsin</label>
-    <label class="uzr"><input type="checkbox" data-k="tugma"${c.tugma ? ' checked' : ''}> Katta bolalarda ham 🔊 tugmasi</label></div>
-  <div class="card"><h3>🎙️ Ota-ona ovozi</h3><p class="sm mut">Keyingi bosqichda: savollarni va «Barakalla!» ni o'z ovozingizda yozib olasiz — bola birinchi navbatda sizning ovozingizni eshitadi.</p></div></div>`;
+    <label class="uzr"><input type="checkbox" data-k="avto"${c.avto ? ' checked' : ''}> Savol ochilishi bilan o'zi o'qilsin</label>
+    <label class="uzr"><input type="checkbox" data-k="variant"${c.variant ? ' checked' : ''}> Javobni 1 soniya bosib tursa — javob o'qilsin (so'zli javoblar)</label></div>
+  <div class="card"><h3>🔧 Ovoz chiqmasa</h3><p class="sm">«Tekshirish» telefon ovozni qanday chiqarayotganini ko'rsatadi. Muammo bo'lsa — natija qatorini Claude'ga yuboring.</p>
+    <button class="btn" data-tek>🔧 Ovozni tekshirish</button><div data-tekn></div></div>
+  <div class="card"><h3>🎙️ Ota-ona ovozi</h3><p class="sm mut">Keyingi bosqichda: savollarni va «Barakalla!» ni o'z ovozingizda yozib olasiz.</p></div></div>`;
   bindTop();
-  const saqla = o => { const s = S(); s.sozlama.nutq = Object.assign(cfg(), o); A.save(true); };
-  $$('input[name="uzn"]').forEach(x => x.onchange = () => { saqla({ nom: x.value, tanlandi: 1 }); KESH.clear(); neyTayyor(true).then(() => panel(top, bindTop)); panel(top, bindTop); });
+  const saqla = o => { const s = S(); s.sozlama.nutq = Object.assign({}, cfg(), o, { v: 2 }); A.save(true); };
+  $('[data-yoq]').onchange = e => { toxta(); saqla({ nom: e.target.checked ? STANDART : '' }); KESH.clear(); panel(top, bindTop); };
   $$('input[data-k]').forEach(x => x.onchange = () => saqla({ [x.dataset.k]: x.checked }));
-  $$('[data-nam]').forEach(bt => bt.onclick = async () => {
-    if (bt.classList.contains('gapir')) return toxta();
-    const nom = bt.dataset.nam; toxta(); const id = IJ; const ac = ctx(); if (!ac) return toast('Ovoz chiqmaydi');
-    if (ac.state !== 'running') { try { await ac.resume(); } catch (e) {} }
-    belgi(bt, true); EL = bt;
-    try { const bufs = await Promise.all(['n5', 'n2', 'n6'].map(n => fetch(BASE + 'namuna/' + nom + '_' + n + '.mp3').then(r => { if (!r.ok) throw 0; return r.arrayBuffer(); }).then(dekod).then(kes)));
-      if (id !== IJ) return; let t = ac.currentTime + 0.05; bufs.forEach(b => { const s = ac.createBufferSource(); s.buffer = b; s.connect(VG); s.start(t); NODES.push(s); t += b.duration + 0.6; });
-      TM = setTimeout(() => { if (id === IJ) { belgi(bt, false); EL = null; } }, (t - ac.currentTime) * 1000);
-    } catch (e) { belgi(bt, false); toast("Namuna yuklanmadi — internetni tekshiring"); } });
-  if (c.nom && !(NEY.ids && NEY.nom === c.nom)) neyTayyor(true).then(x => { if (x && location.hash === '#ota-ovoz') panel(top, bindTop); });
+  $('[data-nam]').onclick = e => namunaOqi(e.currentTarget);
+  $('[data-tek]').onclick = e => tekshir($('[data-tekn]'), e.currentTarget);
+  if (c.nom && !(NEY.ids && NEY.nom === c.nom)) neyTayyor(true).then(x => { if (x && location.hash === '#ota-ovoz') { const h = $('[data-uzh]'); if (h) h.textContent = `✅ ${NEY.n.toLocaleString('ru-RU')} ta ibora tayyor`; } });
 }
 /* ilova ochilganda ro'yxatni fonda yangilash (internet bo'lsa) */
 setTimeout(() => { try { if (cfg().nom) neyTayyor(); } catch (e) {} }, 1500);
-A.ovoz = { NUTQ, reja, savolMatn, savolReja, variantMatn, manba, oqi, toxta, bind, panel, neyTayyor, cfg, NOMLAR, holat: () => ({ nom: NEY.nom, n: NEY.n, kesh: KESH.size }), otaManba: null };
+A.ovoz = { NUTQ, reja, savolMatn, savolReja, variantMatn, manba, oqi, toxta, bind, panel, neyTayyor, cfg, NOMLAR, STANDART, holat: () => ({ nom: NEY.nom, n: NEY.n, kesh: KESH.size, kut: !!KUT }), otaManba: null };
 })(window);
 </script>
 <script>
