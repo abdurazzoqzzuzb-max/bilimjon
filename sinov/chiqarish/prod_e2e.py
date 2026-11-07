@@ -6,11 +6,15 @@ Ishlatish (chiqarishdan OLDIN): eski = hozirgi main, yangi = main + tarmoq birla
   git worktree add /tmp/yangi -b chiqar origin/main && (cd /tmp/yangi && git merge --no-ff origin/<tarmoq>)
   python3 sinov/chiqarish/prod_e2e.py /tmp/eski /tmp/yangi        (MISSIYA_ONLY=1 — faqat 1–3-qism)
 Server GitHub Pages kabi har faylga max-age=600 beradi (ghserve.py) — yangilanish 2-ochishda kelishi tekshiriladi.
-07.11 (0.7.1 chiqarishi): 23 tekshiruv — hammasi o'tdi."""
+07.11 (0.7.1 chiqarishi): 23 tekshiruv — hammasi o'tdi. 0.7.2 dan versiyalar fayllardan o'qiladi."""
 import sys, os, time, random, subprocess, shutil, json
 from playwright.sync_api import sync_playwright
 
 OLD, NEW = sys.argv[1], sys.argv[2]
+import re
+def _ver(d): return re.search(r"A\.VER = '([\d.]+)'", open(os.path.join(d, 'index.html'), encoding='utf-8').read()).group(1)
+VOLD, VNEW = _ver(OLD), _ver(NEW)
+VK = lambda v: (lambda q: (q[0] + '.' + q[1]) if q[0] != '0' else q[1] + ('.' + q[2] if q[2] != '0' else ''))(v.split('.'))
 PORT = 8850; URL = f'http://localhost:{PORT}/'
 UDD = '/tmp/bj_prod_ctx'; shutil.rmtree(UDD, ignore_errors=True)
 UA = 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1'
@@ -48,7 +52,7 @@ try:
     pg.fill('#on', 'Sinov'); pg.fill('#p1', '1234'); pg.fill('#p2', '1234'); pg.click('#go'); pg.wait_for_timeout(500)
     ids = ev("""(()=>{const A=BJ.A; const r=[['Kichik','g0','garaj'],['Orta','g1','orol'],['Katta','g2','garaj']].map(([l,d,w])=>{const b=A.newBola({laqab:l,daraja:d,avatar:'🐯',dunyo:w}); b.boshlandi='2026-10-28'; return b.id});
       A.S().sozlama.uyqu=''; A.S().joriy=r[0]; A.save(true); return r})()""")
-    ok(ev('BJ.A.VER') == '0.7.0', f"0.7.0 ochildi ({ev('BJ.A.VER')})")
+    ok(ev('BJ.A.VER') == VOLD, f"{VOLD} ochildi ({ev('BJ.A.VER')})")
     def setj(bid): ev(f"(()=>{{const s=BJ.A.S(); s.joriy='{bid}'; BJ.A.save(true)}})()")
     NV = [0]
     def NAV(h, ms=600, ota=False, tez=True):
@@ -59,21 +63,21 @@ try:
         for _ in range(5):
             if ev("!!(window.__bjCur && __bjCur() && __bjCur().cb)"): ev("window.__bjJavob(true)"); pg.wait_for_timeout(700)
     oldYul = ev("Object.values(BJ.A.S().bolalar).map(b=>[b.id,b.yulduz||0, Object.keys(b.tugun||{}).length])")
-    ok(not PE, f"0.7.0 da xato yo'q {PE[:3]}"); PE.clear()
+    ok(not PE, f"{VOLD} da xato yo'q {PE[:3]}"); PE.clear()
 
-    # ---------- 2) yangilanish 0.7.0 → 0.7.1 (xuddi telefondagidek: sahifa qayta ochiladi) ----------
+    # ---------- 2) yangilanish VOLD → VNEW (xuddi telefondagidek: sahifa qayta ochiladi) ----------
     serve(NEW)
     vers = []
     for i in range(4):
         pg.goto(URL); pg.wait_for_timeout(2500); vers.append(ev('BJ.A.VER'))
     NOTE.append(f'ochishlar ketma-ketligi (GitHub Pages keshi 10 daq bilan): {vers}')
-    ok(ev('BJ.A.VER') == '0.7.1', f"yangilanishdan keyin versiya {ev('BJ.A.VER')} (ochishlar: {vers})")
-    ok(ev('BJ.A.S().appVer') == '0.7.1', 'appVer yangilandi')
+    ok(ev('BJ.A.VER') == VNEW, f"yangilanishdan keyin versiya {ev('BJ.A.VER')} (ochishlar: {vers})")
+    ok(ev('BJ.A.S().appVer') == VNEW, 'appVer yangilandi')
     newYul = ev("Object.values(BJ.A.S().bolalar).map(b=>[b.id,b.yulduz||0, Object.keys(b.tugun||{}).length])")
     ok(sorted(newYul) == sorted(oldYul), f"bolalar va natijalar saqlandi ({len(newYul)} bola)")
     kk = ev("caches.keys()")
-    ok('bj-v0.7.1' in kk and 'bj-v0.7.0' not in kk, f"service worker keshi yangilandi {kk}")
-    ok('v7.1' in ev("document.body.innerText"), "ekranda «v7.1» belgisi")
+    ok('bj-v' + VNEW in kk and 'bj-v' + VOLD not in kk, f"service worker keshi yangilandi {kk}")
+    ok('v' + VK(VNEW) in ev("document.body.innerText"), f"ekranda «v{VK(VNEW)}» belgisi")
     nz = ev("JSON.stringify(BJ.A.S().sozlama.nutq||null)"); NOTE.append('nutq sozlamasi: ' + nz)
     ok(not PE, f"yangilanishda xato yo'q {PE[:3]}"); PE.clear()
 
@@ -127,7 +131,7 @@ try:
     t = ev("document.body.innerText"); ok('Besh' in t and 'Fayl yuklandi' in t, "🔧 Ovozni tekshirish ishladi (fayl yuklandi)")
     pg.click('[data-eh="1"]'); pg.wait_for_timeout(300)
     kod = ev("(document.querySelector('[data-ehn] input')||{}).value||''"); NOTE.append('tekshiruv qatori: ' + kod)
-    ok(kod.startswith('OVOZ|iPhone'), f"natija qatori: {kod[:70]}")
+    ok(kod.startswith('OVOZ|iPhone') and ('yol=media' in kod if VNEW >= '0.7.2' else True), f"natija qatori: {kod[:70]}")
     KID = ['', 'mashq', 'mashq-mat', 'mashq-til', 'mashq-ar', 'zal', 'dokon', 'garaj', 'bozor', 'arena']
     for bid in ids:
         setj(bid)

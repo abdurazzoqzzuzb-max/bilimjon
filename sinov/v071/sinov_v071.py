@@ -304,7 +304,7 @@ try:
     BU = f'http://localhost:{PORT2}/'
     BT = tel(br, 'BETA', BU); oila(BT, 'Beta oila'); btb = BT.evaluate("(()=>{const b=BJ.A.newBola({laqab:'Beta',daraja:'g1',avatar:'🐼'}); BJ.A.save(true); return b.id})()")
     BT.goto(BU + 'beta/'); BT.wait_for_timeout(500); BT.fill('#bpin', '1234'); BT.click('[data-ok]'); BT.wait_for_timeout(300); BT.click('[data-nus]'); BT.wait_for_timeout(700)
-    ok(BT.evaluate("BJ.A.BETA && BJ.A.VER") == '0.7.1', "B: 🧪 beta ochildi (v7.1)")
+    bv = BT.evaluate("BJ.A.BETA && BJ.A.VER"); ok(bool(bv) and bv >= '0.7.1', f"B: 🧪 beta ochildi (v{bv})")   # 0.7.2 dan: versiya qat'iy yozilmaydi
     w0 = len([w for w in WRITES if w[1].startswith('oila/')])
     BT.evaluate("BJ.A.otaOk={rol:'admin',t:Date.now()}"); BT.goto(BU + 'beta/#ota-bulut'); BT.wait_for_timeout(600)
     ok('Sinov rejimi' in TXT(BT) and BT.locator('#be').count() == 1, "B: beta ☁️ — kirish va sinov izohi")

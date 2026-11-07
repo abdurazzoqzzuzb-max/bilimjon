@@ -9,7 +9,7 @@ Yangi chat shu fayldan davom etadi. Javoblar o'zbekcha. Repo PUBLIC: bu yerga is
 - Hamma oilalar uchun bitta umumiy versiya. Yangilanish telefonga o'zi keladi (ilovani yopib qayta ochganda), natijalar telefonda (localStorage) qoladi; ☁️ akkaunt ulangan oilada Firestore'da ham.
 
 ## Versiya
-- Saytda (main): **0.7.1** («v7.1», 07.11.2026 — u «chiqar» dedi; o'zi sinamadi, Claude prod sinovi bilan chiqarildi — «0.7.1 CHIQARISH» bo'limi). Ichida: 🤔 Tushunmadim + 🛡️ ruxsat tizimi (Firebase'da hali ESKI qoidalar → tizim o'chiq, bulut 0.7.0 dagidek ishlaydi) + 🔊 savol ovozi. Keyingi versiya — yangi tarmoqda (`v0.7.2` / `v0.8.0`), avval beta, saytga faqat «chiqar» bilan.
+- Saytda (main): **0.7.2** («v7.2», 07.11.2026 — 🔊 iPhone ovozi media pleyer orqali; u «o'zing to'g'rilab, chiqar» dedi — «0.7.2» bo'limi). 0.7.1 («v7.1», shu kuni, Claude prod sinovi bilan — «0.7.1 CHIQARISH» bo'limi) ichida: 🤔 Tushunmadim + 🛡️ ruxsat tizimi (Firebase'da hali ESKI qoidalar → tizim o'chiq, bulut 0.7.0 dagidek ishlaydi) + 🔊 savol ovozi. Keyingi versiya — yangi tarmoqda (`v0.7.2` / `v0.8.0`), avval beta, saytga faqat «chiqar» bilan.
 - 🧪 Sinov rejimi: `…/bilimjon/beta/` (main'dagi `beta/` papkasi). Yig'ish (main'da): `git fetch origin v0.7.1 && python3 sinov/beta/beta_yig.py origin/v0.7.1 beta` → faqat `beta/` commit + push. Xotira `bj_beta_*`, kirish — asosiy ilovaning admin PIN'i. Bulut SINXRONI o'chiq (`SYNC = !A.BETA`), lekin 🛡️ ruxsat tizimi ishlaydi (sinash uchun). Keyingi versiyalar avval beta'ga, u sinagach «chiqar».
 - Har chiqarishda ikkalasi birga oshiriladi: `index.html` → `VER = 'x.y.z'`, `sw.js` → `const V = 'bj-vx.y.z'`.
 - Ekranda oddiy nom (foydalanuvchi so'rovi, 05.11): `A.VERK` — 0.6.0 → «v6», 0.6.1 → «v6.1» (`A.verBadge()`), uy va bola tanlash ekranida tepada ism ostida; ota-ona panelida «Versiya 6». Keyingi katta versiya — 0.7.0 → «v7».
@@ -120,6 +120,17 @@ Tartib (foydalanuvchi qarori, 05.11; 06.11 — rasmli dars bozordan oldinga):
 4. 🎙️ Ota-ona ovozi.
 5. To'liq sinov → VER 0.7.0 → u «chiqar» desa main.
 
+
+## 0.7.2 — 🔊 iPhone ovozi: MEDIA PLEYER (07.11, chiqarildi; tarmoq `v0.7.2` main'dan)
+- Muammo (u, iPhone, v7.1, Abu Bakr profili): savol matni yonib turadi (`.q.gapir` — kod «o'ynayapman» deb hisoblaydi), lekin ovoz yo'q; 🔊 bosilsa ham jim. Sabab: iPhone'da WebAudio jim qoladi (yon tomondagi jim tugma / audio sessiya; `audioSession` va jim `<audio>` hiylasi yetmadi).
+- Yechim (`A.ovoz`, «0.7.2: MEDIA YO'L» bloki): bo'laklar avvalgidek `yuk` → `dekod` → `kes`, keyin `wav(bufs, pz)` — pauzalar bilan BITTA 16 bit mono WAV (Blob) → bitta `<audio playsinline>` (`me()`) da o'ynaladi. iPhone'da media ovozi jim tugmaga bog'liq emas.
+- Ochilish: FX `unlock()` boshida `FX.onGesture()` — teginish ichida SINXRON `ME.play(JIM)` (jim WAV) → `MEo = true` → `kutDavom()` (navbatdagi savol o'qiladi). Ochilmagan bo'lsa — eski `KUT` + `tegHint` (🔊 miltillaydi, «ekranga bir marta teging»). `play()` `NotAllowedError` bersa — yana navbat.
+- Umumiy ijro: `ijro(bufs, pz, el, id, kut)` — media yoki WebAudio; `oqi` va `namunaOqi` shundan foydalanadi. `FX.onUnlock = kutDavom` (WebAudio uchun ham).
+- Yo'l: `S.sozlama.nutq.yol` — '' (avto: `IOSM` iPhone → media, boshqalar → WebAudio) | 'media' | 'webaudio'. 🔧 tekshiruv: «🎵 Usul: …», «🎚️ Media pleyer ochiq», natija qatorida `yol=…|me=ochiq|yopiq|ijro=ok|yoq|kut`; «❌ Yo'q» → **«🔁 Boshqa usulda sinash»** (yo'lni almashtirib qayta tekshiradi, saqlanadi).
+- `A.ovoz.holat()` → `{…, yol, me, mn (oxirigacha o'qilgan ijrolar), msrc}`. Versiya xabari: 0.7.1 dan kelganlarga «🔊 iPhone'da savol ovozi tuzatildi».
+- Sinov: **`sinov/v072/sinov_ovoz_ios.py`** (21; haqiqiy ovoz fayllari, iPhone UA, autoplay ruxsatisiz): teginishdan oldin navbat + miltillash + xabar → teginish → WAV blob o'qiladi va oxirigacha yetadi → 🔊 qayta → javobdan keyin keyingi savol teginishsiz → ▶ Namuna → 🔧 tekshiruv `yol=media|me=ochiq|ijro=ok` → «Boshqa usul» WebAudio va qaytish → Android/kompyuterda WebAudio o'zgarmagan. `prod_e2e.py` endi versiyalarni fayllardan o'qiydi.
+- Regressiya (07.11, 0.7.2): 681/681 (v072 21, v071 157, v070 305, v060 167, bulut 31) + `prod_e2e.py` 23/23 (0.7.1 → 0.7.2 yangilanish 1-ochishdayoq — 0.7.1 dagi `tarmoq()` ishladi). `sinov_v071.py` A-qismidagi «o'rniga yangi savol» tasodifan (xuddi shu savol qayta chiqsa) yiqilishi mumkin — qayta ishga tushiring. `ghserve.py` endi `If-Modified-Since` ni e'tiborga olmaydi (eski papka fayl vaqti yangiroq bo'lsa noto'g'ri 304 berardi).
+- [?] Haqiqiy iPhone'da tekshirish — u qiladi; ovoz baribir chiqmasa: 🔧 → natija qatori → Claude. FX effekt tovushlari (portlash va h.k.) hali WebAudio'da — jim rejimda eshitilmasligi mumkin (keyingi ish, kerak bo'lsa).
 
 ## 0.7.1 CHIQARISH (07.11) — tekshiruv va tuzatishlar
 - Tekshiruv: regressiya 660/660 (v060 167, v070 305, v071 157, bulut 31) + **`sinov/chiqarish/prod_e2e.py`** (23; KEYINGI CHIQARISHLARDA HAM ishlating): 0.7.0 → 0.7.1 yangilanish (iPhone UA, 390 px, service worker yoqilgan, `ghserve.py` — GitHub Pages kabi max-age=600): 1-ochishda eski, 2-ochishda yangi versiya; bolalar va natijalar saqlanadi; SW keshi `bj-v0.7.1`; 3 bola (g0/g1/g2) to'liq missiya; haqiqiy ovoz fayllari (404 yo'q); 23 ota-ona + 30 bola ekrani; mashq + Tushunmadim; tasodifiy bosishlar 3×120 — JS xato 0.

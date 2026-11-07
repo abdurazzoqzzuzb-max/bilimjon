@@ -2144,6 +2144,7 @@ function jimAudio() {
 }
 function audio() { if (ac) return ac; asPlay(); try { ac = new (G.AudioContext || G.webkitAudioContext)(); master = ac.createGain(); master.gain.value = FX.vol; master.connect(ac.destination); } catch (e) { ac = null; } return ac; }
 function unlock() {
+  if (FX.onGesture) { try { FX.onGesture(); } catch (e) {} }   /* 0.7.2: 🔊 media pleyer (iPhone) — shu teginish ichida ochiladi */
   const a = audio(); if (!a) return; asPlay(); jimAudio();
   if (a.state !== 'running') { try { const p = a.resume(); if (p && p.then) p.then(() => { if (a.state === 'running' && FX.onUnlock) FX.onUnlock(); }, () => {}); } catch (e) {} }
   else if (FX.onUnlock) FX.onUnlock();
@@ -2532,7 +2533,7 @@ BJ.vis = vis;
 (function (G) {
 'use strict';
 const BJ = G.BJ, A = BJ.A = {}, gen = BJ.gen, B = BJ.bank;
-A.VER = '0.7.1';
+A.VER = '0.7.2';
 /* Oddiy versiya nomi (foydalanuvchi so'rovi, 05.11): 0.6.0 → «6», 0.6.1 → «6.1», 1.2.0 → «1.2». Ekranda shu ko'rinadi, ichkarida A.VER qoladi. */
 A.VERK = (() => { const p = A.VER.split('.').map(Number); return p[0] ? p[0] + '.' + p[1] : p[1] + (p[2] ? '.' + p[2] : ''); })();
 A.verBadge = () => `<span class="verb" title="Versiya ${A.VER}">v${A.VERK}</span>`;
@@ -6259,6 +6260,33 @@ function ctx() {
   if (AC) { VG = AC.createGain(); VG.gain.value = 1; VG.connect(AC.destination); }
   return AC;
 }
+/* ---------- 0.7.2: MEDIA YO'L (iPhone) ----------
+   07.11 (u: «Abu Bakr profilida savol yonib turadi, lekin ovoz yo'q; 🔊 bosilsa ham jim»): iPhone'da WebAudio «o'ynayotgandek» bo'lib jim qoladi
+   (yon tomondagi jim tugma / audio sessiya). Yechim: bo'laklar avvalgidek dekodlanadi va jimligi kesiladi, keyin pauzalar bilan BITTA WAV ga
+   yig'ilib <audio> elementida o'ynaladi — iPhone'da media ovozi jim tugmaga bog'liq emas. Element birinchi teginishda ochiladi (FX.onGesture).
+   Yo'l: sozlama nutq.yol — '' (avto: iPhone → media, boshqalar → webaudio) | 'media' | 'webaudio' (🔧 tekshiruvda «🔁 Boshqa usul»). */
+const IOSM = !!(FX && FX.audioInfo && FX.audioInfo().ios);
+const mediaYol = () => { const y = cfg().yol; return y === 'media' || (y !== 'webaudio' && IOSM); };
+const JIM = (() => { const n = 800, b = new Uint8Array(44 + n), v = new DataView(b.buffer), w = (o, t) => { for (let i = 0; i < t.length; i++) b[o + i] = t.charCodeAt(i); };
+  w(0, 'RIFF'); v.setUint32(4, 36 + n, true); w(8, 'WAVE'); w(12, 'fmt '); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true); v.setUint32(24, 8000, true); v.setUint32(28, 8000, true); v.setUint16(32, 1, true); v.setUint16(34, 8, true); w(36, 'data'); v.setUint32(40, n, true); b.fill(128, 44);
+  let s = ''; for (let i = 0; i < b.length; i++) s += String.fromCharCode(b[i]); return 'data:audio/wav;base64,' + btoa(s); })();
+let ME = null, MEo = false, MEurl = null, MEn = 0;
+function me() { if (!ME) { ME = document.createElement('audio'); ME.setAttribute('playsinline', ''); ME.setAttribute('webkit-playsinline', ''); ME.setAttribute('x-webkit-airplay', 'deny'); ME.preload = 'auto'; } return ME; }
+/* teginish ichida (sinxron!) element ochiladi: jim tovush o'ynatiladi — shundan keyin dastur play() qila oladi */
+FX.onGesture = () => {
+  if (MEo || !mediaYol()) return; const a = me();
+  try { a.onended = a.onerror = null; a.src = JIM; const p = a.play(), ok = () => { MEo = true; try { a.pause(); } catch (e) {} kutDavom(); };
+    if (p && p.then) p.then(ok, () => {}); else ok(); } catch (e) {}
+};
+/* bo'laklar → bitta WAV (16 bit, mono): boshida 40 ms, bo'laklar orasida pauza pz(i) soniya, oxirida 60 ms */
+function wav(bufs, pz) {
+  const sr = bufs[0].sampleRate, P = bufs.map((b, i) => i ? Math.round(pz(i) * sr) : 0), bosh = Math.round(0.04 * sr), oxir = Math.round(0.06 * sr);
+  const n = bosh + oxir + bufs.reduce((t, b, i) => t + P[i] + b.length, 0), pcm = new Int16Array(n); let o = bosh;
+  bufs.forEach((b, i) => { o += P[i]; const d = b.getChannelData(0); for (let k = 0; k < d.length; k++) { const x = d[k] < -1 ? -1 : d[k] > 1 ? 1 : d[k]; pcm[o + k] = x < 0 ? x * 0x8000 : x * 0x7FFF; } o += d.length; });
+  const h = new DataView(new ArrayBuffer(44)), w = (q, t) => { for (let i = 0; i < t.length; i++) h.setUint8(q + i, t.charCodeAt(i)); };
+  w(0, 'RIFF'); h.setUint32(4, 36 + n * 2, true); w(8, 'WAVE'); w(12, 'fmt '); h.setUint32(16, 16, true); h.setUint16(20, 1, true); h.setUint16(22, 1, true); h.setUint32(24, sr, true); h.setUint32(28, sr * 2, true); h.setUint16(32, 2, true); h.setUint16(34, 16, true); w(36, 'data'); h.setUint32(40, n * 2, true);
+  return { blob: new Blob([h.buffer, pcm.buffer], { type: 'audio/wav' }), sek: n / sr };
+}
 const KESH = new Map();
 function dekod(buf) { return new Promise((res, rej) => { try { const p = ctx().decodeAudioData(buf, res, rej); if (p && p.catch) p.catch(rej); } catch (e) { rej(e); } }); }
 /* boshidagi va oxiridagi jimlikni kesish (mp3 kodlovchi bo'shlig'i + TTS pauzasi) */
@@ -6286,10 +6314,12 @@ function tegHint(el) {
   if (!HINT) { HINT = 1; toast('🔊 Ovoz uchun ekranga bir marta teging'); }
 }
 /* teginish javob bo'lsa (variant bosildi) — eski savol o'qilmaydi: 150 ms dan keyin javob belgisi bormi, tekshiriladi */
-FX.onUnlock = () => { const k = KUT; if (!k) return; KUT = null; setTimeout(() => { const it = k.el && k.el.closest ? k.el.closest('.item') : null;
-  if (k.el && k.el.isConnected && !(it && it.querySelector('.opt.ok,.opt.no,.ok,.no'))) oqi(k.r, k.el, k.opt).then(k.res); else k.res(false); }, 150); };
+function kutDavom() { const k = KUT; if (!k) return; KUT = null; setTimeout(() => { const it = k.el && k.el.closest ? k.el.closest('.item') : null;
+  if (k.el && k.el.isConnected && !(it && it.querySelector('.opt.ok,.opt.no,.ok,.no'))) oqi(k.r, k.el, k.opt).then(k.res); else k.res(false); }, 150); }
+FX.onUnlock = kutDavom;
 function toxta() {
   IJ++; KUT = null; NODES.forEach(n => { try { n.stop(); } catch (e) {} }); NODES = []; clearTimeout(TM); belgi(EL, false); EL = null;
+  if (ME) { try { ME.onended = ME.onerror = null; if (!ME.paused) ME.pause(); } catch (e) {} }
   try { if (G.speechSynthesis && speechSynthesis.speaking) speechSynthesis.cancel(); } catch (e) {}
 }
 /* gapni o'qish: r — bo'laklar; el — yonib turadigan element. Natija: Promise<boolean> (o'qildimi) */
@@ -6300,15 +6330,37 @@ async function oqi(r, el, opt) {
     try { const u = new SpeechSynthesisUtterance(NUTQ.matn(r)); u.voice = telOvoz(); u.lang = u.voice ? u.voice.lang : 'uz-UZ'; u.rate = 0.9; belgi(el, true); u.onend = u.onerror = () => { if (id === IJ) belgi(el, false); }; speechSynthesis.cancel(); speechSynthesis.speak(u); return true; } catch (e) { return false; }
   }
   const ac = ctx(); if (!ac) return false;
-  try { if (navigator.audioSession && navigator.audioSession.type !== 'playback') navigator.audioSession.type = 'playback'; } catch (e) {}
-  /* resume() iPhone'da ruxsatsiz holatda hech qachon tugamasligi mumkin — 450 ms dan ortiq kutilmaydi */
-  if (ac.state !== 'running') { try { const p = ac.resume(); if (p && p.then) await Promise.race([p.catch(() => {}), new Promise(z => setTimeout(z, 450))]); } catch (e) {} }
-  if (id !== IJ) return false;
-  if (ac.state !== 'running') { EL = null; tegHint(el); return new Promise(res => { KUT = { r, el, opt: Object.assign({}, opt, { mb }), res }; }); }
+  const media = mediaYol(), kut = res => ({ r, el, opt: Object.assign({}, opt, { mb }), res });
+  if (media) { if (!MEo) { EL = null; tegHint(el); return new Promise(res => { KUT = kut(res); }); } }
+  else {
+    try { if (navigator.audioSession && navigator.audioSession.type !== 'playback') navigator.audioSession.type = 'playback'; } catch (e) {}
+    /* resume() iPhone'da ruxsatsiz holatda hech qachon tugamasligi mumkin — 450 ms dan ortiq kutilmaydi */
+    if (ac.state !== 'running') { try { const p = ac.resume(); if (p && p.then) await Promise.race([p.catch(() => {}), new Promise(z => setTimeout(z, 450))]); } catch (e) {} }
+    if (id !== IJ) return false;
+    if (ac.state !== 'running') { EL = null; tegHint(el); return new Promise(res => { KUT = kut(res); }); }
+  }
   let bufs; try { bufs = await Promise.all(r.map(x => yuk(mb, x.id))); } catch (e) { if (id === IJ) belgi(el, false); console.warn('ovoz', e); if (opt.qol) toast("🔊 Ovoz yuklanmadi — internetni tekshiring"); return false; }
   if (id !== IJ) return false;
-  let t = ac.currentTime + 0.04;
-  bufs.forEach((b, i) => { if (i) t += r[i].p === '.' ? 0.32 : r[i].p ? 0.22 : 0.07; const s = ac.createBufferSource(); s.buffer = b; s.connect(VG); s.start(t); NODES.push(s); t += b.duration; });
+  return ijro(bufs, i => r[i].p === '.' ? 0.32 : r[i].p ? 0.22 : 0.07, el, id, kut);
+}
+/* tayyor (dekodlangan, kesilgan) bo'laklarni o'ynatish: media <audio> (iPhone) yoki WebAudio. kut(res) — media hali ochilmagan bo'lsa navbat */
+function ijro(bufs, pz, el, id, kut) {
+  if (mediaYol()) {
+    const { blob, sek } = wav(bufs, pz), a = me();
+    if (MEurl) { try { URL.revokeObjectURL(MEurl); } catch (e) {} }
+    MEurl = URL.createObjectURL(blob); a.onended = a.onerror = null; a.src = MEurl; EL = el; belgi(el, true);
+    return new Promise(res => {
+      let tug = false; const fin = ok => { if (tug) return; tug = true; clearTimeout(TM); a.onended = a.onerror = null; if (ok) MEn++; if (id === IJ) { belgi(el, false); EL = null; } res(ok); };
+      a.onended = () => fin(true); a.onerror = () => fin(false); TM = setTimeout(() => fin(true), sek * 1000 + 2500);
+      let p; try { p = a.play(); } catch (e) { p = Promise.reject(e); }
+      if (p && p.then) p.then(() => { MEo = true; }, e => { if (tug) return; tug = true; clearTimeout(TM); a.onended = a.onerror = null;
+        if (id !== IJ) return res(false); belgi(el, false); EL = null;
+        if (e && e.name === 'NotAllowedError') { MEo = false; if (kut) { tegHint(el); KUT = kut(res); return; } toast('🔊 Ovoz uchun ekranga bir marta teging'); }
+        res(false); });
+    });
+  }
+  const ac = ctx(); let t = ac.currentTime + 0.04;
+  bufs.forEach((b, i) => { if (i) t += pz(i); const s = ac.createBufferSource(); s.buffer = b; s.connect(VG); s.start(t); NODES.push(s); t += b.duration; });
   belgi(el, true); const ms = (t - ac.currentTime) * 1000 + 60;
   return new Promise(res => { TM = setTimeout(() => { if (id === IJ) { belgi(el, false); NODES = []; EL = null; } res(true); }, ms); });
 }
@@ -6357,11 +6409,10 @@ document.addEventListener('visibilitychange', () => { if (document.visibilitySta
 function namunaOqi(bt) {
   if (bt.classList.contains('gapir')) return toxta();
   toxta(); const id = IJ, ac = ctx(); if (!ac) return toast('Bu telefonda ovoz chiqmaydi');
-  try { if (ac.state !== 'running') ac.resume(); } catch (e) {}
+  if (!mediaYol()) { try { if (ac.state !== 'running') ac.resume(); } catch (e) {} }
   belgi(bt, true); EL = bt;
   return Promise.all(['n5', 'n2', 'n6'].map(n => fetch(BASE + 'namuna/' + STANDART + '_' + n + '.mp3').then(r => { if (!r.ok) throw 0; return r.arrayBuffer(); }).then(dekod).then(kes))).then(bufs => {
-    if (id !== IJ) return; let t = ac.currentTime + 0.05; bufs.forEach(b => { const s = ac.createBufferSource(); s.buffer = b; s.connect(VG); s.start(t); NODES.push(s); t += b.duration + 0.6; });
-    TM = setTimeout(() => { if (id === IJ) { belgi(bt, false); EL = null; } }, (t - ac.currentTime) * 1000);
+    if (id !== IJ) return; return ijro(bufs, () => 0.6, bt, id, null);
   }).catch(() => { belgi(bt, false); toast('Namuna yuklanmadi — internetni tekshiring'); });
 }
 /* 🔧 tekshiruv: telefon ovozni qanday chiqarayotgani — natija qatori Claude'ga yuboriladi */
@@ -6374,20 +6425,24 @@ async function tekshir(box, bt) {
   const ney = await neyTayyor(true), L = [];
   let fayl = 'yoq', dek = 0;
   try { const t0 = Date.now(); const b = await yuk('ney', 'n5'); dek = Date.now() - t0; fayl = b && b.duration > 0.1 ? 'ok' : 'bosh'; } catch (e) { fayl = 'xato'; }
-  const fx = FX.audioInfo ? FX.audioInfo() : {}, holat = ac ? ac.state : 'yoq';
-  if (fayl === 'ok' && holat === 'running') { await oqi(NUTQ.reja('5'), bt, { mb: 'ney' }); }
-  const kod = `OVOZ|${qur}|${pwa ? 'ilova' : 'brauzer'}|session=${fx.session || '-'}|holat=${ac ? ac.state : 'yoq'}|jim=${fx.jim || '-'}|royxat=${ney ? NEY.n : 0}|fayl=${fayl}|${dek}ms|v=${A.VER}`;
+  const fx = FX.audioInfo ? FX.audioInfo() : {}, holat = ac ? ac.state : 'yoq', media = mediaYol();
+  let ijr = '-';
+  if (fayl === 'ok' && (media || holat === 'running')) { const ok = await Promise.race([oqi(NUTQ.reja('5'), bt, { mb: 'ney' }), new Promise(z => setTimeout(() => z('kut'), 6000))]); ijr = ok === true ? 'ok' : ok === 'kut' ? 'kut' : 'yoq'; }
+  const kod = `OVOZ|${qur}|${pwa ? 'ilova' : 'brauzer'}|yol=${media ? 'media' : 'webaudio'}|me=${MEo ? 'ochiq' : 'yopiq'}|ijro=${ijr}|session=${fx.session || '-'}|holat=${ac ? ac.state : 'yoq'}|jim=${fx.jim || '-'}|royxat=${ney ? NEY.n : 0}|fayl=${fayl}|${dek}ms|v=${A.VER}`;
   L.push(`📱 ${qur} · ${pwa ? 'uy ekranidagi ilova' : 'brauzer'}`);
-  L.push(ios && +ios.split('.')[0] < 17 ? (fx.jim === 'ishlayapti' ? '🔈 iOS 17 dan eski: jim tugma aylanib o\'tildi ✓' : '⚠️ iOS 17 dan eski: yon tomondagi jim tugmasini (beshik) o\'chiring') : (fx.session === 'playback' ? '🔈 Jim tugma ovozni to\'smaydi ✓' : ios ? '⚠️ Jim tugma ovozni to\'sishi mumkin — yon tugmani tekshiring' : '🔈 Ovoz rejimi ✓'));
-  L.push(holat === 'running' ? '🎚️ Ovoz tizimi ochiq ✓' : '⚠️ Ovoz tizimi yopiq — ekranga bir marta tegib, qayta bosing');
+  L.push(media ? `🎵 Usul: media pleyer${cfg().yol ? '' : ' (iPhone uchun avtomatik)'} — jim tugma to'smaydi ✓` : `🎵 Usul: WebAudio${cfg().yol ? '' : ' (avtomatik)'}`);
+  if (!media) L.push(ios && +ios.split('.')[0] < 17 ? (fx.jim === 'ishlayapti' ? '🔈 iOS 17 dan eski: jim tugma aylanib o\'tildi ✓' : '⚠️ iOS 17 dan eski: yon tomondagi jim tugmasini (beshik) o\'chiring') : (fx.session === 'playback' ? '🔈 Jim tugma ovozni to\'smaydi ✓' : ios ? '⚠️ Jim tugma ovozni to\'sishi mumkin — yon tugmani tekshiring' : '🔈 Ovoz rejimi ✓'));
+  L.push(media ? (MEo ? '🎚️ Media pleyer ochiq ✓' : '⚠️ Media pleyer hali ochilmagan — ekranga bir marta tegib, qayta bosing') : holat === 'running' ? '🎚️ Ovoz tizimi ochiq ✓' : '⚠️ Ovoz tizimi yopiq — ekranga bir marta tegib, qayta bosing');
   L.push(ney ? `📋 Ro'yxat: ${NEY.n.toLocaleString('ru-RU')} ta ibora ✓` : "⚠️ Ro'yxat yuklanmadi — internetni tekshiring");
   L.push(fayl === 'ok' ? `🎧 Fayl yuklandi va o'qildi ✓ (${dek} ms)` : '⚠️ Ovoz fayli yuklanmadi — internetni tekshiring');
   bt.disabled = false;
   box.innerHTML = `<div class="sm">${L.map(esc).join('<br>')}</div><p class="sm"><b>«Besh» so'zini eshitdingizmi?</b></p><div class="row"><button class="btn sm" data-eh="1">✅ Ha</button><button class="btn sm ghost" data-eh="0">❌ Yo'q</button></div><div data-ehn></div>`;
   $$('[data-eh]', box).forEach(x => x.onclick = () => {
     const ha = x.dataset.eh === '1', kk = kod + '|eshitdi=' + (ha ? 'ha' : 'yoq');
-    $('[data-ehn]', box).innerHTML = (ha ? `<p class="sm">✅ Ovoz ishlayapti.</p>` : `<p class="sm">Tekshiring: 1) telefonning ovoz balandligi tugmasi (+) — o'yin ochiq turganda bosing; 2) Bluetooth quloqchin ulangan bo'lmasin; 3) iPhone'da yon tomondagi jim tugmasi; 4) ilovani yopib qayta oching.</p>`) +
+    $('[data-ehn]', box).innerHTML = (ha ? `<p class="sm">✅ Ovoz ishlayapti.</p>` : `<p class="sm">Tekshiring: 1) telefonning ovoz balandligi tugmasi (+) — o'yin ochiq turganda bosing; 2) Bluetooth quloqchin ulangan bo'lmasin; 3) ilovani yopib qayta oching.</p><button class="btn" data-yol>🔁 Boshqa usulda sinash (${media ? 'WebAudio' : 'media pleyer'})</button>`) +
       `<p class="sm mut">Natija qatori (Claude'ga yuboring):</p><input class="inp mono" readonly value="${esc(kk)}"><button class="btn sm ghost" data-ehk>📋 Nusxalash</button>`;
+    const yb = $('[data-yol]', box); if (yb) yb.onclick = () => { const s = S(); s.sozlama.nutq = Object.assign({}, cfg(), { yol: media ? 'webaudio' : 'media', v: 2 }); A.save(true); MEo = false;
+      if (FX.onGesture) FX.onGesture(); toast(media ? '🔁 Usul: WebAudio' : '🔁 Usul: media pleyer'); tekshir(box, bt); };
     const nk = $('[data-ehk]', box); nk.onclick = () => { const inp = $('input', $('[data-ehn]', box)); try { navigator.clipboard.writeText(kk).then(() => toast('📋 Nusxalandi'), () => { inp.select(); document.execCommand('copy'); toast('📋 Nusxalandi'); }); } catch (e) { inp.select(); try { document.execCommand('copy'); } catch (er) {} toast('📋 Nusxalandi'); } };
   });
 }
@@ -6416,7 +6471,7 @@ function panel(top, bindTop) {
 }
 /* ilova ochilganda ro'yxatni fonda yangilash (internet bo'lsa) */
 setTimeout(() => { try { if (cfg().nom) neyTayyor(); } catch (e) {} }, 1500);
-A.ovoz = { NUTQ, reja, savolMatn, savolReja, variantMatn, manba, oqi, toxta, bind, panel, neyTayyor, cfg, NOMLAR, STANDART, holat: () => ({ nom: NEY.nom, n: NEY.n, kesh: KESH.size, kut: !!KUT }), otaManba: null };
+A.ovoz = { NUTQ, reja, savolMatn, savolReja, variantMatn, manba, oqi, toxta, bind, panel, neyTayyor, cfg, NOMLAR, STANDART, holat: () => ({ nom: NEY.nom, n: NEY.n, kesh: KESH.size, kut: !!KUT, yol: mediaYol() ? 'media' : 'webaudio', me: MEo, mn: MEn, msrc: ME && ME.src ? String(ME.src).slice(0, 5) : '' }), otaManba: null };
 })(window);
 </script>
 <script>
@@ -7291,7 +7346,7 @@ function start() {
   BJ.debug = { state: () => A.S(), fx: FX.stats, A, gen: BJ.gen };
   A.render();
   try { if (A.bulutStart) A.bulutStart(); } catch (e) { console.warn(e); }
-  if (oldVer && oldVer !== A.VER) setTimeout(() => toast(oldVer.indexOf('0.7.') === 0 ? '🆕 Bilimjon v7.1: 🔊 savollar o\'zbekcha ovozda o\'qiladi, 🤔 «Tushunmadim» tugmasi va 🙋 ota-onadan so\'rash!' : '🆕 Bilimjon v7.1: 🔊 savollar ovozda, 🗺️ sarguzasht xaritasi, 🎮 o\'yinlar zali, 🧺 oila bozori, 🤔 «Tushunmadim» tugmasi!'), 900);
+  if (oldVer && oldVer !== A.VER) setTimeout(() => toast(oldVer === '0.7.1' ? '🆕 Bilimjon v7.2: 🔊 iPhone\'da savol ovozi tuzatildi (jim rejimda ham eshitiladi)' : oldVer.indexOf('0.7.') === 0 ? '🆕 Bilimjon v7.2: 🔊 savollar o\'zbekcha ovozda o\'qiladi, 🤔 «Tushunmadim» tugmasi va 🙋 ota-onadan so\'rash!' : '🆕 Bilimjon v7.2: 🔊 savollar ovozda, 🗺️ sarguzasht xaritasi, 🎮 o\'yinlar zali, 🧺 oila bozori, 🤔 «Tushunmadim» tugmasi!'), 900);
 }
 start();
 })(window);
