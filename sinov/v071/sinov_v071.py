@@ -317,7 +317,7 @@ try:
     SHOT(BT, '10_beta')
     # 🛡️ PIN'siz yo'l: asosiy ilova sozlanmagan brauzer (iPhone Safari) — beta eshigidan to'g'ri «Ruxsat tizimi»
     SF = tel(br, 'SAFARI', BU + 'beta/'); SF.wait_for_timeout(400)
-    ok("sozlanmagan" in TXT(SF) and SF.locator('[data-rxk]').count() == 1, "B: PIN'siz brauzerda ham «🛡️ Ruxsat tizimini yoqish» tugmasi bor")
+    ok("PIN yo'q" in TXT(SF) and SF.locator('[data-rxk]').count() == 1 and SF.locator('#bpin').count() == 0, "B: PIN'siz brauzerda (iPhone Safari) — «☁️ Oila emaili va paroli bilan kirish» tugmasi")
     SHOT(SF, '11_eshik')
     SF.click('[data-rxk]'); ok(kut(SF, "!!document.querySelector('#be')", 8000), "B: tugma → to'g'ri kirish oynasi (PIN so'ralmaydi)")
     SF.fill('#be', 'admin@test.uz'); SF.fill('#bp', 'parol123'); SF.click('[data-in]')
@@ -325,6 +325,19 @@ try:
     SF.reload(); SF.wait_for_timeout(600)
     ok(kut(SF, "document.body.innerText.includes('Ruxsatlar')", 8000), "B: sahifa yangilansa ham shu ekran (#bulut)")
     SF.click('[data-bk]'); SF.wait_for_timeout(900); ok(SF.locator('[data-rxk]').count() == 1, "B: ← orqaga — sinov eshigiga qaytadi")
+    # 📱 0.7.1 (07.11): iPhone — oila akkaunti bilan bulutdan NUSXA olib sinovga kirish
+    wB = len(WRITES); SF.click('[data-rxk]'); ok(kut(SF, "!!document.querySelector('[data-bnus]')", 8000), "C: kirgan akkauntda «📥 Nusxa olib sinovga kirish» tugmasi")
+    SF.click('[data-bnus]'); SF.wait_for_timeout(2500)
+    ok(kut(SF, "BJ.A.BETA && !!document.querySelector('.betab') && !!BJ.A.S().oila && Object.keys(BJ.A.S().bolalar).length > 0", 8000), "C: nusxadan keyin sinov ochildi (🧪 belgisi, oila va bolalar bor)")
+    ok(SF.evaluate("Object.keys(BJ.A.S().bolalar).length") == len([k for k in STORE if k.startswith('oila/' + RULES['admin'] + '/bolalar/')]), "C: bolalar soni bulutdagi bilan teng")
+    ok(SF.evaluate("localStorage.getItem('bj_beta_manba')") == 'bulut' and SF.evaluate("!!localStorage.getItem('bj_state_v1')") is False, "C: nusxa faqat sinov xotirasida (asosiy kalit bo'sh)")
+    SF.evaluate("(()=>{const s=BJ.A.S(); const id=s.tartib[0]; s.bolalar[id].yulduz=777; BJ.A.save(true)})()"); SF.wait_for_timeout(7000)
+    ok(not any(w[1].startswith('oila/') for w in WRITES[wB:]), "C: sinov bulutga hech narsa YOZMADI")
+    SHOT(SF, '12_beta_nusxa')
+    SF.evaluate("localStorage.removeItem('bj_beta_ok')"); SF.reload(); SF.wait_for_timeout(700)
+    ok(SF.locator('#bpin').count() == 1 and 'Admin PIN' in TXT(SF), "C: 12 soatdan keyin — sinovdagi nusxa PIN'i so'raladi")
+    SF.fill('#bpin', '0000'); SF.click('[data-ok]'); SF.wait_for_timeout(300); ok(not SF.evaluate("!!document.querySelector('.betab')"), "C: noto'g'ri PIN — kirmaydi")
+    SF.fill('#bpin', '1234'); SF.click('[data-ok]'); SF.wait_for_timeout(900); ok(SF.evaluate("!!document.querySelector('.betab') && Object.keys(BJ.A.S().bolalar).length > 0"), "C: to'g'ri PIN — sinov ma'lumoti bilan ochildi")
     br.close()
 finally:
     srv.terminate(); srv2.terminate(); shutil.rmtree(TMP, ignore_errors=True)
