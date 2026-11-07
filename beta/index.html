@@ -6729,7 +6729,8 @@ function sorash(nB, nL) {
    Yangi oila bulutga faqat Bilimjon egasining (admin) tasdig'i bilan ulanadi: ruxsat/{uid} {email, oila, ts, holat: kutish|ok|rad|blok, hal}.
    Admin — firestore.rules dagi admin(): akkaunt ID sini qoidaga ilovaning o'zi qo'yadi (☁️ → 🛡️ → «📋 Qoidalarni nusxalash»); repo'da — namuna.
    Qoidalar hali eski bo'lsa (ruxsat/ o'qilmaydi) — tizim «yoqilmagan», ilova 0.7.0 dagidek ishlaydi.
-   Ruxsatni faqat «admin telefoni» beradi (S.adminTel — oila darajasida sinxron): boshqa telefonda ro'yxat faqat ko'rinadi.
+   0.7.5 (u: «telefonga bog'liq bo'lmasin — telefonimni yo'qotishim mumkin»): admin — AKKAUNT, telefon emas. Admin akkaunti bilan kirgan istalgan
+   telefonda hamma tugma ishlaydi (eski S.adminTel e'tiborga olinmaydi). Admin — qoidalardagi uid yoki custom claim admin=true (Claude boshqaruvi).
    🧪 Sinov rejimida (beta) bulut sinxroni o'chiq, lekin ruxsat tizimi ishlaydi — so'rovchi va admin tomonini sinash uchun. */
 const SYNC = !A.BETA;
 let RX = { faol: null, admin: false, holat: null, d: null, ok: true }, rxU = null, rxLU = null, rxList = [], rxQT = 0, rxQoida = null;
@@ -6759,7 +6760,7 @@ async function rxSorov(nom) {
 }
 /* Admin: hamma so'rovlar jonli; yangi so'rov kelsa admin telefonida xabar */
 const qNom = () => IOS ? 'iPhone' : /Android/i.test(navigator.userAgent) ? 'Android' : 'kompyuter';
-const adminTelMi = () => { const t = S().adminTel; return !!(t && t.q === qid()); };
+const adminTelMi = () => RX.admin === true;   /* 0.7.5: telefonga bog'lanmagan — admin akkaunti bilan kirgan har qanday qurilma */
 function rxAdminObuna() {
   if (rxLU) { try { rxLU(); } catch (e) {} rxLU = null; }
   if (!user || !RX.admin) return;
@@ -6797,8 +6798,8 @@ function rxYoqishHTML() {
   <div class="row"><button class="btn ghost" data-rxk>🔄 Tekshirish</button><button class="btn sm ghost" data-rxe>↩ Eski qoidalar</button></div></div>`;
 }
 function rxAdminHTML() {
-  const t = S().adminTel, men = adminTelMi(), dis = men ? '' : ' disabled';
-  const tel = men ? `<p class="sm">📱 Admin telefoni: <b>shu telefon</b> ✓</p>` : t ? `<p class="sm">📱 Ruxsat faqat admin telefonida beriladi (${esc(t.nom || 'telefon')}, ${vaqtQ(t.ts)} dan). Bu yerda ro'yxat faqat ko'rinadi.</p><button class="btn sm ghost" data-rxtel>↪ Shu telefonni admin telefoni qilish</button>` : `<p class="sm">📱 Admin telefoni hali belgilanmagan. Ruxsat faqat bitta telefondan berilishi uchun o'z telefoningizni belgilang.</p><button class="btn" data-rxtel>📱 Shu telefon — admin telefoni</button>`;
+  const men = adminTelMi(), dis = men ? '' : ' disabled';
+  const tel = `<p class="sm">👑 Admin — shu akkaunt: istalgan telefon yoki kompyuterdan boshqarasiz. Telefon yo'qolsa — boshqasida shu email bilan kiring.</p>`;
   const qator = x => { const bt = x.holat === 'kutish' ? `<button class="btn sm" data-rxa="ok|${esc(x.uid)}"${dis}>✅ Ruxsat berish</button><button class="btn sm ghost" data-rxa="rad|${esc(x.uid)}"${dis}>❌ Rad etish</button>`
       : x.holat === 'ok' ? `<button class="btn sm ghost" data-rxa="blok|${esc(x.uid)}"${dis}>🚫 To'xtatish</button>` : `<button class="btn sm" data-rxa="ok|${esc(x.uid)}"${dis}>↩ Ruxsat berish</button><button class="btn sm ghost" data-rxa="del|${esc(x.uid)}"${dis}>🗑 O'chirish</button>`;
     return `<div class="rxi"><div class="rxe">${esc(x.email || '—')}</div><div class="sm">Oila: <b>${esc(x.oila || '—')}</b> · ${vaqtQ(x.ts)} · <span class="rxh ${esc(x.holat)}">${RXH[x.holat] || esc(x.holat)}</span></div><div class="row">${bt}</div></div>`; };

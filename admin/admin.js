@@ -1,0 +1,194 @@
+#!/usr/bin/env node
+/* Bilimjon — 👑 ADMIN BOSHQARUVI (Claude chatdan yoki GitHub'dan; telefon kerak emas).
+   07.11.2026 (u: «telefonimni yo'qotishim, akkauntim yo'qolishi mumkin — hamma narsani shu chatdan qila olay; adminlik — o'zimning akkauntimda»).
+   Ishlaydigan joyi: YOPIQ (private) repo «bilimjon-admin» dagi GitHub Actions (admin.yml) — loglar faqat egasiga ko'rinadi.
+   Kalit: Firebase xizmat akkaunti (service account) JSON — secrets.FIREBASE_SA (yoki zaxira: yopiq repodagi kalit/sa.json). Kalit chatga HECH QACHON yozilmaydi.
+   Bu fayl ochiq repoda turadi — ichida maxfiy narsa yo'q; kalitsiz hech narsa qila olmaydi.
+
+   Buyruqlar (BUYRUQ, A1, A2, TASDIQ — muhit o'zgaruvchilari):
+     yordam                         — ro'yxat
+     holat                          — hamma akkauntlar: email, admin, ruxsat, oila, bolalar, oxirgi kirish/sinxron, versiya
+     statistika [email|hammasi]     — bolalar: bu hafta va o'tgan 4 hafta (kun, daqiqa, missiya, aniqlik), oxirgi faol kun
+     ruxsat <email> <ok|rad|blok|ochir>
+     admin <email> <ber|ol>         — custom claim admin=true (qoidalardagi admin())
+     parol <email> <yangi_parol>    — parolni o'rnatish (kamida 6 belgi; logda yashiriladi)
+     akkaunt <email> <yoq|ochir|ochirish>   — o'chirib qo'yish / yoqish / butunlay o'chirish (ochirish — TASDIQ=HA)
+     kochir <eski_email> <yangi_email>      — oila bulut ma'lumotini yangi akkauntga (TASDIQ=HA)
+     qoidalar <admin_email>         — firestore.rules ni Firebase'ga qo'yish (__ADMIN_UID__ → shu akkaunt)
+     zaxira                         — hamma Firestore ma'lumoti → zaxira/bilimjon_YYYY-MM-DD.json.gz (Actions artifact, 90 kun)
+*/
+'use strict';
+const fs = require('fs'), path = require('path'), zlib = require('zlib');
+
+const KUN = 864e5;
+const tk = d => { const x = new Date(d.getTime() + 5 * 3600e3); return x.toISOString().slice(0, 10); };   // Toshkent sanasi
+function haftaKunlari(oldin = 0, bugun = new Date()) {   // dushanbadan yakshanbagacha (Toshkent)
+  const t = new Date(tk(bugun) + 'T00:00:00Z'), dw = (t.getUTCDay() + 6) % 7, du = new Date(t.getTime() - (dw + 7 * oldin) * KUN);
+  return Array.from({ length: 7 }, (_, i) => new Date(du.getTime() + i * KUN).toISOString().slice(0, 10));
+}
+const vaqt = ms => { if (!ms) return '—'; const d = new Date(+ms + 5 * 3600e3); return d.toISOString().slice(8, 10) + '.' + d.toISOString().slice(5, 7) + '.' + d.toISOString().slice(0, 4) + ' ' + d.toISOString().slice(11, 16); };
+const sana = k => k ? k.slice(8, 10) + '.' + k.slice(5, 7) + '.' + k.slice(0, 4) : '—';
+const json = (s, d) => { try { return JSON.parse(s); } catch (e) { return d; } };
+const DARAJA = { g0: 'Maktabgacha', g1: '1-sinf', g2: '2-sinf', g3: '3-sinf', g4: '4-sinf' };
+const RXH = { kutish: 'kutyapti', ok: 'ruxsat bor', rad: 'rad etilgan', blok: "to'xtatilgan" };
+
+function haftaStat(b, kunlar) {
+  const K = (b && b.kun) || {}; let kun = 0, sek = 0, n = 0, ok = 0, mis = 0;
+  kunlar.forEach(k => { const a = K[k]; if (!a) return; if ((a.faol || 0) > 60) kun++; sek += a.faol || 0; n += a.n || 0; ok += a.ok1 || 0; if (a.missiya) mis++; });
+  return { kun, daq: Math.round(sek / 60), mis, n, foiz: n ? Math.round(ok * 100 / n) : null };
+}
+const oxirgiFaol = b => Object.keys((b && b.kun) || {}).filter(k => (b.kun[k].faol || 0) > 60).sort().pop() || '';
+
+async function hammaFoydalanuvchi(auth) {
+  const out = []; let t;
+  do { const r = await auth.listUsers(1000, t); out.push(...r.users); t = r.pageToken; } while (t);
+  return out;
+}
+async function foydalanuvchi(auth, email) {
+  if (!email || !/@/.test(email)) throw new Error('Email kerak (A1)');
+  try { return await auth.getUserByEmail(String(email).trim().toLowerCase()); } catch (e) { throw new Error('Bunday akkaunt yo\'q: ' + email); }
+}
+async function oilaOl(db, uid) {
+  const o = await db.doc('oila/' + uid).get(), x = o.exists ? o.data() : null, j = x ? json(x.j, {}) : null, bolalar = [];
+  if (x) { const s = await db.collection('oila/' + uid + '/bolalar').get(); s.forEach(d => { const b = json((d.data() || {}).j, null); if (b && b.id) bolalar.push(b); }); }
+  return { bor: !!x, x, j, bolalar };
+}
+
+const B = {};
+B.yordam = async ({ log }) => { log(fs.readFileSync(__filename, 'utf8').split('*/')[0].split('Buyruqlar')[1] || ''); };
+
+B.holat = async ({ auth, db, log }) => {
+  const users = await hammaFoydalanuvchi(auth), rx = {};
+  (await db.collection('ruxsat').get()).forEach(d => { rx[d.id] = d.data() || {}; });
+  log(`👑 Bilimjon — akkauntlar: ${users.length} ta · ${vaqt(Date.now())} (Toshkent)\n`);
+  const qator = [];
+  for (const u of users) {
+    const o = await oilaOl(db, u.uid), r = rx[u.uid] || {}, adm = !!(u.customClaims && u.customClaims.admin);
+    qator.push({ u, o, r, adm, ts: (o.x && o.x.ts) || 0 });
+  }
+  qator.sort((a, b) => (b.adm - a.adm) || (b.ts - a.ts));
+  qator.forEach(({ u, o, r, adm }, i) => {
+    log(`${i + 1}. ${u.email || '(emailsiz)'}${adm ? '  👑 ADMIN' : ''}${u.disabled ? '  ⛔ O\'CHIRILGAN' : ''}`);
+    log(`   uid: ${u.uid} · ochilgan: ${vaqt(Date.parse(u.metadata.creationTime))} · oxirgi kirish: ${vaqt(Date.parse(u.metadata.lastSignInTime || '') || 0)}`);
+    log(`   ruxsat: ${r.holat ? RXH[r.holat] || r.holat : "so'ralmagan"}${r.oila ? ' («' + r.oila + '»)' : ''}`);
+    if (o.bor) log(`   oila: «${(o.j.oila && o.j.oila.nom) || '—'}» · bolalar: ${o.bolalar.map(b => b.laqab).join(', ') || '—'} · oxirgi sinxron: ${vaqt(o.x.ts)} · v${o.x.v || '?'}`);
+    else log(`   oila: bulutda ma'lumot yo'q`);
+  });
+  const yetim = Object.keys(rx).filter(uid => !users.some(u => u.uid === uid));
+  if (yetim.length) log(`\n⚠️ Akkaunti o'chirilgan, lekin ruxsat yozuvi qolgan: ${yetim.length} ta`);
+};
+
+B.statistika = async ({ auth, db, log, A1 }) => {
+  const users = !A1 || A1 === 'hammasi' ? await hammaFoydalanuvchi(auth) : [await foydalanuvchi(auth, A1)];
+  const H = [0, 1, 2, 3, 4].map(i => haftaKunlari(i));
+  for (const u of users) {
+    const o = await oilaOl(db, u.uid); if (!o.bor) continue;
+    log(`\n🏠 «${(o.j.oila && o.j.oila.nom) || '—'}» — ${u.email}`);
+    if (!o.bolalar.length) log('   bolalar yo\'q');
+    o.bolalar.forEach(b => {
+      log(`   ${b.avatar || '🙂'} ${b.laqab} (${DARAJA[b.daraja] || b.daraja || '?'}) · oxirgi faol kun: ${sana(oxirgiFaol(b))}`);
+      H.forEach((kunlar, i) => { const s = haftaStat(b, kunlar);
+        log(`      ${i === 0 ? 'bu hafta   ' : i + ' hafta oldin'}: ${s.kun} kun · ${s.daq} daq · ${s.mis} missiya · ${s.foiz == null ? 'javob yo\'q' : s.foiz + '% to\'g\'ri (' + s.n + ')'}`); });
+    });
+  }
+};
+
+B.ruxsat = async ({ auth, db, log, A1, A2 }) => {
+  const u = await foydalanuvchi(auth, A1), h = String(A2 || '').toLowerCase();
+  if (h === 'ochir') { await db.doc('ruxsat/' + u.uid).delete(); return log(`🗑 ${u.email}: ruxsat yozuvi o'chirildi`); }
+  if (!['ok', 'rad', 'blok'].includes(h)) throw new Error('A2: ok | rad | blok | ochir');
+  const eski = await db.doc('ruxsat/' + u.uid).get();
+  await db.doc('ruxsat/' + u.uid).set(Object.assign(eski.exists ? {} : { email: u.email || '', oila: 'Oila', ts: Date.now() }, { holat: h, hal: Date.now() }), { merge: true });
+  log(`✅ ${u.email}: ruxsat → ${RXH[h]}`);
+};
+
+B.admin = async ({ auth, log, A1, A2 }) => {
+  const u = await foydalanuvchi(auth, A1), ber = String(A2 || 'ber').toLowerCase() !== 'ol';
+  const c = Object.assign({}, u.customClaims || {}); if (ber) c.admin = true; else delete c.admin;
+  await auth.setCustomUserClaims(u.uid, c);
+  log(`${ber ? '👑' : '↩'} ${u.email}: admin ${ber ? 'berildi' : 'olindi'}. Ilovada ☁️ dan chiqib qayta kirsin (yoki 1 soat kutsin).`);
+};
+
+B.parol = async ({ auth, log, A1, A2 }) => {
+  const u = await foydalanuvchi(auth, A1);
+  if (!A2 || String(A2).length < 6) throw new Error('Parol kamida 6 belgi bo\'lsin (A2)');
+  await auth.updateUser(u.uid, { password: String(A2) });
+  log(`🔑 ${u.email}: yangi parol o'rnatildi (logda yashirilgan). Endi ilovada shu email + yangi parol bilan «Kirish».`);
+};
+
+B.akkaunt = async ({ auth, db, log, A1, A2, TASDIQ }) => {
+  const u = await foydalanuvchi(auth, A1), h = String(A2 || '').toLowerCase();
+  if (h === 'yoq') { await auth.updateUser(u.uid, { disabled: false }); return log(`✅ ${u.email}: akkaunt yoqildi`); }
+  if (h === 'ochir') { await auth.updateUser(u.uid, { disabled: true }); return log(`⛔ ${u.email}: akkaunt o'chirib qo'yildi (kira olmaydi; ma'lumot saqlanadi)`); }
+  if (h === 'ochirish') {
+    if (TASDIQ !== 'HA') throw new Error('Butunlay o\'chirish uchun TASDIQ=HA kerak');
+    await auth.deleteUser(u.uid); return log(`🗑 ${u.email}: akkaunt butunlay o'chirildi (bulutdagi oila ma'lumoti qoldi — kerak bo'lsa «kochir» bilan boshqa akkauntga)`);
+  }
+  throw new Error('A2: yoq | ochir | ochirish');
+};
+
+B.kochir = async ({ auth, db, log, A1, A2, TASDIQ }) => {
+  const s = await foydalanuvchi(auth, A1), d = await foydalanuvchi(auth, A2);
+  if (s.uid === d.uid) throw new Error('Bir xil akkaunt');
+  if (TASDIQ !== 'HA') throw new Error(`Ko'chirish uchun TASDIQ=HA kerak (${d.email} dagi bulut ma'lumoti almashadi)`);
+  const o = await db.doc('oila/' + s.uid).get(); if (!o.exists) throw new Error(s.email + ': bulutda oila ma\'lumoti yo\'q');
+  const x = o.data(), now = Date.now();
+  await db.doc('oila/' + d.uid).set({ j: x.j, ts: now, q: 'admin', v: x.v || '' }, { merge: true });
+  let nb = 0, nl = 0;
+  for (const doc of (await db.collection('oila/' + s.uid + '/bolalar').get()).docs) { await db.doc('oila/' + d.uid + '/bolalar/' + doc.id).set({ j: doc.data().j, ts: now, q: 'admin' }); nb++; }
+  for (const doc of (await db.collection('oila/' + s.uid + '/log').get()).docs) { await db.doc('oila/' + d.uid + '/log/' + doc.id).set(doc.data(), { merge: true }); nl++; }
+  log(`🔁 ${s.email} → ${d.email}: oila + ${nb} bola + ${nl} kunlik log ko'chirildi. Yangi akkaunt egasi ilovani yopib qayta ochsin.`);
+};
+
+B.qoidalar = async ({ auth, rules, log, A1, QOIDA_FAYL }) => {
+  /* beta/firestore.rules — eng yangi qoidalar (beta har doim saytdagidan yangi yoki teng; qoidalar eski ilova bilan ham ishlaydi) */
+  const fayl = [QOIDA_FAYL, path.join(path.dirname(QOIDA_FAYL), 'beta', 'firestore.rules')].reverse().find(f => f && fs.existsSync(f)) || QOIDA_FAYL;
+  const u = await foydalanuvchi(auth, A1), t = fs.readFileSync(fayl, 'utf8');
+  if (t.indexOf('__ADMIN_UID__') < 0) throw new Error('Qoidalar faylida __ADMIN_UID__ joyi yo\'q');
+  const src = t.split('__ADMIN_UID__').join(u.uid);
+  await rules.releaseFirestoreRulesetFromSource(src);
+  log(`🛡️ Firestore qoidalari qo'yildi (admin: ${u.email}). Yangi oila endi faqat ruxsat bilan bulutga ulanadi.`);
+};
+
+B.zaxira = async ({ db, log, ZAXIRA_PAPKA }) => {
+  const out = { v: 1, ts: Date.now(), oila: {}, ruxsat: {}, guruh: {} };
+  for (const o of (await db.collection('oila').get()).docs) {
+    const r = { doc: o.data(), bolalar: {}, log: {} };
+    (await db.collection('oila/' + o.id + '/bolalar').get()).forEach(d => { r.bolalar[d.id] = d.data(); });
+    (await db.collection('oila/' + o.id + '/log').get()).forEach(d => { r.log[d.id] = d.data(); });
+    out.oila[o.id] = r;
+  }
+  (await db.collection('ruxsat').get()).forEach(d => { out.ruxsat[d.id] = d.data(); });
+  for (const g of (await db.collection('guruh').get()).docs) {
+    const r = { doc: g.data(), oilalar: {}, azo: {} };
+    (await db.collection('guruh/' + g.id + '/oilalar').get()).forEach(d => { r.oilalar[d.id] = d.data(); });
+    (await db.collection('guruh/' + g.id + '/azo').get()).forEach(d => { r.azo[d.id] = d.data(); });
+    out.guruh[g.id] = r;
+  }
+  fs.mkdirSync(ZAXIRA_PAPKA, { recursive: true });
+  const f = path.join(ZAXIRA_PAPKA, `bilimjon_${tk(new Date())}.json.gz`), buf = zlib.gzipSync(JSON.stringify(out));
+  fs.writeFileSync(f, buf);
+  log(`💾 Zaxira: ${Object.keys(out.oila).length} oila, ${Object.keys(out.ruxsat).length} ruxsat, ${Object.keys(out.guruh).length} guruh → ${path.basename(f)} (${Math.round(buf.length / 1024)} KB)`);
+  return f;
+};
+
+async function ishla(buyruq, deps) {
+  const f = B[String(buyruq || 'yordam').toLowerCase()];
+  if (!f) throw new Error('Noma\'lum buyruq: ' + buyruq + ' (yordam — ro\'yxat)');
+  return f(deps);
+}
+module.exports = { ishla, B, haftaKunlari, haftaStat, tk };
+
+if (require.main === module) {
+  (async () => {
+    const admin = require('firebase-admin'), env = process.env;
+    let sa = env.FIREBASE_SA;
+    if (!sa && env.SA_FAYL && fs.existsSync(env.SA_FAYL)) sa = fs.readFileSync(env.SA_FAYL, 'utf8');
+    if (!sa) throw new Error('Kalit yo\'q: secrets.FIREBASE_SA (yoki kalit/sa.json) qo\'yilmagan');
+    const cred = JSON.parse(sa);
+    admin.initializeApp({ credential: admin.credential.cert(cred), projectId: cred.project_id });
+    await ishla(env.BUYRUQ, { auth: admin.auth(), db: admin.firestore(), rules: admin.securityRules(), log: s => console.log(s),
+      A1: (env.A1 || '').trim(), A2: (env.A2 || '').trim(), TASDIQ: (env.TASDIQ || '').trim(),
+      QOIDA_FAYL: env.QOIDA_FAYL || path.join(__dirname, '..', 'firestore.rules'), ZAXIRA_PAPKA: env.ZAXIRA_PAPKA || 'zaxira' });
+  })().catch(e => { console.error('❌ ' + (e && e.message || e)); process.exit(1); });
+}
