@@ -5,7 +5,7 @@
 "dvigatel": "edge",
 "voice": "uz-UZ-MadinaNeural",
 "rate": "-18%",
-"nom": "Madina — sekinroq (tanlangan, 07.11)",
+"nom": "Madina — sekinroq",
 "toliq": true,
 "imlo": 2
 },
@@ -14,8 +14,9 @@
 "voice": "uz-UZ-MadinaNeural",
 "rate": "-12%",
 "pitch": "+12Hz",
-"nom": "Madina — jonliroq (bolalarga)",
-"imlo": 2
+"nom": "Madina — jonli (tanlangan, 07.11)",
+"imlo": 2,
+"toliq": true
 },
 "madina": {
 "dvigatel": "edge",
