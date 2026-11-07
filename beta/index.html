@@ -521,6 +521,7 @@ body:not(.th-garaj):not(.th-orol) .zbig{color:#B9800F;background:none}
 .uzrow{display:flex;justify-content:space-between;align-items:center;gap:8px}.uzr{display:flex;gap:10px;align-items:center;margin:8px 0;font-weight:600}.uzr input{width:20px;height:20px}
 [data-nam].gapir{background:#FFD54F;color:#222}
 @media (prefers-reduced-motion:reduce){.q.gapir{animation:none;text-shadow:0 0 10px rgba(255,213,79,.8)}}
+.oilk{margin-top:14px;padding-top:12px;border-top:1px solid rgba(127,127,127,.25)}.oilb{margin:8px 0 2px;padding:8px 10px;border-radius:10px;background:rgba(127,127,127,.08)}
 </style>
 </head>
 <body class="th-neutral">
@@ -2533,7 +2534,7 @@ BJ.vis = vis;
 (function (G) {
 'use strict';
 const BJ = G.BJ, A = BJ.A = {}, gen = BJ.gen, B = BJ.bank;
-A.VER = '0.7.4';
+A.VER = '0.7.5';
 /* Oddiy versiya nomi (foydalanuvchi so'rovi, 05.11): 0.6.0 → «6», 0.6.1 → «6.1», 1.2.0 → «1.2». Ekranda shu ko'rinadi, ichkarida A.VER qoladi. */
 A.VERK = (() => { const p = A.VER.split('.').map(Number); return p[0] ? p[0] + '.' + p[1] : p[1] + (p[2] ? '.' + p[2] : ''); })();
 A.verBadge = () => `<span class="verb" title="Versiya ${A.VER}">v${A.VERK}</span>`;
@@ -6647,7 +6648,7 @@ async function tick() {
   try {
     A.flushLog(); const { doc, setDoc, deleteDoc, arrayUnion } = fb.fs, s = S(), sy = L.sync, now = Date.now(), ish = [];
     const uj = JSON.stringify(umumiy()), uh = hsh(uj);
-    if (uh !== sy.s.h) ish.push(setDoc(doc(db, 'oila', user.uid), { j: uj, ts: now, q: qid(), v: A.VER }).then(() => { sy.s = { h: uh, ts: now, r: uh }; }));
+    if (uh !== sy.s.h) ish.push(setDoc(doc(db, 'oila', user.uid), { j: uj, ts: now, q: qid(), v: A.VER, e: user.email || '' }).then(() => { sy.s = { h: uh, ts: now, r: uh }; }));
     Object.keys(s.bolalar).forEach(bid => { if (pending[bid]) return; const j = JSON.stringify(s.bolalar[bid]), h = hsh(j), r = sy.b[bid]; if (r && r.h === h) return;
       if (j.length > 950000) { xato = '⚠️ Bola ma\'lumoti juda katta — zaxira faylga saqlang'; return; }
       ish.push(setDoc(doc(db, 'oila', user.uid, 'bolalar', bid), { j, ts: now, q: qid() }).then(() => { sy.b[bid] = { h, ts: now, r: h }; })); });
@@ -6805,15 +6806,76 @@ function rxAdminHTML() {
   if (user && L) { L.rxKor = Math.max(L.rxKor || 0, ...rxList.map(x => x.ts)); lsave(); }
   return `<div class="card"><h3>🛡️ Ruxsatlar <span class="sm mut">· siz — admin</span></h3>${tel}
   ${rxList.length ? `<p class="sm">${n ? `⏳ Kutayotgan: <b>${n}</b> · ` : ''}Jami: ${rxList.length}</p><div class="rxl">${rxList.map(qator).join('')}</div>` : `<p class="sm mut">Hali so'rov yo'q. Yangi oila ☁️ da ro'yxatdan o'tib «📨 Ruxsat so'rash»ni bosadi — shu yerda chiqadi.</p>`}
+  ${oilHTML(men)}
   <details><summary class="sm">⚙️ Qoidalar</summary><p class="sm mut">Qoidalar yangilanganda (yangi versiyada) — shu yerdan qayta nusxa olib, konsolga qo'yiladi.</p><div class="row"><button class="btn sm" data-rxc>📋 Qoidalarni nusxalash</button><button class="btn sm ghost" data-rxs>📤 Ulashish</button><button class="btn sm ghost" data-rxe>↩ Eski qoidalar</button></div><textarea class="inp mono" rows="6" readonly data-rxt aria-label="Qoidalar matni">${esc(typeof rxQoida === 'string' ? rxQoida : '')}</textarea></details></div>`;
 }
 function rxSorovHTML() {
   const h = RX.holat, d = RX.d || {}, nom = (S().oila && S().oila.nom) || '';
-  if (!h) return `<div class="card"><h3>🛡️ Ruxsat kerak</h3><p class="sm">Bilimjon — yopiq oilaviy ilova: yangi oila bulutga faqat Bilimjon egasining ruxsati bilan ulanadi. Ilova shu telefonda hozir ham to'liq ishlaydi — ruxsatdan keyin ikkinchi telefon va reyting guruhi ham ochiladi.</p>
+  if (!h) return `<div class="card"><h3>🛡️ Ruxsat kerak</h3><p class="sm">Bilimjon — yopiq oilaviy ilova: yangi oila bulutga faqat Bilimjon egasining ruxsati bilan ulanadi. Ilova shu telefonda hozir ham to'liq ishlaydi — ruxsatdan keyin ikkinchi telefon va reyting guruhi ham ochiladi.</p><p class="sm mut">ℹ️ Ilova egasi (admin) oilangiz bulutdagi natijalarini ko'ra oladi va parolni unutsangiz ma'lumotni tiklashga yordam beradi.</p>
     <label class="lb" for="rxn">Oila nomi (egasi tanishi uchun)</label><input id="rxn" class="inp" maxlength="24" value="${esc(nom)}" autocomplete="off"><button class="btn big" data-rxq>📨 Ruxsat so'rash</button></div>`;
   if (h === 'kutish') return `<div class="card"><h3>⏳ Ruxsat kutilmoqda</h3><p class="sm">So'rov yuborildi: ${vaqtQ(d.ts)}. Bilimjon egasiga xabar bering — u tasdiqlashi bilan shu ekran o'zi yangilanadi va bulut ulanadi.</p><div class="row"><button class="btn" data-rxm>📤 Egasiga xabar</button><button class="btn ghost" data-rxk>🔄 Tekshirish</button></div></div>`;
   if (h === 'rad') return `<div class="card"><h3>❌ Ruxsat berilmadi</h3><p class="sm">Savol bo'lsa — Bilimjon egasiga yozing. Ilova shu telefonda bulutsiz ishlayveradi.</p><button class="btn ghost" data-rxk>🔄 Tekshirish</button></div>`;
   return `<div class="card"><h3>🚫 Bulut to'xtatilgan</h3><p class="sm">Bu akkaunt uchun bulut to'xtatilgan. Ma'lumotlar shu telefonda qoladi. Savol bo'lsa — Bilimjon egasiga yozing.</p><button class="btn ghost" data-rxk>🔄 Tekshirish</button></div>`;
+}
+/* ---------- 👑 HAMMA OILALAR (0.7.5) ----------
+   07.11 (u: «Javlon yangi email bilan kiradi; keyin kirgan hamma odamning akkauntini men nazorat qila olishim kerak — ilova o'zim va oilam
+   uchun, sotish uchun emas»). firestore.rules 0.7.5: admin() oila/** ni o'qiydi va yozadi. Admin: hamma oila (nomi, email, versiya, oxirgi
+   sinxron, ruxsat holati) → 👁 bolalari (bu hafta: kun, daqiqa, missiya, aniqlik) · ✉️ parol tiklash xati · 🔁 ma'lumotni boshqa akkauntga
+   ko'chirish (parol unutilib, telefon ham yo'qolganda). Parolni o'zi qo'ya olmaydi — Firebase buni faqat egasining emaili orqali beradi.
+   Oila hujjatida e (email) — keyingi sinxronda o'zi yoziladi. Beta'da ko'chirish yopiq (beta bulutga yozmaydi). */
+let OIL = null, OILK = null, OILB = {};
+async function oilalarOl() {
+  const { collection, getDocs } = fb.fs, arr = [], snap = await getDocs(collection(db, 'oila'));
+  snap.forEach(d => { const x = d.data() || {}; let j = {}; try { j = JSON.parse(x.j || '{}'); } catch (e) {} const r = rxList.find(y => y.uid === d.id) || {};
+    arr.push({ uid: d.id, nom: String((j.oila && j.oila.nom) || r.oila || '—'), e: String(x.e || r.email || ''), v: String(x.v || ''), ts: +x.ts || 0, n: (j.tartib || []).length, holat: d.id === user.uid ? 'admin' : r.holat || '' }); });
+  rxList.forEach(r => { if (!arr.some(a => a.uid === r.uid)) arr.push({ uid: r.uid, nom: r.oila || '—', e: r.email, v: '', ts: 0, n: 0, holat: r.holat, bos: true }); });
+  OIL = arr.sort((a, b) => (b.uid === user.uid) - (a.uid === user.uid) || b.ts - a.ts); return OIL;
+}
+async function oilaBolalar(uid) {
+  const { collection, getDocs } = fb.fs, out = [], snap = await getDocs(collection(db, 'oila', uid, 'bolalar'));
+  snap.forEach(d => { const x = d.data() || {}; try { const b = JSON.parse(x.j || '{}'); if (b && b.id) out.push(b); } catch (e) {} });
+  return (OILB[uid] = out);
+}
+function bolaQisqa(b) {
+  const K = b.kun || {}; let kun = 0, sek = 0, n = 0, ok = 0, mis = 0;
+  A.weekDays(A.isoWeek()).forEach(k => { const a = K[k]; if (!a) return; if ((a.faol || 0) > 60) kun++; sek += a.faol || 0; n += a.n || 0; ok += a.ok1 || 0; if (a.missiya) mis++; });
+  const ox = Object.keys(K).filter(k => (K[k].faol || 0) > 60).sort().pop() || '';
+  return `<div class="oilb">${esc(b.avatar || '🙂')} <b>${esc(b.laqab || '—')}</b> <span class="sm mut">${esc(A.DARAJA[b.daraja] || b.daraja || '')}</span><div class="sm">Bu hafta: ${kun} kun · ${Math.round(sek / 60)} daq · 🎯 ${mis} missiya · ${n ? Math.round(ok * 100 / n) + "% to'g'ri (" + n + ' javob)' : "javob yo'q"}</div><div class="sm mut">Oxirgi faol kun: ${ox ? ox.slice(8, 10) + '.' + ox.slice(5, 7) + '.' + ox.slice(0, 4) : '—'}</div></div>`;
+}
+function oilHTML(men) {
+  if (!OIL) return `<div class="oilk"><h3>👨‍👩‍👧 Hamma oilalar</h3><p class="sm mut">Bulutdagi har bir oila: email, bolalari va bu haftadagi natijasi; parol unutilsa — tiklash xati yoki ma'lumotni yangi akkauntga ko'chirish.</p><button class="btn" data-oil>👨‍👩‍👧 Oilalarni ko'rish</button></div>`;
+  const dis = men ? '' : ' disabled', qator = o => { const siz = o.uid === user.uid, ochiq = OILK === o.uid, bl = OILB[o.uid];
+    return `<div class="rxi"><div class="rxe">${siz ? '👑 ' : ''}${esc(o.nom)}${siz ? ' <span class="sm mut">(siz)</span>' : ''}</div>
+    <div class="sm">${esc(o.e || "email noma'lum")}${o.v ? ' · v' + esc(o.v) : ''} · ${o.bos ? "bulutda ma'lumot yo'q" : 'oxirgi sinxron ' + vaqtQ(o.ts)}${o.holat && !siz ? ` · <span class="rxh ${esc(o.holat)}">${RXH[o.holat] || esc(o.holat)}</span>` : ''}</div>
+    <div class="row">${o.bos ? '' : `<button class="btn sm ghost" data-oilb="${esc(o.uid)}">👁 Bolalari${o.n ? ' (' + o.n + ')' : ''}</button>`}${o.e && !siz ? `<button class="btn sm ghost" data-oilr="${esc(o.uid)}"${dis}>✉️ Parol tiklash xati</button>` : ''}${!siz && !o.bos ? `<button class="btn sm ghost" data-oilk="${esc(o.uid)}"${dis || (A.BETA ? ' disabled' : '')}>🔁 Ko'chirish</button>` : ''}</div>
+    ${ochiq ? (bl ? (bl.length ? bl.map(bolaQisqa).join('') : `<p class="sm mut">Bolalar yo'q</p>`) : '<p class="sm">⏳ Yuklanmoqda…</p>') : ''}</div>`; };
+  return `<div class="oilk"><h3>👨‍👩‍👧 Hamma oilalar <span class="sm mut">· ${OIL.length}</span></h3><div class="rxl">${OIL.map(qator).join('')}</div>
+  <p class="sm mut">${A.BETA ? "🧪 Sinovda «Ko'chirish» yopiq (beta bulutga yozmaydi). " : ''}Parolni admin qo'ya olmaydi: «✉️ Parol tiklash xati» egasining emailiga havola yuboradi, parolni u o'zi qo'yadi (havola 1 soat ishlaydi).</p>
+  <button class="btn sm ghost" data-oil>🔄 Yangilash</button></div>`;
+}
+async function oilaKochir(src, dst) {
+  const { doc, getDoc, setDoc, collection, getDocs, arrayUnion } = fb.fs, now = Date.now();
+  const o = await getDoc(doc(db, 'oila', src)); if (!o.exists()) throw new Error("Bu oilaning bulutda ma'lumoti yo'q");
+  const x = o.data(); await setDoc(doc(db, 'oila', dst), { j: x.j, ts: now, q: 'admin', v: x.v || '' }, { merge: true });
+  let nb = 0, nl = 0; const bs = await getDocs(collection(db, 'oila', src, 'bolalar')), bd = []; bs.forEach(d => bd.push([d.id, d.data()]));
+  for (const [id, d] of bd) { await setDoc(doc(db, 'oila', dst, 'bolalar', id), { j: d.j, ts: now, q: 'admin' }); nb++; }
+  const ls = await getDocs(collection(db, 'oila', src, 'log')), ld = []; ls.forEach(d => ld.push([d.id, d.data()]));
+  for (const [id, d] of ld) { const e = d.e || []; for (let i = 0; i < e.length || i === 0; i += 400) { await setDoc(doc(db, 'oila', dst, 'log', id), { bid: d.bid, kun: d.kun, e: arrayUnion(...e.slice(i, i + 400)) }, { merge: true }); if (!e.length) break; } nl++; }
+  return { nb, nl };
+}
+function oilBind(on, ish, redraw) {
+  on('[data-oil]', () => ish(async () => { await oilalarOl(); OILB = {}; OILK = null; }));
+  on('[data-oilb]', el => { const u = el.dataset.oilb; if (OILK === u) { OILK = null; return redraw(); } OILK = u; redraw(); if (!OILB[u]) oilaBolalar(u).then(redraw, e => { toast('⚠️ ' + xabar(e)); OILK = null; redraw(); }); });
+  on('[data-oilr]', el => { const o = (OIL || []).find(x => x.uid === el.dataset.oilr); if (!o || !o.e) return;
+    sheet(`<h2>✉️ Parol tiklash xati</h2><p><b>${esc(o.e)}</b> ga havola yuboriladi. Egasi pochtasini ochib, eng oxirgi xatdagi havolani <b>1 soat ichida</b> bosadi va yangi parolni o'zi yozadi.</p><div class="row"><button class="btn" data-ok>✉️ Yuborish</button><button class="btn ghost" data-x>Bekor</button></div>`, sh => {
+      $('[data-ok]', sh).onclick = () => { closeSheets(); ish(() => fb.au.sendPasswordResetEmail(auth, o.e), '✉️ Xat yuborildi: ' + o.e); }; }); });
+  on('[data-oilk]', el => { const src = (OIL || []).find(x => x.uid === el.dataset.oilk); if (!src) return; const nish = (OIL || []).filter(x => x.uid !== src.uid && x.uid !== user.uid);
+    if (!nish.length) return toast("Ko'chirish uchun boshqa akkaunt yo'q — avval yangi akkaunt ochilib, ruxsat so'ralsin");
+    sheet(`<h2>🔁 Ma'lumotni ko'chirish</h2><p class="sm">📤 Qayerdan: <b>${esc(src.nom)}</b> (${esc(src.e || src.uid.slice(0, 6))}, ${src.n} bola)</p><label class="lb" for="oilq">📥 Qayerga (yangi akkaunt)</label>
+      <select id="oilq" class="inp">${nish.map(x => `<option value="${esc(x.uid)}">${esc(x.e || x.uid.slice(0, 6))} — ${esc(x.nom)}</option>`).join('')}</select>
+      <p class="sm warn">⚠️ Tanlangan akkauntning bulutdagi oila ma'lumoti shu bilan ALMASHTIRILADI (eski akkauntdagi nusxa o'zgarmaydi). Yangi akkaunt egasi ilovani yopib qayta ochadi.</p>
+      <div class="row"><button class="btn" data-ok>🔁 Ko'chirish</button><button class="btn ghost" data-x>Bekor</button></div>`, sh => {
+      $('[data-ok]', sh).onclick = () => { const dst = $('#oilq', sh).value; closeSheets(); ish(async () => { const r = await oilaKochir(src.uid, dst); await oilalarOl(); toast(`🔁 Ko'chirildi: ${r.nb} bola, ${r.nl} kunlik log ✓`); }); }; }); });
 }
 function rxBind(redraw) {
   const on = (sel, fn) => $$(sel).forEach(el => { el.onclick = () => fn(el); });
@@ -6823,6 +6885,7 @@ function rxBind(redraw) {
   on('[data-rxe]', () => sheet(`<h2>↩ Eski qoidalar (0.7.0)</h2><p class="sm">Ruxsat tizimini o'chiradi: hamma akkaunt avvalgidek o'z bulutiga yoza oladi. Faqat muammo bo'lsa ishlating.</p><button class="btn" data-ok>📋 Nusxalash</button><button class="btn ghost" data-x>Bekor</button>`, el => {
     const p = fetch('qoidalar/firestore-0.5.0.rules', { cache: 'no-store' }).then(r => r.ok ? r.text() : Promise.reject(new Error('fayl'))).catch(() => null);
     $('[data-ok]', el).onclick = async () => { const t = await p; if (!t) return toast("⚠️ Fayl ochilmadi — internetni tekshiring"); nusxa(t); }; }));
+  oilBind(on, ish, redraw);
   on('[data-rxk]', () => ish(async () => { rxQT = 0; const r = await ruxsatTekshir(user); if (r.admin) rxAdminObuna(); if (r.ok && !r.admin && r.faol) { await ulan(user); }
     toast(r.noma || r.kesh ? "📴 Internet yo'q — keyin tekshiring" : r.faol === false ? 'ℹ️ Firebase\'da hali eski qoidalar' : r.admin ? '✅ Siz — admin. Ruxsat tizimi ishlayapti' : r.ok ? '✅ Ruxsat bor' : RX.holat === 'kutish' ? '⏳ Hali tasdiqlanmagan' : 'ℹ️ Holat: ' + (RX.holat || "so'rov yo'q")); }));
   on('[data-rxq]', () => { const n = ($('#rxn') || {}).value || ''; if (!n.trim()) return toast('Oila nomini yozing'); ish(() => rxSorov(n), '📨 So\'rov yuborildi'); });
@@ -6926,7 +6989,7 @@ A.bulutPanel = function (top, bindTop) {
   const ep = () => [$('#be').value.trim(), $('#bp').value];
   on('[data-in]', () => { const [e, p] = ep(); ish(() => fb.au.signInWithEmailAndPassword(auth, e, p)); });
   on('[data-up]', () => { const [e, p] = ep(); ish(() => fb.au.createUserWithEmailAndPassword(auth, e, p)); });
-  on('[data-reset]', () => { const [e] = ep(); if (!e) return toast('Avval emailni yozing'); ish(() => fb.au.sendPasswordResetEmail(auth, e), '✉️ Parolni tiklash xati yuborildi'); });
+  on('[data-reset]', () => { const [e] = ep(); if (!e) return toast('Avval emailni yozing'); ish(() => fb.au.sendPasswordResetEmail(auth, e), '✉️ Xat yuborildi: ENG OXIRGI xatdagi havolani 1 soat ichida oching (Спам papkasini ham qarang)'); });
   on('[data-sync]', () => ish(async () => { if (band) throw new Error('⏳ Oldingi yuborish hali tugamadi — internet sekin, o\'zi davom etadi'); await logOl(7); await tick(); if (xato) throw new Error(xato); }, '✓ Sinxronlandi'));
   rxBind(() => A.bulutPanel(top, bindTop));
   on('[data-bnus]', () => ish(async () => { const n = await betaBulutNusxa(); toast(`📥 Nusxa olindi: ${n} ta bola ✓`); location.hash = ''; setTimeout(() => location.reload(), 700); }));
@@ -7440,7 +7503,7 @@ function start() {
   BJ.debug = { state: () => A.S(), fx: FX.stats, A, gen: BJ.gen };
   A.render();
   try { if (A.bulutStart) A.bulutStart(); } catch (e) { console.warn(e); }
-  if (oldVer && oldVer !== A.VER) setTimeout(() => toast(oldVer === '0.7.3' ? '🆕 Bilimjon v7.4: 📈 savollar bola darajasiga to\'g\'ri moslashadi, 📊 hafta xulosasi aniqroq' : oldVer === '0.7.2' ? '🆕 Bilimjon v7.4: 🇬🇧 «🔊 Eshitish» — inglizcha so\'z yangi ovozda (iPhone jim rejimida ham)' : oldVer === '0.7.1' ? '🆕 Bilimjon v7.4: 🔊 iPhone\'da savol va inglizcha so\'z ovozi tuzatildi (jim rejimda ham eshitiladi)' : oldVer.indexOf('0.7.') === 0 ? '🆕 Bilimjon v7.4: 🔊 savollar o\'zbekcha ovozda o\'qiladi, 🤔 «Tushunmadim» tugmasi va 🙋 ota-onadan so\'rash!' : '🆕 Bilimjon v7.4: 🔊 savollar ovozda, 🗺️ sarguzasht xaritasi, 🎮 o\'yinlar zali, 🧺 oila bozori, 🤔 «Tushunmadim» tugmasi!'), 900);
+  if (oldVer && oldVer !== A.VER) setTimeout(() => toast(oldVer === '0.7.4' ? '🆕 Bilimjon v7.5: 👨‍👩‍👧 ota-ona uchun bulut nazorati yaxshilandi, parol tiklash aniqroq' : oldVer === '0.7.3' ? '🆕 Bilimjon v7.5: 📈 savollar bola darajasiga to\'g\'ri moslashadi, 📊 hafta xulosasi aniqroq' : oldVer === '0.7.2' ? '🆕 Bilimjon v7.5: 🇬🇧 «🔊 Eshitish» — inglizcha so\'z yangi ovozda (iPhone jim rejimida ham)' : oldVer === '0.7.1' ? '🆕 Bilimjon v7.5: 🔊 iPhone\'da savol va inglizcha so\'z ovozi tuzatildi (jim rejimda ham eshitiladi)' : oldVer.indexOf('0.7.') === 0 ? '🆕 Bilimjon v7.5: 🔊 savollar o\'zbekcha ovozda o\'qiladi, 🤔 «Tushunmadim» tugmasi va 🙋 ota-onadan so\'rash!' : '🆕 Bilimjon v7.5: 🔊 savollar ovozda, 🗺️ sarguzasht xaritasi, 🎮 o\'yinlar zali, 🧺 oila bozori, 🤔 «Tushunmadim» tugmasi!'), 900);
 }
 start();
 })(window);
