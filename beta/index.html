@@ -2533,7 +2533,7 @@ BJ.vis = vis;
 (function (G) {
 'use strict';
 const BJ = G.BJ, A = BJ.A = {}, gen = BJ.gen, B = BJ.bank;
-A.VER = '0.7.3';
+A.VER = '0.7.4';
 /* Oddiy versiya nomi (foydalanuvchi so'rovi, 05.11): 0.6.0 → «6», 0.6.1 → «6.1», 1.2.0 → «1.2». Ekranda shu ko'rinadi, ichkarida A.VER qoladi. */
 A.VERK = (() => { const p = A.VER.split('.').map(Number); return p[0] ? p[0] + '.' + p[1] : p[1] + (p[2] ? '.' + p[2] : ''); })();
 A.verBadge = () => `<span class="verb" title="Versiya ${A.VER}">v${A.VERK}</span>`;
@@ -2590,7 +2590,12 @@ function migrate(s) {
   /* v1 → keyingi versiyalar shu yerga qo'shiladi; hech narsa o'chirilmaydi */
   s.v = SV; return s;
 }
-function fixBola(b) { const d = bolaDefaults(); Object.keys(d).forEach(k => { if (b[k] === undefined || b[k] === null && d[k] !== null && typeof d[k] === 'object') b[k] = d[k]; }); return b; }
+function fixBola(b) { const d = bolaDefaults(); Object.keys(d).forEach(k => { if (b[k] === undefined || b[k] === null && d[k] !== null && typeof d[k] === 'object') b[k] = d[k]; }); ismTuz(b); return b; }
+/* 0.7.4: ota-ona so'rovi (07.11) — bitta profil nomidagi yozuv xatosi bir marta tuzatiladi. Repo ochiq: ism yozilmaydi, faqat xatoli shaklning
+   fnv xeshi va qaysi harf almashadi. b.ismTuz — bir marta (ota-ona keyin ✏️ bilan istalgancha o'zgartira oladi). */
+function ismTuz(b) {   /* jadval funksiya ichida: load() → migrate() bu satrdan OLDIN ishlaydi (const TDZ bo'lmasin) */
+  if (!b || b.ismTuz || typeof b.laqab !== 'string') return; const l = b.laqab.trim().toLowerCase(), t = ({ '611f9d28': [0, 'S'] })[fnv(l)]; if (!t) return;
+  b.laqab = (l.slice(0, t[0]) + t[1] + l.slice(t[0] + 1)).replace(/^./, c => c.toUpperCase()); b.ismTuz = 1; }
 let saveT = null;
 function save(now) { clearTimeout(saveT); const f = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); A.storageOK = true; } catch (e) { A.storageOK = false; } }; if (now) f(); else saveT = setTimeout(f, 250); }
 try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {}); } catch (e) {}
@@ -3152,7 +3157,7 @@ function stepRun(b, m) {
 function nextItem(b, m, st, i) {
   let sel;
   if (st.k === 'isinish') { const rev = A.dueReview(b), yest = Object.keys(b.tugun).filter(id => b.tugun[id].kun[A.addDays(A.todayKey(), -1)] && gen.reg[id] && !['KASHF', 'OL'].includes(id)); const pool = rev.length ? rev : yest.map(id => ({ tugun: id, q: b.tugun[id].q, tur: 'takror' })); sel = pool.length ? pool[i % pool.length] : { tugun: (b.fan.mat || {}).cur || 'M0.3', q: 1, tur: 'missiya' }; sel = Object.assign({}, sel, { tur: sel.tur === 'takror' ? 'takror' : 'missiya' }); }
-  else if (st.k === 'blok') { sel = (st.olimp && i === st.n - 1) ? { tugun: 'OL', q: A.gl(b.daraja) === 'g0' ? 1 : A.gl(b.daraja) === 'g1' ? 2 : 3, tur: 'olimp' } : A.pickNode(b, st.fan, { mantTypes: st.mantTypes, i, bolim: st.arBolim }); }
+  else if (st.k === 'blok') { sel = (st.olimp && i === st.n - 1) ? { tugun: 'OL', q: olimpQ(b), tur: 'olimp' } : A.pickNode(b, st.fan, { mantTypes: st.mantTypes, i, bolim: st.arBolim }); }
   else if (st.k === 'qayta') { const it = gen.make('L.10', 2, { dunyo: b.dunyo }); const f = BJ.FIG.mashina; it.fig = 'mashina'; it.qism = f.p.map((p, j) => ({ id: 'p' + j, sh: p[0], x: p[1], y: p[2], w: p[3], h: p[4], rang: ART.RANGLAR[(b.detal.length + j) % ART.RANGLAR.length] })); it.sav = "💥 Sinov poygasi: mashina devorga urilib parchalandi! Detallarni joyiga sudrab qayta yig'!"; it.tur = 'missiya'; it.fan = 'mant'; return it; }
   else if (st.k === 'kashf') { sel = { tugun: 'KASHF', q: qOfGrade(b), tur: 'kashf', kashfId: st.id, kashfSavol: (st.ksi || 0) + i }; }
   else if (st.k === 'duel') { const w = BJ.ARW.find(x => x.w === st.sozlar[i]); const it = BJ.arItem(w, 1); it.tugun = 'AR.' + w.m; it.q = 1; it.t = 'tanla'; it.gen = 'AR'; it.tur = 'duel'; it.fan = 'ar'; return it; }
@@ -3188,11 +3193,21 @@ function showItem(b, m, st, it) {
   if (A.ovoz) A.ovoz.bind(b, it, st0, $('.item'), { keyin: enKeyin }); else if (enKeyin) setTimeout(enKeyin, 350);
   if (st0.lock) { const ob = $('#body'); ob.classList.add('locked'); setTimeout(() => ob.classList.remove('locked'), 1500); }
 }
+/* 0.7.4: olimpiada masalasi — sinf darajasi (g0 1, g1 2, g2+ 3); oxirgi 8 ta urinishda (≥6) birinchi urinish < 30% → 1 pog'ona oson,
+   ≥ 80% → 1 pog'ona qiyin. Olimpiada ataylab qiyin: 30–80% — mos zona, o'zgarmaydi. */
+function olimpQ(b) { const g = A.gl(b.daraja), q0 = g === 'g0' ? 1 : g === 'g1' ? 2 : 3, t = b.tugun && b.tugun.OL, w = t && t.oyna ? t.oyna.slice(-8) : [];
+  if (w.length < 6) return q0; const a = A.sum(w) / w.length; return Math.max(1, Math.min(3, q0 + (a < 0.3 ? -1 : a >= 0.8 ? 1 : 0))); }
+A.olimpQ = olimpQ;
 /* ---------- Javob: log, statistika, effekt ---------- */
 function logEntry(b, it, st0, r, m) {
-  const now = Date.now(), msA = now - st0.shown, msF = (st0.first || now) - st0.shown;
+  const now = Date.now(), msX = now - st0.shown, msF = (st0.first || now) - st0.shown;
+  /* 0.7.4: savol ovozda o'qiladi (0.7.1 dan hamma bolaga) — bola ovozni kutib turgan vaqt «sekin javob» bo'lib qolmasin: javob ovoz tugagandan keyin
+     berilgan bo'lsa, shu seansdagi ijro vaqti ayiriladi (o'qiyotganda bosgan bo'lsa — xom vaqt). Aks holda adapt() (≥90% va tez → qiyinroq) va
+     o'zlashtirish (median ≤ me'yor×1,2) deyarli ishlamay qolardi: 100% to'g'ri yechsa ham savol oson darajada qolardi. */
+  const ovM = A.ovoz && A.ovoz.ijroMs && st0.ov0 != null ? Math.max(0, A.ovoz.ijroMs() - st0.ov0) : 0, ovH = ovM && !(A.ovoz.gapiryapti && A.ovoz.gapiryapti());
+  const msA = ovH ? Math.max(Math.min(msX, 400), msX - ovM) : msX;
   const e = { t: 'ans', ts: now, bola: b.id, kun: 'D' + (m ? m.D : A.dayNo(b)), sessiya: b.sessiya || null, fan: it.fan, tugun: it.tugun, gen: it.gen, qiyinlik: it.q, savol: String(it.savLog || it.sav || '').slice(0, 80), javob: String(r.javob == null ? '' : r.javob).slice(0, 40), togri_javob: String(it.a).slice(0, 40),
-    korsatildi_ms: st0.shown, birinchi_bosish_ms: msF, javob_ms: msA, urinish: st0.urinish, maslahat: st0.maslahat ? 1 : 0, togri_1: r.togri_1 ? 1 : 0, togri: r.togri ? 1 : 0, xato_turi: r.xato_turi || null, ovoz_qayta: st0.ovoz, shoshildi: r.shoshildi ? 1 : 0, tur: it.tur || 'missiya' };
+    korsatildi_ms: st0.shown, birinchi_bosish_ms: msF, javob_ms: msA, ovoz_ms: ovH ? ovM : 0, urinish: st0.urinish, maslahat: st0.maslahat ? 1 : 0, togri_1: r.togri_1 ? 1 : 0, togri: r.togri ? 1 : 0, xato_turi: r.xato_turi || null, ovoz_qayta: st0.ovoz, shoshildi: r.shoshildi ? 1 : 0, tur: it.tur || 'missiya' };
   A.pushLog(b.id, e); return e;
 }
 A.logEntry = logEntry;
@@ -6315,7 +6330,11 @@ function yuk(mb, id) {
   return p;
 }
 let IJ = 0, NODES = [], TM = null, EL = null, KUT = null, HINT = 0;
-function belgi(el, on) { if (el) el.classList.toggle('gapir', !!on); if (on) $$('.uzb.teg').forEach(x => x.classList.remove('teg')); }
+function belgi(el, on) { if (el) el.classList.toggle('gapir', !!on); if (on) $$('.uzb.teg').forEach(x => x.classList.remove('teg')); ovt(on); }
+/* 0.7.4: ovoz qancha vaqt o'ynadi (javob tezligidan ayirish uchun — logEntry) */
+const OVT = { on: false, t0: 0, sum: 0 };
+function ovt(on) { const t = Date.now(); if (on && !OVT.on) { OVT.on = true; OVT.t0 = t; } else if (!on && OVT.on) { OVT.on = false; OVT.sum += t - OVT.t0; } }
+const ijroMs = () => OVT.sum + (OVT.on ? Date.now() - OVT.t0 : 0);
 /* iPhone: ovoz faqat ekranga tegilgandan keyin ochiladi (Safari qoidasi). Savol ochilganda hali ochilmagan bo'lsa — navbatga qo'yiladi,
    🔊 tugma yonib-o'chadi, birinchi teginishda (FX.onUnlock) o'zi o'qiladi */
 function tegHint(el) {
@@ -6433,7 +6452,7 @@ async function ingliz(t, el, opt) {
 /* ---------- savol ekrani: 🔊 tugma, savol o'zi o'qiladi (07.11 — HAMMA bolaga), variantni bosib turish ---------- */
 /* opt.keyin — o'zbekcha savol o'qilgandan keyin (inglizcha so'zni telefon aytadi); o'qilmasa 350 ms da */
 function bind(b, it, st0, item, opt) {
-  toxta(); opt = opt || {};
+  toxta(); opt = opt || {}; if (st0) st0.ov0 = ijroMs();
   const keyin = typeof opt.keyin === 'function' ? opt.keyin : null, kech = () => { if (keyin) setTimeout(() => { if (item && item.isConnected) keyin(); }, 350); };
   if (!item || !b) return kech();
   const c = cfg(); if (!c.nom) return kech();
@@ -6536,7 +6555,7 @@ function panel(top, bindTop) {
 }
 /* ilova ochilganda ro'yxatni fonda yangilash (internet bo'lsa) */
 setTimeout(() => { try { if (cfg().nom) neyTayyor(); enTayyor(); } catch (e) {} }, 1500);
-A.ovoz = { NUTQ, reja, savolMatn, savolReja, variantMatn, manba, oqi, toxta, bind, panel, neyTayyor, cfg, NOMLAR, STANDART, ingliz, enId, enMatnlar, enOldin, enTayyor, EN_NOM, holat: () => ({ nom: NEY.nom, n: NEY.n, kesh: KESH.size, kut: !!KUT, yol: mediaYol() ? 'media' : 'webaudio', me: MEo, mn: MEn, msrc: ME && ME.src ? String(ME.src).slice(0, 5) : '', en: ENR.n, enOk: ENR.ok || 0, enTel: ENR.tel || 0 }), otaManba: null };
+A.ovoz = { NUTQ, reja, savolMatn, savolReja, variantMatn, manba, oqi, toxta, bind, panel, neyTayyor, cfg, NOMLAR, STANDART, ingliz, enId, enMatnlar, enOldin, enTayyor, EN_NOM, ijroMs, gapiryapti: () => OVT.on, holat: () => ({ nom: NEY.nom, n: NEY.n, kesh: KESH.size, kut: !!KUT, yol: mediaYol() ? 'media' : 'webaudio', me: MEo, mn: MEn, msrc: ME && ME.src ? String(ME.src).slice(0, 5) : '', en: ENR.n, enOk: ENR.ok || 0, enTel: ENR.tel || 0 }), otaManba: null };
 })(window);
 </script>
 <script>
@@ -7050,15 +7069,21 @@ function sovgaPanel() {
 /* ================= 📊 HAFTA XULOSASI — pedagog tilida (0.6.0) ================= */
 function xulosa(b, wk) {
   const s = A.weekStats(b, wk), p = A.weekStats(b, A.prevWeek(wk)), lim = A.kunLimit(b), q = [], t = [];
-  const otdi = wk === A.isoWeek() ? Math.max(1, A.weekDays(wk).indexOf(A.todayKey()) + 1) : 7, kunO = s.kunlar ? Math.round(s.faol / 60 / s.kunlar) : 0;
-  q.push(`⏱ ${s.kunlar}/${otdi} kun faol, kuniga o'rtacha ${kunO} daqiqa${lim ? ` (chegara ${lim})` : ''} · 🎯 missiya: ${s.missiya} kun`);
+  /* 0.7.4: kunlar bola ilovani BOSHLAGAN kundan sanaladi (hafta o'rtasida qo'shilgan bolaga «2/5 — muntazamlik past» deyilmasin) */
+  const bugun = A.todayKey(), bosh = [b.yaratildi, b.boshlandi].filter(Boolean).sort()[0] || '0000', WD = A.weekDays(wk), yangi = bosh > WD[0] && bosh <= WD[6];
+  const otdi = Math.max(1, WD.filter(k => k <= bugun && k >= bosh).length), kunO = s.kunlar ? Math.round(s.faol / 60 / s.kunlar) : 0;
+  q.push(`⏱ ${s.kunlar}/${otdi} kun faol${yangi ? ` (${bosh.slice(8, 10)}.${bosh.slice(5, 7)} dan boshlagan)` : ''}, kuniga o'rtacha ${kunO} daqiqa${lim ? ` (chegara ${lim})` : ''} · 🎯 missiya: ${s.missiya} kun`);
   if (s.n) q.push(`✅ Birinchi urinishda to'g'ri: ${s.acc1}% (${s.n} ta javob)${p.n >= 10 ? ` · o'tgan hafta ${p.acc1}% (${s.acc1 - p.acc1 >= 0 ? '+' : ''}${s.acc1 - p.acc1})` : ''}`);
-  const tug = Object.keys(s.nodes).map(id => { const n = s.nodes[id]; return { id, n: n.n, a: n.n ? n.ok1 / n.n : 0, nom: (gen.reg[id] && gen.reg[id].nom) || id }; }).filter(x => x.n >= 5);
+  /* olimpiada va kashfiyot — oddiy mavzu emas (ataylab qiyin, rejalashtirish ularni «ko'proq» bermaydi) — alohida qatorda */
+  const tug = Object.keys(s.nodes).filter(id => !['OL', 'KASHF'].includes(id)).map(id => { const n = s.nodes[id]; return { id, n: n.n, a: n.n ? n.ok1 / n.n : 0, nom: (gen.reg[id] && gen.reg[id].nom) || id }; }).filter(x => x.n >= 5);
   const kuch = tug.filter(x => x.a >= 0.85).sort((x, y) => y.a - x.a || y.n - x.n).slice(0, 2), zaif = tug.filter(x => x.a < 0.7).sort((x, y) => x.a - y.a).slice(0, 2);
   if (kuch.length) q.push("💪 Kuchli: " + kuch.map(x => `${x.nom} (${Math.round(x.a * 100)}%)`).join(', '));
   if (zaif.length) q.push("🧩 Qiyin: " + zaif.map(x => `${x.nom} (${Math.round(x.a * 100)}%)`).join(', '));
   if (s.ozl.length) q.push(`🚀 Yangi o'zlashtirilgan ko'nikmalar: ${s.ozl.length}`);
-  if (s.charchash) q.push(`😴 Missiyaning 2-yarmida aniqlik ${s.charchash > 0 ? '+' : ''}${s.charchash} punkt o'zgargan`);
+  const ol = s.nodes.OL, olA = ol ? Math.round(ol.ok1 * 100 / ol.n) : 0;
+  if (ol && ol.n >= 3) q.push(`🏅 Olimpiada masalalari: ${ol.ok1}/${ol.n} (${olA}%) — ataylab qiyin, 30–80% — mos daraja`);
+  if (s.charchash <= -5) q.push(`😴 Missiyaning 2-yarmida aniqlik ${-s.charchash} punkt pasaydi${s.charchash > -15 ? ' (biroz — odatiy holat)' : ''}`);
+  else if (s.charchash >= 5) q.push(`💪 Missiyaning 2-yarmida aniqlik ${s.charchash} punkt oshdi`);
   const km = Math.max(0, ...s.days.map(k => (b.kun[k] && b.kun[k].komboMax) || 0)); if (km >= 3) q.push(`🔥 Eng uzun kombo: ${km} ta ketma-ket to'g'ri`);
   const uyN = (b.kashfUy || []).filter(x => x.holat === 'bajardi' && s.days.includes(x.bsana)).length, uyE = (b.kashfUy || []).filter(x => s.days.includes(x.sana)).length; if (uyE) q.push(`🏠 Uy tajribalari: ${uyN} ta bajarildi (${uyE} ta eslab qolgan)`);
   const uc = ((b.uch && b.uch.tarix) || []).filter(t => s.days.includes(t.sana)); if (uc.length) { const o = Math.round(A.sum(uc.map(t => t.w[0] ? (t.w[2] - t.w[0]) * 100 / t.w[0] : 0)) / uc.length); q.push(`📖 Uch marta o'qish: ${uc.length} kun, 1-o'qish ${uc[0].w[0]} → ${uc[uc.length - 1].w[0]} so'z/daq, kunlik o'sish o'rtacha ${o >= 0 ? '+' : ''}${o}%`); }
@@ -7066,7 +7091,11 @@ function xulosa(b, wk) {
   if (lim && kunO > lim + 10) t.push(`Kuniga ${kunO} daqiqa — chegaradan ancha ko'p. «+10 daqiqa»ni kamroq bering: charchagan bola o'rganmaydi, shunchaki bosadi.`);
   if (s.n >= 30 && s.acc1 >= 90) t.push("Aniqlik juda yuqori — savollar oson va zeriktirishi mumkin. 🎯 Fokus fan qo'ying yoki darslikdagi mavzuni oldinga suring.");
   if (s.n >= 30 && s.acc1 < 65) t.push("Aniqlik past — savollar qiyin. Qiyin mavzuni uyda narsalar bilan ko'rsating (tangalar, cho'plar), 2–3 kun takrorlang.");
-  if (s.missiya < Math.ceil(otdi * 0.6)) t.push("Muntazamlik past. Har kuni bir xil vaqtda (masalan, kechki ovqatdan oldin) 20 daqiqa — odatga aylanadi. 🎁 Sovg'a shartini «haftada 5 kun» qiling.");
+  if (otdi >= 3 && s.missiya < Math.ceil(otdi * 0.6)) t.push("Muntazamlik past. Har kuni bir xil vaqtda (masalan, kechki ovqatdan oldin) 20 daqiqa — odatga aylanadi. 🎁 Sovg'a qo'ysangiz, shartini «haftada 5 kun» qiling.");
+  else if (yangi && otdi < 3) t.push(`Endi boshladi (${otdi} kun) — muntazamlik haqida xulosa keyingi haftada. Hozir har kuni bir xil vaqtda qisqa mashg'ulot odat bo'lishiga yordam beradi.`);
+  const oson = kuch.filter(x => x.a >= 0.95 && x.n >= 8 && b.tugun[x.id] && b.tugun[x.id].holat !== 'ozl');
+  if (oson.length) t.push(`«${oson[0].nom}» deyarli xatosiz — ilova bu mavzuda savollarni asta-sekin qiyinlashtiradi va keyingi mavzuga o'tkazadi.`);
+  if (ol && ol.n >= 5 && olA < 30) t.push("Olimpiada masalalari hozircha juda qiyin — ilova ularni bir pog'ona osonlashtiradi. Bunday masalani birga, rasm chizib yeching: maqsad — javob emas, o'ylash.");
   if (zaif.length) t.push(`Keyingi hafta «${zaif[0].nom}» ko'proq chiqadi (ilova o'zi rejalaydi). Bolani natija uchun emas, harakati uchun maqtang.`);
   if (!t.length) t.push("Hammasi joyida — shu tartibda davom eting. Bolani natija uchun emas, harakati uchun maqtang.");
   return { q, t, matn: [`${b.laqab} — ${wk}`, ...q, '👉 Tavsiya:', ...t.map(x => '• ' + x)].join('\n') };
@@ -7411,7 +7440,7 @@ function start() {
   BJ.debug = { state: () => A.S(), fx: FX.stats, A, gen: BJ.gen };
   A.render();
   try { if (A.bulutStart) A.bulutStart(); } catch (e) { console.warn(e); }
-  if (oldVer && oldVer !== A.VER) setTimeout(() => toast(oldVer === '0.7.2' ? '🆕 Bilimjon v7.3: 🇬🇧 «🔊 Eshitish» — inglizcha so\'z yangi ovozda (iPhone jim rejimida ham)' : oldVer === '0.7.1' ? '🆕 Bilimjon v7.3: 🔊 iPhone\'da savol va inglizcha so\'z ovozi tuzatildi (jim rejimda ham eshitiladi)' : oldVer.indexOf('0.7.') === 0 ? '🆕 Bilimjon v7.3: 🔊 savollar o\'zbekcha ovozda o\'qiladi, 🤔 «Tushunmadim» tugmasi va 🙋 ota-onadan so\'rash!' : '🆕 Bilimjon v7.3: 🔊 savollar ovozda, 🗺️ sarguzasht xaritasi, 🎮 o\'yinlar zali, 🧺 oila bozori, 🤔 «Tushunmadim» tugmasi!'), 900);
+  if (oldVer && oldVer !== A.VER) setTimeout(() => toast(oldVer === '0.7.3' ? '🆕 Bilimjon v7.4: 📈 savollar bola darajasiga to\'g\'ri moslashadi, 📊 hafta xulosasi aniqroq' : oldVer === '0.7.2' ? '🆕 Bilimjon v7.4: 🇬🇧 «🔊 Eshitish» — inglizcha so\'z yangi ovozda (iPhone jim rejimida ham)' : oldVer === '0.7.1' ? '🆕 Bilimjon v7.4: 🔊 iPhone\'da savol va inglizcha so\'z ovozi tuzatildi (jim rejimda ham eshitiladi)' : oldVer.indexOf('0.7.') === 0 ? '🆕 Bilimjon v7.4: 🔊 savollar o\'zbekcha ovozda o\'qiladi, 🤔 «Tushunmadim» tugmasi va 🙋 ota-onadan so\'rash!' : '🆕 Bilimjon v7.4: 🔊 savollar ovozda, 🗺️ sarguzasht xaritasi, 🎮 o\'yinlar zali, 🧺 oila bozori, 🤔 «Tushunmadim» tugmasi!'), 900);
 }
 start();
 })(window);
