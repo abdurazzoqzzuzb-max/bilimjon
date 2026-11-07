@@ -21,7 +21,9 @@ async def bitta(matn, voice, rate, yol, urinish=4):
             if os.path.getsize(tmp) < 400: raise RuntimeError('bo\'sh audio')
             os.replace(tmp, yol); return True
         except Exception as e:
-            print('  ⚠️', voice, matn[:40], e, file=sys.stderr); await asyncio.sleep(2 + i * 3)
+            print('  ⚠️', voice, matn[:40], str(e)[:160], file=sys.stderr); await asyncio.sleep(2 + i * 3)
+    try: os.remove(yol + '.tmp')
+    except OSError: pass
     return False
 
 async def ishla(ish, parallel=6):
@@ -58,5 +60,6 @@ def main():
             json.dump({'v': cfg.get('v', 1), 'n': len(bor), 'id': bor}, open(os.path.join(papka, 'royxat.json'), 'w'), separators=(',', ':'))
     print(f'✅ {n} ta, ❌ {len(xato)} ta, {time.time() - t:.0f} s')
     if xato: print('\n'.join(xato[:50]))
+    if ish and n == 0: sys.exit('❌ birorta ham fayl yasalmadi')
 
 if __name__ == '__main__': main()
