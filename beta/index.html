@@ -6328,6 +6328,22 @@ async function guruhChiq() {
   await deleteDoc(doc(db, 'guruh', kod, 'oilalar', user.uid)).catch(() => {});
   s.guruh = null; A.save(true); L.sync.g = {}; lsave(); guruhObuna(); tick();
 }
+/* ---------- 🧪 0.7.1 (07.11): iPhone uchun sinovga kirish ----------
+   iPhone'da Safari va uy ekranidagi ilova xotirasi alohida — Safari'da asosiy ilova (PIN) yo'q, sinov eshigi ochilmasdi.
+   Endi: oila emaili + paroli bilan kirish → bulutdagi oila ma'lumotidan NUSXA (faqat o'qish; SYNC o'chiq — bulutga hech narsa yozilmaydi). */
+async function betaBulutNusxa() {
+  if (!A.BETA || !user) throw new Error('Avval oila akkaunti bilan kiring');
+  const { doc, getDoc, collection, getDocs } = fb.fs;
+  const od = await getDoc(doc(db, 'oila', user.uid)), bs = await getDocs(collection(db, 'oila', user.uid, 'bolalar'));
+  if (!od.exists() && bs.empty) throw new Error("Bu akkauntning bulutida oila ma'lumoti yo'q — oila emaili bilan kiring");
+  if (A.betaTozala) A.betaTozala();
+  if (od.exists()) umumiyQabul(JSON.parse(od.data().j), hsh(od.data().j));
+  bs.forEach(d => bolaQabul(d.id, d.data()));
+  await logOl(42).catch(() => 0);
+  try { localStorage.setItem('bj_beta_nusxa', String(Date.now())); localStorage.setItem('bj_beta_manba', 'bulut'); } catch (e) {}
+  if (A.betaOchildi) A.betaOchildi();
+  A.save(true); return Object.keys(S().bolalar).length;
+}
 /* ---------- EKRAN: ☁️ Oila akkaunti ---------- */
 let qaytaFn = null;
 function qayta() { if (qaytaFn && /^#(ota-bulut|bulut)$/.test(location.hash) && !$('.scrim')) qaytaFn(); }
@@ -6346,7 +6362,8 @@ A.bulutPanel = function (top, bindTop) {
       : `<div class="card"><button class="btn ghost" data-google>🇬 Google bilan kirish</button><p class="sm mut">Oilada iPhone bo'lsa — hamma telefonda email + parol ishlating: bitta oila, bitta usul.</p></div>`}
     <div class="card"><p class="sm mut">⚠️ Har oila — o'z akkaunti. Bitta akkauntni boshqa oila bilan bo'lishmang: ular sizning bolalaringiz natijasini ko'radi va o'zgartira oladi.</p></div>`;
   else if (RX.faol === true && !RX.ok) body = `${rxSorovHTML()}<div class="card"><p class="sm">Akkaunt: <b>${esc(user.email || L.email || '')}</b></p><button class="btn ghost" data-out>🚪 Chiqish</button></div>`;
-  else if (A.BETA) body = `<div class="card"><h3>🧪 Sinov rejimi</h3><p><b>${esc(user.email || '')}</b></p><p class="sm">Bulut sinxroni bu yerda o'chiq: oila ma'lumotiga hech narsa yozilmaydi. Faqat 🛡️ ruxsat tizimini sinash mumkin.</p><button class="btn ghost" data-out>🚪 Chiqish</button></div>${RX.admin ? rxAdminHTML() : RX.faol === false ? rxYoqishHTML() : RX.faol === true ? '<div class="card"><p>✅ Bu akkauntga ruxsat berilgan.</p></div>' : ''}`;
+  else if (A.BETA) body = `<div class="card betag"><h3>📥 Sinovga kirish</h3><p class="sm">Bulutdagi oila ma'lumotidan <b>nusxa</b> olinadi (bolalar, natijalar, PIN). Bulutga hech narsa yozilmaydi — bolalar ilovasi o'zgarmaydi.</p><button class="btn big" data-bnus>📥 Nusxa olib sinovga kirish</button>${A.betaOchiq && A.betaOchiq() ? '<p class="sm mut">Sinov allaqachon ochiq — qayta bossangiz, sinovdagi ma\'lumot bulutdagi bilan almashadi.</p>' : ''}</div>
+    <div class="card"><h3>🧪 Sinov rejimi</h3><p><b>${esc(user.email || '')}</b></p><p class="sm">Bulut sinxroni bu yerda o'chiq: oila ma'lumotiga hech narsa yozilmaydi. 🛡️ Ruxsat tizimini ham shu yerda sinaysiz.</p><button class="btn ghost" data-out>🚪 Chiqish</button></div>${RX.admin ? rxAdminHTML() : RX.faol === false ? rxYoqishHTML() : RX.faol === true ? '<div class="card"><p>✅ Bu akkauntga ruxsat berilgan.</p></div>' : ''}`;
   else { const s = S(), n = Object.keys(s.bolalar).length, kutRx = RX.admin && rxList.some(x => x.holat === 'kutish');
     body = `${kutRx ? rxAdminHTML() : ''}<div class="card"><h3>✅ Ulangan</h3><p><b>${esc(user.email || L.email || 'Google akkaunt')}</b></p><p class="sm">Bolalar: ${n} · Oxirgi sinxron: <b>${vaqt(L && L.oxirgi)}</b>${online() ? '' : ' · 📴 internet yo\'q'}</p>${xato ? `<p class="sm">⚠️ ${esc(xato)}</p>` : ''}
     <div class="row"><button class="btn" data-sync>🔄 Hozir sinxronla</button><button class="btn ghost" data-out>🚪 Chiqish</button></div></div>
@@ -6363,6 +6380,7 @@ A.bulutPanel = function (top, bindTop) {
   on('[data-reset]', () => { const [e] = ep(); if (!e) return toast('Avval emailni yozing'); ish(() => fb.au.sendPasswordResetEmail(auth, e), '✉️ Parolni tiklash xati yuborildi'); });
   on('[data-sync]', () => ish(async () => { if (band) throw new Error('⏳ Oldingi yuborish hali tugamadi — internet sekin, o\'zi davom etadi'); await logOl(7); await tick(); if (xato) throw new Error(xato); }, '✓ Sinxronlandi'));
   rxBind(() => A.bulutPanel(top, bindTop));
+  on('[data-bnus]', () => ish(async () => { const n = await betaBulutNusxa(); toast(`📥 Nusxa olindi: ${n} ta bola ✓`); location.hash = ''; setTimeout(() => location.reload(), 700); }));
   on('[data-out]', () => sheet(`<h2>🚪 Akkauntdan chiqish</h2><p>Natijalar shu telefonda qoladi, lekin ikkinchi telefon bilan sinxron to'xtaydi.</p><div class="row"><button class="btn danger" data-ok>Chiqish</button><button class="btn ghost" data-x>Bekor</button></div>`, el => { $('[data-ok]', el).onclick = async () => { closeSheets(); await tick(); L = null; lsave(); pending = {}; await fb.au.signOut(auth).catch(() => {}); toast('Chiqildi'); qayta(); }; }));
 };
 /* ---------- REYTING PANELIGA: 🏆 Reyting guruhi kartasi ---------- */
@@ -6830,16 +6848,18 @@ function prodS() { try { return JSON.parse(localStorage.getItem(PROD_KEY) || 'nu
 function betaOk() { try { return +localStorage.getItem(BOK) > Date.now() - 12 * 3600e3; } catch (e) { return false; } }
 function kalitlar(p) { const out = []; try { for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k && k.indexOf(p) === 0) out.push(k); } } catch (e) {} return out; }
 function betaNusxa() { const p = localStorage.getItem(PROD_KEY); if (!p) return false; try { A.flushLog(); } catch (e) {} kalitlar(BLOG).forEach(k => localStorage.removeItem(k)); kalitlar(PROD_LOG).forEach(k => { try { localStorage.setItem(BLOG + k.slice(PROD_LOG.length), localStorage.getItem(k)); } catch (e) {} }); A.setS(JSON.parse(p)); /* xotiradagi holat ham almashadi — sahifa yopilayotganda eski holat qayta yozilmasin */ localStorage.setItem('bj_beta_nusxa', String(Date.now())); return true; }
-function betaTozala() { try { A.flushLog(); } catch (e) {} kalitlar(BLOG).forEach(k => localStorage.removeItem(k)); A.setS(null); localStorage.removeItem('bj_beta_nusxa'); }
-A.betaNusxa = betaNusxa;
+function betaTozala() { try { A.flushLog(); } catch (e) {} kalitlar(BLOG).forEach(k => localStorage.removeItem(k)); A.setS(null); localStorage.removeItem('bj_beta_nusxa'); localStorage.removeItem('bj_beta_manba'); }
+A.betaNusxa = betaNusxa; A.betaTozala = betaTozala; A.betaOchiq = betaOk; A.betaOchildi = () => { try { localStorage.setItem(BOK, String(Date.now())); } catch (e) {} };
+/* 0.7.1 (07.11): PIN manbai — shu brauzerdagi asosiy ilova; bo'lmasa (iPhone Safari) — sinovdagi nusxa (bulutdan olingan, PIN o'sha); bo'lmasa — oila akkaunti bilan kirish */
 function betaGate() {
-  const p = prodS();
+  const p = prodS(), bs = S(), pm = p && p.pin ? p : bs && bs.oila && bs.pin ? bs : null, kirAkk = `<button class="btn${pm ? ' ghost' : ' big'}" data-rxk>☁️ Oila emaili va paroli bilan kirish</button>`;
   app.innerHTML = `<div class="wrap onb"><div class="card betag"><h1>🧪 Sinov rejimi</h1><p>Bilimjonning keyingi versiyasi — <b>v${A.VERK}</b>. Bolalar ilovasiga tegmaydi: ma'lumot alohida saqlanadi, bulutga hech narsa yozilmaydi.</p>
-  ${p && p.pin ? `<label class="lb">Asosiy ilovadagi admin PIN</label><input id="bpin" class="inp mono" type="password" inputmode="numeric" maxlength="4" autocomplete="off"><button class="btn big" data-ok>Kirish</button>` : `<div class="note">Bu brauzerda asosiy Bilimjon (admin PIN bilan) sozlanmagan. Sinov rejimi faqat ota-ona telefonida ochiladi.</div>`}</div>
-  <div class="card betag"><h2>🛡️ Ruxsat tizimi</h2><p class="sm">Faqat Bilimjon egasi uchun: oila emaili va paroli bilan kirib, yangi oilalarga ruxsat berish tizimini yoqish. PIN kerak emas — kirish oila paroli bilan.</p><button class="btn" data-rxk>🛡️ Ruxsat tizimini yoqish</button></div></div>`;
+  ${pm ? `<label class="lb">${pm === p ? 'Asosiy ilovadagi admin PIN' : 'Admin PIN'}</label><input id="bpin" class="inp mono" type="password" inputmode="numeric" maxlength="4" autocomplete="off"><button class="btn big" data-ok>Kirish</button>` : `<div class="note">📱 iPhone'da Safari va uy ekranidagi Bilimjon xotirasi alohida — shuning uchun bu yerda PIN yo'q. Oila emaili va paroli bilan kiring: bulutdagi ma'lumotdan nusxa olinadi.</div>`}</div>
+  <div class="card betag"><h2>${pm ? '☁️ Yoki oila akkaunti bilan' : '☁️ Oila akkaunti bilan kirish'}</h2><p class="sm">Bulutdagi bolalar ma'lumotidan nusxa (faqat o'qiladi) + 🛡️ ruxsat tizimini yoqish. PIN kerak emas — kirish oila paroli bilan.</p>${kirAkk}</div></div>`;
   $('[data-rxk]').onclick = () => { location.hash = 'bulut'; if (A.bulutPanel) A.bulutPanel(null); };
   const b = $('[data-ok]'); if (!b) return;
-  b.onclick = () => { const v = $('#bpin').value.trim(); if (A.fnv('bilimjon|' + v + '|' + (p.oila && p.oila.kod || '')) !== p.pin) return toast("PIN noto'g'ri"); localStorage.setItem(BOK, String(Date.now()));
+  const pin = $('#bpin'); pin.onkeydown = e => { if (e.key === 'Enter') b.click(); };
+  b.onclick = () => { const v = pin.value.trim(); if (A.fnv('bilimjon|' + v + '|' + (pm.oila && pm.oila.kod || '')) !== pm.pin) return toast("PIN noto'g'ri"); localStorage.setItem(BOK, String(Date.now()));
     if (S().oila) return location.reload();
     app.innerHTML = `<div class="wrap onb"><div class="card betag"><h1>🧪 Qaysi ma'lumot bilan sinaymiz?</h1><button class="btn big" data-nus>📥 Bolalar ma'lumotidan nusxa (tavsiya)</button><button class="btn ghost" data-bos>🆕 Bo'sh boshlash</button><p class="sm mut">Nusxa — bugungi holatning surati. Sinovda nima qilsangiz ham, bolalarning asl ilovasi o'zgarmaydi.</p></div></div>`;
     $('[data-nus]').onclick = () => { betaNusxa(); location.reload(); }; $('[data-bos]').onclick = () => location.reload(); };
@@ -6847,8 +6867,8 @@ function betaGate() {
 function betaBelgi() {
   document.title = 'Bilimjon 🧪'; document.body.classList.add('beta');
   const el = document.createElement('button'); el.className = 'betab'; el.type = 'button'; el.textContent = '🧪 SINOV · v' + A.VERK; document.body.appendChild(el);
-  el.onclick = () => sheet(`<h2>🧪 Sinov rejimi · v${A.VERK}</h2><p class="sm">Nusxa olingan: ${localStorage.getItem('bj_beta_nusxa') ? new Date(+localStorage.getItem('bj_beta_nusxa')).toLocaleString() : '—'}</p><button class="btn" data-nus>📥 Asosiy ilovadan qayta nusxa</button><button class="btn ghost" data-toz>🗑 Sinov ma'lumotini tozalash</button><button class="btn ghost" data-chiq>🔒 Sinovdan chiqish</button>`, sh => {
-    $('[data-nus]', sh).onclick = () => { betaNusxa(); location.reload(); }; $('[data-toz]', sh).onclick = () => { betaTozala(); location.reload(); }; $('[data-chiq]', sh).onclick = () => { localStorage.removeItem(BOK); location.reload(); }; });
+  el.onclick = () => sheet(`<h2>🧪 Sinov rejimi · v${A.VERK}</h2><p class="sm">Nusxa olingan: ${localStorage.getItem('bj_beta_nusxa') ? new Date(+localStorage.getItem('bj_beta_nusxa')).toLocaleString() : '—'}</p>${prodS() ? '<button class="btn" data-nus>📥 Asosiy ilovadan qayta nusxa</button>' : ''}<button class="btn${prodS() ? ' ghost' : ''}" data-bul>☁️ Bulutdan qayta nusxa</button><button class="btn ghost" data-toz>🗑 Sinov ma'lumotini tozalash</button><button class="btn ghost" data-chiq>🔒 Sinovdan chiqish</button>`, sh => {
+    const nu = $('[data-nus]', sh); if (nu) nu.onclick = () => { betaNusxa(); location.reload(); }; $('[data-bul]', sh).onclick = () => { closeSheets(); location.hash = 'bulut'; }; $('[data-toz]', sh).onclick = () => { betaTozala(); location.reload(); }; $('[data-chiq]', sh).onclick = () => { localStorage.removeItem(BOK); location.reload(); }; });
 }
 function start() {
   /* 0.7.1: sinovga kirmasdan ham ☁️ «🛡️ Ruxsat tizimi» (#bulut) — iPhone'da Safari va uy ekranidagi ilova xotirasi alohida, PIN Safari'da bo'lmasligi mumkin */
