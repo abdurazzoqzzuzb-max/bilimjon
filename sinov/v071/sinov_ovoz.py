@@ -1,8 +1,10 @@
 """Bilimjon 0.7.1 — 🔊 SAVOL OVOZI (07.11).
 A) NUTQ: misollar o'zbekcha gapga, sonlar suffiks bilan (bitta, qirqqa, to'rtinchi), ismlar alohida bo'lak; hamma generatorlarda xatosiz,
-   bo'laklarda raqam/arabcha/emoji qolmaydi. Pedagogik qoida: o'qish sinovidagi so'z, bitta harf, arabcha/inglizcha so'z o'qilmaydi; diktantda so'z 2 marta.
-B) Ekran: maktabgachaga savol o'zi o'qiladi (bir marta), kattaga — 🔊 tugma bilan; variantni bosib turish javob emas; ovoz o'chiq / ro'yxat yo'q — tugma yo'q;
-   ota-ona paneli (ovoz tanlash, namuna); 390 px.
+   bo'laklarda raqam/arabcha/emoji qolmaydi. Pedagogik qoida: o'qish sinovidagi so'z, arabcha/inglizcha so'z o'qilmaydi; diktantda so'z 2 marta.
+   07.11: harf topshiriqlari ham o'qiladi — harf NOMI bilan (h_a, h_b …), «Z + O = ?» → «ze bilan o qo'shilsa…».
+B) Ekran (07.11 — HAMMA bolaga): savol o'zi o'qiladi (bir marta), 🔊 — qayta; variantni bosib turish javob emas; ovoz o'chiq / ro'yxat yo'q — tugma yo'q;
+   ovoz ochilmagan (iPhone kabi) — navbat, birinchi teginishda o'qiladi; inglizcha so'z — o'zbekcha savoldan KEYIN;
+   ota-ona paneli (bitta ovoz — Madina, yoqish/o'chirish, namuna, 🔧 tekshiruv), eski sozlamalar → Madina jonli; 390 px.
 Ovoz fayllari Playwright'da soxta (qisqa WAV tovush, boshida va oxirida jimlik). Ishga tushirish: python3 sinov/v071/sinov_ovoz.py"""
 import os, sys, time, subprocess, json, struct, math, io, wave
 from playwright.sync_api import sync_playwright
@@ -66,8 +68,15 @@ try:
     ok(sw['n'] > 8000 and not sw['xato'], f"A: {sw['n']} topshiriq, {sw['bol']} bo'lak — xatosiz, raqam/arabcha/emoji yo'q {sw['xato']}")
     PQ = lambda js: ev(f"""(() => {{ const O = BJ.A.ovoz, mk = (id, q, c) => {{ const it = BJ.gen.make(id, q || 1, Object.assign({{ g0: true, dunyo: 'garaj', harflar: (BJ.harfTartib||[]).slice() }}, c || {{}})); it.tugun = id; return it; }}; {js} }})()""")
     ok(PQ("for (let i=0;i<20;i++){ const it = mk('H0.6'); const t = O.savolReja(it).map(x=>x.t).join(' '); if (t.indexOf(it.sav) >= 0 || !/o'qi/i.test(t)) return false; } return true;"), "A: o'qish sinovi (H0.6) — so'z o'qilmaydi, faqat «So'zni o'qi…»")
-    hq = PQ("let n = 0; for (let i=0;i<60;i++){ for (const id of ['H0.2','H0.5','H1.1']) { const it = mk(id); if (/«\\s*[A-Za-z]{1,2}['ʻ]?\\s*»/.test(it.sav) && !/bo'g'in|boshlanadi/.test(it.sav)) { n++; if (O.savolReja(it).some(x => it.sav.indexOf(x.t) >= 0 || /harf/.test(x.t))) return -1; } } } return n;")
-    ok(hq > 5, f"A: bitta harf («N» harfini top) — o'qilmaydi, kattalar tovush bilan aytadi ({hq} ta savol)")
+    for t, kut_ in [("«A» harfini top", "a harfini top."), ("Nechta «Ng» bor? (katta ham, kichik ham)", "Nechta nge bor? katta ham, kichik ham."), ("«g'» ning katta harfi qaysi?", "g'e ning katta harfi qaysi?"),
+                    ("🔍 Hamma «Q» harflarini top!", "Hamma qa harflarini top!"), ("Barmog'ing bilan iz bos: «V» harfi", "Barmog'ing bilan iz bos, ve harfi.")]:
+        got = ev("t => { const O = BJ.A.ovoz; return O.NUTQ.matn(O.savolReja({ sav: t, tugun: 'H0.1' })); }", t)
+        ok(got == kut_, f"A: harf — «{t}» → «{got}»")
+    ok(I("«A» harfini top")[0] == 'h_a' and I("«O'» harfini top")[0] == 'h_oo' and I("«Sh» harfini top")[0] == 'h_sh', "A: harf bo'lagi id — h_a, h_oo (oʻ), h_sh")
+    bg = ev("() => { const O = BJ.A.ovoz; return [O.NUTQ.matn(O.savolReja({ sav: 'Z + O = ?', tugun: 'H0.3' })), O.NUTQ.matn(O.savolReja({ sav: \"M + O' = ?\", tugun: 'H1.2' }))]; }")
+    ok(bg == ["ze bilan o qo'shilsa, qanday o'qiladi?", "em bilan o' qo'shilsa, qanday o'qiladi?"], f"A: bo'g'in yig'ish — {bg}")
+    hq = PQ("let n = 0, jim = 0; for (let i=0;i<60;i++){ for (const id of ['H0.1','H0.2','H0.3','H0.5','H1.1','H1.2','Y0.4']) { const it = mk(id); n++; if (!O.savolReja(it).length) jim++; } } return [n, jim];")
+    ok(hq[1] == 0, f"A: harf topshiriqlarining HAMMASI o'qiladi ({hq[0]} ta, jim {hq[1]})")
     ok(PQ("const it = mk('H2.6', 1, { g0: false }); const t = O.savolReja(it).map(x=>x.t); return t.filter(x => x.replace(/[.]/g,'') === String(it.a)).length === 2;"), "A: diktant — so'z ikki marta aytiladi")
     ok(PQ("for (let i=0;i<20;i++){ const it = mk('EN.hayvon', 1); const t = O.savolReja(it).map(x=>x.t).join(' '); if (it.tts && t.indexOf(it.tts) >= 0) return false; } return true;"), "A: inglizcha so'z o'zbek ovozida o'qilmaydi")
     ok(PQ("const it = mk('H2.2', 1, {g0:false}); return it.o.every(o => !O.variantMatn(it, o));") and PQ("const it = mk('M0.3'); return it.o.every(o => !O.variantMatn(it, o));"), "A: imlo va raqam variantlari o'qilmaydi")
@@ -103,10 +112,16 @@ try:
     ok(ev("window.__bjCur().it.sav") == it1 and not ev("!!document.querySelector('.q.gapir')"), "B: pauzadan qaytganda o'sha savol QAYTA o'qilmaydi")
     pg.click('[data-uzs]'); ok(kut(pg, "!!document.querySelector('.q.gapir')", 3000), "B: 🔊 bosilsa — qayta o'qiydi")
     pg.click('[data-uzs]'); pg.wait_for_timeout(200); ok(not ev("!!document.querySelector('.q.gapir')"), "B: o'qiyotganda 🔊 bosilsa — to'xtaydi")
-    # kattaroq bola: avtomatik emas, tugma bilan
-    setj(O); missiya(O); NAV('missiya', 1300)
-    ok(ev("!!document.querySelector('[data-uzs]')") and not ev("!!document.querySelector('.q.gapir')"), "B: 1-sinf — tugma bor, o'zi o'qilmaydi")
-    pg.click('[data-uzs]'); ok(kut(pg, "!!document.querySelector('.q.gapir')", 3000), "B: 1-sinf — 🔊 bosilganda o'qiydi")
+    # kattaroq bola ham (07.11): savol o'zi o'qiladi
+    setj(O); missiya(O); NAV('missiya', 300)
+    ok(kut(pg, "!!document.querySelector('[data-uzs]') && !!document.querySelector('.q.gapir')", 4000), "B: 1-sinf — savol O'ZI o'qildi (07.11: hamma bolaga)")
+    kut(pg, "!document.querySelector('.q.gapir')", 6000)
+    pg.click('[data-uzs]'); ok(kut(pg, "!!document.querySelector('.q.gapir')", 3000), "B: 1-sinf — 🔊 bosilganda qayta o'qiydi")
+    # inglizcha so'z — o'zbekcha savoldan KEYIN (keyin ilgagi)
+    kk = ev("""() => new Promise(res => { const d = document.createElement('div'); d.className = 'item'; d.innerHTML = '<div class="q">Qaysi rasm?</div>'; document.body.appendChild(d);
+      const t0 = Date.now(); let gap = 0; const iv = setInterval(() => { if (document.querySelector('.q.gapir')) gap = 1; }, 20);
+      BJ.A.ovoz.bind(BJ.A.S().bolalar[BJ.A.S().joriy], { sav: '8 + 1 = ?', tugun: 'EN.hayvon', t: 'tanla' }, {}, d, { keyin: () => { clearInterval(iv); res([gap, Date.now() - t0, !!document.querySelector('.q.gapir')]); d.remove(); } }); setTimeout(() => res(['vaqt']), 6000); })""")
+    ok(kk[0] == 1 and kk[2] is False and kk[1] > 400, f"B: inglizcha so'z — o'zbekcha savol o'qilib bo'lgach aytiladi ({kk})")
     SHOT(pg, '2_g1')
     # 3A: variantni bosib turish
     setj(K); NAV('sinov-H0.7-1', 900)
@@ -118,7 +133,7 @@ try:
     pg.wait_for_timeout(600); pg.locator('.opt').first.click(); pg.wait_for_timeout(300)
     ok(ev("BJ.A.CUR().sinovNatija !== undefined"), "B: oddiy bosish — javob qabul qilindi")
     # sozlama: o'chiq / ro'yxat yo'q
-    ev("(()=>{const s=BJ.A.S(); s.sozlama.nutq={nom:'',avto:true,variant:true,tugma:true}; BJ.A.save(true)})()"); missiya(K); NAV('missiya', 900)
+    ev("(()=>{const s=BJ.A.S(); s.sozlama.nutq={nom:'',avto:true,variant:true,v:2}; BJ.A.save(true)})()"); missiya(K); NAV('missiya', 900)
     ok(not ev("!!document.querySelector('[data-uzs]')"), "B: ovoz o'chiq — tugma yo'q")
     ev("(()=>{const s=BJ.A.S(); s.sozlama.nutq.nom='madina_jonli'; BJ.A.save(true); localStorage.removeItem('bj_ovoz_royxat_madina_jonli')})()"); ROY['mode'] = 'yoq'
     missiya(K); NAV('missiya', 1200)
@@ -126,18 +141,44 @@ try:
     ROY['mode'] = 'ok'
     # ota-ona paneli
     NAV('ota', 500, ota=True); ok('Savol ovozi' in ev("document.body.innerText"), "B: ota-ona menyusida «🔊 Savol ovozi»")
+    ev("(()=>{const s=BJ.A.S(); s.sozlama.nutq={nom:'sardor',avto:false,variant:true,tugma:true,tanlandi:1}; BJ.A.save(true)})()")
+    ok(ev("BJ.A.ovoz.cfg().nom") == 'madina_jonli' and ev("BJ.A.ovoz.cfg().avto") is True, "B: eski sozlama (Sardor, avto o'chiq) → Madina jonli + o'zi o'qiydi")
+    ev("(()=>{const s=BJ.A.S(); s.sozlama.nutq={nom:'',avto:true,variant:true,tugma:true,tanlandi:1}; BJ.A.save(true)})()")
+    ok(ev("BJ.A.ovoz.cfg().nom") == 'madina_jonli', "B: eski «O'chiq» (v1) → yoqilgan (07.11 qarori)")
     NAV('ota-ovoz', 900, ota=True)
-    ok(ev("document.querySelectorAll('input[name=uzn]').length") == 5 and ev("document.querySelector('input[name=uzn][value=madina_jonli]').checked"), "B: panel — 4 ovoz + o'chiq, standart Madina jonli")
-    pg.check('input[name=uzn][value=sardor]'); pg.wait_for_timeout(300)
-    ok(ev("BJ.A.S().sozlama.nutq.nom") == 'sardor' and ev("BJ.A.ovoz.cfg().nom") == 'sardor', "B: Sardor tanlandi — saqlandi (tanlandi belgisi bilan)")
-    ev("(()=>{const s=BJ.A.S(); s.sozlama.nutq={nom:'madina',avto:true,variant:true,tugma:true}; BJ.A.save(true)})()")
-    ok(ev("BJ.A.ovoz.cfg().nom") == 'madina_jonli', "B: eski (tanlanmagan) «madina» → standart Madina jonli")
-    ev("(()=>{const s=BJ.A.S(); s.sozlama.nutq={nom:'sardor',avto:true,variant:true,tugma:true,tanlandi:1}; BJ.A.save(true)})()")
-    pg.uncheck('input[data-k=avto]'); pg.wait_for_timeout(100); ok(ev("BJ.A.S().sozlama.nutq.avto") is False, "B: «o'zi o'qilsin» o'chirildi — saqlandi")
-    r0 = len(REQ); pg.click('[data-nam=madina_sekin]'); pg.wait_for_timeout(700)
-    ok(any('/namuna/madina_sekin_n5' in u for u in REQ[r0:]), "B: ▶ Namuna — namuna fayllari yuklandi")
+    ok(ev("document.querySelectorAll('input[name=uzn]').length") == 0 and ev("document.querySelector('[data-yoq]').checked") and 'Madina' in ev("document.body.innerText"), "B: panel — bitta ovoz (Madina), yoqilgan")
+    pg.uncheck('[data-yoq]'); pg.wait_for_timeout(300)
+    ok(ev("BJ.A.S().sozlama.nutq.nom") == '' and ev("BJ.A.S().sozlama.nutq.v") == 2 and ev("BJ.A.ovoz.cfg().nom") == '', "B: o'chirildi — saqlandi (v: 2)")
+    pg.check('[data-yoq]'); pg.wait_for_timeout(300); ok(ev("BJ.A.ovoz.cfg().nom") == 'madina_jonli', "B: qayta yoqildi — Madina jonli")
+    pg.uncheck('input[data-k=avto]'); pg.wait_for_timeout(100); ok(ev("BJ.A.S().sozlama.nutq.avto") is False and ev("BJ.A.ovoz.cfg().avto") is False, "B: «o'zi o'qilsin» o'chirildi — saqlandi")
+    pg.check('input[data-k=avto]'); pg.wait_for_timeout(100)
+    r0 = len(REQ); pg.click('[data-nam]'); pg.wait_for_timeout(700)
+    ok(any('/namuna/madina_jonli_n5' in u for u in REQ[r0:]), "B: ▶ Namuna — Madina jonli namunasi yuklandi")
+    pg.click('[data-tek]'); ok(kut(pg, "document.body.innerText.includes('eshitdingizmi')", 6000), "B: 🔧 tekshiruv — natija va «eshitdingizmi?» savoli")
+    pg.click('[data-eh="0"]'); pg.wait_for_timeout(200)
+    kod = ev("(document.querySelector('[data-ehn] input')||{}).value || ''")
+    ok(kod.startswith('OVOZ|') and 'holat=running' in kod and 'fayl=ok' in kod and 'eshitdi=yoq' in kod, f"B: tekshiruv qatori — {kod}")
     SHOT(pg, '3_panel')
-    ok(any('/ovoz/sardor/royxat.json' in u for u in REQ), "B: ovoz almashganda o'sha ovozning ro'yxati so'raldi")
+    r = ev("[document.documentElement.scrollWidth]"); ok(r[0] <= 390, f"B: panel 390 px ({r})")
+    # iPhone kabi: ovoz ochilmagan (avtoplay taqiqlangan brauzer) — navbat, birinchi teginishda o'qiladi
+    br2 = p.chromium.launch(args=['--autoplay-policy=user-gesture-required'])
+    setj(K); missiya(K); st = json.dumps(ev("JSON.stringify(BJ.A.S())"))
+    c2 = br2.new_context(viewport={'width': 390, 'height': 844}, service_workers='block'); c2.route('**/ovoz/**', ovoz_route)
+    # iPhone Safari qoidasini taqlid qilish: AudioContext foydalanuvchi teginmaguncha 'suspended', resume() — teginishgacha tugamaydi
+    c2.add_init_script("""(() => { const AC = window.AudioContext; let ruxsat = false; addEventListener('click', () => { ruxsat = true; }, true); addEventListener('touchend', () => { ruxsat = true; }, true);
+      window.AudioContext = window.webkitAudioContext = class extends AC { constructor(...a) { super(...a); const st = Object.getOwnPropertyDescriptor((window.BaseAudioContext || AC).prototype, 'state').get; Object.defineProperty(this, 'state', { get: () => ruxsat ? st.call(this) : 'suspended' }); }
+        resume() { return ruxsat ? super.resume() : new Promise(() => {}); } }; })()""")
+    c2.add_init_script(f"try {{ if (!sessionStorage.getItem('qo')) {{ localStorage.setItem('bj_state_v1', {st}); localStorage.setItem('bj_ovoz_royxat_madina_jonli', {json.dumps(json.dumps({'v': 2, 'n': len(ROY['ids']), 'id': ROY['ids']}))}); sessionStorage.setItem('qo', '1'); }} }} catch (e) {{}}")
+    pg2 = c2.new_page(); pg2.on('pageerror', lambda e: ERR.append(f'IPH pageerror: {e}')); e2 = pg2.evaluate
+    pg2.goto(URL + '?tez=1#missiya')   # hech qanday teginishsiz — iPhone'da savol ochilgandagi holat
+    pg2.wait_for_timeout(1600)
+    hol = e2("BJ.fx.audioInfo().holat"); kutdi = e2("BJ.A.ovoz.holat().kut")
+    if hol != 'running':
+        ok(kutdi and e2("!!document.querySelector('.uzb.teg')") and not e2("!!document.querySelector('.q.gapir')"), f"B: ovoz ochilmagan ({hol}) — savol navbatda, 🔊 yonib-o'chadi")
+        pg2.mouse.click(195, 760); ok(kut(pg2, "!!document.querySelector('.q.gapir')", 4000), "B: birinchi teginish — navbatdagi savol o'zi o'qildi")
+        ok(not e2("!!document.querySelector('.uzb.teg')"), "B: o'qiy boshlaganda tugma yonib-o'chishi to'xtadi")
+    else: print('ℹ️ bu Chromium avtoplayni taqiqlamadi — navbat sinovi o\'tkazib yuborildi')
+    br2.close()
     br.close()
 finally:
     srv.terminate()
