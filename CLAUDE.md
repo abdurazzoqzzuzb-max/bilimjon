@@ -9,7 +9,7 @@ Yangi chat shu fayldan davom etadi. Javoblar o'zbekcha. Repo PUBLIC: bu yerga is
 - Hamma oilalar uchun bitta umumiy versiya. Yangilanish telefonga o'zi keladi (ilovani yopib qayta ochganda), natijalar telefonda (localStorage) qoladi; ☁️ akkaunt ulangan oilada Firestore'da ham.
 
 ## Versiya
-- Saytda (main): **0.7.2** («v7.2», 07.11.2026 — 🔊 iPhone ovozi media pleyer orqali; u «o'zing to'g'rilab, chiqar» dedi — «0.7.2» bo'limi). 0.7.1 («v7.1», shu kuni, Claude prod sinovi bilan — «0.7.1 CHIQARISH» bo'limi) ichida: 🤔 Tushunmadim + 🛡️ ruxsat tizimi (Firebase'da hali ESKI qoidalar → tizim o'chiq, bulut 0.7.0 dagidek ishlaydi) + 🔊 savol ovozi. Keyingi versiya — yangi tarmoqda (`v0.7.2` / `v0.8.0`), avval beta, saytga faqat «chiqar» bilan.
+- Saytda (main): **0.7.3** («v7.3», 07.11.2026 — 🇬🇧 «🔊 Eshitish» inglizcha so'z neyron ovozda, iPhone jim rejimida ham — «0.7.3» bo'limi). 0.7.2 («v7.2», shu kuni — 🔊 iPhone savol ovozi media pleyer orqali; u «o'zing to'g'rilab, chiqar» dedi — «0.7.2» bo'limi). 0.7.1 («v7.1», shu kuni, Claude prod sinovi bilan — «0.7.1 CHIQARISH» bo'limi) ichida: 🤔 Tushunmadim + 🛡️ ruxsat tizimi (Firebase'da hali ESKI qoidalar → tizim o'chiq, bulut 0.7.0 dagidek ishlaydi) + 🔊 savol ovozi. Keyingi versiya — yangi tarmoqda (`v0.7.4` / `v0.8.0`), avval beta, saytga faqat «chiqar» bilan.
 - 🧪 Sinov rejimi: `…/bilimjon/beta/` (main'dagi `beta/` papkasi). Yig'ish (main'da): `git fetch origin v0.7.1 && python3 sinov/beta/beta_yig.py origin/v0.7.1 beta` → faqat `beta/` commit + push. Xotira `bj_beta_*`, kirish — asosiy ilovaning admin PIN'i. Bulut SINXRONI o'chiq (`SYNC = !A.BETA`), lekin 🛡️ ruxsat tizimi ishlaydi (sinash uchun). Keyingi versiyalar avval beta'ga, u sinagach «chiqar».
 - Har chiqarishda ikkalasi birga oshiriladi: `index.html` → `VER = 'x.y.z'`, `sw.js` → `const V = 'bj-vx.y.z'`.
 - Ekranda oddiy nom (foydalanuvchi so'rovi, 05.11): `A.VERK` — 0.6.0 → «v6», 0.6.1 → «v6.1» (`A.verBadge()`), uy va bola tanlash ekranida tepada ism ostida; ota-ona panelida «Versiya 6». Keyingi katta versiya — 0.7.0 → «v7».
@@ -120,6 +120,16 @@ Tartib (foydalanuvchi qarori, 05.11; 06.11 — rasmli dars bozordan oldinga):
 4. 🎙️ Ota-ona ovozi.
 5. To'liq sinov → VER 0.7.0 → u «chiqar» desa main.
 
+
+## 0.7.3 — 🇬🇧 INGLIZCHA SO'Z OVOZI (07.11, chiqarildi; tarmoq `v0.7.3`)
+- Muammo (u, iPhone, v7.2): savollar jim rejimda ham o'qilyapti, lekin «🔊 Eshitish» (inglizcha so'z) jim — u `speechSynthesis` edi (iPhone'da jim tugmaga bo'ysunadi).
+- Fayllar: `ovoz/en_jenny/<id>.mp3` (edge **en-US-JennyNeural**, −15%, `imlo: 0`), id = `'e' + fnv-1a(base36)` matndan (`A.ovoz.enId`, bo'shliqlar tekislanadi). `iboralar.json`: ovoz `en_jenny` `toplam: "en"` → **`iboralar_en`** (151: `B.en` so'zlari, `B.enIbora`, `B.kashf[].en`). `yasa.py`: `toplam(cfg, o)` — ovozning o'z to'plami (madina imzosi o'zgarmadi). `inventar.py` `iboralar_en` ni ham yig'adi va har EN generatori `it.tts` ro'yxatda ekanini tekshiradi (yangi inglizcha so'z qo'shilsa — inventar → main → Actions).
+- Ilova (`A.ovoz`, «0.7.3: INGLIZCHA SO'Z» bloki): `ingliz(t, el)` → `enTayyor` (royxat, localStorage keshi `bj_ovoz_royxat_en_jenny`) → `yuk('en', id)` → `ijro` (iPhone — media WAV, boshqalar — WebAudio); media hali ochilmagan bo'lsa jim tovush tugashini ≤600 ms kutadi, `NotAllowedError` → navbat (`KUT.fn`). Fayl yo'q / yuklanmadi / WebAudio yopiq → `enTel` (eski telefon ovozi). «Savol ovozi» o'chiq bo'lsa ham ishlaydi. `enOldin` — oldindan yuklash. `holat()` → `en, enOk, enTel`.
+- Kid: `speak(txt, lang, el)` → `A.ovoz.ingliz`; `sayBind(it, st0)` — showItem, arena, mashq, `#sinov-` (arena va mashqda ham so'z o'zbekcha savoldan keyin o'zi aytiladi); dars (`data-dsay`), Tushunmadim (`data-tsay`), kashfiyot (`data-en`) tugmalari yonib turadi.
+- Tuzatildi (pedagogik xato): `ttsKeyin` (q3 «🍎 Bu inglizcha qanday?» va iboralar savoli — `tts` = javob) — avval tugma bor edi va so'z o'zi aytilib javobni ochib qo'yardi. Endi tugma yo'q, javobdan keyin to'g'ri talaffuz (`onAnswer` → `keyinAyt`, keyingi savol 2,1 s da; `?tez=1` — 1,2 s).
+- 🔧 tekshiruv: «🇬🇧 Inglizcha so'zlar: N ta», natija qatorida `en=N`. Versiya xabari: 0.7.2 dan kelganlarga «🇬🇧 «🔊 Eshitish» — inglizcha so'z yangi ovozda».
+- Sinov: **`sinov/v073/sinov_en_ios.py`** (22; haqiqiy en fayllar, iPhone UA, autoplay ruxsatisiz, `speechSynthesis.speak` hisoblagichi). Regressiya 07.11: v073 22, v072 21, v071 95+62, v070 50/31/59/101/64, v060 21/13/35/36/62, bulut 21+10 — hammasi o'tdi (`1c` parallel yuklamada bir marta yiqildi, yolg'iz — o'tdi); `prod_e2e.py` 0.7.2 → 0.7.3 23/23.
+- [?] Haqiqiy iPhone'da jim rejimda «🔊 Eshitish» — u tekshiradi. Qolgan jim joy: FX effekt tovushlari (ding, portlash) hali WebAudio.
 
 ## 0.7.2 — 🔊 iPhone ovozi: MEDIA PLEYER (07.11, chiqarildi; tarmoq `v0.7.2` main'dan)
 - Muammo (u, iPhone, v7.1, Abu Bakr profili): savol matni yonib turadi (`.q.gapir` — kod «o'ynayapman» deb hisoblaydi), lekin ovoz yo'q; 🔊 bosilsa ham jim. Sabab: iPhone'da WebAudio jim qoladi (yon tomondagi jim tugma / audio sessiya; `audioSession` va jim `<audio>` hiylasi yetmadi).
