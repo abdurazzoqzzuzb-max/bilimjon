@@ -2550,7 +2550,7 @@ Object.assign(A, { FAN, ZANJIR, BOSH, DARAJA, gl, BLOK, MANT_KUN, UZUN, XATO, TU
 const BETA = A.BETA = typeof location !== 'undefined' && /\/beta\/(index\.html)?$/.test(location.pathname);
 const KEY = BETA ? 'bj_beta_state_v1' : 'bj_state_v1'; /* asosiy kalit HECH QACHON o'zgarmaydi: yangi versiya eski holatni migrate() bilan yangilaydi */
 const SV = 1;
-function defaults() { return { v: SV, oila: null, pin: null, pinOta: null, sozlama: { ovoz: 0.8, kamEffekt: 'auto', tanaffus: 20, oyinHar: 5, oyinDaq: 3, uyqu: '21:00', reyting: true, tjTasdiq: {}, sandiq: { bronza: 40, kumush: 90, oltin: 150, olmos: 220 }, arTasdiq: {}, alifTasdiq: false, pul: true, byudjet: 50000, kassa: true, zal: 10, bozor: true, bozorXoh: true, kashfUy: true, tush: true, nutq: { nom: 'madina', avto: true, variant: true, tugma: true } }, bolalar: {}, tartib: [], joriy: null, duel: {}, oilaTel: {}, sovga: [], dokon: [], bozor: null, qurilma: null, lastBackup: null, seenVer: null, appVer: null }; }
+function defaults() { return { v: SV, oila: null, pin: null, pinOta: null, sozlama: { ovoz: 0.8, kamEffekt: 'auto', tanaffus: 20, oyinHar: 5, oyinDaq: 3, uyqu: '21:00', reyting: true, tjTasdiq: {}, sandiq: { bronza: 40, kumush: 90, oltin: 150, olmos: 220 }, arTasdiq: {}, alifTasdiq: false, pul: true, byudjet: 50000, kassa: true, zal: 10, bozor: true, bozorXoh: true, kashfUy: true, tush: true, nutq: { nom: 'madina_sekin', avto: true, variant: true, tugma: true } }, bolalar: {}, tartib: [], joriy: null, duel: {}, oilaTel: {}, sovga: [], dokon: [], bozor: null, qurilma: null, lastBackup: null, seenVer: null, appVer: null }; }
 let S = load(); A.storageOK = true;
 /* Xotira tekshiruvi: brauzer yozishga ruxsat beradimi va ilova begona sayt ichida (sinov havolasi) ochilganmi */
 A.storageProbe = (function () { try { const k = 'bj_probe'; localStorage.setItem(k, String(Date.now())); const ok = !!localStorage.getItem(k); localStorage.removeItem(k); return ok; } catch (e) { return false; } })();
@@ -6170,8 +6170,10 @@ function variantMatn(it, o) {
 }
 const reja = t => t ? NUTQ.reja(t) : [];
 /* ---------- sozlama (S.sozlama.nutq) ---------- */
-const NOMLAR = { madina: 'Madina (ayol)', madina_sekin: 'Madina — sekinroq', sardor: 'Sardor (erkak)' };
-const cfg = () => Object.assign({ nom: 'madina', avto: true, variant: true, tugma: true }, (S().sozlama || {}).nutq || {});
+/* 07.11: u «Madina sekin» ni tanladi — standart; boshqalari hozircha faqat namuna (to'liq to'plam — ovoz/iboralar.json da toliq: true) */
+const STANDART = 'madina_sekin';
+const NOMLAR = { madina_sekin: 'Madina — sekinroq', madina_jonli: 'Madina — jonliroq', madina: 'Madina (ayol)', sardor: 'Sardor (erkak)' };
+const cfg = () => { const s = (S().sozlama || {}).nutq || {}, c = Object.assign({ nom: STANDART, avto: true, variant: true, tugma: true }, s); if (!s.tanlandi && c.nom) c.nom = STANDART; return c; };
 const BASE = (A.BETA ? '../' : '') + 'ovoz/';
 const g0 = b => A.gl(b.daraja) === 'g0';
 /* ---------- 2-qavat: neyron fayllar ro'yxati (ovoz/<nom>/royxat.json; keshi localStorage, internetsiz ham) ---------- */
@@ -6290,7 +6292,7 @@ document.addEventListener('visibilitychange', () => { if (document.visibilitySta
 /* ---------- 👨‍👩‍👧 ota-ona: 🔊 Savol ovozi paneli (#ota-ovoz) ---------- */
 function panel(top, bindTop) {
   const c = cfg(), app = A.app;
-  const holat = NEY.ids && NEY.nom === c.nom ? `✅ ${NEY.n.toLocaleString('ru-RU')} ta ibora tayyor` : c.nom ? "⏳ Fayllar hali tayyorlanmoqda — tayyor bo'lgach savollar o'zi o'qiladi" : '🔇 O\'chiq';
+  const holat = NEY.ids && NEY.nom === c.nom ? `✅ ${NEY.n.toLocaleString('ru-RU')} ta ibora tayyor` : c.nom === STANDART ? "⏳ Fayllar hali tayyorlanmoqda — tayyor bo'lgach savollar o'zi o'qiladi" : c.nom ? "⏳ Bu ovozning to'liq to'plami hali yo'q (faqat namuna) — kerak bo'lsa Claude'ga ayting" : '🔇 O\'chiq';
   app.innerHTML = `<div class="wrap ota">${top('🔊 Savol ovozi', 'ota')}
   <div class="card"><p class="sm">Savol o'zbekcha ovozda o'qiladi: maktabgacha bolaga — o'zi, kattalarga — 🔊 tugmasi bilan. O'qish sinovidagi so'z, arabcha/inglizcha so'z va harflar o'qilmaydi — ularni bola o'zi o'qiydi yoki siz tovush bilan aytasiz.</p></div>
   <div class="card"><h3>Ovoz</h3>${Object.keys(NOMLAR).map(k => `<div class="uzrow"><label class="uzr"><input type="radio" name="uzn" value="${k}"${c.nom === k ? ' checked' : ''}> ${esc(NOMLAR[k])}</label><button class="btn sm ghost" data-nam="${k}">▶ Namuna</button></div>`).join('')}
@@ -6303,14 +6305,14 @@ function panel(top, bindTop) {
   <div class="card"><h3>🎙️ Ota-ona ovozi</h3><p class="sm mut">Keyingi bosqichda: savollarni va «Barakalla!» ni o'z ovozingizda yozib olasiz — bola birinchi navbatda sizning ovozingizni eshitadi.</p></div></div>`;
   bindTop();
   const saqla = o => { const s = S(); s.sozlama.nutq = Object.assign(cfg(), o); A.save(true); };
-  $$('input[name="uzn"]').forEach(x => x.onchange = () => { saqla({ nom: x.value }); KESH.clear(); neyTayyor(true).then(() => panel(top, bindTop)); panel(top, bindTop); });
+  $$('input[name="uzn"]').forEach(x => x.onchange = () => { saqla({ nom: x.value, tanlandi: 1 }); KESH.clear(); neyTayyor(true).then(() => panel(top, bindTop)); panel(top, bindTop); });
   $$('input[data-k]').forEach(x => x.onchange = () => saqla({ [x.dataset.k]: x.checked }));
   $$('[data-nam]').forEach(bt => bt.onclick = async () => {
     if (bt.classList.contains('gapir')) return toxta();
     const nom = bt.dataset.nam; toxta(); const id = IJ; const ac = ctx(); if (!ac) return toast('Ovoz chiqmaydi');
     if (ac.state !== 'running') { try { await ac.resume(); } catch (e) {} }
     belgi(bt, true); EL = bt;
-    try { const bufs = await Promise.all(['n2', 'n1', 'n3'].map(n => fetch(BASE + 'namuna/' + nom + '_' + n + '.mp3').then(r => { if (!r.ok) throw 0; return r.arrayBuffer(); }).then(dekod).then(kes)));
+    try { const bufs = await Promise.all(['n5', 'n2', 'n6'].map(n => fetch(BASE + 'namuna/' + nom + '_' + n + '.mp3').then(r => { if (!r.ok) throw 0; return r.arrayBuffer(); }).then(dekod).then(kes)));
       if (id !== IJ) return; let t = ac.currentTime + 0.05; bufs.forEach(b => { const s = ac.createBufferSource(); s.buffer = b; s.connect(VG); s.start(t); NODES.push(s); t += b.duration + 0.6; });
       TM = setTimeout(() => { if (id === IJ) { belgi(bt, false); EL = null; } }, (t - ac.currentTime) * 1000);
     } catch (e) { belgi(bt, false); toast("Namuna yuklanmadi — internetni tekshiring"); } });
