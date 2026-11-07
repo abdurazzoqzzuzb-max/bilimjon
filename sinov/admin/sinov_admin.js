@@ -55,7 +55,9 @@ const xato = async (b, x) => { try { await run(b, x); return null; } catch (e) {
   await run('kochir', { A1: 'javlon@test.uz', A2: 'javlon2@test.uz', TASDIQ: 'HA' });
   ok(ST['oila/Ujav2UID'] && ST['oila/Ujav2UID/bolalar/s1'] && ST['oila/Ujav2UID/log/s1_' + bu[1]] && ST['oila/UjavUID/bolalar/s1'], "kochir: oila + bola + log yangi akkauntda, eskisi qoldi");
   ok(/TASDIQ=HA/.test(await xato('akkaunt', { A1: 'javlon@test.uz', A2: 'ochirish' }) || ''), "akkaunt ochirish: tasdiqsiz — rad");
-  const qd = fs.mkdtempSync(path.join(os.tmpdir(), 'bjq')); fs.copyFileSync(path.join(__dirname, '..', '..', 'firestore.rules'), path.join(qd, 'firestore.rules'));
+  const qd = fs.mkdtempSync(path.join(os.tmpdir(), 'bjq')); const R0 = path.join(__dirname, '..', '..'), QF = [path.join(R0, 'firestore.rules'), path.join(R0, 'beta', 'firestore.rules')]   // eng yangi (claim bor) qoidalar
+    .find(f => fs.existsSync(f) && fs.readFileSync(f, 'utf8').includes('token.admin')) || path.join(R0, 'firestore.rules');
+  fs.copyFileSync(QF, path.join(qd, 'firestore.rules'));
   await run('qoidalar', { A1: 'admin@test.uz', QOIDA_FAYL: path.join(qd, 'firestore.rules') });
   fs.mkdirSync(path.join(qd, 'beta')); fs.writeFileSync(path.join(qd, 'beta', 'firestore.rules'), "// beta __ADMIN_UID__ token.admin");
   await run('qoidalar', { A1: 'admin@test.uz', QOIDA_FAYL: path.join(qd, 'firestore.rules') });
