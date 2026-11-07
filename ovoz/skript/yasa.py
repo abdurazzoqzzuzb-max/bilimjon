@@ -4,6 +4,8 @@ Kirish: ovoz/iboralar.json
      edge   — voice (uz-UZ-MadinaNeural…), rate ("-18%"), pitch ("+0Hz")
      gemini — model (gemini-3.8-flash-tts…), voice (Kore…), style (ohang: «iliq, quvnoq…»); kalit — GitHub secret GEMINI_API_KEY
   "iboralar": {"<id>": "<matn>"}, "namuna": {"<id>": "<matn>"}
+  0.7.3: ovozda "toplam": "en" bo'lsa — o'sha ovoz "iboralar_en" ro'yxatini yasaydi (o'zbekcha "iboralar" emas); "imlo": 0 — talaffuz() qo'llanmaydi.
+     en_jenny — inglizcha so'zlar («🔊 Eshitish», javobdan keyingi talaffuz), id = 'e' + fnv-1a (ilovadagi A.ovoz.enId).
 Chiqish: ovoz/<nom>/<id>.mp3 (faqat yo'qlari) + ovoz/<nom>/royxat.json {v, n, id, sig}; namuna: ovoz/namuna/<nom>_<id>.mp3.
 Sozlama (sig) o'zgarsa — o'sha ovozning hamma fayli qayta yasaladi.
 TALAFFUZ (07.11, foydalanuvchi: «G' va O' ni yaxshi aytolmayapti»): ilova matnida o' / g' ASCII apostrof bilan — TTS uni pauza/tutuq
@@ -18,6 +20,10 @@ def talaffuz(t):
     t = re.sub(r"([OoGg])['‘’`ʼ]", lambda m: m.group(1) + OKO, t)       # oʻ gʻ
     t = re.sub(r"(?<=[A-Za-z])['‘’`](?=[A-Za-z])", TUTUQ, t)              # maʼno, sanʼat
     return t
+
+def toplam(cfg, o):  # shu ovoz yasaydigan iboralar
+    t = o.get('toplam')
+    return cfg.get('iboralar_' + t) or {} if t else cfg['iboralar']
 
 def imzo(o):  # sozlama imzosi — o'zgarsa qayta yasaladi
     k = {x: o.get(x) for x in ('dvigatel', 'voice', 'rate', 'pitch', 'model', 'style', 'imlo')}
@@ -107,9 +113,10 @@ def main():
         papka = os.path.join(ILD, on); rf = os.path.join(papka, 'royxat.json')
         if os.path.exists(rf) and json.load(open(rf)).get('sig') != sig: shutil.rmtree(papka)   # sozlama o'zgardi — qaytadan
         os.makedirs(papka, exist_ok=True)
+        I = toplam(cfg, o)
         for f in os.listdir(papka):  # matni o'zgargan (endi ishlatilmaydigan) fayllar
-            if f.endswith('.mp3') and f[:-4] not in cfg['iboralar']: os.remove(os.path.join(papka, f))
-        for iid, matn in cfg['iboralar'].items():
+            if f.endswith('.mp3') and f[:-4] not in I: os.remove(os.path.join(papka, f))
+        for iid, matn in I.items():
             y = os.path.join(papka, iid + '.mp3')
             if not os.path.exists(y): ish[dv].append((matn, o, y))
     t = time.time(); print('yasaladi: edge', len(ish['edge']), '· gemini', len(ish['gemini']))
