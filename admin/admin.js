@@ -2,7 +2,8 @@
 /* Bilimjon — 👑 ADMIN BOSHQARUVI (Claude chatdan yoki GitHub'dan; telefon kerak emas).
    07.11.2026 (u: «telefonimni yo'qotishim, akkauntim yo'qolishi mumkin — hamma narsani shu chatdan qila olay; adminlik — o'zimning akkauntimda»).
    Ishlaydigan joyi: YOPIQ (private) repo «bilimjon-admin» dagi GitHub Actions (admin.yml) — loglar faqat egasiga ko'rinadi.
-   Kalit: Firebase xizmat akkaunti (service account) JSON — secrets.FIREBASE_SA (yoki zaxira: yopiq repodagi kalit/sa.json). Kalit chatga HECH QACHON yozilmaydi.
+   Kalit: Firebase xizmat akkaunti (service account) JSON — secrets.FIREBASE_SA, yoki yopiq repoga yuklangan fayl (ildizda yoki kalit/ papkasida,
+   nomi qanday bo'lsa ham — ichida "type": "service_account" bo'lsa topiladi; telefondan yuklash uchun). Kalit chatga HECH QACHON yozilmaydi.
    Bu fayl ochiq repoda turadi — ichida maxfiy narsa yo'q; kalitsiz hech narsa qila olmaydi.
 
    Buyruqlar (BUYRUQ, A1, A2, TASDIQ — muhit o'zgaruvchilari):
@@ -10,6 +11,7 @@
      holat                          — hamma akkauntlar: email, admin, ruxsat, oila, bolalar, oxirgi kirish/sinxron, versiya
      statistika [email|hammasi]     — bolalar: bu hafta va o'tgan 4 hafta (kun, daqiqa, missiya, aniqlik), oxirgi faol kun
      ruxsat <email> <ok|rad|blok|ochir>
+     ruxsat hammasi ok              — bulutda oilasi bor hamma akkauntga ruxsat (rad/blok qilinganlardan tashqari) — qoidalardan OLDIN
      admin <email> <ber|ol>         — custom claim admin=true (qoidalardagi admin())
      parol <email> <yangi_parol>    — parolni o'rnatish (kamida 6 belgi; logda yashiriladi)
      akkaunt <email> <yoq|ochir|ochirish>   — o'chirib qo'yish / yoqish / butunlay o'chirish (ochirish — TASDIQ=HA)
@@ -94,6 +96,19 @@ B.statistika = async ({ auth, db, log, A1 }) => {
 };
 
 B.ruxsat = async ({ auth, db, log, A1, A2 }) => {
+  if (String(A1 || '').toLowerCase() === 'hammasi') {
+    if (String(A2 || '').toLowerCase() !== 'ok') throw new Error('Faqat: ruxsat hammasi ok');
+    const users = await hammaFoydalanuvchi(auth); let n = 0, otdi = 0;
+    for (const u of users) {
+      const o = await db.doc('oila/' + u.uid).get(); if (!o.exists) continue;
+      const r = await db.doc('ruxsat/' + u.uid).get(), h0 = r.exists ? (r.data() || {}).holat : '';
+      if (h0 === 'ok' || h0 === 'rad' || h0 === 'blok') { otdi++; log(`   ${u.email}: o'zgarmadi (${RXH[h0]})`); continue; }
+      const j = json((o.data() || {}).j, {}), nom = (j.oila && j.oila.nom) || 'Oila';
+      await db.doc('ruxsat/' + u.uid).set(Object.assign(r.exists ? {} : { email: u.email || '', oila: nom, ts: Date.now() }, { holat: 'ok', hal: Date.now() }), { merge: true });
+      n++; log(`   ✅ ${u.email} («${nom}»)`);
+    }
+    return log(`✅ Ruxsat berildi: ${n} ta oila · o'zgarmadi: ${otdi} ta`);
+  }
   const u = await foydalanuvchi(auth, A1), h = String(A2 || '').toLowerCase();
   if (h === 'ochir') { await db.doc('ruxsat/' + u.uid).delete(); return log(`🗑 ${u.email}: ruxsat yozuvi o'chirildi`); }
   if (!['ok', 'rad', 'blok'].includes(h)) throw new Error('A2: ok | rad | blok | ochir');
@@ -140,7 +155,7 @@ B.kochir = async ({ auth, db, log, A1, A2, TASDIQ }) => {
   log(`🔁 ${s.email} → ${d.email}: oila + ${nb} bola + ${nl} kunlik log ko'chirildi. Yangi akkaunt egasi ilovani yopib qayta ochsin.`);
 };
 
-B.qoidalar = async ({ auth, rules, log, A1, QOIDA_FAYL }) => {
+B.qoidalar = async ({ auth, db, rules, log, A1, QOIDA_FAYL }) => {
   /* beta/firestore.rules — eng yangi qoidalar (beta har doim saytdagidan yangi yoki teng; qoidalar eski ilova bilan ham ishlaydi) */
   const fayl = [QOIDA_FAYL, path.join(path.dirname(QOIDA_FAYL), 'beta', 'firestore.rules')].reverse().find(f => f && fs.existsSync(f)) || QOIDA_FAYL;
   const u = await foydalanuvchi(auth, A1), t = fs.readFileSync(fayl, 'utf8');
@@ -148,6 +163,16 @@ B.qoidalar = async ({ auth, rules, log, A1, QOIDA_FAYL }) => {
   const src = t.split('__ADMIN_UID__').join(u.uid);
   await rules.releaseFirestoreRulesetFromSource(src);
   log(`🛡️ Firestore qoidalari qo'yildi (admin: ${u.email}). Yangi oila endi faqat ruxsat bilan bulutga ulanadi.`);
+  if (db) {   /* ogohlantirish: bulutda oilasi bor, lekin ruxsati yo'q akkauntlar endi bulutga yoza olmaydi */
+    const users = await hammaFoydalanuvchi(auth), yoq = [];
+    for (const x of users) {
+      if (x.uid === u.uid) continue;
+      const o = await db.doc('oila/' + x.uid).get(); if (!o.exists) continue;
+      const r = await db.doc('ruxsat/' + x.uid).get(); if (!r.exists || (r.data() || {}).holat !== 'ok') yoq.push(x.email || x.uid);
+    }
+    if (yoq.length) log(`⚠️ Ruxsatsiz ${yoq.length} ta oila bulutga yoza olmaydi (telefonda ishlayveradi): ${yoq.join(', ')} → «ruxsat hammasi ok» yoki «ruxsat <email> ok»`);
+    else log('✅ Bulutdagi hamma oilaning ruxsati bor.');
+  }
 };
 
 B.zaxira = async ({ db, log, ZAXIRA_PAPKA }) => {
@@ -177,15 +202,30 @@ async function ishla(buyruq, deps) {
   if (!f) throw new Error('Noma\'lum buyruq: ' + buyruq + ' (yordam — ro\'yxat)');
   return f(deps);
 }
-module.exports = { ishla, B, haftaKunlari, haftaStat, tk };
+/* Kalitni topish: secret → SA_FAYL → yopiq repodagi istalgan JSON (ildiz yoki kalit/) ichida "type":"service_account" */
+function kalitTop(env, papka) {
+  if (env.FIREBASE_SA && env.FIREBASE_SA.trim()) return { sa: env.FIREBASE_SA, manba: 'secret' };
+  if (env.SA_FAYL && fs.existsSync(env.SA_FAYL)) return { sa: fs.readFileSync(env.SA_FAYL, 'utf8'), manba: 'fayl' };
+  if (papka && fs.existsSync(papka)) {
+    for (const d of [papka, path.join(papka, 'kalit')]) {
+      if (!fs.existsSync(d)) continue;
+      for (const f of fs.readdirSync(d).filter(x => /\.json$/i.test(x)).sort()) {
+        const t = fs.readFileSync(path.join(d, f), 'utf8'), j = json(t, null);
+        if (j && j.type === 'service_account' && j.private_key && j.client_email) return { sa: t, manba: 'fayl' };
+      }
+    }
+  }
+  return null;
+}
+module.exports = { ishla, B, haftaKunlari, haftaStat, tk, kalitTop };
 
 if (require.main === module) {
   (async () => {
     const admin = require('firebase-admin'), env = process.env;
-    let sa = env.FIREBASE_SA;
-    if (!sa && env.SA_FAYL && fs.existsSync(env.SA_FAYL)) sa = fs.readFileSync(env.SA_FAYL, 'utf8');
-    if (!sa) throw new Error('Kalit yo\'q: secrets.FIREBASE_SA (yoki kalit/sa.json) qo\'yilmagan');
-    const cred = JSON.parse(sa);
+    const k = kalitTop(env, env.SA_PAPKA);
+    if (!k) throw new Error('Kalit yo\'q: secrets.FIREBASE_SA qo\'yilmagan va yopiq repoda kalit JSON fayli topilmadi');
+    const cred = JSON.parse(k.sa);
+    console.log(`🔑 Kalit: ${k.manba === 'secret' ? 'GitHub secret' : 'yopiq repodagi fayl'} · loyiha ${cred.project_id}`);
     admin.initializeApp({ credential: admin.credential.cert(cred), projectId: cred.project_id });
     await ishla(env.BUYRUQ, { auth: admin.auth(), db: admin.firestore(), rules: admin.securityRules(), log: s => console.log(s),
       A1: (env.A1 || '').trim(), A2: (env.A2 || '').trim(), TASDIQ: (env.TASDIQ || '').trim(),

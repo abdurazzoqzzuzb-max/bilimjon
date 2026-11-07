@@ -1,7 +1,7 @@
 /* Bilimjon admin.js sinovi — soxta firebase-admin (auth, firestore, securityRules) bilan. Ishga tushirish: node sinov/admin/sinov_admin.js */
 'use strict';
 const path = require('path'), fs = require('fs'), os = require('os'), zlib = require('zlib');
-const { ishla, haftaKunlari } = require(path.join(__dirname, '..', '..', 'admin', 'admin.js'));
+const { ishla, haftaKunlari, kalitTop } = require(path.join(__dirname, '..', '..', 'admin', 'admin.js'));
 let XATO = 0; const ok = (c, m) => { console.log((c ? '✅ ' : '❌ ') + m); if (!c) XATO++; };
 // --- soxta ombor
 const ST = {}, USERS = [];
@@ -63,6 +63,33 @@ const xato = async (b, x) => { try { await run(b, x); return null; } catch (e) {
   await run('qoidalar', { A1: 'admin@test.uz', QOIDA_FAYL: path.join(__dirname, '..', '..', 'firestore.rules') }).catch(() => {});
   fs.rmSync(path.join(qd, 'beta'), { recursive: true }); await run('qoidalar', { A1: 'admin@test.uz', QOIDA_FAYL: path.join(qd, 'firestore.rules') });
   ok(QOYILDI && QOYILDI.includes("'UadminUID'") && !QOYILDI.includes('__ADMIN_UID__') && QOYILDI.includes('request.auth.token.admin == true'), "qoidalar: admin uid qo'yildi, claim ham qoldi");
+  // qoidalar ogohlantirishi: bulutda oilasi bor, ruxsati yo'q (javlon — blok) akkauntlar ro'yxati
+  L.length = 0; await run('qoidalar', { A1: 'admin@test.uz', QOIDA_FAYL: path.join(qd, 'firestore.rules') }); const qw = L.join('\n');
+  ok(/Ruxsatsiz 1 ta oila/.test(qw) && qw.includes('javlon@test.uz') && !qw.includes('javlon2@test.uz'), "qoidalar: ruxsatsiz oilalar haqida ogohlantirish (admin va ruxsatlilar yo'q)");
+  // ruxsat hammasi ok: admin oilasiga ok, blok qilingan javlon o'zgarmaydi
+  L.length = 0; await run('ruxsat', { A1: 'hammasi', A2: 'ok' });
+  ok(ST['ruxsat/UadminUID'] && ST['ruxsat/UadminUID'].holat === 'ok' && ST['ruxsat/UadminUID'].oila === 'Admin oila' && ST['ruxsat/UjavUID'].holat === 'blok' && /Ruxsat berildi: 1 ta oila · o'zgarmadi: 2 ta/.test(L.join('\n')), "ruxsat hammasi ok: bulutdagi oilalarga ruxsat, blok/ok o'zgarmaydi");
+  ok(/hammasi ok/.test(await xato('ruxsat', { A1: 'hammasi', A2: 'rad' }) || ''), 'ruxsat hammasi: faqat ok');
+  // kalitTop: secret → SA_FAYL → yopiq repodagi istalgan nomli JSON (ildiz yoki kalit/)
+  const SA = JSON.stringify({ type: 'service_account', project_id: 'bilimjon-4c008', private_key: '-----BEGIN PRIVATE KEY-----\nX\n-----END PRIVATE KEY-----\n', client_email: 'firebase-adminsdk-x@bilimjon-4c008.iam.gserviceaccount.com' });
+  const kd = fs.mkdtempSync(path.join(os.tmpdir(), 'bjk'));
+  ok(kalitTop({}, kd) === null, "kalitTop: kalit yo'q — null");
+  fs.writeFileSync(path.join(kd, 'package.json'), '{"name":"x"}'); fs.writeFileSync(path.join(kd, 'README.md'), '# x');
+  ok(kalitTop({}, kd) === null, "kalitTop: boshqa JSON fayl kalit deb olinmaydi");
+  fs.mkdirSync(path.join(kd, 'kalit')); fs.writeFileSync(path.join(kd, 'kalit', 'abc.json'), SA);
+  ok((kalitTop({}, kd) || {}).manba === 'fayl', 'kalitTop: kalit/ papkasidagi fayl topiladi');
+  fs.rmSync(path.join(kd, 'kalit'), { recursive: true }); fs.writeFileSync(path.join(kd, 'bilimjon-4c008-firebase-adminsdk-fbsvc-1a2b3c4d5e.json'), SA);
+  const k1 = kalitTop({ FIREBASE_SA: '', SA_FAYL: path.join(kd, 'kalit', 'sa.json') }, kd);
+  ok(k1 && k1.manba === 'fayl' && JSON.parse(k1.sa).project_id === 'bilimjon-4c008', "kalitTop: telefondan yuklangan (Firebase bergan nomli) fayl ildizda topiladi, bo'sh secret e'tiborsiz");
+  ok((kalitTop({ FIREBASE_SA: SA }, kd) || {}).manba === 'secret', 'kalitTop: secret bo\'lsa — secret ustun');
+  // asosiy blok (admin.js to'g'ridan-to'g'ri): soxta firebase-admin moduli, kalit — yopiq repo papkasidan
+  const nm = fs.mkdtempSync(path.join(os.tmpdir(), 'bjm')); fs.mkdirSync(path.join(nm, 'firebase-admin'));
+  fs.writeFileSync(path.join(nm, 'firebase-admin', 'index.js'), "let P=null;module.exports={credential:{cert:c=>{if(!c.private_key)throw new Error('kalit buzuq');return c;}},initializeApp:o=>{P=o.projectId;},auth:()=>({}),firestore:()=>({}),securityRules:()=>({})};");
+  const cp = require('child_process'), A = path.join(__dirname, '..', '..', 'admin', 'admin.js');
+  const r1 = cp.spawnSync('node', [A], { env: Object.assign({}, process.env, { NODE_PATH: nm, BUYRUQ: 'yordam', SA_PAPKA: kd, FIREBASE_SA: '' }), encoding: 'utf8' });
+  ok(r1.status === 0 && r1.stdout.includes('yopiq repodagi fayl') && r1.stdout.includes('bilimjon-4c008') && !r1.stdout.includes('PRIVATE KEY'), "admin.js: yuklangan fayl bilan ishga tushadi, kalit logga chiqmaydi");
+  const r2 = cp.spawnSync('node', [A], { env: Object.assign({}, process.env, { NODE_PATH: nm, BUYRUQ: 'yordam', SA_PAPKA: nm, FIREBASE_SA: '' }), encoding: 'utf8' });
+  ok(r2.status === 1 && r2.stderr.includes("Kalit yo'q"), "admin.js: kalitsiz — tushunarli xato");
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'bjz')); L.length = 0; const f = await run('zaxira', { ZAXIRA_PAPKA: tmp });
   const z = JSON.parse(zlib.gunzipSync(fs.readFileSync(f)));
   ok(Object.keys(z.oila).length === 3 && z.oila.UjavUID.bolalar.s1 && Object.keys(z.oila.UjavUID.log).length === 1 && z.ruxsat.UjavUID && z.guruh.ABCDEFGH23.oilalar.UadminUID, 'zaxira: oila (bola, log), ruxsat, guruh — hammasi faylda');
