@@ -55,6 +55,9 @@ def main():
     n, xato = asyncio.run(ishla(ish))
     for on in tanlangan:
         papka = os.path.join(ILD, on)
+        if os.path.isdir(papka) and cfg['ovozlar'][on].get('toliq'):
+            for f in os.listdir(papka):  # endi ishlatilmaydigan (matni o'zgargan) fayllar
+                if f.endswith('.mp3') and f[:-4] not in cfg['iboralar']: os.remove(os.path.join(papka, f))
         if os.path.isdir(papka):
             bor = sorted(f[:-4] for f in os.listdir(papka) if f.endswith('.mp3'))
             json.dump({'v': cfg.get('v', 1), 'n': len(bor), 'id': bor}, open(os.path.join(papka, 'royxat.json'), 'w'), separators=(',', ':'))
