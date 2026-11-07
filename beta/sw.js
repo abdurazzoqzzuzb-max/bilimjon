@@ -4,7 +4,10 @@ const BETA = self.location.pathname.indexOf('/beta/') >= 0, P = BETA ? 'bj-beta-
 const V = P + '0.7.1';
 const OV = 'bj-ovoz-1';
 const SHELL = ['./', 'index.html', 'manifest.webmanifest', 'icon.svg', 'icon-192.png', 'icon-512.png'];
-self.addEventListener('install', e => { e.waitUntil(caches.open(V).then(c => c.addAll(SHELL)).then(() => self.skipWaiting())); });
+/* 0.7.1 (07.11): GitHub Pages fayllarni 10 daqiqa keshlaydi (max-age=600) — oddiy fetch() eski index.html ni brauzer keshidan berib, yangilanish 10 daqiqagacha kechikardi.
+   Endi o'z fayllarimiz tarmoqdan har safar tekshiriladi (no-cache → 304 yoki yangi fayl), install ham brauzer keshini chetlab o'tadi (reload). Yo'naltirish bo'lsa — eski usul. */
+const tarmoq = req => fetch(req.url, { cache: 'no-cache', credentials: 'same-origin' }).then(r => r.redirected ? fetch(req) : r).catch(() => fetch(req));
+self.addEventListener('install', e => { e.waitUntil(caches.open(V).then(c => c.addAll(SHELL.map(u => new Request(u, { cache: 'reload' })))).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.indexOf(P) === 0 && k !== V).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
 self.addEventListener('fetch', e => {
   const req = e.request; if (req.method !== 'GET') return; const url = new URL(req.url);
@@ -13,7 +16,7 @@ self.addEventListener('fetch', e => {
     e.respondWith(caches.open(OV).then(c => c.match(req).then(r => r || fetch(req).then(res => { if (res.ok) c.put(req, res.clone()); return res; }))));
   } else if (url.origin === location.origin) {
     /* avval tarmoq (yangi versiya tez yetib borsin), bo'lmasa kesh — internetsiz ham ishlaydi */
-    e.respondWith(fetch(req).then(r => { if (r.ok) { const cp = r.clone(); caches.open(V).then(c => c.put(req, cp)); } return r; }).catch(() => caches.match(req, { ignoreSearch: true }).then(r => r || caches.match('index.html'))));
+    e.respondWith(tarmoq(req).then(r => { if (r.ok) { const cp = r.clone(); caches.open(V).then(c => c.put(req, cp)); } return r; }).catch(() => caches.match(req, { ignoreSearch: true }).then(r => r || caches.match('index.html'))));
   } else if (/fonts\.(googleapis|gstatic)\.com$/.test(url.hostname) || (url.hostname === 'www.gstatic.com' && url.pathname.indexOf('/firebasejs/') === 0)) {
     /* shriftlar va Firebase SDK (versiyali, o'zgarmaydi) — keshdan; Firestore/Auth so'rovlariga tegilmaydi */
     e.respondWith(caches.match(req).then(r => r || fetch(req).then(res => { const cp = res.clone(); caches.open(V).then(c => c.put(req, cp)); return res; }).catch(() => r)));
