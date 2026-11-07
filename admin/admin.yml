@@ -1,0 +1,73 @@
+# Bilimjon — 👑 admin boshqaruvi. BU FAYL YOPIQ (private) REPO «bilimjon-admin» ga qo'yiladi: .github/workflows/admin.yml
+# Ochiq repodagi nusxa — namuna (ochiq repoda Actions logi hammaga ko'rinadi, shuning uchun bu yerda ISHLATILMAYDI).
+# Kalit: Settings → Secrets and variables → Actions → FIREBASE_SA (Firebase → ⚙️ → Service accounts → Generate new private key → JSON matni).
+# Ishga tushirish: Actions → admin → Run workflow (buyruq, a1, a2, tasdiq) yoki Claude: gh workflow run admin.yml -R <egasi>/bilimjon-admin -f buyruq=holat
+name: admin
+on:
+  workflow_dispatch:
+    inputs:
+      buyruq:
+        description: "yordam | holat | statistika | ruxsat | admin | parol | akkaunt | kochir | qoidalar | zaxira"
+        required: true
+        default: holat
+      a1:
+        description: "1-argument (odatda email)"
+        required: false
+        default: ""
+      a2:
+        description: "2-argument (ok/rad/blok, ber/ol, yangi parol, yangi email …)"
+        required: false
+        default: ""
+      tasdiq:
+        description: "Xavfli amal (kochir, akkaunt ochirish) uchun: HA"
+        required: false
+        default: ""
+  schedule:
+    - cron: "17 21 * * 0"   # har dushanba 02:17 (Toshkent) — haftalik zaxira
+permissions:
+  contents: read
+concurrency: admin
+jobs:
+  ish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Yopiq repo (zaxira kalit fayli bo'lsa)
+        uses: actions/checkout@v4
+        with: { path: yopiq }
+      - name: Bilimjon kodi (ochiq repo — admin.js va firestore.rules)
+        uses: actions/checkout@v4
+        with:
+          repository: abdurazzoqzzuzb-max/bilimjon
+          ref: main
+          path: bj
+          sparse-checkout: |
+            admin
+            firestore.rules
+            beta/firestore.rules
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - name: firebase-admin
+        run: npm install --prefix bj/admin --no-audit --no-fund --silent firebase-admin@13
+      - name: Buyruq
+        env:
+          FIREBASE_SA: ${{ secrets.FIREBASE_SA }}
+          SA_FAYL: yopiq/kalit/sa.json
+          BUYRUQ: ${{ github.event_name == 'schedule' && 'zaxira' || inputs.buyruq }}
+          A1: ${{ inputs.a1 }}
+          TASDIQ: ${{ inputs.tasdiq }}
+          QOIDA_FAYL: bj/firestore.rules
+          ZAXIRA_PAPKA: zaxira
+        run: |
+          # a2 (masalan, yangi parol) env sarlavhasida ko'rinmasin — hodisa faylidan o'qiladi va darhol yashiriladi
+          A2="$(jq -r '.inputs.a2 // ""' "$GITHUB_EVENT_PATH")"
+          if [ -n "$A2" ] && [ "$BUYRUQ" = "parol" ]; then echo "::add-mask::$A2"; fi
+          export A2
+          node bj/admin/admin.js
+      - name: Zaxirani saqlash (faqat egasi yuklab oladi, 90 kun)
+        if: always() && hashFiles('zaxira/*.json.gz') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: bilimjon-zaxira-${{ github.run_id }}
+          path: zaxira/*.json.gz
+          retention-days: 90

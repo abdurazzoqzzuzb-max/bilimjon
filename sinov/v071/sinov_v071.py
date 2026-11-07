@@ -246,9 +246,8 @@ try:
     SHOT(AD, '6_yoqish')
     RULES['on'] = True
     AD.click('[data-rxk]'); ok(kut(AD, "document.body.innerText.includes('Ruxsatlar') && document.body.innerText.includes('siz — admin')"), "B: yangi qoidalar → «🔄 Tekshirish» → «Siz — admin»")
-    ok("Hali so'rov yo'q" in TXT(AD) and AD.locator('[data-rxtel]').count() == 1, "B: so'rov yo'q; «📱 Shu telefon — admin telefoni» tugmasi")
-    AD.click('[data-rxtel]'); AD.wait_for_timeout(200); AD.click('.scrim [data-ok]'); AD.wait_for_timeout(400)
-    ok(AD.evaluate("BJ.A.S().adminTel && BJ.A.S().adminTel.q===BJ.A.S().qurilma.id") and 'shu telefon' in TXT(AD), "B: admin telefoni belgilandi")
+    ok("Hali so'rov yo'q" in TXT(AD) and AD.locator('[data-rxtel]').count() == 0, "B: so'rov yo'q; telefon tanlash yo'q (0.7.5: admin — akkaunt)")
+    ok('istalgan telefon yoki kompyuterdan' in TXT(AD), "B: «👑 Admin — shu akkaunt: istalgan telefondan» yozuvi")
     AD.evaluate(f"(()=>{{const b=BJ.A.S().bolalar['{abid}']; b.yulduz=7; BJ.A.save(true)}})()")
     ok(kutpy(lambda: '"yulduz":7' in (STORE.get(f'oila/U_admintestuz/bolalar/{abid}') or {}).get('j', ''), 9000), "B: yangi qoidalarda admin oilasi sinxroni ishlayapti")
     # --- yangi oila
@@ -292,13 +291,12 @@ try:
     ok(len([w for w in WRITES if w[2] == 'U_yangitestuz']) == n0, "B: sinxron to'xtadi (7 s da yangi urinish yo'q)")
     AD.click('[data-rxa="ok|U_yangitestuz"]')
     ok(kutpy(lambda: '"yulduz":9' in STORE[f'oila/U_yangitestuz/bolalar/{ybid}']['j'], 12000), "B: qayta ruxsat → sinxron o'zi tiklandi")
-    # admin 2-telefoni (oyisi): ro'yxat ko'rinadi, tugmalar o'chiq
+    # admin 2-telefoni (oyisi): 0.7.5 dan admin — akkaunt, shu email bilan kirgan har telefonda tugmalar ishlaydi
     A2 = tel(br, 'ADMIN2'); A2.goto(URL + '#bulut'); A2.wait_for_timeout(500)
     A2.fill('#be', 'admin@test.uz'); A2.fill('#bp', 'parol123'); A2.click('[data-in]')
-    kut(A2, "BJ.A.S().oila && BJ.A.S().adminTel", 8000)
+    kut(A2, "!!BJ.A.S().oila", 8000)
     A2.evaluate("BJ.A.otaOk={rol:'admin',t:Date.now()}"); A2.goto(URL + '#ota-bulut'); A2.wait_for_timeout(600)
-    ok(kut(A2, "document.body.innerText.includes('yangi@test.uz')", 6000) and not A2.locator('[data-rxa="blok|U_yangitestuz"]').is_enabled(), "B: admin 2-telefoni — ro'yxat bor, tugmalar o'chiq")
-    ok('faqat admin telefonida' in TXT(A2), "B: «Ruxsat faqat admin telefonida beriladi» yozuvi")
+    ok(kut(A2, "document.body.innerText.includes('yangi@test.uz')", 6000) and A2.locator('[data-rxa="blok|U_yangitestuz"]').is_enabled(), "B: admin 2-telefoni — ro'yxat bor, tugmalar ham ishlaydi (telefonga bog'lanmagan)")
     SHOT(A2, '9_admin2')
     # 🧪 sinov rejimi (beta): oila ma'lumoti bulutga yozilmaydi, ruxsat paneli ishlaydi
     BU = f'http://localhost:{PORT2}/'

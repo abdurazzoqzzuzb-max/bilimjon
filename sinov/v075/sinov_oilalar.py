@@ -79,7 +79,7 @@ try:
     AD = tel(br, 'ADMIN'); oila(AD, 'Admin oila'); PUMP[0] = AD; AD.evaluate(BOLA % ('Ali', '🦊'))
     ota(AD); AD.fill('#be', 'admin@test.uz'); AD.fill('#bp', 'parol123'); AD.click('[data-in]')
     ok(kut(AD, "document.body.innerText.includes('siz — admin')"), "admin — «🛡️ Ruxsatlar · siz — admin»")
-    AD.click('[data-rxtel]'); AD.wait_for_timeout(200); AD.click('.scrim [data-ok]'); AD.wait_for_timeout(300)
+    ok('istalgan telefon yoki kompyuterdan' in TXT(AD) and AD.locator('[data-rxtel]').count() == 0, "admin — akkaunt (telefon tanlash yo'q)")
     ok(kutpy(lambda: (STORE.get('oila/U_admintestuz') or {}).get('e') == 'admin@test.uz'), "oila hujjatida email (e) — admin kimligini taniydi")
     # --- Javlon (eski telefon): so'rov → ruxsat → bulut
     JV = tel(br, 'JAVLON'); oila(JV, 'Javlon oila'); jbid = JV.evaluate(BOLA % ('Sabo', '🌸'))
@@ -124,12 +124,14 @@ try:
     JN.reload(); JN.wait_for_timeout(500)
     ok(kut(JN, "(BJ.A.bolalar()||[]).some(b=>b.laqab==='Sabo')", 15000), "yangi telefon: Sabo va natijalari o'zi keldi")
     ok(JN.evaluate("(()=>{const b=BJ.A.bolalar().find(b=>b.laqab==='Sabo'); return b && b.kun[BJ.A.todayKey()].n})()") == 20, "bolaning bugungi natijasi ham ko'chdi (20 javob)")
-    # --- admin 2-telefoni: ko'radi, lekin ✉️/🔁 o'chiq
+    # --- admin 2-telefoni (masalan, asosiy telefon yo'qoldi): shu akkaunt bilan — hamma tugma ishlaydi
     A2 = tel(br, 'ADMIN2'); A2.goto(URL + '#bulut'); A2.wait_for_timeout(500)
-    A2.fill('#be', 'admin@test.uz'); A2.fill('#bp', 'parol123'); A2.click('[data-in]'); kut(A2, "BJ.A.S().oila && BJ.A.S().adminTel", 10000)
+    A2.fill('#be', 'admin@test.uz'); A2.fill('#bp', 'parol123'); A2.click('[data-in]'); kut(A2, "!!BJ.A.S().oila", 10000)
     ota(A2); kut(A2, "!!document.querySelector('[data-oil]')", 6000); A2.click('[data-oil]'); kut(A2, "!!document.querySelector('[data-oilk=\"U_javlontestuz\"]')", 8000)
-    ok(not A2.locator('[data-oilk="U_javlontestuz"]').is_enabled() and not A2.locator('[data-oilr="U_javlontestuz"]').is_enabled() and A2.locator('[data-oilb="U_javlontestuz"]').is_enabled(),
-       "admin 2-telefoni: 👁 ko'rish bor, ✉️ va 🔁 faqat admin telefonida")
+    ok(A2.locator('[data-oilk="U_javlontestuz"]').is_enabled() and A2.locator('[data-oilr="U_javlontestuz"]').is_enabled() and A2.locator('[data-oilb="U_javlontestuz"]').is_enabled(),
+       "admin boshqa telefonda: 👁 ✉️ 🔁 — hammasi ishlaydi (telefonga bog'lanmagan)")
+    r = open(os.path.join(SITE, 'firestore.rules'), encoding='utf-8').read()
+    ok("request.auth.token.admin == true" in r and "'__ADMIN_UID__'" in r, "qoidalar: admin — uid yoki custom claim (Claude boshqaruvi uchun)")
     ok(not PE, f"JS xato yo'q {PE[:3]}")
     br.close()
 finally:
