@@ -3556,7 +3556,7 @@ function onAnswer(b, m, st, it, st0, r) {
   if (it.tur === 'dars' && fin.togri) setTimeout(() => toast("🎓 Barakalla! Darsdan keyin o'zing yechding!"), 250);
   if (it.tur === 'sora' && fin.togri) setTimeout(() => toast('🙋 Barakalla! Endi tushunding 💪'), 250);
   if (it.tur !== 'dars' && it.tur !== 'sora') { if (KOMBO.id !== b.id) KOMBO = { id: b.id, n: 0 }; KOMBO.n = fin.togri_1 ? KOMBO.n + 1 : 0; const dd = A.agg(b); if (KOMBO.n > (dd.komboMax || 0)) dd.komboMax = KOMBO.n; if (KOMBO.n > (b.komboMax || 0)) b.komboMax = KOMBO.n; if (fin.togri_1 && A.konsJavob) A.konsJavob(b); }
-  if (fin.togri_1) { const el = r.el || $('#body'); const bb = el.getBoundingClientRect(); const t0 = performance.now(); if (it.tur !== 'dars' && it.tur !== 'sora' && komboMarra(KOMBO.n)) komboFX(b, KOMBO.n, bb.left + bb.width / 2, bb.top + Math.min(bb.height / 2, 160), ctx.k === 'arena' || ctx.k === 'mashq'); FX.boom(bb.left + bb.width / 2, bb.top + Math.min(bb.height / 2, 160), b.dunyo).then(() => { A.agg(b).fx += Math.round(performance.now() - t0); if (ev === 'ozl') toast('🟢 Yangi ko\'nikma o\'zlashtirildi!'); next(); }); return; }
+  if (fin.togri_1) { const el = r.el || $('#body') || app; const bb = el.getBoundingClientRect(); const t0 = performance.now(); if (it.tur !== 'dars' && it.tur !== 'sora' && komboMarra(KOMBO.n)) komboFX(b, KOMBO.n, bb.left + bb.width / 2, bb.top + Math.min(bb.height / 2, 160), ctx.k === 'arena' || ctx.k === 'mashq'); FX.boom(bb.left + bb.width / 2, bb.top + Math.min(bb.height / 2, 160), b.dunyo).then(() => { A.agg(b).fx += Math.round(performance.now() - t0); if (ev === 'ozl') toast('🟢 Yangi ko\'nikma o\'zlashtirildi!'); next(); }); return; }
   if (fin.togri) { FX.play('ding'); $('#fb').innerHTML = `<div class="good">✅ ${esc(pickA(PRAISE1))}</div>`; setTimeout(next, A.TEZ ? 200 : 1300); return; }
   /* 0.2.0: 2-xatoda javob shunchaki ko'rsatilmaydi — kichik dars → egizak savol */
   if (darsMumkin(it, r)) return darsFlow(b, m, st, it, next);
@@ -5967,17 +5967,22 @@ function step(b, m, st, mk, fin) {
     $('[data-bosh]', host).onclick = boshla;
     const sk = $('[data-skip]', host); if (sk) sk.onclick = () => { clearInterval(SES.tm); delete st.uch; fin(null); };
   }
+  /* 0.7.1 (07.11 tekshiruv): taymer o'z seansini eslab qoladi — seans tugasa (SES = null) yoki ekran almashsa o'zi to'xtaydi (avval «SES.t0» xatosi har 250 ms takrorlanardi) */
+  function soat() {
+    const S1 = SES; clearInterval(S1.tm);
+    S1.tm = setInterval(() => { const e = $('#utm', host); if (SES !== S1 || !e || !e.isConnected) return clearInterval(S1.tm); e.textContent = A.fmtMS((Date.now() - S1.t0) / 1000); }, 250);
+  }
   function boshla() {
     SES.faza = 'oqish'; SES.t0 = Date.now(); SES.xato = new Set();
     host.innerHTML = `<div class="card uchc oqiyapti">${nuqta()}<div class="uchtm mono" id="utm">0:00</div><div class="uchnom">${esc(tx.nom)}</div>${textHTML()}<button class="btn big alt" data-tug>✓ O'qib bo'ldim</button></div>`;
-    SES.tm = setInterval(() => { const e = $('#utm', host); if (!e) return clearInterval(SES.tm); e.textContent = A.fmtMS((Date.now() - SES.t0) / 1000); }, 250);
+    soat();
     $('[data-tug]', host).onclick = () => tugat();
     try { FX.play('ding'); } catch (e) {}
   }
   function tugat(sekOverride) {
     if (SES.faza !== 'oqish') return; clearInterval(SES.tm);
     const sek = sekOverride != null ? sekOverride : (Date.now() - SES.t0) / 1000;
-    if (sek < MIN_SEK && sekOverride == null) { toast("Matnni oxirigacha o'qi, keyin bos 🙂"); SES.tm = setInterval(() => { const e = $('#utm', host); if (e) e.textContent = A.fmtMS((Date.now() - SES.t0) / 1000); }, 250); return; }
+    if (sek < MIN_SEK && sekOverride == null) { toast("Matnni oxirigacha o'qi, keyin bos 🙂"); soat(); return; }
     SES.sek = Math.max(1, sek); const wpm = Math.round(W.length * 60 / SES.sek);
     if (wpm > lim && !S.kat) {
       SES.faza = 'tez'; A.pushLog(b.id, { t: 'oqish', ts: Date.now(), bola: b.id, tur: 'uch_tez', matn: tx.id, k: S.w.length, wpm });
@@ -6099,11 +6104,16 @@ const NUTQ = (() => {
   /* «A op B = ?» — bola tushunadigan gap */
   const IKKI = { '+': ['ga', 'ni', "qo'shsak, nechchi bo'ladi?"], '−': ['dan', 'ni', 'ayirsak, nechchi bo\'ladi?'], '-': ['dan', 'ni', 'ayirsak, nechchi bo\'ladi?'], '×': ['ni', 'ga', "ko'paytirsak, nechchi bo'ladi?"], '·': ['ni', 'ga', "ko'paytirsak, nechchi bo'ladi?"], ':': ['ni', 'ga', "bo'lsak, nechchi bo'ladi?"] };
   /* tokenlar: {s: son, q: qo'shimcha} yoki matn qatori */
+  /* 0.7.1 (07.11 tekshiruv): «ال» dagi lom → «dagi lom» bo'lib qolardi — arabcha qo'shtirnoq + qo'shimcha → «shu so'zdagi», «…» so'zi → «shu so'zi» */
+  const ARQ = new RegExp('«\\s*(?:' + AR.source + '|[\\s،ـ])+\\s*»', 'g'), ARQ_SUF = new RegExp(ARQ.source + "\\s*(dagi|dagini|da|ni|ning|ga|dan)(?=[\\s,.?!:]|$)", 'g'), ARQ_SOZ = new RegExp(ARQ.source + "\\s*(?=so'z)", 'g');
+  /* emoji amal ichida («🍎 + 🍎 = 6») — emojisiz gap ma'nosiz («plyus teng olti») bo'lardi: bunday savol o'qilmaydi */
+  const EMO_AMAL = new RegExp('(?:' + EMO.source + ')\\s*[+−×·:=]|[+−×·:=]\\s*(?:' + EMO.source + ')');
   function tozala(t) {
-    return String(t || '').replace(/\d\uFE0F?\u20E3/g, ' ').replace(AR, ' ').replace(EMO, ' ').replace(/«\s*([^»]*?)\s*»/g, ' \u0004$1\u0004 ').replace(/[«»"“”„]/g, '').replace(/_{2,}/g, ' … ').replace(/\s+—\s+/g, ', ').replace(/\s+/g, ' ').trim();
+    return String(t || '').replace(ARQ_SUF, " shu so'z$1 ").replace(ARQ_SOZ, ' shu ').replace(/\d\uFE0F?\u20E3/g, ' ').replace(AR, ' ').replace(EMO, ' ').replace(/«\s*([^»]*?)\s*»/g, ' \u0004$1\u0004 ').replace(/[«»"“”„]/g, '').replace(/_{2,}/g, ' … ').replace(/\s+—\s+/g, ', ').replace(/\s+/g, ' ').trim();
   }
   /* ifoda gaplari: «8 + 1 = ?», «(5 + 4) − 6 = ?», «6 + x = 10. x = ?», «17 □ 9», «1 dm = ? sm», «Qonuniyatni top: 1, 11, 21, ?» */
   function ifoda(t) {
+    t = String(t).replace(/\s*\.$/, '').trim();
     let m = t.match(/^(\d+)\s*([+−\-×·:])\s*(\d+)\s*=\s*\?$/);
     if (m) { const r = IKKI[m[2]]; return [{ s: +m[1], q: r[0] }, { s: +m[3], q: r[1] }, r[2]]; }
     m = t.match(/^(\d+)\s*□\s*(\d+)$/);
@@ -6124,8 +6134,11 @@ const NUTQ = (() => {
     return null;
   }
   function tokenlar(t) {
+    if (EMO_AMAL.test(String(t || ''))) return [];
     t = tozala(t); if (!t) return [];
     const f0 = ifoda(t); if (f0) return f0;
+    const pm = t.match(/^([\d\s+−\-×·:=?()x□△.,]+?=\s*\?)\s*\(([^()]+)\)\s*\.?$/); /* «13 − 7 = ? (son o'qida sakra)» */
+    if (pm) { const f1 = ifoda(pm[1]); if (f1) return f1.concat([' '], sonli(pm[2].trim() + '.')); }
     const parts = t.replace(/=\s*\?/g, '=\u0002').replace(/([.!?])\s+(?=\S)/g, '$1\u0001').split('\u0001').map(p => p.replace(/\u0002/g, '?')), out = [];
     parts.forEach((p, i) => { if (i) out.push(' '); const f = ifoda(p.trim()); if (f) out.push(...f); else out.push(...sonli(p)); });
     return out;
@@ -7278,7 +7291,7 @@ function start() {
   BJ.debug = { state: () => A.S(), fx: FX.stats, A, gen: BJ.gen };
   A.render();
   try { if (A.bulutStart) A.bulutStart(); } catch (e) { console.warn(e); }
-  if (oldVer && oldVer !== A.VER) setTimeout(() => toast(oldVer.indexOf('0.7.') === 0 ? '🆕 Bilimjon v7.1: 🤔 «Tushunmadim» tugmasi va 🙋 ota-onadan so\'rash!' : '🆕 Bilimjon v7.1: 🗺️ sarguzasht xaritasi, 🎮 o\'yinlar zali, 🧺 oila bozori, 🤔 «Tushunmadim» tugmasi!'), 900);
+  if (oldVer && oldVer !== A.VER) setTimeout(() => toast(oldVer.indexOf('0.7.') === 0 ? '🆕 Bilimjon v7.1: 🔊 savollar o\'zbekcha ovozda o\'qiladi, 🤔 «Tushunmadim» tugmasi va 🙋 ota-onadan so\'rash!' : '🆕 Bilimjon v7.1: 🔊 savollar ovozda, 🗺️ sarguzasht xaritasi, 🎮 o\'yinlar zali, 🧺 oila bozori, 🤔 «Tushunmadim» tugmasi!'), 900);
 }
 start();
 })(window);
