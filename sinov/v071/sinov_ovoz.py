@@ -120,19 +120,22 @@ try:
     # sozlama: o'chiq / ro'yxat yo'q
     ev("(()=>{const s=BJ.A.S(); s.sozlama.nutq={nom:'',avto:true,variant:true,tugma:true}; BJ.A.save(true)})()"); missiya(K); NAV('missiya', 900)
     ok(not ev("!!document.querySelector('[data-uzs]')"), "B: ovoz o'chiq — tugma yo'q")
-    ev("(()=>{const s=BJ.A.S(); s.sozlama.nutq.nom='madina'; BJ.A.save(true); localStorage.removeItem('bj_ovoz_royxat_madina')})()"); ROY['mode'] = 'yoq'
+    ev("(()=>{const s=BJ.A.S(); s.sozlama.nutq.nom='madina_sekin'; BJ.A.save(true); localStorage.removeItem('bj_ovoz_royxat_madina_sekin')})()"); ROY['mode'] = 'yoq'
     missiya(K); NAV('missiya', 1200)
     ok(not ev("!!document.querySelector('[data-uzs]')") and not ev("!!document.querySelector('.q.gapir')"), "B: fayllar hali yo'q (404) — tugma chiqmaydi, xato yo'q")
     ROY['mode'] = 'ok'
     # ota-ona paneli
     NAV('ota', 500, ota=True); ok('Savol ovozi' in ev("document.body.innerText"), "B: ota-ona menyusida «🔊 Savol ovozi»")
     NAV('ota-ovoz', 900, ota=True)
-    ok(ev("document.querySelectorAll('input[name=uzn]').length") == 4 and ev("document.querySelector('input[name=uzn][value=madina]').checked"), "B: panel — 3 ovoz + o'chiq, standart Madina")
+    ok(ev("document.querySelectorAll('input[name=uzn]').length") == 5 and ev("document.querySelector('input[name=uzn][value=madina_sekin]').checked"), "B: panel — 4 ovoz + o'chiq, standart Madina sekin")
     pg.check('input[name=uzn][value=sardor]'); pg.wait_for_timeout(300)
-    ok(ev("BJ.A.S().sozlama.nutq.nom") == 'sardor', "B: Sardor tanlandi — saqlandi")
+    ok(ev("BJ.A.S().sozlama.nutq.nom") == 'sardor' and ev("BJ.A.ovoz.cfg().nom") == 'sardor', "B: Sardor tanlandi — saqlandi (tanlandi belgisi bilan)")
+    ev("(()=>{const s=BJ.A.S(); s.sozlama.nutq={nom:'madina',avto:true,variant:true,tugma:true}; BJ.A.save(true)})()")
+    ok(ev("BJ.A.ovoz.cfg().nom") == 'madina_sekin', "B: eski (tanlanmagan) «madina» → standart Madina sekin")
+    ev("(()=>{const s=BJ.A.S(); s.sozlama.nutq={nom:'sardor',avto:true,variant:true,tugma:true,tanlandi:1}; BJ.A.save(true)})()")
     pg.uncheck('input[data-k=avto]'); pg.wait_for_timeout(100); ok(ev("BJ.A.S().sozlama.nutq.avto") is False, "B: «o'zi o'qilsin» o'chirildi — saqlandi")
-    r0 = len(REQ); pg.click('[data-nam=madina]'); pg.wait_for_timeout(700)
-    ok(any('/namuna/madina_n' in u for u in REQ[r0:]), "B: ▶ Namuna — namuna fayllari yuklandi")
+    r0 = len(REQ); pg.click('[data-nam=madina_jonli]'); pg.wait_for_timeout(700)
+    ok(any('/namuna/madina_jonli_n5' in u for u in REQ[r0:]), "B: ▶ Namuna — namuna fayllari yuklandi")
     SHOT(pg, '3_panel')
     ok(any('/ovoz/sardor/royxat.json' in u for u in REQ), "B: ovoz almashganda o'sha ovozning ro'yxati so'raldi")
     br.close()
