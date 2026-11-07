@@ -66,7 +66,7 @@ try:
     ok(sw['n'] > 8000 and not sw['xato'], f"A: {sw['n']} topshiriq, {sw['bol']} bo'lak — xatosiz, raqam/arabcha/emoji yo'q {sw['xato']}")
     PQ = lambda js: ev(f"""(() => {{ const O = BJ.A.ovoz, mk = (id, q, c) => {{ const it = BJ.gen.make(id, q || 1, Object.assign({{ g0: true, dunyo: 'garaj', harflar: (BJ.harfTartib||[]).slice() }}, c || {{}})); it.tugun = id; return it; }}; {js} }})()""")
     ok(PQ("for (let i=0;i<20;i++){ const it = mk('H0.6'); const t = O.savolReja(it).map(x=>x.t).join(' '); if (t.indexOf(it.sav) >= 0 || !/o'qi/i.test(t)) return false; } return true;"), "A: o'qish sinovi (H0.6) — so'z o'qilmaydi, faqat «So'zni o'qi…»")
-    hq = PQ("let n = 0; for (let i=0;i<60;i++){ for (const id of ['H0.2','H0.5','H1.1']) { const it = mk(id); if (/«\\s*[A-Za-z]{1,2}['ʻ]?\\s*»/.test(it.sav) && !/bo'g'in/.test(it.sav)) { n++; if (O.savolReja(it).some(x => it.sav.indexOf(x.t) >= 0 || /harf/.test(x.t))) return -1; } } } return n;")
+    hq = PQ("let n = 0; for (let i=0;i<60;i++){ for (const id of ['H0.2','H0.5','H1.1']) { const it = mk(id); if (/«\\s*[A-Za-z]{1,2}['ʻ]?\\s*»/.test(it.sav) && !/bo'g'in|boshlanadi/.test(it.sav)) { n++; if (O.savolReja(it).some(x => it.sav.indexOf(x.t) >= 0 || /harf/.test(x.t))) return -1; } } } return n;")
     ok(hq > 5, f"A: bitta harf («N» harfini top) — o'qilmaydi, kattalar tovush bilan aytadi ({hq} ta savol)")
     ok(PQ("const it = mk('H2.6', 1, { g0: false }); const t = O.savolReja(it).map(x=>x.t); return t.filter(x => x.replace(/[.]/g,'') === String(it.a)).length === 2;"), "A: diktant — so'z ikki marta aytiladi")
     ok(PQ("for (let i=0;i<20;i++){ const it = mk('EN.hayvon', 1); const t = O.savolReja(it).map(x=>x.t).join(' '); if (it.tts && t.indexOf(it.tts) >= 0) return false; } return true;"), "A: inglizcha so'z o'zbek ovozida o'qilmaydi")
@@ -120,22 +120,22 @@ try:
     # sozlama: o'chiq / ro'yxat yo'q
     ev("(()=>{const s=BJ.A.S(); s.sozlama.nutq={nom:'',avto:true,variant:true,tugma:true}; BJ.A.save(true)})()"); missiya(K); NAV('missiya', 900)
     ok(not ev("!!document.querySelector('[data-uzs]')"), "B: ovoz o'chiq — tugma yo'q")
-    ev("(()=>{const s=BJ.A.S(); s.sozlama.nutq.nom='madina_sekin'; BJ.A.save(true); localStorage.removeItem('bj_ovoz_royxat_madina_sekin')})()"); ROY['mode'] = 'yoq'
+    ev("(()=>{const s=BJ.A.S(); s.sozlama.nutq.nom='madina_jonli'; BJ.A.save(true); localStorage.removeItem('bj_ovoz_royxat_madina_jonli')})()"); ROY['mode'] = 'yoq'
     missiya(K); NAV('missiya', 1200)
     ok(not ev("!!document.querySelector('[data-uzs]')") and not ev("!!document.querySelector('.q.gapir')"), "B: fayllar hali yo'q (404) — tugma chiqmaydi, xato yo'q")
     ROY['mode'] = 'ok'
     # ota-ona paneli
     NAV('ota', 500, ota=True); ok('Savol ovozi' in ev("document.body.innerText"), "B: ota-ona menyusida «🔊 Savol ovozi»")
     NAV('ota-ovoz', 900, ota=True)
-    ok(ev("document.querySelectorAll('input[name=uzn]').length") == 5 and ev("document.querySelector('input[name=uzn][value=madina_sekin]').checked"), "B: panel — 4 ovoz + o'chiq, standart Madina sekin")
+    ok(ev("document.querySelectorAll('input[name=uzn]').length") == 5 and ev("document.querySelector('input[name=uzn][value=madina_jonli]').checked"), "B: panel — 4 ovoz + o'chiq, standart Madina jonli")
     pg.check('input[name=uzn][value=sardor]'); pg.wait_for_timeout(300)
     ok(ev("BJ.A.S().sozlama.nutq.nom") == 'sardor' and ev("BJ.A.ovoz.cfg().nom") == 'sardor', "B: Sardor tanlandi — saqlandi (tanlandi belgisi bilan)")
     ev("(()=>{const s=BJ.A.S(); s.sozlama.nutq={nom:'madina',avto:true,variant:true,tugma:true}; BJ.A.save(true)})()")
-    ok(ev("BJ.A.ovoz.cfg().nom") == 'madina_sekin', "B: eski (tanlanmagan) «madina» → standart Madina sekin")
+    ok(ev("BJ.A.ovoz.cfg().nom") == 'madina_jonli', "B: eski (tanlanmagan) «madina» → standart Madina jonli")
     ev("(()=>{const s=BJ.A.S(); s.sozlama.nutq={nom:'sardor',avto:true,variant:true,tugma:true,tanlandi:1}; BJ.A.save(true)})()")
     pg.uncheck('input[data-k=avto]'); pg.wait_for_timeout(100); ok(ev("BJ.A.S().sozlama.nutq.avto") is False, "B: «o'zi o'qilsin» o'chirildi — saqlandi")
-    r0 = len(REQ); pg.click('[data-nam=madina_jonli]'); pg.wait_for_timeout(700)
-    ok(any('/namuna/madina_jonli_n5' in u for u in REQ[r0:]), "B: ▶ Namuna — namuna fayllari yuklandi")
+    r0 = len(REQ); pg.click('[data-nam=madina_sekin]'); pg.wait_for_timeout(700)
+    ok(any('/namuna/madina_sekin_n5' in u for u in REQ[r0:]), "B: ▶ Namuna — namuna fayllari yuklandi")
     SHOT(pg, '3_panel')
     ok(any('/ovoz/sardor/royxat.json' in u for u in REQ), "B: ovoz almashganda o'sha ovozning ro'yxati so'raldi")
     br.close()
