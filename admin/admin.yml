@@ -1,6 +1,7 @@
 # Bilimjon — 👑 admin boshqaruvi. BU FAYL YOPIQ (private) REPO «bilimjon-admin» ga qo'yiladi: .github/workflows/admin.yml
 # Ochiq repodagi nusxa — namuna (ochiq repoda Actions logi hammaga ko'rinadi, shuning uchun bu yerda ISHLATILMAYDI).
-# Kalit: Settings → Secrets and variables → Actions → FIREBASE_SA (Firebase → ⚙️ → Service accounts → Generate new private key → JSON matni).
+# Kalit (ikkalasidan biri): 1) Settings → Secrets and variables → Actions → FIREBASE_SA (JSON matni) — eng xavfsiz;
+#   2) telefondan: Firebase'dan yuklangan JSON faylni yopiq repoga «Add file → Upload files» bilan qo'yish (nomi qanday bo'lsa ham topiladi).
 # Ishga tushirish: Actions → admin → Run workflow (buyruq, a1, a2, tasdiq) yoki Claude: gh workflow run admin.yml -R <egasi>/bilimjon-admin -f buyruq=holat
 name: admin
 on:
@@ -32,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: Yopiq repo (zaxira kalit fayli bo'lsa)
+      - name: Yopiq repo (kalit fayli shu yerda bo'lishi mumkin)
         uses: actions/checkout@v4
         with: { path: yopiq }
       - name: Bilimjon kodi (ochiq repo — admin.js va firestore.rules)
@@ -53,6 +54,7 @@ jobs:
         env:
           FIREBASE_SA: ${{ secrets.FIREBASE_SA }}
           SA_FAYL: yopiq/kalit/sa.json
+          SA_PAPKA: yopiq
           BUYRUQ: ${{ github.event_name == 'schedule' && 'zaxira' || inputs.buyruq }}
           A1: ${{ inputs.a1 }}
           TASDIQ: ${{ inputs.tasdiq }}
