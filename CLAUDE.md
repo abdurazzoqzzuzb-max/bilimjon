@@ -9,7 +9,7 @@ Javoblar o'zbekcha. Repo PUBLIC: ism, familiya, oila ma'lumoti, Telegram manzili
 - Firebase **bilimjon-4c008** (Spark, eur3), kirish — email + parol (iPhone'da Google yo'q). SDK gstatic 13.2.0, faqat akkauntli telefonda yuklanadi.
 
 ## Versiya va chiqarish
-- Saytda va beta'da: **0.7.7** («v7.7», 08.11). Qoidalar Firebase'da: **0.7.7**.
+- Saytda: **0.7.7** («v7.7», 08.11). Beta'da: **0.7.8** (tarmoq `v0.7.8`: 🏆 admin guruhga qo'shish + 👆 zoom yo'q; u «chiqar» deyishini kutyapti). Qoidalar Firebase'da: **0.7.7** (0.7.8 qoidani o'zgartirmaydi).
 - Har versiyada ikkalasi: `index.html` → `A.VER = 'x.y.z'`, `sw.js` → `P + 'x.y.z'`; ekranda `A.VERK` («v7.7»); `start()` dagi versiya toast'i (eski versiyadan kelganlarga).
 - Tartib: yangi tarmoq `v0.x.y` (main'dan) → har bosqich push → beta: main worktree'da `python3 sinov/beta/beta_yig.py origin/<tarmoq> beta` → faqat `beta/` commit → u sinaydi → **«chiqar»** desa: `prod_e2e.py` (eski main vs main+tarmoq, 23 tekshiruv) → main'ga `merge --no-ff` → push → GitHub API deployments (github.io proksida yopiq) → qoidalar o'zgargan bo'lsa `qoidalar <oila emaili>`.
 - Orqaga: `git revert -m 1 <merge>`; qoidalar eski ilova bilan mos qilib yoziladi; to'liq eski — admin `qoidalar - eski`.
@@ -29,11 +29,13 @@ Kontent banki `BJ.bank` → generatorlar `BJ.gen` (mat M0–M2, mantiq L, ona ti
 - NUTQ yoki generator matni o'zgarsa — `python3 sinov/ovoz/inventar.py ovoz/iboralar.json` → main'ga push (Actions mp3 yasaydi). Ovozni o'sha id bilan qayta yasasangiz — `sw.js` `OV` ni oshiring.
 - Lookbehind regex yo'q (eski iOS). Firestore hujjati ≤1 MB (`S.sovga` + `S.dokon` rasmlari ~720 KB — oshirmang).
 - Dizayn: realistik + animatsiya, multfilm emas (u 4 marta aytgan). 390 px da gorizontal siljish yo'q.
+- 👆 Ikki marta bosish zoom'i yo'q (0.7.8, u so'radi): `html{touch-action:manipulation}`, hamma input ≥ 16px. Ikki barmoq bilan kattalashtirish QOLADI (u tanladi) — viewport'ga `user-scalable=no` qo'ymang. touchend bilan ikki bosishni to'xtatmang (o'yinlarda tez bosish yo'qoladi).
 - `obuna`: bulut hujjati `q === 'admin'` bo'lsa undagi `guruh` olinadi.
 
 ## 👑 Admin (Claude chatdan; telefon/akkaunt yo'qolsa ham)
 - Yopiq repo `abdurazzoqzzuzb-max/bilimjon-admin`, workflow `admin.yml` (main'dagi `admin/admin.js` ni ishlatadi). Ishga tushirish: GitHub MCP `actions_run_trigger` (run_workflow, `admin.yml`, ref `main`, inputs `{buyruq, a1, a2, tasdiq}`) → `actions_list` (runs → jobs) → `get_job_logs` (job_id, return_content); yoki `bash admin/claude_adm.sh <buyruq> [a1] [a2] [tasdiq]` (gh ishlasa).
 - Buyruqlar: `holat`, `statistika [email]`, `ruxsat <email> ok|rad|blok|ochir`, `ruxsat hammasi ok`, `guruh <email1> <email2>`, `telegram [@user|-]`, `qoidalar <admin email>` (beta/firestore.rules bo'lsa o'sha), `zaxira` (har dushanba o'zi ham), `admin <email> ber|ol`, `parol`, `akkaunt`, `kochir` — oxirgi to'rttasi FAQAT u aniq so'rasa.
+- 🏆 Ilovada (0.7.8, faqat admin akkaunt): ⚙️ Sozlamalar va 📲 Oila reytingi → «🏆 Oilalar reyting guruhi» → «➕ Guruhga qo'shish» (`guruhOilaQosh`: `oila/{uid}.j.guruh` + `q:'admin'`). `guruh/{kod}/oilalar/{uid}` ni o'sha oila telefoni O'ZI yozadi (`guruhObuna` → `guruhAzoYoz`, belgi `L.sync.ga`), eski guruhdagi yozuvlarini o'chiradi. Oila bulutda bo'lmasa (ruxsat kutyapti / oila yaratmagan) — qo'shib bo'lmaydi.
 - Firebase kaliti yopiq repoda: HECH QACHON o'qilmaydi, chatga yozilmaydi, so'ralmaydi.
 
 ## U bilan ish tartibi
