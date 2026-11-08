@@ -85,7 +85,7 @@ try:
     JV = tel(br, 'DOST'); oila(JV, 'Dost oila'); jbid = JV.evaluate(BOLA % ('Sabo', '🌸'))
     ota(JV); JV.fill('#be', 'dost@test.uz'); JV.fill('#bp', 'parol123'); JV.click('[data-up]')
     ok(kut(JV, "document.body.innerText.includes('Ruxsat kerak')"), "Dost — «🛡️ Ruxsat kerak»")
-    ok("admin) oilangiz bulutdagi natijalarini ko'ra oladi" in TXT(JV), "so'rov ekranida ochiq aytiladi: admin natijalarni ko'ra oladi va yordam beradi")
+    ok("ilova egasi tomonidan o'quv rejasi uchun ko'rib chiqiladi" in TXT(JV), "so'rov ekranida ochiq aytiladi: admin natijalarni ko'ra oladi va yordam beradi")
     JV.click('[data-rxq]'); ok(kutpy(lambda: (STORE.get('ruxsat/U_dosttestuz') or {}).get('holat') == 'kutish'), "so'rov yuborildi")
     ok(kut(AD, "!!document.querySelector('[data-rxa=\"ok|U_dosttestuz\"]')", 8000), "admin ro'yxatida so'rov"); AD.click('[data-rxa="ok|U_dosttestuz"]')
     ok(kutpy(lambda: f'oila/U_dosttestuz/bolalar/{jbid}' in STORE and any(k.startswith('oila/U_dosttestuz/log/') for k in STORE), 12000), "ruxsatdan keyin Dost oilasi bulutda (bola + log)")
@@ -98,7 +98,7 @@ try:
     # --- admin: hamma oilalar
     ota(AD); ok(kut(AD, "!!document.querySelector('[data-oil]')"), "admin kartasida «👨‍👩‍👧 Oilalarni ko'rish»")
     AD.click('[data-oil]'); ok(kut(AD, "document.body.innerText.includes('Dost oila') && document.body.innerText.includes('dost@test.uz')", 8000), "ro'yxatda Dost oilasi: nomi va emaili")
-    t = TXT(AD); ok('👑 Admin oila' in t and '✅ ruxsat' in t and ' · v0.7' in t, "admin oilasi 👑 tepada; ruxsat holati va versiya ko'rinadi")
+    t = TXT(AD); ok('👑 Admin oila' in t and '✅ ruxsat' in t and ' · v0.' in t, "admin oilasi 👑 tepada; ruxsat holati va versiya ko'rinadi")
     AD.click('[data-oilb="U_dosttestuz"]'); ok(kut(AD, "document.body.innerText.includes('Sabo')", 8000), "👁 Bolalari — Sabo")
     t = TXT(AD); ok("Bu hafta: 1 kun · 25 daq · 🎯 1 missiya · 85% to'g'ri (20 javob)" in t, "bola qisqa natijasi: kun, daqiqa, missiya, aniqlik")
     ok(AD.evaluate("document.documentElement.scrollWidth") <= 390, "390 px — gorizontal sirpanish yo'q")

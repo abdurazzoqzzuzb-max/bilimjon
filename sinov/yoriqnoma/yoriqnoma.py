@@ -113,7 +113,7 @@ qadam(2, 'Bolani qo\'shing', '<b>Laqab</b> (ism-familiya emas), avatar va <b>sin
 bosh('🏆', 'Oilalar o\'rtasida reyting', 'Bolalar boshqa oila bolalari bilan musobaqalashadi') + '<div class="qlar">' +
 qadam(1, 'Guruh kodini kiriting', 'Sizni taklif qilgan oiladan <b>10 belgili guruh kodini</b> so\'rang. 👨‍👩‍👧 → <b>«📲 Oila reytingi»</b> → kod → <b>«🔗 Qo\'shilish»</b>. Yoki egasiga yozing — o\'zi qo\'shib qo\'yadi.', f'<div class="row2">{tel("24_guruh_kod", 140, .42)}{tel("10_rekordlar", 140, .42)}</div>') +
 '</div><div class="kun"><b>Har kuni</b><ul><li>🚀 <b>1 ta missiya</b> (20–35 daq) — keyin 🎮 <b>o\'yinlar zali</b> ochiladi.</li><li>🔑 Zalni missiyasiz ham ochish mumkin — ota-ona PIN bilan.</li><li>📊 Ota-ona panelida — <b>hafta xulosasi</b> va bolaning savollari.</li>'
-f'<li>🔄 Yangi versiya chiqqanda — ilovani <b>yopib qayta oching</b> (tepada «v{VK}» yozuvi).</li></ul></div>'
+f'<li>🔄 Yangi versiya chiqqanda ilova <b>o\'zi yangilanadi</b>. Tepada eski raqam qolsa — yopib qayta oching (hozir «v{VK}»).</li></ul></div>'
 '<div class="maxfiy kichik"><b>🔒 Eslatma</b><span>Ilova shaxsiy — boshqalarga ulashmang. Savol bo\'lsa — sizni taklif qilgan odamga yozing.</span></div>' + oyoq(6),
 ]
 
