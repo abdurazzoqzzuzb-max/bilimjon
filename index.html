@@ -278,7 +278,14 @@ body.th-garaj .kyb .k1{fill:#2A3141}body.th-garaj .kyb .k2{fill:#232A38}body.th-
 .pullar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0}.bnk{display:block;height:auto;filter:drop-shadow(0 2px 2px rgba(0,0,0,.25))}.tanga{display:block;height:auto;filter:drop-shadow(0 1px 1px rgba(0,0,0,.3))}
 .pbtn{position:relative;border:0;background:none;padding:2px;min-width:44px;min-height:44px;border-radius:10px}.pbtn:disabled{opacity:.3}.pbtn i{position:absolute;right:-2px;bottom:-2px;font-style:normal;font-weight:900;font-size:.75rem;background:var(--acc);color:var(--onacc);border-radius:999px;padding:0 5px}
 .hamyon .hmy{display:flex;justify-content:space-between;align-items:baseline}.hamyon .hmy b{font-size:1.5rem}.kassa{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}.kassa .row{margin:0}
-.qurq{text-align:center}.qurq .qurik{width:150px;height:auto;display:block;margin:4px auto 8px}.qurq .row{justify-content:center}
+.qurq{text-align:center}
+/* 🔄 0.8.0 yangilanish: to'liq oyna (yvo) va faoliyat paytida pastki tasma (yvt) */
+.yvo{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(6,10,18,.74);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.yvo .yvk{width:100%;max-width:360px;text-align:center;margin:0}.yvo h2{margin:6px 0 8px}.yvo ul{list-style:none;padding:0;margin:0 0 10px;text-align:left;display:flex;flex-direction:column;gap:6px}.yvo li{padding:8px 10px;border-radius:12px;background:rgba(127,140,170,.12);font-size:.95rem;line-height:1.35}
+.yvic{width:64px;height:64px;display:block;margin:0 auto}.yvic .yva{transform-origin:32px 32px;animation:yvAyl 1.6s linear infinite}@keyframes yvAyl{to{transform:rotate(360deg)}}
+.yvbar{height:8px;border-radius:999px;background:rgba(127,140,170,.25);overflow:hidden;margin:10px 0 12px}.yvbar i{display:block;height:100%;width:0;background:var(--acc);border-radius:999px;animation:yvBar var(--yvs,3s) linear forwards}@keyframes yvBar{to{width:100%}}
+.yvt{position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:85;display:flex;flex-wrap:wrap;align-items:center;gap:8px;justify-content:center;padding:10px 12px;border-radius:16px;background:var(--card);color:var(--ink);box-shadow:0 10px 28px rgba(0,0,0,.35);border:1px solid var(--line);max-width:520px;margin:0 auto}.yvt span{font-weight:800;flex:1 1 160px;text-align:center}
+.yvq{text-align:left;padding-left:20px;margin:6px 0 10px;display:flex;flex-direction:column;gap:7px}.yvq li{line-height:1.4}.qurq .qurik{width:150px;height:auto;display:block;margin:4px auto 8px}.qurq .row{justify-content:center}
 /* 🔐 0.7.9 Orzu sandiqchasi: tanga qopqoqdagi teshikka tushadi, sandiqcha silkinadi */
 .kassa .sndw{flex:0 0 76px}.sndq{display:block;width:76px;height:auto;overflow:visible;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25))}.kassa .sndt{flex:1;min-width:150px}
 .sndq .tng{opacity:0}.sndw.tush .tng{animation:sqTanga .9s ease-in forwards}.sndw.tush .sndq{animation:sqSilk .5s .85s ease-out}
@@ -7074,6 +7081,7 @@ async function tick() {
   } catch (e) { xato = xabar(e); console.warn('bulut', e); if (e && e.code === 'permission-denied') rxQayta(); }
   finally { band = false; }
 }
+A.bulutYubor = () => tick();   /* 🔄 0.8.0: yangilashdan oldin oxirgi natijalar bulutga */
 function tickBosh() { clearInterval(tickT); tickT = setInterval(tick, TICK); setTimeout(tick, 400); }
 document.addEventListener('visibilitychange', () => { if (!user || !SYNC || !RX.ok) return; if (document.visibilityState === 'hidden') tick(); else { logOl(2).then(n => { if (n) qaytaChiz(); }).catch(() => {}); tick(); } });
 addEventListener('online', () => { if (user) tick(); });
@@ -7842,7 +7850,7 @@ function settings() {
   const qkart = qme ? `<div class="card form"><h3>📱 Bitta bola — bitta qurilma</h3><p class="sm">Har bola faqat o'z qurilmasida o'ynaydi — ikki joydan o'ynasa natijalar aralashadi. Boshqa qurilmada bola o'ynamoqchi bo'lsa, o'sha qurilmada ota-ona PIN bilan o'tkazasiz.${qyoq ? ' <span class="mut">(Oila akkaunti ulanganda ishlaydi.)</span>' : ''}</p>
     <label class="lb" for="qnm">Bu qurilma nomi</label><input id="qnm" class="inp" maxlength="24" value="${esc(qme.nom || '')}" placeholder="${esc(A.qurNom({}))} — masalan: Dadamning telefoni" autocomplete="off">
     ${A.bolalar().map(b => `<div class="nr">${esc(b.avatar + ' ' + b.laqab)} — ${b.qurilma && b.qurilma.id ? (b.qurilma.id === qme.id ? '📱 <b>shu qurilma</b>' : '📱 ' + esc(b.qurilma.nom || 'boshqa qurilma')) : '<span class="mut">hali o\'ynamagan</span>'}</div>`).join('')}</div>` : '';
-  app.innerHTML = `<div class="wrap ota">${top('⚙️ Sozlamalar', 'ota')}${gad ? `<div id="gadw">${gad}</div>` : ''}${qkart}<div class="card form">
+  app.innerHTML = `<div class="wrap ota">${top('⚙️ Sozlamalar', 'ota')}${gad ? `<div id="gadw">${gad}</div>` : ''}${yvKart()}${qkart}<div class="card form">
   <label class="lb">🔊 Effekt ovozi: <b id="vv">${Math.round(z.ovoz * 100)}%</b></label><input type="range" id="vol" min="0" max="100" value="${Math.round(z.ovoz * 100)}"><button class="btn sm ghost" data-test>▶ Sinash</button>
   <label class="lb">✨ Effektlar</label><select id="ke" class="inp"><option value="auto" ${z.kamEffekt === 'auto' ? 'selected' : ''}>Avtomatik (sekin telefonda «kam effekt»)${z.kamAuto ? ' — hozir yoqilgan' : ''}</option><option value="on" ${z.kamEffekt === 'on' ? 'selected' : ''}>Kam effekt</option><option value="off" ${z.kamEffekt === 'off' ? 'selected' : ''}>To'liq effekt</option></select>
   <label class="lb">🎮 Dam olish o'yini</label><select id="oh" class="inp">${[0, 3, 4, 5, 6, 8, 10].map(n => `<option value="${n}" ${+z.oyinHar === n ? 'selected' : ''}>${n ? `Har ${n} ta savoldan keyin` : "O'chiq"}</option>`).join('')}</select>
@@ -7867,6 +7875,7 @@ function settings() {
   const gw = $('#gadw'); if (gw) { const rd = () => { if (!document.body.contains(gw)) return; gw.innerHTML = A.guruhAdminHTML(); A.guruhAdminBind(gw, rd); }; A.guruhAdminBind(gw, rd); }
   bindTop(); $('#vol').oninput = e => { $('#vv').textContent = e.target.value + '%'; FX.setVol(e.target.value / 100); };
   $('[data-test]').onclick = () => FX.boom(innerWidth / 2, innerHeight / 3, 'garaj');
+  yvKartBog();
   $('[data-save]').onclick = () => { z.ovoz = $('#vol').value / 100; z.kamEffekt = $('#ke').value; if (z.kamEffekt !== 'auto') z.kamAuto = null; z.oyinHar = +$('#oh').value; z.oyinMin = +$('#od').value; z.uyqu = $('#uq').value; z.reyting = $('#rk').checked; z.kashfUy = $('#ku').checked; z.tush = $('#tu').checked; z.zal = +$('#zl').value; z.zalOchish = $('#zo').value === 'doim' ? 'doim' : 'missiya'; z.zalChipta = $('#zc').checked;
     if (ad) { z.tanaffus = Math.max(10, Math.min(40, +$('#tn').value || 20)); $$('[data-sq]').forEach(i => { z.sandiq[i.dataset.sq] = Math.max(1, +i.value || 1); }); s.oila.nom = $('#onm').value.trim() || s.oila.nom; const po = $('#po').value.trim(), pa = $('#pa').value.trim(); if (po) { if (!/^\d{4}$/.test(po)) return toast('PIN — 4 raqam'); s.pinOta = A.pinHash(po); } if (pa) { if (!/^\d{4}$/.test(pa)) return toast('PIN — 4 raqam'); s.pin = A.pinHash(pa); } }
     const qn = $('#qnm'); if (qn && A.meQur) { const me = A.meQur(), v = qn.value.trim().slice(0, 24); if (v) me.nom = v; else delete me.nom; A.bolalar().forEach(b => { if (b.qurilma && b.qurilma.id === me.id && b.qurilma.nom !== A.qurNom(me)) b.qurilma.nom = A.qurNom(me); }); }
@@ -8036,6 +8045,112 @@ function betaBelgi() {
   el.onclick = () => sheet(`<h2>🧪 Sinov rejimi · v${A.VERK}</h2><p class="sm">Nusxa olingan: ${localStorage.getItem('bj_beta_nusxa') ? new Date(+localStorage.getItem('bj_beta_nusxa')).toLocaleString() : '—'}</p>${prodS() ? '<button class="btn" data-nus>📥 Asosiy ilovadan qayta nusxa</button>' : ''}<button class="btn${prodS() ? ' ghost' : ''}" data-bul>☁️ Bulutdan qayta nusxa</button><button class="btn ghost" data-toz>🗑 Sinov ma'lumotini tozalash</button><button class="btn ghost" data-chiq>🔒 Sinovdan chiqish</button>`, sh => {
     const nu = $('[data-nus]', sh); if (nu) nu.onclick = () => { betaNusxa(); location.reload(); }; $('[data-bul]', sh).onclick = () => { closeSheets(); location.hash = 'bulut'; }; $('[data-toz]', sh).onclick = () => { betaTozala(); location.reload(); }; $('[data-chiq]', sh).onclick = () => { localStorage.removeItem(BOK); location.reload(); }; });
 }
+/* ================= 🔄 YANGILANISH (0.8.0) =================
+   U (08.11): «eski versiyada qolib ketib o'ynashmasin — yangi versiya chiqqanda hammaga borsin, hamma bilsin; oson yo'riqnoma».
+   Saytdagi version.json ({ ver, verk, min, yangi:[…] }) tekshiriladi: ochilganda, telefonga qaytganda (≥ 1 daq oraliq), har 20 daqiqada
+   (?t= + no-store — GitHub Pages 10 daqiqalik keshi chetlanadi; sw.js version.json ni keshlamaydi). Yangi versiya bo'lsa:
+   • bola faoliyatda emas (uy, tanlash, ota-ona paneli) — o'zi yangilanadi: «🆕 … keldi» oynasi + «Nima yangi», 3 s → yangilash;
+   • faoliyatda (missiya, o'yin, mashq…) — pastda tasma [🔄 Yangilash] [Keyinroq]; faoliyat tugashi bilan o'zi yangilanadi;
+   • majburiy (A.VER < min) — «Keyinroq» yo'q: oyna 5 s dan keyin faoliyatda ham yangilaydi (natija localStorage'da — yo'qolmaydi).
+   Yangilash: saqlash → bulutga yuborish → sw.update → ilova keshi o'chiriladi (🔊 ovoz keshi qoladi) → ?yv=<ver> bilan qayta yuklash.
+   Halqa yo'q: bir versiya uchun 10 daqiqada 2 urinish, keyin — «yopib qayta oching» tasmasi + 📖 qo'llanma. */
+const YV = { info: null, last: 0, band: false, keyin: false, holat: '', toxta: false };
+const YVK = A.BETA ? 'bj_beta_yv' : 'bj_yv';
+const verSon = v => String(v || '0').split('.').map(n => +n || 0);
+function verKatta(a, b) { const x = verSon(a), y = verSon(b); for (let i = 0; i < 3; i++) if ((x[i] || 0) !== (y[i] || 0)) return (x[i] || 0) > (y[i] || 0); return false; }
+const yvBor = () => !!(YV.info && verKatta(YV.info.ver, A.VER));
+const yvMajburiy = () => !!(yvBor() && YV.info.min && verKatta(YV.info.min, A.VER));
+const yvVerk = () => (YV.info && YV.info.verk) || (YV.info && YV.info.ver) || '';
+function yvFaol() {
+  const ae = document.activeElement;
+  return /^(missiya|arena|natija|mashq|vazifa-|sinov-|zal-|qutqar-|oyin)/.test(location.hash.slice(1)) || !!$('.scrim') || !!(ae && /^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName));
+}
+async function yvTekshir(sabab) {
+  if (G.BJ_BITTA || YV.band || !G.fetch || location.protocol === 'file:') return YV.holat;
+  if (sabab !== 'qolda' && Date.now() - YV.last < 60000) return YV.holat;
+  YV.band = true; YV.last = Date.now();
+  try {
+    const r = await fetch('version.json?t=' + Date.now(), { cache: 'no-store' }); if (!r.ok) throw new Error(r.status);
+    const j = await r.json(); if (!j || !j.ver) throw new Error('ver');
+    YV.info = j; YV.holat = yvBor() ? 'yangi' : 'ok';
+    if (yvBor()) yvHal();
+  } catch (e) { YV.holat = 'xato'; } finally { YV.band = false; }
+  return YV.holat;
+}
+function yvHal() {
+  if (!yvBor() || $('.yvo') || YV.toxta) return;
+  if (yvMajburiy()) return yvOyna(yvFaol() ? 5 : 3);
+  if (!yvFaol()) return yvOyna(3);
+  if (!YV.keyin) yvTasma();
+}
+function yvTasmaYop() { const t = $('.yvt'); if (t) t.remove(); }
+function yvTasma(matn, qollanma) {
+  yvTasmaYop(); const t = document.createElement('div'); t.className = 'yvt'; t.setAttribute('role', 'status');
+  t.innerHTML = qollanma ? `<span>${matn}</span><button class="btn sm" data-yvq>📖 Qanday?</button><button class="btn sm ghost" data-yvx>✕</button>`
+    : `<span>🆕 Yangi versiya v${esc(yvVerk())} tayyor</span><button class="btn sm" data-yvh>🔄 Yangilash</button>${yvMajburiy() ? '' : '<button class="btn sm ghost" data-yvk>Keyinroq</button>'}`;
+  document.body.appendChild(t);
+  const h = $('[data-yvh]', t), k = $('[data-yvk]', t), q = $('[data-yvq]', t), x = $('[data-yvx]', t);
+  if (h) h.onclick = () => { yvTasmaYop(); yvOyna(0, true); };
+  if (k) k.onclick = () => { YV.keyin = true; yvTasmaYop(); toast("👌 Mashg'ulot tugagach ilova o'zi yangilanadi"); };
+  if (q) q.onclick = () => yvQollanma(); if (x) x.onclick = yvTasmaYop;
+}
+function yvOyna(sek, qolda) {
+  if ($('.yvo')) return; yvTasmaYop(); const i = YV.info || {}, yangi = Array.isArray(i.yangi) ? i.yangi.slice(0, 5) : [];
+  const o = document.createElement('div'); o.className = 'yvo'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-modal', 'true');
+  o.innerHTML = `<div class="card yvk"><svg class="yvic" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#1E2A44"/><g class="yva" fill="none" stroke="#4FC3F7" stroke-width="5" stroke-linecap="round"><path d="M18 26a15 15 0 0 1 26-5"/><path d="M46 38a15 15 0 0 1-26 5"/></g><path d="M44 12v10h-10" fill="none" stroke="#4FC3F7" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 52V42h10" fill="none" stroke="#4FC3F7" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <h2>🆕 Bilimjon v${esc(yvVerk())} keldi!</h2>${yangi.length ? `<ul>${yangi.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
+    <p class="sm mut">⭐ Yulduzlar, 💵 so'm va natijalar saqlanadi.</p>${sek ? `<div class="yvbar" style="--yvs:${sek}s"><i></i></div>` : ''}
+    <button class="btn big" data-yvh>🔄 ${sek ? 'Hozir yangilash' : 'Yangilanmoqda…'}</button></div>`;
+  document.body.appendChild(o);
+  let bitdi = false; const ket = () => { if (bitdi) return; bitdi = true; const b = $('[data-yvh]', o); if (b) { b.disabled = true; b.textContent = '🔄 Yangilanmoqda…'; } yangila(qolda); };
+  $('[data-yvh]', o).onclick = () => { qolda = true; ket(); }; setTimeout(ket, (sek || 0) * 1000 + 50);
+}
+async function yangila(qolda) {
+  const v = (YV.info && YV.info.ver) || String(Date.now());
+  try { const u = JSON.parse(localStorage.getItem(YVK) || '{}'), yaqin = u.v === v && Date.now() - u.ts < 10 * 60000;
+    if (yaqin && u.n >= 2 && !qolda) { YV.toxta = true; const o = $('.yvo'); if (o) o.remove(); return yvTasma("⚠️ Yangilanmadi — ilovani to'liq yopib, qayta oching", true); }
+    localStorage.setItem(YVK, JSON.stringify({ v, ts: yaqin ? u.ts : Date.now(), n: (yaqin ? u.n : 0) + 1 })); } catch (e) {}
+  const kut = (p, ms) => Promise.race([Promise.resolve(p).catch(() => {}), new Promise(r => setTimeout(r, ms))]);
+  try { A.save(true); } catch (e) {}
+  try { if (A.bulutYubor) await kut(A.bulutYubor(), 2500); } catch (e) {}
+  try { const reg = navigator.serviceWorker && await kut(navigator.serviceWorker.getRegistration(), 1500); if (reg && reg.update) await kut(reg.update(), 3000); } catch (e) {}
+  try { if (G.caches) { const pre = A.BETA ? 'bj-beta-' : 'bj-v', ks = await caches.keys(); await Promise.all(ks.filter(k => k.indexOf(pre) === 0).map(k => caches.delete(k))); } } catch (e) {}
+  const u = new URL(location.href); u.searchParams.set('yv', v); location.replace(u.pathname + u.search + location.hash);
+}
+function yvQollanma() {
+  sheet(`<h2>🔄 Ilovani yangilash</h2><p class="sm">Odatda hech narsa qilish shart emas — Bilimjon <b>o'zi yangilanadi</b>: ochilganda, telefonga qaytganda va mashg'ulot tugaganda. Natijalar yo'qolmaydi.</p>
+  <ol class="yvq sm">
+    <li><b>«🆕 Yangi versiya» chiqsa</b> — «🔄 Yangilash» ni bosing.</li>
+    <li><b>Versiyani ko'rish:</b> 👨‍👩‍👧 Ota-ona → ⚙️ Sozlamalar → «📲 Versiya». Bosh ekran tepasida ham yozilgan (masalan, v${esc(A.VERK)}).</li>
+    <li><b>iPhone'da eski versiya qolsa:</b> ekran pastidan yuqoriga surib, barmoqni ushlab turing (переключатель приложений; Home tugmali iPhone'da — Home'ni 2 marta bosing) → Bilimjon oynasini yuqoriga otib yuboring → uy ekranidagi Bilimjon belgisidan qayta oching.</li>
+    <li><b>Android'da:</b> «Oxirgi ilovalar» (□ tugma yoki pastdan surib ushlab turish) → Bilimjon'ni yuqoriga otib yuboring → qayta oching.</li>
+    <li>Baribir eski bo'lsa — internetni tekshiring va ⚙️ Sozlamalar → «🔄 Yangilanishni tekshirish».</li>
+  </ol><p class="sm mut">⚠️ Safari yoki Chrome tarixini (ma'lumotlarini) tozalamang — oila akkaunti ulanmagan bo'lsa natijalar o'chib ketadi.</p>
+  <div class="row"><button class="btn ghost" data-x>Yopish</button></div>`, el => { $('[data-x]', el).onclick = closeSheets; });
+}
+function yvKart() {
+  const h = YV.holat === 'yangi' ? `🆕 v${esc(yvVerk())} bor` : YV.holat === 'ok' ? '✅ eng yangisi' : YV.holat === 'xato' ? '⚠️ tekshirib bo\'lmadi (internet?)' : '';
+  return `<div class="card form"><h3>📲 Versiya</h3><p>Shu telefonda: <b>v${esc(A.VERK)}</b> <span class="sm mut">(${esc(A.VER)})</span>${h ? ` · <span data-yvs>${h}</span>` : ' <span data-yvs></span>'}</p>
+    <p class="sm mut">Ilova o'zi yangilanadi — yangi versiya chiqqanda hamma telefonga yetib boradi.</p>
+    <div class="row"><button class="btn sm" data-yvt>🔄 Yangilanishni tekshirish</button><button class="btn sm ghost" data-yvq>📖 Qanday yangilanadi?</button></div></div>`;
+}
+function yvKartBog() {
+  const t = $('[data-yvt]'), q = $('[data-yvq]'); if (q) q.onclick = yvQollanma;
+  if (t) t.onclick = async () => { t.disabled = true; const r = await yvTekshir('qolda'); t.disabled = false; const s = $('[data-yvs]');
+    if (r === 'ok') { if (s) s.textContent = '✅ eng yangisi'; toast('✅ Sizda eng yangi versiya — v' + A.VERK); }
+    else if (r === 'xato') { if (s) s.textContent = "⚠️ tekshirib bo'lmadi (internet?)"; toast("⚠️ Tekshirib bo'lmadi — internetni tekshiring"); }
+    else if (r === 'yangi' && !$('.yvo')) yvOyna(0, true); };
+}
+function yvBosh() {
+  try { const u = new URL(location.href); if (u.searchParams.has('yv')) { u.searchParams.delete('yv'); history.replaceState(null, '', u.pathname + u.search + u.hash); } } catch (e) {}
+  try { const u = JSON.parse(localStorage.getItem(YVK) || 'null'); if (u && !verKatta(u.v, A.VER)) localStorage.removeItem(YVK); } catch (e) {}
+  if (G.BJ_BITTA) return;
+  setTimeout(() => yvTekshir('start'), 2500);
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') yvTekshir('qayt'); });
+  setInterval(() => { if (document.visibilityState === 'visible') yvTekshir('vaqt'); }, 20 * 60000);
+  addEventListener('hashchange', () => setTimeout(() => { if (!yvBor() || YV.toxta) return; if (!yvFaol()) yvOyna(3); else yvHal(); }, 400));
+}
+Object.assign(A, { yvTekshir, yvQollanma, verKatta, yangila, yvHolat: () => Object.assign({}, YV) });
 function start() {
   /* 0.7.1: sinovga kirmasdan ham ☁️ «🛡️ Ruxsat tizimi» (#bulut) — iPhone'da Safari va uy ekranidagi ilova xotirasi alohida, PIN Safari'da bo'lmasligi mumkin */
   if (A.BETA) { if (!betaOk()) return location.hash === '#bulut' && A.bulutPanel ? A.bulutPanel(null) : betaGate(); betaBelgi(); }
@@ -8045,8 +8160,9 @@ function start() {
   if (!G.BJ_BITTA && 'serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')) navigator.serviceWorker.register('sw.js').catch(() => {});
   BJ.debug = { state: () => A.S(), fx: FX.stats, A, gen: BJ.gen };
   A.render();
+  try { yvBosh(); } catch (e) { console.warn(e); }
   try { if (A.bulutStart) A.bulutStart(); } catch (e) { console.warn(e); }
-  if (oldVer && oldVer !== A.VER) setTimeout(() => toast(oldVer === '0.7.9' ? "🆕 Bilimjon v8: 📱 bitta bola — bitta qurilma: har bola o'z telefonida o'ynaydi (boshqasiga ota-ona PIN bilan o'tkaziladi)" : oldVer === '0.7.8' ? "🆕 Bilimjon v8: 🔐 do'kondagi kassa endi «Orzu sandiqchasi» — pul orzu uchun alohida saqlanadi (foiz yo'q)" : oldVer === '0.7.7' ? "🆕 Bilimjon v8: 👆 ekran endi ikki marta bosilganda kattalashib qolmaydi (ikki barmoq bilan kattalashtirish — bor), 🏆 oilalar reyting guruhiga ulanish yaxshilandi" : oldVer === '0.7.6' ? '🆕 Bilimjon v8: masala savollaridagi ortiqcha «📄 Matn 1» oynasi olib tashlandi, matnlardagi imlo tuzatildi' : /^0\.7\.[45]$/.test(oldVer) ? '🆕 Bilimjon v8: 🎮 dam olishda 7 o\'yindan tanlov, 🏆 o\'yin reytingi (boshqa oila ham), 🏅 haftaning chempioni, 🔑 zal ota-ona ruxsati bilan' : oldVer === '0.7.4' ? '🆕 Bilimjon v8: 👨‍👩‍👧 ota-ona uchun bulut nazorati yaxshilandi, parol tiklash aniqroq' : oldVer === '0.7.3' ? '🆕 Bilimjon v8: 📈 savollar bola darajasiga to\'g\'ri moslashadi, 📊 hafta xulosasi aniqroq' : oldVer === '0.7.2' ? '🆕 Bilimjon v8: 🇬🇧 «🔊 Eshitish» — inglizcha so\'z yangi ovozda (iPhone jim rejimida ham)' : oldVer === '0.7.1' ? '🆕 Bilimjon v8: 🔊 iPhone\'da savol va inglizcha so\'z ovozi tuzatildi (jim rejimda ham eshitiladi)' : oldVer.indexOf('0.7.') === 0 ? '🆕 Bilimjon v8: 🔊 savollar o\'zbekcha ovozda o\'qiladi, 🤔 «Tushunmadim» tugmasi va 🙋 ota-onadan so\'rash!' : '🆕 Bilimjon v8: 🔊 savollar ovozda, 🗺️ sarguzasht xaritasi, 🎮 o\'yinlar zali, 🧺 oila bozori, 🤔 «Tushunmadim» tugmasi!'), 900);
+  if (oldVer && oldVer !== A.VER) setTimeout(() => toast(oldVer === '0.7.9' ? "🆕 Bilimjon v8: 📱 bitta bola — bitta qurilma, ⏱ dam olish o'yini 1 daqiqa (ota-ona ko'paytira oladi), 🔄 ilova endi o'zi yangilanadi" : oldVer === '0.7.8' ? "🆕 Bilimjon v8: 🔐 do'kondagi kassa endi «Orzu sandiqchasi» — pul orzu uchun alohida saqlanadi (foiz yo'q)" : oldVer === '0.7.7' ? "🆕 Bilimjon v8: 👆 ekran endi ikki marta bosilganda kattalashib qolmaydi (ikki barmoq bilan kattalashtirish — bor), 🏆 oilalar reyting guruhiga ulanish yaxshilandi" : oldVer === '0.7.6' ? '🆕 Bilimjon v8: masala savollaridagi ortiqcha «📄 Matn 1» oynasi olib tashlandi, matnlardagi imlo tuzatildi' : /^0\.7\.[45]$/.test(oldVer) ? '🆕 Bilimjon v8: 🎮 dam olishda 7 o\'yindan tanlov, 🏆 o\'yin reytingi (boshqa oila ham), 🏅 haftaning chempioni, 🔑 zal ota-ona ruxsati bilan' : oldVer === '0.7.4' ? '🆕 Bilimjon v8: 👨‍👩‍👧 ota-ona uchun bulut nazorati yaxshilandi, parol tiklash aniqroq' : oldVer === '0.7.3' ? '🆕 Bilimjon v8: 📈 savollar bola darajasiga to\'g\'ri moslashadi, 📊 hafta xulosasi aniqroq' : oldVer === '0.7.2' ? '🆕 Bilimjon v8: 🇬🇧 «🔊 Eshitish» — inglizcha so\'z yangi ovozda (iPhone jim rejimida ham)' : oldVer === '0.7.1' ? '🆕 Bilimjon v8: 🔊 iPhone\'da savol va inglizcha so\'z ovozi tuzatildi (jim rejimda ham eshitiladi)' : oldVer.indexOf('0.7.') === 0 ? '🆕 Bilimjon v8: 🔊 savollar o\'zbekcha ovozda o\'qiladi, 🤔 «Tushunmadim» tugmasi va 🙋 ota-onadan so\'rash!' : '🆕 Bilimjon v8: 🔊 savollar ovozda, 🗺️ sarguzasht xaritasi, 🎮 o\'yinlar zali, 🧺 oila bozori, 🤔 «Tushunmadim» tugmasi!'), 900);
 }
 start();
 })(window);

@@ -7,7 +7,7 @@ Ishlatish (repo ildizida, odatda main'da):  python3 sinov/beta/beta_yig.py <tarm
 0.7.1 da qayta yozildi (0.7.0 dagi nusxa repo'ga tushmagan edi)."""
 import json, os, re, subprocess, sys
 
-FAYLLAR = ['index.html', 'sw.js', 'manifest.webmanifest', 'icon.svg', 'icon-192.png', 'icon-512.png', 'firestore.rules', 'qoidalar/firestore-0.5.0.rules']
+FAYLLAR = ['index.html', 'sw.js', 'version.json', 'manifest.webmanifest', 'icon.svg', 'icon-192.png', 'icon-512.png', 'firestore.rules', 'qoidalar/firestore-0.5.0.rules']
 QATIY = {'index.html', 'sw.js', 'manifest.webmanifest'}
 
 def git(*a, raw=False):
@@ -41,6 +41,8 @@ def main():
     ver = (re.search(r"A\.VER = '([\d.]+)'", html) or [None, '?'])[1]
     sw = open(os.path.join(papka, 'sw.js'), encoding='utf-8').read(); swv = (re.search(r"const V = P \+ '([\d.]+)'", sw) or [None, '?'])[1]
     if ver != swv: raise SystemExit(f'❌ index.html VER {ver} ≠ sw.js V {swv}')
+    vj = os.path.join(papka, 'version.json')   # 🔄 0.8.0: yangilanish tekshiruvi — version.json ver ilova bilan bir xil bo'lishi shart
+    if 'version.json' in yozildi and json.load(open(vj, encoding='utf-8')).get('ver') != ver: raise SystemExit(f'❌ version.json ver ≠ index.html VER {ver}')
     if 'A.BETA' not in html: raise SystemExit('❌ index.html da sinov rejimi (A.BETA) yo\'q')
     with open(os.path.join(papka, 'VERSIYA.txt'), 'w', encoding='utf-8') as fh:
         fh.write(f'Bilimjon sinov rejimi\ntarmoq: {tarmoq}\ncommit: {commit}\nVER: {ver}\n')
