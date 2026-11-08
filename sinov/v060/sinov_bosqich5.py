@@ -96,7 +96,7 @@ with sync_playwright() as p:
     # ---- 2-sinf: kupyura bilan to'lash + qaytim savoli
     setj(Q); berP(Q, 15000); NAV(pg, 'dokon', 400)
     ok(pg.locator('.dsg').count() == 2 and pg.locator('[data-ol]').count() == 2, "Kattaning do'konida 2 sovg'a (o'ziniki + hammaga), ikkalasiga puli yetadi")
-    ok(pg.locator('.kassa').count() == 1, "2-sinfda 🐷 cho'chqa-kassa bor")
+    ok(pg.locator('.kassa').count() == 1, "2-sinfda 🔐 Orzu sandiqchasi bor")
     SHOT(pg, 'dokon_sovga')
     lego = ev("BJ.A.S().dokon[0].id"); pg.click(f'[data-ol="{lego}"]'); pg.wait_for_timeout(300)
     pg.click('.sheet [data-v="10000"]'); pg.wait_for_timeout(100); pg.click('.sheet [data-v="5000"]'); pg.wait_for_timeout(100)
@@ -123,10 +123,10 @@ with sync_playwright() as p:
     r = ev(f"(()=>{{const b=BJ.A.S().bolalar['{Q}'], p=BJ.A.pul.st(b); return [p.h, p.ega.taqa, p.joy.taqa, BJ.A.bezak(b).taqa]}})()")
     ok(r == [3000, [1], 1, 1], f"Oltin taqa sotib olindi va o'rnatildi {r}")
     NAV(pg, 'uy', 400); ok('#FFD54F' in pg.inner_html('[data-xmap] .xhero'), "Bola uyidagi uchar otda oltin taqa (0.7.0 dan — xaritadagi qahramon)")
-    # ---- 🐷 cho'chqa-kassa: solish, 14 kunda 2 marta +5%, olish
+    # ---- 🔐 Orzu sandiqchasi (0.7.9): solish, 14 kundan keyin ham FOIZ YO'Q (u: islomiy jihatdan), olish
     r = ev(f"""(()=>{{const A=BJ.A, b=A.S().bolalar['{Q}'], p=A.pul.st(b); p.h=10000; const s=A.pul.kassaSol(b,5000); p.kassaTs=A.addDays(A.todayKey(),-14);
-      const f=A.pul.kassaFoiz(b), k=p.kassa, ts=p.kassaTs===A.todayKey(), o=A.pul.kassaOl(b); return [s,f,k,ts,o,p.h,p.kassa]}})()""")
-    ok(r == [5000, 600, 5600, True, 5600, 10600, 0], f"Kassa: 5 000 solindi → 14 kunda +300 +300 = 5 600 → olindi, hamyon 10 600 {r}")
+      const f=A.pul.kassaFoiz(b), k=p.kassa, o=A.pul.kassaOl(b); return [s,f,k,o,p.h,p.kassa]}})()""")
+    ok(r == [5000, 0, 5000, 5000, 10000, 0], f"Sandiqcha: 5 000 solindi → 14 kundan keyin ham 5 000 (foiz yo'q) → olindi, hamyon 10 000 {r}")
     ok(ev(f"(()=>{{const b=BJ.A.S().bolalar['{K}']; return BJ.A.pul.st(b).kassa}})()") == 0, "Maktabgacha bolada kassa yo'q (kassaBor — faqat 1-sinfdan)")
 
     # ---- 👨‍👩‍👧 Berildi; maktabgacha — avtomatik to'lov; Bekor → pul qaytadi; 🔁 qayta sotuvda

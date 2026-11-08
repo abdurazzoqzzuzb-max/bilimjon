@@ -9,7 +9,7 @@ Javoblar o'zbekcha. Repo PUBLIC: ism, familiya, oila ma'lumoti, Telegram manzili
 - Firebase **bilimjon-4c008** (Spark, eur3), kirish — email + parol (iPhone'da Google yo'q). SDK gstatic 13.2.0, faqat akkauntli telefonda yuklanadi.
 
 ## Versiya va chiqarish
-- Saytda va beta'da: **0.7.8** («v7.8», 08.11 11:10; 🏆 admin guruhga qo'shish + 👆 ikki bosish zoom'i yo'q). Qoidalar Firebase'da: **0.7.7** (0.7.8 qoidani o'zgartirmaydi).
+- Saytda va beta'da: **0.7.9** («v7.9», 08.11; 🔐 Orzu sandiqchasi — cho'chqa-kassa va foiz olib tashlandi). Qoidalar Firebase'da: **0.7.7** (0.7.8–0.7.9 qoidani o'zgartirmaydi).
 - Har versiyada ikkalasi: `index.html` → `A.VER = 'x.y.z'`, `sw.js` → `P + 'x.y.z'`; ekranda `A.VERK` («v7.7»); `start()` dagi versiya toast'i (eski versiyadan kelganlarga).
 - Tartib: yangi tarmoq `v0.x.y` (main'dan) → har bosqich push → beta: main worktree'da `python3 sinov/beta/beta_yig.py origin/<tarmoq> beta` → faqat `beta/` commit → u sinaydi → **«chiqar»** desa: `prod_e2e.py` (eski main vs main+tarmoq, 23 tekshiruv) → main'ga `merge --no-ff` → push → GitHub API deployments (github.io proksida yopiq) → qoidalar o'zgargan bo'lsa `qoidalar <oila emaili>`.
 - Orqaga: `git revert -m 1 <merge>`; qoidalar eski ilova bilan mos qilib yoziladi; to'liq eski — admin `qoidalar - eski`.
@@ -30,6 +30,7 @@ Kontent banki `BJ.bank` → generatorlar `BJ.gen` (mat M0–M2, mantiq L, ona ti
 - Lookbehind regex yo'q (eski iOS). Firestore hujjati ≤1 MB (`S.sovga` + `S.dokon` rasmlari ~720 KB — oshirmang).
 - Dizayn: realistik + animatsiya, multfilm emas (u 4 marta aytgan). 390 px da gorizontal siljish yo'q.
 - 👆 Ikki marta bosish zoom'i yo'q (0.7.8, u so'radi): `html{touch-action:manipulation}`, hamma input ≥ 16px. Ikki barmoq bilan kattalashtirish QOLADI (u tanladi) — viewport'ga `user-scalable=no` qo'ymang. touchend bilan ikki bosishni to'xtatmang (o'yinlarda tez bosish yo'qoladi).
+- 🔐 Pul FOIZSIZ (0.7.9, u: «pul tegilmasa ko'payadi — islomiy jihatdan to'g'ri emas»): sandiqchaga foiz/o'sish qo'shmang, 🐷 cho'chqa tasvirini ishlatmang. Tejash — faqat ota-ona mukofoti (bozor 🪙) yoki orzu uchun yig'ish.
 - `obuna`: bulut hujjati `q === 'admin'` bo'lsa undagi `guruh` olinadi.
 
 ## 👑 Admin (Claude chatdan; telefon/akkaunt yo'qolsa ham)
