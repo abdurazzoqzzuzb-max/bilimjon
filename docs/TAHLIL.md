@@ -26,3 +26,7 @@ qayerda xato qilayotganini topib, yangi versiyada o'sha bolaga foydali bo'ladiga
   ilova egasi tomonidan o'quv rejasi uchun ko'rib chiqiladi»). Ismlar/emaillar ochiq repoga, Drive'ga yozilmaydi.
 - Firestore Spark limiti (50k o'qish/kun) — 3–5 oila uchun bir tahlil ~1–2k o'qish, xavfsiz.
 - Reja faqat yumshoq (ulush/tartib) — bola o'z darajasidan tushib ketmaydi; reja eskirsa ilova odatdagi moslashuvga qaytadi.
+
+## Uning qarorlari (08.11 11:51)
+- Individual reja — DARHOL avtomatik qo'llanadi (Claude tahlil qilib `reja` yozadi, keyin hisobot beradi; u alohida «ha» demaydi).
+- Maxfiylik gapi «Natijalar ilova egasi tomonidan o'quv rejasi uchun ko'rib chiqiladi.» — yo'riqnoma va ilovadagi tanishtiruvga, NAVBATDAGI versiya bilan birga.

@@ -42,11 +42,12 @@ Kontent banki `BJ.bank` → generatorlar `BJ.gen` (mat M0–M2, mantiq L, ona ti
 ## U bilan ish tartibi
 - **Yangi odam ulanishi:** odam ilovada «📨 Ruxsat so'rash» → «✈️ Telegram'da egasiga yozish» → xabar unga keladi → u chatga «ha» + email (yoki xabar) → Claude `ruxsat <email> ok` (rad: `ruxsat <email> rad`); reyting guruhiga — u aytsa `guruh <uning emaili> <yangi email>`. Telegram manzili `ilova/egasi` da (qo'yilgan; `holat` ko'rsatadi).
 - **«yo'riqnoma»:** `python3 sinov/yoriqnoma/yoriqnoma.py <papka>` (`--suratsiz` — eski ekranlar) → «pastki chegara» har sahifada ≤ 925 → PDF + 6 JPG SendUserFile bilan. Matn — `SAHIFALAR`, ekranlar — `suratlar.py` (namuna oila, haqiqiy ism yo'q). PDF/JPG repoga yozilmaydi. PDF — sahifa rasmlaridan yig'iladi (HTML'dan to'g'ridan-to'g'ri PDF iPhone/Telegram'da qora to'rtburchak va kesilgan sarlavha berardi, 08.11); tekshiruv: `pdftoppm -r 54 -png <pdf> chk`.
-- **«TAHLIL»** (u tasdiqlagan reja, 08.11): `docs/TAHLIL.md` — hamma oilalar ma'lumoti → har bolaga individual reja (`oila/{uid}/reja/{bid}`) + umumiy tuzatish. Holat: reja tayyor, 1-bosqich (admin `tahlil`) — keyingi chatda.
+- **«TAHLIL»** (u tasdiqlagan reja, 08.11): `docs/TAHLIL.md` — hamma oilalar ma'lumoti → har bolaga individual reja (`oila/{uid}/reja/{bid}`) + umumiy tuzatish. Holat: reja tayyor, u tanladi — reja hisobotdan keyin DARHOL avtomatik qo'llanadi (tasdiq kutilmaydi); 1-bosqich (admin `tahlil`) — keyingi chatda.
 - **«📚 Bugungi qiyinlar»** matnini tashlasa: o'sha tugunlar uchun `DARS` qoidasi va `DARS_QADAM` ni kuchaytirish → sinov → versiya → beta.
 - Javob oxirida: «🕒 sana · savol vaqti → javob vaqti · 👤 profil». Drive xotirasi (OXIRGI.md) — katta ish tugaganda.
 
 ## Ochiq ishlar (u tasdiqlasa)
+- ⏭️ **KEYINGI VERSIYADA ALBATTA (u 08.11 11:51 aytdi):** maxfiylik gapi — «Natijalar ilova egasi tomonidan o'quv rejasi uchun ko'rib chiqiladi.» → `sinov/yoriqnoma/yoriqnoma.py` `SAHIFALAR` (1-sahifa, taklifnoma ostida) + ilovadagi 📖 tanishtiruv / 🛡️ ruxsat so'rash kartasi. Alohida versiya chiqarilmaydi — navbatdagi tuzatish bilan birga.
 - 🎁 «1 oy bepul, keyin pullik» — hozircha faqat matn (to'lov va cheklov yo'q).
 - 🎙️ Arab so'zlari qizining ovozida (132 yozuv) — «hali boshlama». Ota-ona ovozi — keyinroq. Gemini ovozi — `GEMINI_API_KEY` qo'yilsa.
 - 11-sinfgacha kengaytirish — avval pilot (1 fan × 1 sinf, darslik PDF'ini u beradi).
