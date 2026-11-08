@@ -22,7 +22,7 @@ run() { for t in "$@"; do s=$(date +%s)
   done; }
 run sinov/v060/sinov_bosqich1.py sinov/v060/sinov_bosqich2.py sinov/v060/sinov_bosqich3.py sinov/v060/sinov_bosqich4.py sinov/v060/sinov_bosqich5.py \
     sinov/v070/sinov_bosqich1.py sinov/v070/sinov_bosqich1b.py sinov/v070/sinov_bosqich1c.py sinov/bulut/sinov_bulut.py sinov/bulut/sinov_chekka.py \
-    sinov/v072/sinov_ovoz_ios.py sinov/v073/sinov_en_ios.py sinov/v077/sinov_v077.py sinov/v078/sinov_v078.py > "$T/1.log" 2>&1 &
+    sinov/v072/sinov_ovoz_ios.py sinov/v073/sinov_en_ios.py sinov/v077/sinov_v077.py sinov/v078/sinov_v078.py sinov/v078/sinov_zoom.py > "$T/1.log" 2>&1 &
 run sinov/v070/sinov_bosqich2.py sinov/v070/sinov_bosqich3.py sinov/v071/sinov_v071.py sinov/v071/sinov_ovoz.py sinov/v074/sinov_v074.py \
     sinov/v075/sinov_oilalar.py sinov/v076/sinov_v076.py sinov/v077/sinov_eshik.py sinov/admin/sinov_admin.js > "$T/2.log" 2>&1 &
 wait
