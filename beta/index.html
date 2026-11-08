@@ -2,7 +2,7 @@
 <html lang="uz">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#2F7BEA">
 <title>Bilimjon</title>
 <link rel="manifest" href="manifest.webmanifest">
@@ -22,8 +22,8 @@ body.th-garaj{--bg:#12161F;--card:#1E2533;--ink:#F5F7FA;--mut:#A9B3C4;--line:#2E
 body.th-orol{--bg:#3B1E6E;--card:rgba(255,255,255,.14);--ink:#FFFFFF;--mut:#F3D3F0;--line:rgba(255,255,255,.25);--acc:#FF4FB0;--acc2:#B81F78;--onacc:#fff;--q:#FFFFFF;color-scheme:dark}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;padding:0;overflow-x:hidden}
-/* 👆 0.7.8 (u: «ekranni 2 marta bossa yaqinlashib qolyapti — har doim bir xil tursin»): ikki marta bosish va chimchilab kattalashtirish o'chiq; tez bosish (o'yinlar) buzilmaydi */
-html{touch-action:manipulation;touch-action:pan-x pan-y;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+/* 👆 0.7.8 (u: «ekranni 2 marta bossa yaqinlashib qolyapti»): ikki marta bosish zoom'i o'chiq (manipulation); ikki barmoq bilan kattalashtirish QOLDI (u tanladi, 11:01); tez bosish (o'yinlar) buzilmaydi */
+html{touch-action:manipulation;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{background:var(--bg);color:var(--ink);font-family:"Inter",-apple-system,"SF Pro Text",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:17px;line-height:1.35;min-height:100vh;-webkit-font-smoothing:antialiased}
 body.th-garaj{background:radial-gradient(ellipse at 50% -10%,rgba(255,196,0,.18),transparent 55%),linear-gradient(#141925,#0E1119)}
 body.th-orol{background:linear-gradient(170deg,#3B1E6E 0%,#7A2E92 45%,#C2408F 100%) fixed}
@@ -601,8 +601,6 @@ body.tnb{background:#0a0e17}
 <body class="th-neutral">
 <div id="app"></div>
 <script>
-/* 👆 0.7.8: iPhone Safari viewport'dagi «user-scalable=no» ni e'tiborsiz qoldiradi — chimchilash (gesture*) shu yerda to'xtatiladi */
-['gesturestart', 'gesturechange', 'gestureend'].forEach(t => document.addEventListener(t, e => { e.preventDefault(); }, { passive: false }));
 /* Bilimjon — kontent banki (1A urug'i; 1B da kengayadi). Matnlar original. Arab so'zlari va harf nomlari oyisi/ustoz tasdig'idan keyin chiqadi (tasdiq ota-ona panelida). */
 (function (G) {
 'use strict';
@@ -7967,7 +7965,7 @@ function start() {
   BJ.debug = { state: () => A.S(), fx: FX.stats, A, gen: BJ.gen };
   A.render();
   try { if (A.bulutStart) A.bulutStart(); } catch (e) { console.warn(e); }
-  if (oldVer && oldVer !== A.VER) setTimeout(() => toast(oldVer === '0.7.7' ? "🆕 Bilimjon v7.8: 👆 ekran endi ikki marta bosilganda kattalashib qolmaydi, 🏆 oilalar reyting guruhiga ulanish yaxshilandi" : oldVer === '0.7.6' ? '🆕 Bilimjon v7.8: masala savollaridagi ortiqcha «📄 Matn 1» oynasi olib tashlandi, matnlardagi imlo tuzatildi' : /^0\.7\.[45]$/.test(oldVer) ? '🆕 Bilimjon v7.8: 🎮 dam olishda 7 o\'yindan tanlov, 🏆 o\'yin reytingi (boshqa oila ham), 🏅 haftaning chempioni, 🔑 zal ota-ona ruxsati bilan' : oldVer === '0.7.4' ? '🆕 Bilimjon v7.8: 👨‍👩‍👧 ota-ona uchun bulut nazorati yaxshilandi, parol tiklash aniqroq' : oldVer === '0.7.3' ? '🆕 Bilimjon v7.8: 📈 savollar bola darajasiga to\'g\'ri moslashadi, 📊 hafta xulosasi aniqroq' : oldVer === '0.7.2' ? '🆕 Bilimjon v7.8: 🇬🇧 «🔊 Eshitish» — inglizcha so\'z yangi ovozda (iPhone jim rejimida ham)' : oldVer === '0.7.1' ? '🆕 Bilimjon v7.8: 🔊 iPhone\'da savol va inglizcha so\'z ovozi tuzatildi (jim rejimda ham eshitiladi)' : oldVer.indexOf('0.7.') === 0 ? '🆕 Bilimjon v7.8: 🔊 savollar o\'zbekcha ovozda o\'qiladi, 🤔 «Tushunmadim» tugmasi va 🙋 ota-onadan so\'rash!' : '🆕 Bilimjon v7.8: 🔊 savollar ovozda, 🗺️ sarguzasht xaritasi, 🎮 o\'yinlar zali, 🧺 oila bozori, 🤔 «Tushunmadim» tugmasi!'), 900);
+  if (oldVer && oldVer !== A.VER) setTimeout(() => toast(oldVer === '0.7.7' ? "🆕 Bilimjon v7.8: 👆 ekran endi ikki marta bosilganda kattalashib qolmaydi (ikki barmoq bilan kattalashtirish — bor), 🏆 oilalar reyting guruhiga ulanish yaxshilandi" : oldVer === '0.7.6' ? '🆕 Bilimjon v7.8: masala savollaridagi ortiqcha «📄 Matn 1» oynasi olib tashlandi, matnlardagi imlo tuzatildi' : /^0\.7\.[45]$/.test(oldVer) ? '🆕 Bilimjon v7.8: 🎮 dam olishda 7 o\'yindan tanlov, 🏆 o\'yin reytingi (boshqa oila ham), 🏅 haftaning chempioni, 🔑 zal ota-ona ruxsati bilan' : oldVer === '0.7.4' ? '🆕 Bilimjon v7.8: 👨‍👩‍👧 ota-ona uchun bulut nazorati yaxshilandi, parol tiklash aniqroq' : oldVer === '0.7.3' ? '🆕 Bilimjon v7.8: 📈 savollar bola darajasiga to\'g\'ri moslashadi, 📊 hafta xulosasi aniqroq' : oldVer === '0.7.2' ? '🆕 Bilimjon v7.8: 🇬🇧 «🔊 Eshitish» — inglizcha so\'z yangi ovozda (iPhone jim rejimida ham)' : oldVer === '0.7.1' ? '🆕 Bilimjon v7.8: 🔊 iPhone\'da savol va inglizcha so\'z ovozi tuzatildi (jim rejimda ham eshitiladi)' : oldVer.indexOf('0.7.') === 0 ? '🆕 Bilimjon v7.8: 🔊 savollar o\'zbekcha ovozda o\'qiladi, 🤔 «Tushunmadim» tugmasi va 🙋 ota-onadan so\'rash!' : '🆕 Bilimjon v7.8: 🔊 savollar ovozda, 🗺️ sarguzasht xaritasi, 🎮 o\'yinlar zali, 🧺 oila bozori, 🤔 «Tushunmadim» tugmasi!'), 900);
 }
 start();
 })(window);

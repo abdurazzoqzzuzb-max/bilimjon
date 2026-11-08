@@ -9,7 +9,7 @@ Javoblar o'zbekcha. Repo PUBLIC: ism, familiya, oila ma'lumoti, Telegram manzili
 - Firebase **bilimjon-4c008** (Spark, eur3), kirish — email + parol (iPhone'da Google yo'q). SDK gstatic 13.2.0, faqat akkauntli telefonda yuklanadi.
 
 ## Versiya va chiqarish
-- Saytda: **0.7.7** («v7.7», 08.11). Beta'da: **0.7.8** (tarmoq `v0.7.8`: 🏆 admin guruhga qo'shish + 👆 zoom yo'q; u «chiqar» deyishini kutyapti). Qoidalar Firebase'da: **0.7.7** (0.7.8 qoidani o'zgartirmaydi).
+- Saytda va beta'da: **0.7.8** («v7.8», 08.11 11:10; 🏆 admin guruhga qo'shish + 👆 ikki bosish zoom'i yo'q). Qoidalar Firebase'da: **0.7.7** (0.7.8 qoidani o'zgartirmaydi).
 - Har versiyada ikkalasi: `index.html` → `A.VER = 'x.y.z'`, `sw.js` → `P + 'x.y.z'`; ekranda `A.VERK` («v7.7»); `start()` dagi versiya toast'i (eski versiyadan kelganlarga).
 - Tartib: yangi tarmoq `v0.x.y` (main'dan) → har bosqich push → beta: main worktree'da `python3 sinov/beta/beta_yig.py origin/<tarmoq> beta` → faqat `beta/` commit → u sinaydi → **«chiqar»** desa: `prod_e2e.py` (eski main vs main+tarmoq, 23 tekshiruv) → main'ga `merge --no-ff` → push → GitHub API deployments (github.io proksida yopiq) → qoidalar o'zgargan bo'lsa `qoidalar <oila emaili>`.
 - Orqaga: `git revert -m 1 <merge>`; qoidalar eski ilova bilan mos qilib yoziladi; to'liq eski — admin `qoidalar - eski`.

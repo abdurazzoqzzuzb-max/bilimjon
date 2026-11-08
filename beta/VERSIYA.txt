@@ -1,4 +1,4 @@
 Bilimjon sinov rejimi
 tarmoq: origin/v0.7.8
-commit: 9a70f56
+commit: c5a1fa3
 VER: 0.7.8
