@@ -1,6 +1,7 @@
-"""Bilimjon 0.7.8 — 👆 ekran kattalashmaydi (u: «ekranni 2 marta bossa yaqinlashib qolyapti — har doim bir xil tursin»):
-viewport maximum-scale=1 + user-scalable=no, html touch-action (ikki marta bosish zoom'i yo'q), iPhone gesture* to'xtatiladi,
-textarea ≥ 16px (iPhone fokusda kattalashtirmasin); tez ketma-ket bosishlar (o'yinlar) yo'qolmaydi.
+"""Bilimjon 0.7.8 — 👆 ikki marta bosilganda ekran kattalashmaydi (u: «ekranni 2 marta bossa yaqinlashib qolyapti»):
+html touch-action: manipulation (ikki bosish zoom'i yo'q); ikki barmoq bilan kattalashtirish QOLADI (u tanladi, 11:01) —
+viewport'da user-scalable=no / maximum-scale yo'q, gesture* to'xtatilmaydi; textarea ≥ 16px (iPhone fokusda kattalashtirmasin);
+tez ketma-ket bosishlar (o'yinlar) yo'qolmaydi.
 Ishga tushirish: python3 sinov/v078/sinov_zoom.py"""
 import os, sys, time, subprocess
 from playwright.sync_api import sync_playwright
@@ -15,11 +16,10 @@ try:
     pg = ctx.new_page(); pg.on('pageerror', lambda e: PE.append(str(e))); ev = pg.evaluate
     pg.goto(URL + '?tez=1'); pg.wait_for_timeout(600)
     vp = ev("document.querySelector('meta[name=viewport]').content")
-    ok('maximum-scale=1' in vp and 'user-scalable=no' in vp and 'viewport-fit=cover' in vp, f"viewport: {vp}")
+    ok('maximum-scale' not in vp and 'user-scalable' not in vp and 'viewport-fit=cover' in vp, f"viewport — ikki barmoq bilan kattalashtirish ruxsat: {vp}")
     ta = ev("getComputedStyle(document.documentElement).touchAction")
-    ok(ta in ('pan-x pan-y', 'manipulation'), f"html touch-action = {ta} (ikki marta bosish zoom'i yo'q)")
-    ok(ev("(()=>{const e=new Event('gesturestart',{cancelable:true}); document.dispatchEvent(e); return e.defaultPrevented})()"), "iPhone gesturestart (chimchilash) to'xtatiladi")
-    ok(ev("(()=>{const e=new Event('gesturechange',{cancelable:true}); document.body.dispatchEvent(new Event('x')); document.dispatchEvent(e); return e.defaultPrevented})()"), "gesturechange ham")
+    ok(ta == 'manipulation', f"html touch-action = {ta} (ikki marta bosish zoom'i yo'q, chimchilash bor)")
+    ok(not ev("(()=>{const e=new Event('gesturestart',{cancelable:true}); document.dispatchEvent(e); return e.defaultPrevented})()"), "iPhone gesturestart to'xtatilmaydi (chimchilash ishlaydi)")
     # oila → ota-ona paneli → reyting: textarea shrifti
     pg.fill('#on', 'Sinov oila'); pg.fill('#p1', '1234'); pg.fill('#p2', '1234'); pg.click('#go'); pg.wait_for_timeout(300)
     ev("BJ.A.newBola({laqab:'Aziz',daraja:'g1',avatar:'🦊',dunyo:'garaj'}); BJ.A.otaOk={rol:'admin',t:Date.now()}; BJ.A.save(true)")

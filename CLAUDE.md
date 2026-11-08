@@ -29,7 +29,7 @@ Kontent banki `BJ.bank` → generatorlar `BJ.gen` (mat M0–M2, mantiq L, ona ti
 - NUTQ yoki generator matni o'zgarsa — `python3 sinov/ovoz/inventar.py ovoz/iboralar.json` → main'ga push (Actions mp3 yasaydi). Ovozni o'sha id bilan qayta yasasangiz — `sw.js` `OV` ni oshiring.
 - Lookbehind regex yo'q (eski iOS). Firestore hujjati ≤1 MB (`S.sovga` + `S.dokon` rasmlari ~720 KB — oshirmang).
 - Dizayn: realistik + animatsiya, multfilm emas (u 4 marta aytgan). 390 px da gorizontal siljish yo'q.
-- 👆 Ekran kattalashmaydi (0.7.8, u so'radi): viewport `maximum-scale=1,user-scalable=no`, `html{touch-action:pan-x pan-y}`, `gesture*` preventDefault, hamma input ≥ 16px. Qaytarmang; touchend bilan ikki bosishni to'xtatmang (o'yinlarda tez bosish yo'qoladi).
+- 👆 Ikki marta bosish zoom'i yo'q (0.7.8, u so'radi): `html{touch-action:manipulation}`, hamma input ≥ 16px. Ikki barmoq bilan kattalashtirish QOLADI (u tanladi) — viewport'ga `user-scalable=no` qo'ymang. touchend bilan ikki bosishni to'xtatmang (o'yinlarda tez bosish yo'qoladi).
 - `obuna`: bulut hujjati `q === 'admin'` bo'lsa undagi `guruh` olinadi.
 
 ## 👑 Admin (Claude chatdan; telefon/akkaunt yo'qolsa ham)
