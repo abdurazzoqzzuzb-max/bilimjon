@@ -1,5 +1,5 @@
 """Bilimjon 0.7.7 — masala savollarida ortiqcha «📄 Matn 1» oynasi chiqmasligi (it.matn = 1 — faqat «masala» belgisi; o'qish matni — satr).
-Topildi: 08.11, yo'riqnoma uchun ekran rasmlarida. Ishga tushirish: python3 sinov/v077/sinov_v077.py"""
+Topildi: 08.11, yo'riqnoma uchun ekran rasmlarida. + imlo: do'konda «oyang» → «oying» (u telefondan ko'rsatdi). Ishga tushirish: python3 sinov/v077/sinov_v077.py"""
 import os, sys, time, subprocess
 from playwright.sync_api import sync_playwright
 D = os.path.dirname(os.path.abspath(__file__)); SITE = os.path.abspath(os.path.join(D, '..', '..'))
@@ -27,6 +27,8 @@ try:
         if ev("!!(window.__bjCur && __bjCur() && __bjCur().it && __bjCur().it.matn===1)"): topildi = True; break
     ok(topildi and pg.locator('details.matn').count() == 0 and pg.locator('#body .opt').count() >= 2, f"ekranda ({t}): masala savoli — ortiqcha oyna yo'q, variantlar bor")
     ok(ev("BJ.A.VER") == '0.7.7' and 'bj-v0.7.7' in open(os.path.join(SITE, 'sw.js'), encoding='utf-8').read().replace("P + '", 'bj-v'), "VER 0.7.7 · sw.js bj-v0.7.7")
+    src = open(os.path.join(SITE, 'index.html'), encoding='utf-8').read()
+    ok('oyang' not in src and src.count('oyingga') >= 3, "Imlo (u ko'rsatdi, 08.11): «oyangga» → «oyingga», «oyang beradi» → «oying beradi»")
     ok(not PE, f"JS xato yo'q {PE[:3]}")
 finally:
   srv.terminate()

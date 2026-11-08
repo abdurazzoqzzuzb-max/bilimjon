@@ -5456,11 +5456,11 @@ function screenDokon(b) {
   const tg = sovgalar(b), kut = p.xarid.filter(x => x.holat === 'kutish');
   let body = '';
   if (TAB === 'sovga') {
-    body = (kut.length ? `<div class="card"><h3>⏳ Kutilyapti</h3>${kut.map(x => `<div class="nr">🎁 ${esc(x.nom)} — dadang yoki oyang beradi</div>`).join('')}</div>` : '')
+    body = (kut.length ? `<div class="card"><h3>⏳ Kutilyapti</h3>${kut.map(x => `<div class="nr">🎁 ${esc(x.nom)} — dadang yoki oying beradi</div>`).join('')}</div>` : '')
       + (tg.length ? tg.map(g => { const yet = p.h >= g.narx, mq = p.maqsad === g.id; return `<div class="card sovga dsg${yet ? ' yetdi' : ''}">${g.rasm ? `<img class="sgimg" src="${g.rasm}" alt="">` : '<div class="sgsir">🎁</div>'}<div class="sgb"><b>${esc(g.nom)}</b><div class="nx">${som(g.narx)}</div>
         <div class="tbar"><i style="width:${Math.max(4, Math.min(100, Math.round(100 * p.h / g.narx)))}%"></i></div><div class="sm">${yet ? '🎉 Pulingga yetadi!' : kerakHTML(b, g.narx)}</div>
         <div class="row">${yet ? `<button class="btn sm" data-ol="${g.id}">🛒 Sotib olish</button>` : ''}<button class="btn sm ghost" data-mq="${g.id}">${mq ? '🎯 Maqsadim ✓' : '🎯 Maqsad qilish'}</button></div></div></div>`; }).join('')
-      : `<div class="card"><p>🎁 Hozircha haqiqiy sovg'a qo'yilmagan. Dadang yoki oyangga ayt — ular ota-ona panelida sovg'a va uning narxini qo'yadi.</p></div>`);
+      : `<div class="card"><p>🎁 Hozircha haqiqiy sovg'a qo'yilmagan. Dadang yoki oyingga ayt — ular ota-ona panelida sovg'a va uning narxini qo'yadi.</p></div>`);
   } else {
     const it = K[KT], tv = TV != null ? TV : joyda(b, KT), d = Object.assign(bezak(b), { [KT]: tv });
     const prev = orol ? `<div class="scene orol dprev">${ART.island(d)}<div class="peg">${ART.pegasus(d, { w: 190 })}</div></div>` : `<div class="dcar">${ART.car(d, { w: 300 })}</div>`;
@@ -5482,7 +5482,7 @@ function screenDokon(b) {
   $$('[data-tv]').forEach(x => x.onclick = () => { TV = +x.dataset.tv; FX.play('bosish'); again(); });
   $$('[data-mq]').forEach(x => x.onclick = () => { p.maqsad = p.maqsad === x.dataset.mq ? null : x.dataset.mq; A.save(true); again(); });
   $$('[data-ol]').forEach(x => x.onclick = () => { const g = dokon().find(y => y.id === x.dataset.ol); if (!g) return;
-    tolov(b, g.narx, g.nom, () => { p.xarid.push({ id: A.rid(6), gid: g.id, nom: g.nom, narx: g.narx, ts: Date.now(), sana: A.todayKey(), holat: 'kutish' }); if (p.maqsad === g.id) p.maqsad = null; A.save(true); toast(`🎉 Sotib olding! Dadang yoki oyangga ko'rsat — ular haqiqiy «${g.nom}» ni beradi`); again(); }); });
+    tolov(b, g.narx, g.nom, () => { p.xarid.push({ id: A.rid(6), gid: g.id, nom: g.nom, narx: g.narx, ts: Date.now(), sana: A.todayKey(), holat: 'kutish' }); if (p.maqsad === g.id) p.maqsad = null; A.save(true); toast(`🎉 Sotib olding! Dadang yoki oyingga ko'rsat — ular haqiqiy «${g.nom}» ni beradi`); again(); }); });
   const sot = $('[data-sot]'); if (sot) sot.onclick = () => { const it = K[KT], v = TV != null ? TV : joyda(b, KT), r = it.v.find(x => x[0] === v); if (!r) return;
     tolov(b, narxK(b, r[2]), r[1], () => { (p.ega[KT] = p.ega[KT] || []).push(v); p.joy[KT] = v; TV = null; A.save(true); FX.boom(innerWidth / 2, innerHeight / 3, b.dunyo); toast(`✨ ${r[1]} — seniki!`); again(); }); };
   const jy = $('[data-joy]'); if (jy) jy.onclick = () => { p.joy[KT] = TV != null ? TV : 0; TV = null; A.save(true); FX.play('ding'); again(); };
@@ -5496,7 +5496,7 @@ function uyHTML(b) {
   if (yoq()) return ''; const p = st(b), g = p.maqsad && dokon().find(x => x.id === p.maqsad), kut = p.xarid.filter(x => x.holat === 'kutish');
   return `<div class="row"><button class="btn ghost dokb" data-dokon>🛒 Do'kon · 💵 ${fmt(p.h)}</button></div>`
     + (g ? `<div class="card maqsad"><div class="sm mut">🎯 Maqsadim</div><b>${esc(g.nom)} — ${som(g.narx)}</b><div class="tbar"><i style="width:${Math.max(4, Math.min(100, Math.round(100 * p.h / g.narx)))}%"></i></div><div class="sm">${p.h >= g.narx ? "🎉 Pulingga yetadi — do'konga kir!" : kerakHTML(b, g.narx)}</div></div>` : '')
-    + kut.map(x => `<div class="note kn">⏳ ${esc(x.nom)} — sotib olding! Dadang yoki oyangga ko'rsat</div>`).join('');
+    + kut.map(x => `<div class="note kn">⏳ ${esc(x.nom)} — sotib olding! Dadang yoki oyingga ko'rsat</div>`).join('');
 }
 /* ---------- 👨‍👩‍👧 OTA-ONA PANELI: 💰 Pul va do'kon ---------- */
 const BYU = [20000, 30000, 50000, 70000, 100000];
@@ -5678,7 +5678,7 @@ const topBar = (b, ttl) => `<div class="top"><button class="ib" data-x aria-labe
 function boshEkran(b) {
   const t = oxirgi(b);
   app.innerHTML = `<div class="wrap kidw bozor">${topBar(b, '🧺 Oila bozori')}
-  <div class="card bzbos">${ikon('savat', 84)}<h2>Hozir bozor topshirig'i yo'q</h2><p class="sm">Dadang yoki oyang ro'yxat va oila pulini berganda — shu yerda bozorga chiqasan.</p></div>
+  <div class="card bzbos">${ikon('savat', 84)}<h2>Hozir bozor topshirig'i yo'q</h2><p class="sm">Dadang yoki oying ro'yxat va oila pulini berganda — shu yerda bozorga chiqasan.</p></div>
   ${t ? `<div class="bzsec"><b>🧾 Oxirgi chek</b></div>${chekHTML(b, t)}` : ''}</div>`;
   $('[data-x]').onclick = () => { A.endSession(b); A.go('uy'); };
 }
@@ -5817,7 +5817,7 @@ function chekEkran(b, t, yangi) {
   app.innerHTML = `<div class="wrap kidw bozor">${topBar(b, '🧾 Chek')}
   ${yangi ? `<div class="card bzokc"><b>🎉 Bozor tugadi!</b><div class="sm">${r.tej ? `Tejaganing uchun hamyoningga <b>+${som(r.tej)}</b>!` : r.qoldi ? 'Qolgan pul oilaga qaytdi.' : "Oila pulini to'liq ishlatding."}${r.xoh ? ` Xohishdan: ${esc(r.xoh.nom)}.` : ''}</div></div>` : ''}
   ${chekHTML(b, Object.assign({}, t, { natija: Object.assign({}, r, { yangi }) }))}
-  <p class="sm mut">Chekni dadang yoki oyangga ko'rsat — birga ko'rib chiqing: qayerda tejash mumkin edi?</p>
+  <p class="sm mut">Chekni dadang yoki oyingga ko'rsat — birga ko'rib chiqing: qayerda tejash mumkin edi?</p>
   <div class="row"><button class="btn big" data-uy>🏠 Uyga</button></div></div>`;
   $('[data-x]').onclick = $('[data-uy]').onclick = () => { A.endSession(b); A.go('uy'); };
 }
@@ -7719,7 +7719,7 @@ function start() {
   BJ.debug = { state: () => A.S(), fx: FX.stats, A, gen: BJ.gen };
   A.render();
   try { if (A.bulutStart) A.bulutStart(); } catch (e) { console.warn(e); }
-  if (oldVer && oldVer !== A.VER) setTimeout(() => toast(oldVer === '0.7.6' ? '🆕 Bilimjon v7.7: masala savollarida ortiqcha «📄 Matn 1» oynasi olib tashlandi' : /^0\.7\.[45]$/.test(oldVer) ? '🆕 Bilimjon v7.7: 🎮 dam olishda 7 o\'yindan tanlov, 🏆 o\'yin reytingi (boshqa oila ham), 🏅 haftaning chempioni, 🔑 zal ota-ona ruxsati bilan' : oldVer === '0.7.4' ? '🆕 Bilimjon v7.7: 👨‍👩‍👧 ota-ona uchun bulut nazorati yaxshilandi, parol tiklash aniqroq' : oldVer === '0.7.3' ? '🆕 Bilimjon v7.7: 📈 savollar bola darajasiga to\'g\'ri moslashadi, 📊 hafta xulosasi aniqroq' : oldVer === '0.7.2' ? '🆕 Bilimjon v7.7: 🇬🇧 «🔊 Eshitish» — inglizcha so\'z yangi ovozda (iPhone jim rejimida ham)' : oldVer === '0.7.1' ? '🆕 Bilimjon v7.7: 🔊 iPhone\'da savol va inglizcha so\'z ovozi tuzatildi (jim rejimda ham eshitiladi)' : oldVer.indexOf('0.7.') === 0 ? '🆕 Bilimjon v7.7: 🔊 savollar o\'zbekcha ovozda o\'qiladi, 🤔 «Tushunmadim» tugmasi va 🙋 ota-onadan so\'rash!' : '🆕 Bilimjon v7.7: 🔊 savollar ovozda, 🗺️ sarguzasht xaritasi, 🎮 o\'yinlar zali, 🧺 oila bozori, 🤔 «Tushunmadim» tugmasi!'), 900);
+  if (oldVer && oldVer !== A.VER) setTimeout(() => toast(oldVer === '0.7.6' ? '🆕 Bilimjon v7.7: masala savollaridagi ortiqcha «📄 Matn 1» oynasi olib tashlandi, matnlardagi imlo tuzatildi' : /^0\.7\.[45]$/.test(oldVer) ? '🆕 Bilimjon v7.7: 🎮 dam olishda 7 o\'yindan tanlov, 🏆 o\'yin reytingi (boshqa oila ham), 🏅 haftaning chempioni, 🔑 zal ota-ona ruxsati bilan' : oldVer === '0.7.4' ? '🆕 Bilimjon v7.7: 👨‍👩‍👧 ota-ona uchun bulut nazorati yaxshilandi, parol tiklash aniqroq' : oldVer === '0.7.3' ? '🆕 Bilimjon v7.7: 📈 savollar bola darajasiga to\'g\'ri moslashadi, 📊 hafta xulosasi aniqroq' : oldVer === '0.7.2' ? '🆕 Bilimjon v7.7: 🇬🇧 «🔊 Eshitish» — inglizcha so\'z yangi ovozda (iPhone jim rejimida ham)' : oldVer === '0.7.1' ? '🆕 Bilimjon v7.7: 🔊 iPhone\'da savol va inglizcha so\'z ovozi tuzatildi (jim rejimda ham eshitiladi)' : oldVer.indexOf('0.7.') === 0 ? '🆕 Bilimjon v7.7: 🔊 savollar o\'zbekcha ovozda o\'qiladi, 🤔 «Tushunmadim» tugmasi va 🙋 ota-onadan so\'rash!' : '🆕 Bilimjon v7.7: 🔊 savollar ovozda, 🗺️ sarguzasht xaritasi, 🎮 o\'yinlar zali, 🧺 oila bozori, 🤔 «Tushunmadim» tugmasi!'), 900);
 }
 start();
 })(window);
