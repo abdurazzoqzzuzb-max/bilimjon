@@ -2544,7 +2544,7 @@ BJ.vis = vis;
 (function (G) {
 'use strict';
 const BJ = G.BJ, A = BJ.A = {}, gen = BJ.gen, B = BJ.bank;
-A.VER = '0.7.6';
+A.VER = '0.7.7';
 /* Oddiy versiya nomi (foydalanuvchi so'rovi, 05.11): 0.6.0 → «6», 0.6.1 → «6.1», 1.2.0 → «1.2». Ekranda shu ko'rinadi, ichkarida A.VER qoladi. */
 A.VERK = (() => { const p = A.VER.split('.').map(Number); return p[0] ? p[0] + '.' + p[1] : p[1] + (p[2] ? '.' + p[2] : ''); })();
 A.verBadge = () => `<span class="verb" title="Versiya ${A.VER}">v${A.VERK}</span>`;
@@ -3183,7 +3183,7 @@ A.qOfGrade = qOfGrade;
 function headHTML(b, it) {
   const ar = it.arab ? ' arab' : '', big = it.big || it.arab ? ' big' : '';
   let h = '';
-  if (it.matn) h += `<details class="matn" open><summary>📄 ${esc(it.matnNom || 'Matn')}</summary><p>${esc(it.matn)}</p></details>`;
+  if (typeof it.matn === 'string' && it.matn) h += `<details class="matn" open><summary>📄 ${esc(it.matnNom || 'Matn')}</summary><p>${esc(it.matn)}</p></details>`;
   h += `<div class="q${big}${ar}"${it.arab ? ' dir="rtl" lang="ar"' : ''}>${esc(it.sav)}</div>`;
   if (it.sav2) h += `<div class="q2">${esc(it.sav2)}</div>`;
   if (it.tts && !it.ttsKeyin) h += `<button class="btn ghost say" data-say>🔊 ${it.ovozKoz ? 'Eshitish' : 'Talaffuz'}</button>${it.ovozKoz ? `<details class="otatip"><summary>👁 Kattalar uchun (ovoz chiqmasa o'qib bering)</summary><b>${esc(it.tts)}</b></details>` : ''}`;
@@ -7719,7 +7719,7 @@ function start() {
   BJ.debug = { state: () => A.S(), fx: FX.stats, A, gen: BJ.gen };
   A.render();
   try { if (A.bulutStart) A.bulutStart(); } catch (e) { console.warn(e); }
-  if (oldVer && oldVer !== A.VER) setTimeout(() => toast(/^0\.7\.[45]$/.test(oldVer) ? '🆕 Bilimjon v7.6: 🎮 dam olishda 7 o\'yindan tanlov, 🏆 o\'yin reytingi (boshqa oila ham), 🏅 haftaning chempioni, 🔑 zal ota-ona ruxsati bilan' : oldVer === '0.7.4' ? '🆕 Bilimjon v7.6: 👨‍👩‍👧 ota-ona uchun bulut nazorati yaxshilandi, parol tiklash aniqroq' : oldVer === '0.7.3' ? '🆕 Bilimjon v7.6: 📈 savollar bola darajasiga to\'g\'ri moslashadi, 📊 hafta xulosasi aniqroq' : oldVer === '0.7.2' ? '🆕 Bilimjon v7.6: 🇬🇧 «🔊 Eshitish» — inglizcha so\'z yangi ovozda (iPhone jim rejimida ham)' : oldVer === '0.7.1' ? '🆕 Bilimjon v7.6: 🔊 iPhone\'da savol va inglizcha so\'z ovozi tuzatildi (jim rejimda ham eshitiladi)' : oldVer.indexOf('0.7.') === 0 ? '🆕 Bilimjon v7.6: 🔊 savollar o\'zbekcha ovozda o\'qiladi, 🤔 «Tushunmadim» tugmasi va 🙋 ota-onadan so\'rash!' : '🆕 Bilimjon v7.6: 🔊 savollar ovozda, 🗺️ sarguzasht xaritasi, 🎮 o\'yinlar zali, 🧺 oila bozori, 🤔 «Tushunmadim» tugmasi!'), 900);
+  if (oldVer && oldVer !== A.VER) setTimeout(() => toast(oldVer === '0.7.6' ? '🆕 Bilimjon v7.7: masala savollarida ortiqcha «📄 Matn 1» oynasi olib tashlandi' : /^0\.7\.[45]$/.test(oldVer) ? '🆕 Bilimjon v7.7: 🎮 dam olishda 7 o\'yindan tanlov, 🏆 o\'yin reytingi (boshqa oila ham), 🏅 haftaning chempioni, 🔑 zal ota-ona ruxsati bilan' : oldVer === '0.7.4' ? '🆕 Bilimjon v7.7: 👨‍👩‍👧 ota-ona uchun bulut nazorati yaxshilandi, parol tiklash aniqroq' : oldVer === '0.7.3' ? '🆕 Bilimjon v7.7: 📈 savollar bola darajasiga to\'g\'ri moslashadi, 📊 hafta xulosasi aniqroq' : oldVer === '0.7.2' ? '🆕 Bilimjon v7.7: 🇬🇧 «🔊 Eshitish» — inglizcha so\'z yangi ovozda (iPhone jim rejimida ham)' : oldVer === '0.7.1' ? '🆕 Bilimjon v7.7: 🔊 iPhone\'da savol va inglizcha so\'z ovozi tuzatildi (jim rejimda ham eshitiladi)' : oldVer.indexOf('0.7.') === 0 ? '🆕 Bilimjon v7.7: 🔊 savollar o\'zbekcha ovozda o\'qiladi, 🤔 «Tushunmadim» tugmasi va 🙋 ota-onadan so\'rash!' : '🆕 Bilimjon v7.7: 🔊 savollar ovozda, 🗺️ sarguzasht xaritasi, 🎮 o\'yinlar zali, 🧺 oila bozori, 🤔 «Tushunmadim» tugmasi!'), 900);
 }
 start();
 })(window);

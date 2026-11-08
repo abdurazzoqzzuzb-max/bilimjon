@@ -107,7 +107,7 @@ try:
         NV[0] += 1; pg.goto(URL + f'?tez=1&r={NV[0]}#' + h)
         ev(("BJ.A.otaOk={rol:'admin',t:Date.now()}; " if ota else '') + 'BJ.A.render()'); pg.wait_for_timeout(ms)
     def kichikMissiya(bid, n=3):
-        return X(bid, f"""(()=>{{const m=b.missiya=A.buildMission(b); const bl=m.steps.find(s=>s.k==='blok'&&s.fan==='mat')||m.steps.find(s=>s.k==='blok'); const y=m.steps.find(s=>s.k==='yakun')||{{k:'yakun'}};
+        return X(bid, f"""(()=>{{const m=b.missiya=A.buildMission(b); const bl=m.steps.find(s=>s.k==='blok'&&s.fan==='mat')||m.steps.find(s=>s.k==='blok')||{{k:'blok',fan:'mat',n:3}}; if(!m.steps.some(s=>s.k==='blok')) m.steps.push({{k:'blok',fan:'mat'==='mat'?'til':'mat',n:1}}); const y=m.steps.find(s=>s.k==='yakun')||{{k:'yakun'}};
           m.steps=[Object.assign({{}},bl,{{n:{n},olimp:0}}), Object.assign({{}}, m.steps.find(s=>s.k==='blok'&&s!==bl&&s.fan!==bl.fan)||bl, {{n:1, olimp:0}}), y]; m.si=0; m.res={{}}; m.cur=null; m.done=false; m.soraQ=[]; m.soraN=0; A.save(true); return m.steps.map(s=>s.k+':'+(s.fan||''))}})()""")
     def setj(bid): ev(f"(()=>{{const s=BJ.A.S(); s.joriy='{bid}'; BJ.A.save(true)}})()")
     CURIT = lambda: ev("(()=>{const c=BJ.A.CUR(); return c&&c.it?{sav:c.it.sav,a:String(c.it.a),tur:c.it.tur,tugun:c.it.tugun,t:c.it.t}:null})()")
