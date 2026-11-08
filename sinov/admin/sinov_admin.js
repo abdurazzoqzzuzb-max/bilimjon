@@ -122,7 +122,15 @@ const xato = async (b, x) => { try { await run(b, x); return null; } catch (e) {
   ok(/^[A-Z2-9]{10}$/.test(yk || '') && yk !== 'ABCDEFGH23' && jA('Ujav2UID').guruh.kod === yk && ST['guruh/' + yk].yaratdi === 'UadminUID' && ST['guruh/' + yk + '/oilalar/UadminUID'] && ST['guruh/' + yk + '/oilalar/Ujav2UID'],
     `guruh: ikkalasida guruh yo'q — yangi kod ${yk}, guruh hujjati va ikkala oila`);
   L.length = 0; await run('holat'); ok(L.join('\n').includes('🏆 guruh ' + yk), "holat: oila qatorida 🏆 guruh kodi");
+  // ✈️ 0.7.7: telegram
+  L.length = 0; await run('telegram'); ok(/hali qo'yilmagan/.test(L.join('\n')), "telegram: bo'sh — qo'yilmagan");
+  await run('telegram', { A1: '@Bilim_Ega1' }); ok(ST['ilova/egasi'] && ST['ilova/egasi'].tg === 'Bilim_Ega1' && typeof ST['ilova/egasi'].ts === 'number', 'telegram @username → ilova/egasi {tg, ts}');
+  await run('telegram', { A1: 'https://t.me/bilimjon_ota' }); ok(ST['ilova/egasi'].tg === 'bilimjon_ota', 'telegram: t.me havolasidan username');
+  await run('telegram', { A1: '+998 90 123-45-67' }); ok(ST['ilova/egasi'].tg === '+998901234567', 'telegram: telefon raqami → +998901234567');
+  ok(/username/.test(await xato('telegram', { A1: '@ab' }) || '') && /username/.test(await xato('telegram', { A1: 'salom dunyo' }) || ''), "telegram: noto'g'ri manzil rad");
+  L.length = 0; await run('holat'); ok(L.join('\n').includes('✈️ Telegram (yangi oilalar yozadi): +998901234567'), 'holat: ✈️ Telegram qatori');
+  await run('telegram', { A1: '-' }); ok(!ST['ilova/egasi'], "telegram - → o'chirildi");
   ok(/Noma'lum buyruq/.test(await xato('salom') || ''), "noma'lum buyruq — xato");
-  L.length = 0; await run('yordam'); ok(L.join('').includes('statistika') && L.join('').includes('qoidalar'), 'yordam: buyruqlar ro\'yxati');
+  L.length = 0; await run('yordam'); ok(L.join('').includes('statistika') && L.join('').includes('qoidalar') && L.join('').includes('telegram'), 'yordam: buyruqlar ro\'yxati');
   console.log(XATO ? `\n${XATO} ta xato` : '\nHAMMASI OK'); process.exit(XATO ? 1 : 0);
 })().catch(e => { console.error(e); process.exit(1); });
