@@ -396,3 +396,10 @@ U so'radi (08.11 03:30, «PY»): 1) zal ota-ona ruxsati bilan HAR DOIM ochilsin;
 - 10:47: yangi oila (ruxsat 10:27) admin `guruh` buyrug'i bilan admin guruhiga qo'shildi (Claude, u «guruhga ham qo'sh» dedi).
 - 11:01 u: «ikki barmoq bilan kattalashtirishni qoldir» + «chiqar». Viewport asliga qaytdi (user-scalable/max-scale yo'q), `gesture*` to'xtatish olib tashlandi; faqat `html{touch-action:manipulation}` + input 16px. `sinov_zoom.py` (8) moslandi.
 - CHIQARILDI 08.11 ~11:10: `prod_e2e.py` 0.7.7 → 0.7.8: 23/23 «HAMMASI OK»; main'ga `merge --no-ff` (birlashma 679f203) + beta = 0.7.8. Qoidalar o'zgarmadi. Orqaga: `git revert -m 1 679f203`.
+
+## 0.7.9 — 🔐 ORZU SANDIQCHASI (08.11, u «PY … srazu yangi versiya chiqar»; tarmoq `v0.7.9`)
+- U (11:20): «cho'chqaga yig'ishni — cho'chqa emas, qandaydir quticha qil, o'zing kreativ yondash; pul tegilmasa ko'payadi degan g'oyani olib tashla — islomiy tomondan to'g'ri emas».
+- `kassaFoiz()` → 0 (eski chaqiruvlar uchun qoldi), `FOIZ` olib tashlandi, do'kondagi «o'sdi» toast'i yo'q. Ma'lumot maydonlari (`p.kassa`, `kassaTs`) o'zgarmadi — bolalardagi bor summa qoladi.
+- Do'kon: `sandiqSvg(to)` — realistik yog'och sandiqcha (temir qoplama, qulf, qopqoqda tanga teshigi), solinganda tanga tushadi + silkinish (`SANDIQ_TUSH`, `.sndw.tush`). Matn: «Pul shu yerda alohida, xavfsiz turadi — tasodifan sarflab qo'ymaysan. Orzuing uchun yig'!»; maqsad bo'lsa — «Orzuing «X»: sandiqcha + hamyon = N / narx». Tugmalar «⬇️ Solish», «↩️ Olish».
+- Uydagi 🎯 maqsad kartasi: to'lish = hamyon + sandiqcha; «🔐 Sandiqchadagi pul bilan yetadi — do'konda sandiqchadan ol!». Ota-ona paneli sozlamasi va hamyonlar «+ 🔐». Bozor tejash mukofoti belgisi 🐷 → 🪙 (mukofot o'zi qoldi — bu ota-ona sovg'asi, foiz emas).
+- Sinov: `sinov/v079/sinov_sandiq.py` (15); `v060/sinov_bosqich5.py` kassa tekshiruvi foizsizga moslandi.

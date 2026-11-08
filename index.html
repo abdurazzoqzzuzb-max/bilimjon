@@ -278,6 +278,11 @@ body.th-garaj .kyb .k1{fill:#2A3141}body.th-garaj .kyb .k2{fill:#232A38}body.th-
 .pullar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0}.bnk{display:block;height:auto;filter:drop-shadow(0 2px 2px rgba(0,0,0,.25))}.tanga{display:block;height:auto;filter:drop-shadow(0 1px 1px rgba(0,0,0,.3))}
 .pbtn{position:relative;border:0;background:none;padding:2px;min-width:44px;min-height:44px;border-radius:10px}.pbtn:disabled{opacity:.3}.pbtn i{position:absolute;right:-2px;bottom:-2px;font-style:normal;font-weight:900;font-size:.75rem;background:var(--acc);color:var(--onacc);border-radius:999px;padding:0 5px}
 .hamyon .hmy{display:flex;justify-content:space-between;align-items:baseline}.hamyon .hmy b{font-size:1.5rem}.kassa{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}.kassa .row{margin:0}
+/* 🔐 0.7.9 Orzu sandiqchasi: tanga qopqoqdagi teshikka tushadi, sandiqcha silkinadi */
+.kassa .sndw{flex:0 0 76px}.sndq{display:block;width:76px;height:auto;overflow:visible;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25))}.kassa .sndt{flex:1;min-width:150px}
+.sndq .tng{opacity:0}.sndw.tush .tng{animation:sqTanga .9s ease-in forwards}.sndw.tush .sndq{animation:sqSilk .5s .85s ease-out}
+@keyframes sqTanga{0%{opacity:1;transform:translateY(-26px) rotate(0)}70%{opacity:1;transform:translateY(16px) rotate(200deg) scaleX(.6)}100%{opacity:0;transform:translateY(20px) scaleX(.2)}}
+@keyframes sqSilk{0%,100%{transform:none}30%{transform:rotate(-4deg) translateY(-2px)}60%{transform:rotate(3deg)}}
 .dtabs{display:flex;gap:8px;margin:10px 0}.dtabs .btn{flex:1}
 .chips{display:flex;gap:6px;overflow-x:auto;padding:4px 0 8px;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}.chip{flex:none;display:inline-flex;align-items:center;gap:4px;min-height:44px;padding:4px 12px;border-radius:999px;border:2px solid var(--line);background:var(--card);color:var(--ink);font-weight:800;font-size:.85rem}.chip.on{border-color:var(--acc);background:var(--acc);color:var(--onacc)}
 .dcar{display:flex;justify-content:center;padding:14px 0 6px;background:radial-gradient(ellipse at 50% 85%,rgba(255,255,255,.12),transparent 65%);border-radius:20px}.dcar .car{width:300px;max-width:100%}.scene.dprev{height:210px}
@@ -2608,7 +2613,7 @@ BJ.vis = vis;
 (function (G) {
 'use strict';
 const BJ = G.BJ, A = BJ.A = {}, gen = BJ.gen, B = BJ.bank;
-A.VER = '0.7.8';
+A.VER = '0.7.9';
 /* Oddiy versiya nomi (foydalanuvchi so'rovi, 05.11): 0.6.0 → «6», 0.6.1 → «6.1», 1.2.0 → «1.2». Ekranda shu ko'rinadi, ichkarida A.VER qoladi. */
 A.VERK = (() => { const p = A.VER.split('.').map(Number); return p[0] ? p[0] + '.' + p[1] : p[1] + (p[2] ? '.' + p[2] : ''); })();
 A.verBadge = () => `<span class="verb" title="Versiya ${A.VER}">v${A.VERK}</span>`;
@@ -5443,7 +5448,7 @@ if (A.TEZ) G.__bjZal = () => SES; /* faqat ?tez=1 avtomatik sinov uchun */
    Mukofot ota-ona qo'ygan HAFTALIK BYUDJETGA moslashadi (k = byudjet / 50 000): to'g'ri javob +200·k (kuniga 30 tagacha), missiya +2 000·k,
    uyga vazifa +1 000·k, haftada 5 kun missiya +10 000·k → haftasiga ≈ byudjet. Do'kon: 🎁 haqiqiy sovg'alar (ota-ona: rasm + do'kondagi aniq narx;
    bola «sotib oladi» → buyurtma → ota-ona «Berildi») va virtual: 🏎️ tuning garaj / 🦄 uchar ot saloni. Pul savodi: kupyuralar bilan to'lash
-   (1-sinfdan), qaytim savoli (2-sinfdan), «yana N so'm kerak · ~K kun», 🐷 cho'chqa-kassa (har to'liq 7 kun +5%; maktabgachada yo'q).
+   (1-sinfdan), qaytim savoli (2-sinfdan), «yana N so'm kerak · ~K kun», 🔐 Orzu sandiqchasi (0.7.9: pul alohida saqlanadi — FOIZ YO'Q, u: «pul tegilmasa ko'payadi g'oyasi islomiy jihatdan to'g'ri emas»; maktabgachada yo'q).
    Hamyonlar aka-ukaga ko'rinmaydi; ota-ona panelida hammasi. Haqiqiy to'lov, karta yo'q.
    b.pul = { h, kassa, kassaTs, kun{sana:{n,s,x}}, hafta{wk:s}, bonus{wk:1}, xarid[{id,gid,nom,narx,ts,holat:'kutish'|'berildi'|'bekor',sana}], ega{kalit:[v]}, joy{kalit:v}, maqsad, byudjet }
    S.dokon = [{ id, kim: 'hamma'|bid, nom, rasm, narx, takror, yaratildi }] — haqiqiy sovg'alar (ko'pi bilan 6). Log: { t: 'pul', tur, s, h }. */
@@ -5455,7 +5460,7 @@ const S = () => A.S();
 const fmt = n => String(Math.round(n || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 const som = n => fmt(n) + " so'm";
 const NOM = [100000, 50000, 20000, 10000, 5000, 2000, 1000, 500, 200, 100];
-const KUN_MAX = 30, BONUS_KUN = 5, FOIZ = 0.05;
+const KUN_MAX = 30, BONUS_KUN = 5;
 const yoq = () => S().sozlama.pul === false;
 const byudjet = b => (b && b.pul && b.pul.byudjet) || S().sozlama.byudjet || 50000;
 const kf = b => Math.max(0.2, byudjet(b) / 50000);
@@ -5493,14 +5498,31 @@ function bonusTek(b) {
   if (kunlar < BONUS_KUN || p.bonus[wk]) return 0; p.bonus[wk] = 1; const s = kirim(b, m.bonus, 'bonus', `${BONUS_KUN} kun missiya`); setTimeout(() => toast(`🏆 Haftada ${BONUS_KUN} kun missiya — +${som(m.bonus)} bonus!`), 1600); return s;
 }
 const vazifa = b => yoq() || !b ? 0 : kirim(b, MUK(b).vazifa, 'vazifa');
-/* ---------- 🐷 cho'chqa-kassa: har to'liq 7 kunda +5% ---------- */
+/* ---------- 🔐 ORZU SANDIQCHASI (0.7.9; oldin 🐷 cho'chqa-kassa +5% edi) ----------
+   U (08.11): «cho'chqa emas — qandaydir quticha qil, kreativ yondash; pul tegilmasa ko'payadi degan g'oyani olib tashla — islomiy tomondan to'g'ri emas».
+   Endi: sandiqchadagi pul hamyondan alohida, xavfsiz turadi — ko'paymaydi ham, kamaymaydi ham (foiz yo'q). Maqsad — orzu (🎯 maqsad sovg'asi) uchun yig'ish
+   va tasodifan sarflab qo'ymaslik. kassaFoiz — eski chaqiruvlar uchun qoldirildi, hech narsa qo'shmaydi. Ma'lumot maydonlari (kassa, kassaTs) o'zgarmagan. */
 const kassaBor = b => !yoq() && S().sozlama.kassa !== false && A.gl(b.daraja) !== 'g0';
-function kassaFoiz(b) {
-  const p = st(b); if (!p.kassa || !p.kassaTs) return 0; const T = A.todayKey(), n = Math.floor(A.dayDiff(p.kassaTs, T) / 7); if (n < 1) return 0; let f = 0;
-  for (let i = 0; i < n; i++) { const x = Math.max(100, Math.round(p.kassa * FOIZ / 100) * 100); p.kassa += x; f += x; }
-  p.kassaTs = A.addDays(p.kassaTs, n * 7); const wk = A.isoWeek(); p.hafta[wk] = (p.hafta[wk] || 0) + f; A.pushLog(b.id, { t: 'pul', ts: Date.now(), bola: b.id, tur: 'foiz', s: f, h: p.h, kassa: p.kassa }); A.save(); return f;
+function kassaFoiz() { return 0; }
+let SANDIQ_TUSH = 0;   /* solingandan keyingi chizishda tanga tushish animatsiyasi */
+function sandiqSvg(to) {   /* realistik yog'och sandiqcha: temir qoplama, qulf, qopqoqda tanga teshigi; to — orzuga to'lish (0..1) */
+  const id = 'sq' + (++pid), t = Math.max(0, Math.min(1, to || 0));
+  return `<svg class="sndq" viewBox="0 0 120 96" aria-label="Orzu sandiqchasi"><defs>
+  <linearGradient id="${id}w" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9A5B2E"/><stop offset=".55" stop-color="#6E3B1A"/><stop offset="1" stop-color="#4A2510"/></linearGradient>
+  <linearGradient id="${id}m" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7DB7A"/><stop offset=".5" stop-color="#C99A2E"/><stop offset="1" stop-color="#8A6410"/></linearGradient>
+  <linearGradient id="${id}l" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B06A35"/><stop offset="1" stop-color="#7A4220"/></linearGradient>
+  <clipPath id="${id}c"><rect x="14" y="44" width="92" height="42" rx="4"/></clipPath></defs>
+  <ellipse cx="60" cy="90" rx="50" ry="5" fill="#000" opacity=".22"/>
+  <rect x="14" y="44" width="92" height="42" rx="4" fill="url(#${id}w)" stroke="#3A1C0A" stroke-width="1.5"/>
+  <g clip-path="url(#${id}c)"><rect x="14" y="${86 - 42 * t}" width="92" height="${42 * t}" fill="#F2C94C" opacity=".16"/>${[0, 1, 2, 3].map(i => `<line x1="14" y1="${54 + i * 9}" x2="106" y2="${54 + i * 9}" stroke="#3A1C0A" stroke-width=".7" opacity=".45"/>`).join('')}</g>
+  <path class="qpq" d="M12 44 Q12 20 60 18 Q108 20 108 44 Z" fill="url(#${id}l)" stroke="#3A1C0A" stroke-width="1.5"/>
+  <rect x="54" y="25" width="12" height="3.2" rx="1.6" fill="#1E0E04"/>
+  ${[22, 92].map(x => `<rect x="${x}" y="22" width="7" height="64" rx="1.5" fill="url(#${id}m)" stroke="#6B4A0C" stroke-width=".8"/><circle cx="${x + 3.5}" cy="50" r="1.3" fill="#6B4A0C"/><circle cx="${x + 3.5}" cy="78" r="1.3" fill="#6B4A0C"/>`).join('')}
+  <rect x="12" y="42" width="96" height="5" rx="2" fill="url(#${id}m)" stroke="#6B4A0C" stroke-width=".8"/>
+  <rect x="51" y="44" width="18" height="20" rx="3" fill="url(#${id}m)" stroke="#6B4A0C" stroke-width="1"/><path d="M57 44 v-5 a3 3 0 0 1 6 0 v5" fill="none" stroke="#8A6410" stroke-width="2"/><circle cx="60" cy="52" r="2.4" fill="#3A2606"/><rect x="59.2" y="53" width="1.6" height="5" fill="#3A2606"/>
+  <g class="tng"><circle cx="60" cy="8" r="6" fill="url(#${id}m)" stroke="#8A6410" stroke-width="1"/><text x="60" y="10.6" text-anchor="middle" font-size="7" font-weight="800" fill="#6B4A0C">S</text></g></svg>`;
 }
-function kassaSol(b, s) { const p = st(b); s = Math.min(Math.round(s / 100) * 100, p.h); if (s <= 0) return 0; p.h -= s; p.kassa += s; if (!p.kassaTs) p.kassaTs = A.todayKey(); A.pushLog(b.id, { t: 'pul', ts: Date.now(), bola: b.id, tur: 'kassa', s: -s, h: p.h, kassa: p.kassa }); A.save(true); return s; }
+function kassaSol(b, s) { const p = st(b); s = Math.min(Math.round(s / 100) * 100, p.h); if (s <= 0) return 0; p.h -= s; p.kassa += s; SANDIQ_TUSH = 1; if (!p.kassaTs) p.kassaTs = A.todayKey(); A.pushLog(b.id, { t: 'pul', ts: Date.now(), bola: b.id, tur: 'kassa', s: -s, h: p.h, kassa: p.kassa }); A.save(true); return s; }
 function kassaOl(b) { const p = st(b), s = p.kassa; if (!s) return 0; p.kassa = 0; p.kassaTs = null; p.h += s; A.pushLog(b.id, { t: 'pul', ts: Date.now(), bola: b.id, tur: 'kassaOl', s, h: p.h }); A.save(true); return s; }
 /* ---------- 💵 pullar (o'zimiz chizgan: «Bilimjon banki · o'yin puli») ---------- */
 const PR = { 100000: ['#6A1B9A', '#F3E5F5', '#CE93D8'], 50000: ['#1B5E20', '#E8F5E9', '#A5D6A7'], 20000: ['#E65100', '#FFF3E0', '#FFCC80'], 10000: ['#0D47A1', '#E3F2FD', '#90CAF9'], 5000: ['#B71C1C', '#FFEBEE', '#EF9A9A'], 2000: ['#00695C', '#E0F2F1', '#80CBC4'], 1000: ['#4E342E', '#EFEBE9', '#BCAAA4'] };
@@ -5582,7 +5604,7 @@ function tolov(b, narx, nom, ok, o) {
 /* ---------- 🛒 DO'KON (bola ekrani) ---------- */
 let TAB = 'sovga', KT = null, TV = null;
 function screenDokon(b) {
-  if (yoq()) return A.go('uy'); A.theme(b.dunyo); const p = st(b), fz = kassaFoiz(b), K = KAT(b), orol = b.dunyo === 'orol';
+  if (yoq()) return A.go('uy'); A.theme(b.dunyo); const p = st(b), K = KAT(b), orol = b.dunyo === 'orol';
   if (!KT || !K[KT]) KT = Object.keys(K)[0];
   const tg = sovgalar(b), kut = p.xarid.filter(x => x.holat === 'kutish');
   let body = '';
@@ -5603,9 +5625,9 @@ function screenDokon(b) {
   }
   app.innerHTML = `<div class="wrap kidw dokon"><div class="top"><button class="ib" data-x aria-label="Uyga">←</button><div class="ttl">🛒 Do'kon</div><span class="sp"></span>${pill(b)}</div>
   <div class="card hamyon"><div class="hmy"><span class="sm mut">Hamyoning</span><b>${som(p.h)}</b></div>${pullarHTML(p.h)}
-  ${kassaBor(b) ? `<div class="kassa"><span>🐷 Cho'chqa-kassa: <b>${som(p.kassa)}</b><br><small class="mut">Har 7 kun tegmasang — +5% ${p.kassaTs ? `· keyingisi ${7 - (A.dayDiff(p.kassaTs, A.todayKey()) % 7)} kundan keyin` : ''}</small></span><span class="row"><button class="btn sm ghost" data-ks ${p.h >= 1000 ? '' : 'disabled'}>🐷 Solish</button>${p.kassa ? '<button class="btn sm ghost" data-ko>↩️ Olish</button>' : ''}</span></div>` : ''}</div>
+  ${kassaBor(b) ? (() => { const g = p.maqsad && dokon().find(x => x.id === p.maqsad), to = g ? (p.h + p.kassa) / g.narx : Math.min(1, p.kassa / 50000), tush = SANDIQ_TUSH; SANDIQ_TUSH = 0;
+    return `<div class="kassa"><div class="sndw${tush ? ' tush' : ''}">${sandiqSvg(to)}</div><span class="sndt">🔐 Orzu sandiqchasi: <b>${som(p.kassa)}</b><br><small class="mut">${g ? `Orzuing «${esc(g.nom)}»: sandiqcha + hamyon = ${som(p.h + p.kassa)} / ${som(g.narx)}` : "Pul shu yerda alohida, xavfsiz turadi — tasodifan sarflab qo'ymaysan. Orzuing uchun yig'!"}</small></span><span class="row"><button class="btn sm ghost" data-ks ${p.h >= 1000 ? '' : 'disabled'}>⬇️ Solish</button>${p.kassa ? '<button class="btn sm ghost" data-ko>↩️ Olish</button>' : ''}</span></div>`; })() : ''}</div>
   <div class="dtabs"><button class="btn${TAB === 'sovga' ? '' : ' ghost'}" data-tab="sovga">🎁 Sovg'alar</button><button class="btn${TAB === 'tun' ? '' : ' ghost'}" data-tab="tun">${orol ? '🦄 Salon' : '🏎️ Tuning'}</button></div>${body}</div>`;
-  if (fz) setTimeout(() => toast(`🐷 Cho'chqa-kassa o'sdi: +${som(fz)}!`), 400);
   const again = () => screenDokon(b);
   $('[data-x]').onclick = () => { TV = null; A.go('uy'); };
   $$('[data-tab]').forEach(x => x.onclick = () => { TAB = x.dataset.tab; TV = null; again(); });
@@ -5618,15 +5640,15 @@ function screenDokon(b) {
     tolov(b, narxK(b, r[2]), r[1], () => { (p.ega[KT] = p.ega[KT] || []).push(v); p.joy[KT] = v; TV = null; A.save(true); FX.boom(innerWidth / 2, innerHeight / 3, b.dunyo); toast(`✨ ${r[1]} — seniki!`); again(); }); };
   const jy = $('[data-joy]'); if (jy) jy.onclick = () => { p.joy[KT] = TV != null ? TV : 0; TV = null; A.save(true); FX.play('ding'); again(); };
   const qs = $('[data-qism]'); if (qs) qs.onclick = () => tolov(b, narxK(b, 3000), 'Konstruktor qismi', () => { const q = A.garaj.qismBer && A.garaj.qismBer(b); toast(q ? `🔧 Yangi qism: ${A.garaj.QNOM[q]}!` : '🔧 Qism olindi'); again(); });
-  const ks = $('[data-ks]'); if (ks) ks.onclick = () => sheet(`<h2>🐷 Cho'chqa-kassaga solish</h2><p class="sm">Hamyonda: <b>${som(p.h)}</b>. Kassada 7 kun tursa, har haftada +5% qo'shiladi. Xohlagan payt olsang bo'ladi.</p><div class="row">${[1000, 2000, 5000, 10000].filter(v => v <= p.h).map(v => `<button class="btn ghost" data-s="${v}">${som(v)}</button>`).join('')}<button class="btn ghost" data-s="${p.h}">Hammasi</button></div>`,
-    el => $$('[data-s]', el).forEach(x => x.onclick = () => { const s = kassaSol(b, +x.dataset.s); closeSheets(); if (s) { FX.play('ding'); toast(`🐷 +${som(s)} kassaga`); } again(); }));
+  const ks = $('[data-ks]'); if (ks) ks.onclick = () => sheet(`<h2>🔐 Orzu sandiqchasiga solish</h2><p class="sm">Hamyonda: <b>${som(p.h)}</b>. Sandiqchadagi pul alohida turadi — ko'paymaydi ham, kamaymaydi ham. Orzuingga yetguncha shu yerda saqlaysan; kerak bo'lsa xohlagan payt olasan.</p><div class="row">${[1000, 2000, 5000, 10000].filter(v => v <= p.h).map(v => `<button class="btn ghost" data-s="${v}">${som(v)}</button>`).join('')}<button class="btn ghost" data-s="${p.h}">Hammasi</button></div>`,
+    el => $$('[data-s]', el).forEach(x => x.onclick = () => { const s = kassaSol(b, +x.dataset.s); closeSheets(); if (s) { FX.play('ding'); toast(`🔐 +${som(s)} sandiqchaga`); } again(); }));
   const ko = $('[data-ko]'); if (ko) ko.onclick = () => { const s = kassaOl(b); toast(`↩️ ${som(s)} hamyonga qaytdi`); again(); };
 }
 /* ---------- bola uyidagi karta: do'kon tugmasi, maqsad, kutilayotgan sovg'alar ---------- */
 function uyHTML(b) {
   if (yoq()) return ''; const p = st(b), g = p.maqsad && dokon().find(x => x.id === p.maqsad), kut = p.xarid.filter(x => x.holat === 'kutish');
   return `<div class="row"><button class="btn ghost dokb" data-dokon>🛒 Do'kon · 💵 ${fmt(p.h)}</button></div>`
-    + (g ? `<div class="card maqsad"><div class="sm mut">🎯 Maqsadim</div><b>${esc(g.nom)} — ${som(g.narx)}</b><div class="tbar"><i style="width:${Math.max(4, Math.min(100, Math.round(100 * p.h / g.narx)))}%"></i></div><div class="sm">${p.h >= g.narx ? "🎉 Pulingga yetadi — do'konga kir!" : kerakHTML(b, g.narx)}</div></div>` : '')
+    + (g ? `<div class="card maqsad"><div class="sm mut">🎯 Maqsadim</div><b>${esc(g.nom)} — ${som(g.narx)}</b><div class="tbar"><i style="width:${Math.max(4, Math.min(100, Math.round(100 * (p.h + (kassaBor(b) ? p.kassa : 0)) / g.narx)))}%"></i></div><div class="sm">${p.h >= g.narx ? "🎉 Pulingga yetadi — do'konga kir!" : kassaBor(b) && p.h + p.kassa >= g.narx ? "🔐 Sandiqchadagi pul bilan yetadi — do'konda sandiqchadan ol!" : kerakHTML(b, g.narx - (kassaBor(b) ? p.kassa : 0))}</div></div>` : '')
     + kut.map(x => `<div class="note kn">⏳ ${esc(x.nom)} — sotib olding! Dadang yoki oyingga ko'rsat</div>`).join('');
 }
 /* ---------- 👨‍👩‍👧 OTA-ONA PANELI: 💰 Pul va do'kon ---------- */
@@ -5641,8 +5663,8 @@ function panel(top, bindTop) {
   <div class="card form"><h3>⚙️ Sozlama</h3><label class="chk"><input type="checkbox" id="pon" ${s.sozlama.pul === false ? '' : 'checked'}> 💵 So'm iqtisodi yoqilgan</label>
   <label class="lb">Haftalik byudjet (har bolaga, taxminan shuncha topadi)</label><select id="pby" class="inp">${BYU.map(v => `<option value="${v}" ${v === (s.sozlama.byudjet || 50000) ? 'selected' : ''}>${som(v)}</option>`).join('')}</select>
   <p class="sm mut">Hozir: to'g'ri javob +${fmt(m.javob)} (kuniga ${KUN_MAX} tagacha) · missiya +${fmt(m.missiya)} · uyga vazifa +${fmt(m.vazifa)} · haftada ${BONUS_KUN} kun missiya +${fmt(m.bonus)}.</p>
-  <label class="chk"><input type="checkbox" id="pks" ${s.sozlama.kassa === false ? '' : 'checked'}> 🐷 Cho'chqa-kassa (1-sinfdan; 7 kunda +5%)</label></div>
-  <div class="card"><h3>👛 Hamyonlar · jami ${som(jami)}</h3>${kids.map(b => { const p = st(b); return `<div class="nr"><b>${esc(b.avatar + ' ' + b.laqab)}</b> — ${som(p.h)}${p.kassa ? ` + 🐷 ${som(p.kassa)}` : ''} · bu hafta +${som(p.hafta[wk] || 0)}
+  <label class="chk"><input type="checkbox" id="pks" ${s.sozlama.kassa === false ? '' : 'checked'}> 🔐 Orzu sandiqchasi (1-sinfdan): bola pulining bir qismini orzusi uchun alohida saqlaydi — foiz yo'q, pul ko'paymaydi</label></div>
+  <div class="card"><h3>👛 Hamyonlar · jami ${som(jami)}</h3>${kids.map(b => { const p = st(b); return `<div class="nr"><b>${esc(b.avatar + ' ' + b.laqab)}</b> — ${som(p.h)}${p.kassa ? ` + 🔐 ${som(p.kassa)}` : ''} · bu hafta +${som(p.hafta[wk] || 0)}
     <div class="row"><select class="inp sm" data-by="${b.id}"><option value="">Oila byudjeti</option>${BYU.map(v => `<option value="${v}" ${p.byudjet === v ? 'selected' : ''}>${som(v)}</option>`).join('')}</select><input class="inp sm" type="number" step="100" min="100" placeholder="so'm" data-sm="${b.id}"><button class="btn sm ghost" data-pl="${b.id}">➕</button><button class="btn sm ghost" data-mn="${b.id}">➖</button></div></div>`; }).join('')}
   <p class="sm mut">➕ / ➖ — uydagi ish uchun qo'shimcha mukofot yoki tuzatish (logga yoziladi).</p></div>
   ${L.map(g => `<div class="card sovga">${g.rasm ? `<img class="sgimg" src="${g.rasm}" alt="">` : '<div class="sgsir">🎁</div>'}<div class="sgb"><b>${esc(g.nom)}</b> — ${som(g.narx)}<div class="sm">${g.kim === 'hamma' ? '👨‍👩‍👧 Hamma bolalar (har biri o\'ziga)' : A.bola(g.kim) ? esc(A.bola(g.kim).avatar + ' ' + A.bola(g.kim).laqab) : '—'}${g.takror ? ' · 🔁 qayta sotiladi' : ''}</div><div class="row"><button class="btn sm ghost" data-sd="${g.id}">🗑 O'chirish</button></div></div></div>`).join('')}
@@ -5911,10 +5933,10 @@ function xohish(b, t) {
   const m0 = tejMuk(b, qol), pul = S().sozlama.pul !== false;
   app.innerHTML = `<div class="wrap kidw bozor">${topBar(b, '🍭 Xohish javoni')}
   <div class="card bzokc"><b>✅ Ro'yxatdagi hamma narsa olindi!</b><div class="sm">Oila pulidan qoldi: <b>${som(qol)}</b></div></div>
-  ${pul ? `<div class="card bztej">🐷 Hech narsa olmasang — <b>+${som(m0)}</b> sening hamyoningga (qolgan pulning yarmi${m0 < r100(qol * TEJ_ULUSH) ? ', haftalik chegara bilan' : ''}). Qolgani oilaga qaytadi.</div>` : ''}
+  ${pul ? `<div class="card bztej">🪙 Hech narsa olmasang — <b>+${som(m0)}</b> sening hamyoningga (qolgan pulning yarmi${m0 < r100(qol * TEJ_ULUSH) ? ', haftalik chegara bilan' : ''}). Qolgani oilaga qaytadi.</div>` : ''}
   <div class="bzsec"><b>🍭 Xohish — ixtiyoriy</b><span class="sm mut">haftasiga 1 marta</span></div>
   ${L.map(x => { const voz = m0 - tejMuk(b, qol - x.narx); return `<div class="card bzxh">${ikon(x.k, 58)}<div class="bzxb"><b>${esc(x.nom)}</b><div class="bzxn">${esc(x.nom)} = <b>${som(x.narx)}</b>${voz > 0 ? ` + <b>${som(voz)}</b>lik tejash mukofotidan voz kechish` : ''}</div></div><button class="btn sm" data-ol="${x.id}">Olaman</button></div>`; }).join('')}
-  <div class="row"><button class="btn big" data-tej>${pul && m0 ? `🐷 Yo'q, tejayman (+${som(m0)})` : "🙂 Yo'q, kerak emas"}</button></div></div>`;
+  <div class="row"><button class="btn big" data-tej>${pul && m0 ? `🪙 Yo'q, tejayman (+${som(m0)})` : "🙂 Yo'q, kerak emas"}</button></div></div>`;
   $('[data-x]').onclick = () => { A.endSession(b); A.go('uy'); };
   $('[data-tej]').onclick = () => { t.xohYoq = 1; log(b, t, 'xohish', { ol: 0 }); A.save(true); yakun(b, t); };
   $$('[data-ol]').forEach(x => x.onclick = () => { const r = bz().xoh.find(y => y.id === x.dataset.ol); if (!r) return;
@@ -5939,7 +5961,7 @@ function chekHTML(b, t) {
   <div class="bzck jm"><span>Ro'yxat jami</span><b>${fmt(r.sarf)}</b></div>
   ${r.xoh ? `<div class="bzck"><span>🍭 ${esc(r.xoh.nom)}<small>xohish</small></span><b>${fmt(r.xoh.narx)}</b></div>` : ''}
   <div class="bzck"><span>Oila puli</span><b>${fmt(t.byu)}</b></div><div class="bzck"><span>Qoldi</span><b>${fmt(r.qoldi)}</b></div>
-  ${r.tej ? `<div class="bzck tj"><span>🐷 Tejash mukofoti → hamyonga</span><b>+${fmt(r.tej)}</b></div>` : ''}
+  ${r.tej ? `<div class="bzck tj"><span>🪙 Tejash mukofoti → hamyonga</span><b>+${fmt(r.tej)}</b></div>` : ''}
   ${r.oila ? `<div class="bzck"><span>↩ Oilaga qaytdi</span><b>${fmt(r.oila)}</b></div>` : ''}
   <div class="bzckf">RAHMAT! ✦ HAR TANLOVNING NARXI BOR</div></div>`;
 }
@@ -6001,7 +6023,7 @@ function panel(top, bindTop, sub) {
   ${fa.length ? `<div class="card"><h3>🛒 Faol topshiriqlar (${fa.length})</h3>${fa.map(t => { tStd(t); const n = t.roy.filter(it => t.sav[it.id] != null).length;
     return `<div class="nr"><b>${bnom(t.kim)}</b> — ${t.roy.length} ta narsa · ${som(t.byu)} · ${t.holat === 'yangi' ? '🆕 hali ochmagan' : t.tolandi ? '🍭 xohish javonida' : `🛒 savatda ${n}/${t.roy.length}`}<div class="row"><button class="btn sm ghost" data-del="${t.id}">🗑 Bekor qilish</button></div></div>`; }).join('')}</div>` : ''}
   ${tug.length ? `<div class="card"><h3>🧾 Cheklar (${tug.length})</h3>${tug.map(t => { tStd(t); const r = t.natija || {}, arz = t.roy.filter(it => (it.v[t.sav[it.id]] || {}).l === 0).length, b = A.bola(t.kim);
-    return `<details class="bzdt"><summary><b>${bnom(t.kim)}</b> · ${String(r.sana || '').split('-').reverse().join('.')} · ${fmt(r.sarf)}${r.xoh ? ' + 🍭' : ''}${r.tej ? ` · 🐷 +${fmt(r.tej)}` : ''}</summary>
+    return `<details class="bzdt"><summary><b>${bnom(t.kim)}</b> · ${String(r.sana || '').split('-').reverse().join('.')} · ${fmt(r.sarf)}${r.xoh ? ' + 🍭' : ''}${r.tej ? ` · 🪙 +${fmt(r.tej)}` : ''}</summary>
     <p class="sm">Arzonini tanladi: <b>${arz}/${t.roy.length}</b>${t.savol.n ? ` · savollar: ${t.savol.ok}/${t.savol.n} birinchi urinishda` : ''}${r.xoh ? ` · xohish: ${esc(r.xoh.nom)}` : r.qoldi ? ' · xohishdan voz kechdi' : ''}</p>${b ? chekHTML(b, t) : ''}</details>`; }).join('')}</div>` : ''}
   <div class="card form"><h3>🍭 Xohish javoni</h3><p class="sm mut">Narxi qo'yilmaganlar bolaga ko'rinmaydi. Bozordagi haqiqiy narxni yozing.</p>
   ${z.xoh.map(x => `<div class="bzxr">${ikon(x.k, 36)}<b>${esc(x.nom)}</b><input class="inp sm" type="number" step="100" min="0" placeholder="narx, so'm" data-xn="${x.id}" value="${x.narx || ''}"><label class="chk sm"><input type="checkbox" data-xon="${x.id}" ${x.on === false ? '' : 'checked'}> ko'rinsin</label><button class="ib sm" data-xdel="${x.id}" aria-label="O'chirish">✕</button></div>`).join('')}
@@ -7965,7 +7987,7 @@ function start() {
   BJ.debug = { state: () => A.S(), fx: FX.stats, A, gen: BJ.gen };
   A.render();
   try { if (A.bulutStart) A.bulutStart(); } catch (e) { console.warn(e); }
-  if (oldVer && oldVer !== A.VER) setTimeout(() => toast(oldVer === '0.7.7' ? "🆕 Bilimjon v7.8: 👆 ekran endi ikki marta bosilganda kattalashib qolmaydi (ikki barmoq bilan kattalashtirish — bor), 🏆 oilalar reyting guruhiga ulanish yaxshilandi" : oldVer === '0.7.6' ? '🆕 Bilimjon v7.8: masala savollaridagi ortiqcha «📄 Matn 1» oynasi olib tashlandi, matnlardagi imlo tuzatildi' : /^0\.7\.[45]$/.test(oldVer) ? '🆕 Bilimjon v7.8: 🎮 dam olishda 7 o\'yindan tanlov, 🏆 o\'yin reytingi (boshqa oila ham), 🏅 haftaning chempioni, 🔑 zal ota-ona ruxsati bilan' : oldVer === '0.7.4' ? '🆕 Bilimjon v7.8: 👨‍👩‍👧 ota-ona uchun bulut nazorati yaxshilandi, parol tiklash aniqroq' : oldVer === '0.7.3' ? '🆕 Bilimjon v7.8: 📈 savollar bola darajasiga to\'g\'ri moslashadi, 📊 hafta xulosasi aniqroq' : oldVer === '0.7.2' ? '🆕 Bilimjon v7.8: 🇬🇧 «🔊 Eshitish» — inglizcha so\'z yangi ovozda (iPhone jim rejimida ham)' : oldVer === '0.7.1' ? '🆕 Bilimjon v7.8: 🔊 iPhone\'da savol va inglizcha so\'z ovozi tuzatildi (jim rejimda ham eshitiladi)' : oldVer.indexOf('0.7.') === 0 ? '🆕 Bilimjon v7.8: 🔊 savollar o\'zbekcha ovozda o\'qiladi, 🤔 «Tushunmadim» tugmasi va 🙋 ota-onadan so\'rash!' : '🆕 Bilimjon v7.8: 🔊 savollar ovozda, 🗺️ sarguzasht xaritasi, 🎮 o\'yinlar zali, 🧺 oila bozori, 🤔 «Tushunmadim» tugmasi!'), 900);
+  if (oldVer && oldVer !== A.VER) setTimeout(() => toast(oldVer === '0.7.8' ? "🆕 Bilimjon v7.9: 🔐 do'kondagi kassa endi «Orzu sandiqchasi» — pul orzu uchun alohida saqlanadi (foiz yo'q)" : oldVer === '0.7.7' ? "🆕 Bilimjon v7.9: 👆 ekran endi ikki marta bosilganda kattalashib qolmaydi (ikki barmoq bilan kattalashtirish — bor), 🏆 oilalar reyting guruhiga ulanish yaxshilandi" : oldVer === '0.7.6' ? '🆕 Bilimjon v7.9: masala savollaridagi ortiqcha «📄 Matn 1» oynasi olib tashlandi, matnlardagi imlo tuzatildi' : /^0\.7\.[45]$/.test(oldVer) ? '🆕 Bilimjon v7.9: 🎮 dam olishda 7 o\'yindan tanlov, 🏆 o\'yin reytingi (boshqa oila ham), 🏅 haftaning chempioni, 🔑 zal ota-ona ruxsati bilan' : oldVer === '0.7.4' ? '🆕 Bilimjon v7.9: 👨‍👩‍👧 ota-ona uchun bulut nazorati yaxshilandi, parol tiklash aniqroq' : oldVer === '0.7.3' ? '🆕 Bilimjon v7.9: 📈 savollar bola darajasiga to\'g\'ri moslashadi, 📊 hafta xulosasi aniqroq' : oldVer === '0.7.2' ? '🆕 Bilimjon v7.9: 🇬🇧 «🔊 Eshitish» — inglizcha so\'z yangi ovozda (iPhone jim rejimida ham)' : oldVer === '0.7.1' ? '🆕 Bilimjon v7.9: 🔊 iPhone\'da savol va inglizcha so\'z ovozi tuzatildi (jim rejimda ham eshitiladi)' : oldVer.indexOf('0.7.') === 0 ? '🆕 Bilimjon v7.9: 🔊 savollar o\'zbekcha ovozda o\'qiladi, 🤔 «Tushunmadim» tugmasi va 🙋 ota-onadan so\'rash!' : '🆕 Bilimjon v7.9: 🔊 savollar ovozda, 🗺️ sarguzasht xaritasi, 🎮 o\'yinlar zali, 🧺 oila bozori, 🤔 «Tushunmadim» tugmasi!'), 900);
 }
 start();
 })(window);
