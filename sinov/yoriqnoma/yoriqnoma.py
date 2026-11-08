@@ -162,6 +162,16 @@ with sync_playwright() as p:
     print('sahifa pastki chegarasi (≤ 925 bo\'lsin):', toshdi)
     for i, el in enumerate(pg.query_selector_all('.pg')):   # Telegram albomi uchun JPEG (1080×1920)
         t = os.path.join(OUT, f'_s{i + 1}.png'); el.screenshot(path=t); Image.open(t).convert('RGB').save(os.path.join(OUT, f'Bilimjon_{i + 1}.jpg'), 'JPEG', quality=90, optimize=True); os.remove(t)
+    # 08.11 (u iPhone'da ko'rdi): HTML'dan to'g'ridan-to'g'ri PDF — iPhone/Telegram PDF ko'rgichida soya, filtr va shaffoflik joylari QORA to'rtburchak
+    # bo'lib chiqar, «Bilimjon» sarlavhasi kesilardi. Endi PDF = har sahifaning tayyor rasmi (JPG bilan bir xil ko'rinish, hamma ko'rgichda) + havolalar ustiga bosiladigan joy.
+    hav = pg.evaluate("[...document.querySelectorAll('.pg')].map(s=>{const o=s.getBoundingClientRect(); return [...s.querySelectorAll('a[href]')].map(a=>{const r=a.getBoundingClientRect(); return [a.href, r.left-o.left, r.top-o.top, r.width, r.height]})})")
+    import base64
+    def sah(i):
+        d = base64.b64encode(open(os.path.join(OUT, f'Bilimjon_{i + 1}.jpg'), 'rb').read()).decode()
+        a = ''.join(f'<a href="{h}" style="position:absolute;left:{x:.1f}px;top:{y:.1f}px;width:{w:.1f}px;height:{hh:.1f}px"></a>' for h, x, y, w, hh in hav[i])
+        return f'<section style="position:relative;width:540px;height:960px;overflow:hidden;page-break-after:always;break-after:page"><img src="data:image/jpeg;base64,{d}" style="display:block;width:540px;height:960px">{a}</section>'
+    pg.set_content('<!doctype html><html><head><meta charset="utf-8"><style>@page{size:540px 960px;margin:0}html,body{margin:0;padding:0;background:#0B0F1A}</style></head><body>' + ''.join(sah(i) for i in range(len(SAHIFALAR))) + '</body></html>')
+    pg.wait_for_timeout(300)
     pg.pdf(path=PDF, width='540px', height='960px', print_background=True, margin={'top': '0', 'bottom': '0', 'left': '0', 'right': '0'})
     br.close()
 print('✅', PDF, f'({os.path.getsize(PDF) // 1024} KB)'); print('✅ JPG:', ', '.join(f'Bilimjon_{i + 1}.jpg' for i in range(len(SAHIFALAR))))

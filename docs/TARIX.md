@@ -383,3 +383,4 @@ U so'radi (08.11 03:30, «PY»): 1) zal ota-ona ruxsati bilan HAR DOIM ochilsin;
 - Yo'riqnoma tekshirildi: 4-sahifa «Telegram'da ➤ (yuborish)», 6-sahifa «Yoki egasiga yozing — o'zi qo'shib qo'yadi»; qolgani to'g'ri.
 - Limit tejash (u: «o'zing hal qil»): CLAUDE.md 101 KB → ~9 KB (har chatda yuklanadi); tarix shu faylga ko'chdi; `sinov/hammasi.sh` — 1 qatorli natijalar.
 - Ochiq repodan ismlar olib tashlandi (izohlar, CLAUDE.md, sinov personajlari — «Dost»; v074 da bola ismi hex bilan). Eski commit tarixida qolgan — kerak bo'lsa u qaror qiladi (tarixni qayta yozish).
+- 08.11 09:55: yo'riqnoma PDF iPhone'da (u ko'rsatdi) — qora to'rtburchaklar, «Bilimjon» sarlavhasi kesilgan (Chromium PDF'idagi soya/filtr/shaffoflik iOS ko'rgichida). Tuzatish: PDF = sahifa JPG rasmlari + havola joylari (1,3 MB); poppler bilan tekshirildi.
