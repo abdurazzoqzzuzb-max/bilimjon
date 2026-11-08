@@ -81,7 +81,7 @@ SAHIFALAR = [
 # 1 — taklifnoma
 f'''<div class="cover"><img class="logo" src="{ICON}" alt=""><h1>Bilimjon</h1><div class="sub">oilaviy o'yin-darslik · v{VK}</div>
 <div class="taklif"><div class="tk">✉️ TAKLIFNOMA</div><h3>Sizni oilamiz ilovasiga taklif qilamiz!</h3>
-<p>Farzandlaringiz har kuni <b>20–30 daqiqa</b> o'ynab o'rganadi: matematika, ona tili va o'qish, ingliz va arab tili, mantiq. Savollar <b>ovozda o'qiladi</b>, xato qilsa — rasmli kichik dars. Missiyadan keyin — o'yinlar zali, sovg'alar va <b>oilalar o'rtasida reyting</b>.</p></div>
+<p>Farzandlaringiz har kuni <b>20–30 daqiqa</b> o'ynab o'rganadi: matematika, ona tili va o'qish, ingliz va arab tili, mantiq. Savollar <b>ovozda o'qiladi</b>, xato qilsa — rasmli kichik dars. Missiyadan keyin — o'yinlar zali, sovg'alar va <b>oilalar o'rtasida reyting</b>.</p><p class="bep">🎁 Birinchi <b>1 oy — bepul</b>, keyin pullik.</p></div>
 <div class="fan">{tel('04_uy', 132, .62, 'f1')}{tel('05_savol', 150, .55, 'f2')}{tel('09_zal', 132, .62, 'f3')}</div>
 <div class="maxfiy"><b>🔒 Bu — shaxsiy oilaviy ilova</b><span>Faqat taklif qilingan oilalar uchun. Iltimos, havolani va shu yo'riqnomani boshqa hech kimga yubormang.</span></div>
 <div class="keyin">📲 O'rnatish — 5 daqiqa: <b>2-sahifa — iPhone</b>, <b>3-sahifa — Android</b></div></div>{oyoq(1)}''',
@@ -97,17 +97,17 @@ qadam(1, 'Chrome\'da oching', f'Havolani bosing yoki Chrome\'ga yozing:<br>{LINK
 qadam(2, '⋮ (uch nuqta) → «Установить приложение»', 'O\'ng tepadagi <b>⋮</b> ni bosing va <b>«Установить приложение»</b> yoki <b>«Добавить на главный экран»</b> ni tanlang (Install app / Add to Home screen).', f'<div class="mk2">{and_bar()}{and_menu()}</div>') +
 qadam(3, '«Установить» → bosh ekrandan oching', 'Tasdiqlang. Endi ilovani har doim bosh ekrandagi <b>Bilimjon</b> belgisidan oching.', f'<div class="mk2">{and_add()}{ekran_belgi()}</div>') +
 '</div><div class="eslat">💡 Menyuda bu band bo\'lmasa — Chrome\'ni Play Market\'dan yangilang.</div>' + oyoq(3),
-# 4 — oila va bola
-bosh('👨‍👩‍👧', 'Oila va bolalar', 'Birinchi ochilganda — 2 daqiqa') + '<div class="qlar">' +
-qadam(1, 'Oila nomi va ota-ona PIN', 'Oila nomini yozing va <b>4 raqamli PIN</b> o\'ylang — u ota-ona paneli uchun. <b>Bolalarga aytmang.</b>', f'<div class="row2">{tel("01_oila", 150, .7)}<div class="izoh">👆 Ikkinchi telefonda oilangiz bo\'lsa — pastdagi <b>«☁️ Akkauntim bor — kirish»</b> (5-sahifa).</div></div>') +
+# 4 — 0.7.7: kirish va ruxsat (ruxsatgacha ilova ochilmaydi)
+bosh('🔒', 'Kirish va ruxsat', 'Birinchi ochilganda — 3 daqiqa') + '<div class="qlar">' +
+qadam(1, 'Tanishtiruv → «Ro\'yxatdan o\'tish»', 'Ilova o\'zi <b>5 ta rasmli slayd</b> bilan tanishtiradi. Oxirgisida — <b>«✉️ Ro\'yxatdan o\'tish / kirish»</b>.', f'<div class="row2">{tel("30_tanish1", 132, .43)}{tel("31_tanish5", 132, .43)}</div>') +
+qadam(2, 'Email va yangi parol', 'Email va <b>yangi parol</b> (Gmail paroli emas) → <b>«Ro\'yxatdan o\'tish»</b>.', f'<div class="row2">{tel("20_akkaunt", 132, .5)}<div class="izoh">🔑 iPhone ham, Android ham — <b>faqat email + parol</b>. Parolni yozib qo\'ying: oilaning 2-telefonida ham kerak.</div></div>') +
+qadam(3, 'Ruxsat so\'rang → Telegram', 'Oila nomi → <b>«📨 Ruxsat so\'rash»</b> → <b>«✈️ Telegram\'da egasiga yozish»</b> → Telegram\'da <b>«Yuborish»</b>.', f'<div class="row2">{tel("21_ruxsat_kerak", 132, .48)}{tel("22_kutilmoqda", 132, .48)}</div>') +
+'</div><div class="eslat">⏳ Ruxsatgacha ilova ochilmaydi. Egasi ✅ bosishi bilan ekran <b>o\'zi</b> yangilanadi — keyingi sahifa.</div>' + oyoq(4),
+# 5 — oila va bola (ruxsatdan keyin)
+bosh('👨‍👩‍👧', 'Oila va bolalar', 'Ruxsatdan keyin — 2 daqiqa') + '<div class="qlar">' +
+qadam(1, 'Oila nomi va ota-ona PIN', 'Oila nomini yozing va <b>4 raqamli PIN</b> o\'ylang — u ota-ona paneli uchun. <b>Bolalarga aytmang.</b>', f'<div class="row2">{tel("01_oila", 150, .7)}<div class="izoh">📱 <b>2-telefonda</b> (oyisi yoki dadasi): ilovani o\'rnating → tanishtiruv → <b>«Kirish»</b> — xuddi shu email va parol. Bolalar va natijalar o\'zi keladi.</div></div>') +
 qadam(2, 'Bolani qo\'shing', '<b>Laqab</b> (ism-familiya emas), avatar va <b>sinf</b> → «Saqlash». Har bola uchun takrorlang.', f'<div class="row2">{tel("02_bola", 150, .62)}{tel("03_tanla", 150, .62)}</div>') +
-'</div><div class="eslat">✅ Tayyor! Bola o\'z rasmini bosadi va <b>«🚀 Missiyani boshlash»</b>.</div>' + oyoq(4),
-# 5 — oila akkaunti
-bosh('☁️', 'Oila akkaunti', 'Natijalar saqlanadi · 2-telefon · reyting uchun') + '<div class="qlar">' +
-qadam(1, 'Ro\'yxatdan o\'ting', 'O\'ng tepadagi <b>👨‍👩‍👧</b> → PIN → <b>«☁️ Oila akkaunti»</b>. Email va <b>yangi parol</b> yozing → <b>«Ro\'yxatdan o\'tish»</b>.', f'<div class="row2">{tel("20_akkaunt", 140, .62)}<div class="izoh">🔑 iPhone ham, Android ham — <b>faqat email + parol</b> (Google tugmasi emas). Parolni yozib qo\'ying.</div></div>') +
-qadam(2, 'Ruxsat so\'rang', 'Oila nomini yozing → <b>«📨 Ruxsat so\'rash»</b> → <b>«📤 Egasiga xabar»</b>. Ruxsat odatda shu kuni beriladi.', f'<div class="row2">{tel("21_ruxsat_kerak", 140, .45)}{tel("22_kutilmoqda", 140, .45)}</div>') +
-qadam(3, 'Ulandi ✅', 'Ruxsatdan keyin hammasi o\'zi saqlanadi.', f'<div class="row2">{tel("23_ulandi", 140, .36)}<div class="izoh">📱 <b>2-telefonda</b> (oyisi yoki dadasi): ilovani o\'rnating → «☁️ Akkauntim bor — kirish» → <b>xuddi shu email va parol</b> → «Kirish». Bolalar o\'zi keladi.</div></div>') +
-'</div>' + oyoq(5),
+'</div><div class="eslat">✅ Tayyor! Natijalar bulutda o\'zi saqlanadi. Bola o\'z rasmini bosadi va <b>«🚀 Missiyani boshlash»</b>.</div>' + oyoq(5),
 # 6 — reyting va kundalik
 bosh('🏆', 'Oilalar o\'rtasida reyting', 'Bolalar boshqa oila bolalari bilan musobaqalashadi') + '<div class="qlar">' +
 qadam(1, 'Guruh kodini kiriting', 'Sizni taklif qilgan oiladan <b>10 belgili guruh kodini</b> so\'rang. 👨‍👩‍👧 → <b>«📲 Oila reytingi»</b> → kod → <b>«🔗 Qo\'shilish»</b>.', f'<div class="row2">{tel("24_guruh_kod", 140, .42)}{tel("10_rekordlar", 140, .42)}</div>') +
@@ -129,7 +129,7 @@ b{color:#fff;font-weight:700}
 h1{font:800 46px/1.05 "Inter Display",Inter;letter-spacing:-.5px;margin-top:12px;background:linear-gradient(180deg,#fff,#BFD2FF);-webkit-background-clip:text;color:transparent}
 .sub{color:#9AA8C7;font-size:15px;margin-top:4px;letter-spacing:.3px}
 .taklif{margin-top:18px;padding:16px 18px 15px;border-radius:20px;text-align:left;background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03));border:1px solid rgba(255,201,74,.45);box-shadow:0 20px 40px -24px rgba(0,0,0,.9)}
-.tk{font:800 11px Inter;letter-spacing:2.4px;color:#FFC94A}.taklif h3{font:800 21px/1.2 "Inter Display",Inter;margin:6px 0 7px}.taklif p{font-size:14.2px;line-height:1.5;color:#C9D3EA}
+.tk{font:800 11px Inter;letter-spacing:2.4px;color:#FFC94A}.taklif p.bep{margin:9px 0 0;padding:7px 11px;border-radius:12px;font-weight:700;color:#FFE3A0;background:rgba(255,201,74,.12);border:1px solid rgba(255,201,74,.38)}.taklif p.bep b{color:#FFC94A}.taklif h3{font:800 21px/1.2 "Inter Display",Inter;margin:6px 0 7px}.taklif p{font-size:14.2px;line-height:1.5;color:#C9D3EA}
 .fan{position:relative;height:236px;width:100%;margin-top:14px}
 .fan .tel{position:absolute;top:10px}.fan .f1{left:28px;transform:rotate(-8deg)}.fan .f3{right:28px;transform:rotate(8deg)}.fan .f2{left:50%;margin-left:-75px;top:0;z-index:2}
 .maxfiy{margin-top:12px;width:100%;padding:12px 14px;border-radius:16px;text-align:left;display:flex;flex-direction:column;gap:3px;background:rgba(255,82,82,.10);border:1px solid rgba(255,138,128,.45)}

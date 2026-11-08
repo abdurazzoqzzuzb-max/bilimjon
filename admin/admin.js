@@ -21,6 +21,8 @@
      zaxira                         — hamma Firestore ma'lumoti → zaxira/bilimjon_YYYY-MM-DD.json.gz (Actions artifact, 90 kun)
      guruh <email1> <email2>        — ikki oilani bitta 🏆 reyting guruhiga ulash (1-oilaning guruhi; yo'q bo'lsa — yangi kod).
                                       Telefonlar o'zi oladi (ilovani yopib qayta ochish); a'zo yozuvlarini har oila telefoni o'zi yozadi.
+     telegram [@username|+998…|-]   — egasining Telegram manzili (ilova/egasi): yangi oila ruxsat so'raganda «✈️ Telegram'da egasiga yozish»
+                                      xabarni shu manzilga tayyorlaydi. Bo'sh — hozirgisini ko'rsatadi, «-» — o'chiradi. (qoidalar 0.7.7 kerak emas — Admin SDK)
 */
 'use strict';
 const fs = require('fs'), path = require('path'), zlib = require('zlib');
@@ -79,6 +81,8 @@ B.holat = async ({ auth, db, log }) => {
     if (o.bor) log(`   oila: «${(o.j.oila && o.j.oila.nom) || '—'}» · bolalar: ${o.bolalar.map(b => b.laqab).join(', ') || '—'} · oxirgi sinxron: ${vaqt(o.x.ts)} · v${o.x.v || '?'}${o.j.guruh && o.j.guruh.kod ? ' · 🏆 guruh ' + o.j.guruh.kod : ''}`);
     else log(`   oila: bulutda ma'lumot yo'q`);
   });
+  const eg = await db.doc('ilova/egasi').get().catch(() => null), tg = eg && eg.exists ? (eg.data() || {}).tg : '';
+  log(`\n✈️ Telegram (yangi oilalar yozadi): ${tg || "qo'yilmagan — «telegram @username»"}`);
   const yetim = Object.keys(rx).filter(uid => !users.some(u => u.uid === uid));
   if (yetim.length) log(`\n⚠️ Akkaunti o'chirilgan, lekin ruxsat yozuvi qolgan: ${yetim.length} ta`);
 };
@@ -238,6 +242,21 @@ B.guruh = async ({ auth, db, log, A1, A2 }) => {
   log('   Telefonlarda: ilovani yopib qayta ochish → bola uyidagi 🏆 hafta reytingida va 🎮 o\'yinlar reytingida boshqa oila ko\'rinadi.');
 };
 
+/* ✈️ 0.7.7: egasining Telegram manzili — ilova/egasi {tg, ts}. Ochiq repoga yozilmaydi (faqat Firestore'da). */
+function tgToza(t) {
+  t = String(t || '').trim().replace(/^https?:\/\/(www\.)?t(elegram)?\.me\//i, '').replace(/^@/, '').replace(/[?#].*$/, '');
+  if (/^[A-Za-z][A-Za-z0-9_]{4,31}$/.test(t)) return t;
+  const n = t.replace(/\D/g, ''); return /^\+?[\d\s()-]+$/.test(t) && n.length >= 9 && n.length <= 15 ? '+' + n : '';
+}
+B.telegram = async ({ db, log, A1 }) => {
+  const ref = db.doc('ilova/egasi'), v = String(A1 || '').trim();
+  if (!v) { const d = await ref.get(), tg = d.exists ? (d.data() || {}).tg : ''; return log(tg ? `✈️ Telegram: ${tg}` : "✈️ Telegram hali qo'yilmagan — yangi oilalar «📤 Egasiga xabar» (ulashish) bilan yuboradi"); }
+  if (v === '-' || /^o'?chir$/i.test(v)) { await ref.delete(); return log("✈️ Telegram manzili o'chirildi"); }
+  const tg = tgToza(v); if (!tg) throw new Error('Telegram: @username (5–32 belgi: harf, raqam, _) yoki +998… telefon raqami');
+  await ref.set({ tg, ts: Date.now() });
+  log(`✈️ Telegram qo'yildi: ${tg}${tg[0] === '+' ? ' (raqam: xabar matni tayyor bo\'lmaydi — @username yaxshiroq)' : ''}. Yangi oila «✈️ Telegram'da egasiga yozish»ni bossa — xabar shu yerga keladi.`);
+};
+
 async function ishla(buyruq, deps) {
   const f = B[String(buyruq || 'yordam').toLowerCase()];
   if (!f) throw new Error('Noma\'lum buyruq: ' + buyruq + ' (yordam — ro\'yxat)');
@@ -258,7 +277,7 @@ function kalitTop(env, papka) {
   }
   return null;
 }
-module.exports = { ishla, B, haftaKunlari, haftaStat, tk, kalitTop };
+module.exports = { ishla, B, haftaKunlari, haftaStat, tk, kalitTop, tgToza };
 
 if (require.main === module) {
   (async () => {

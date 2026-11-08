@@ -1,5 +1,5 @@
 rules_version = '2';
-// Bilimjon 0.7.6 — Firestore xavfsizlik qoidalari (Firebase konsoli → Firestore → Rules ga qo'yiladi).
+// Bilimjon 0.7.7 — Firestore xavfsizlik qoidalari (Firebase konsoli → Firestore → Rules ga qo'yiladi).
 // 🛡️ RUXSAT TIZIMI: yangi oila bulutga faqat admin (Bilimjon egasi) tasdig'i bilan yoza oladi — ruxsat/{uid}.holat == 'ok'.
 // admin() dagi ID — admin akkaunt ID si. Uni QO'LDA yozmang: ilova o'zi qo'yadi (👨‍👩‍👧 → ☁️ Oila akkaunti → 🛡️ → «📋 Qoidalarni nusxalash»).
 // Bu fayl repo'da namuna sifatida turadi. Eski (0.5.0–0.7.0) qoidalar: qoidalar/firestore-0.5.0.rules
@@ -39,6 +39,13 @@ service cloud.firestore {
       allow create: if admin() || (ozi(uid) && sorov());
       allow update: if admin() || (ozi(uid) && resource.data.holat == 'kutish' && sorov());
       allow delete: if admin();
+    }
+
+    // ✈️ 0.7.7: ilova sozlamalari — egasi {tg, ts}: egasining Telegram manzili (yangi oila ruxsat so'raganda xabar shu yerga tayyorlanadi).
+    // O'qish — kirgan har kim (ruxsat kutayotgan oila ham), yozish — faqat admin.
+    match /ilova/{d} {
+      allow read: if kirgan();
+      allow write: if admin();
     }
 
     match /guruh/{kod} {

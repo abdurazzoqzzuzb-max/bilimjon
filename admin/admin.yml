@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       buyruq:
-        description: "yordam | holat | statistika | ruxsat | admin | parol | akkaunt | kochir | qoidalar | zaxira | guruh"
+        description: "yordam | holat | statistika | ruxsat | admin | parol | akkaunt | kochir | qoidalar | zaxira | guruh | telegram"
         required: true
         default: holat
       a1:
