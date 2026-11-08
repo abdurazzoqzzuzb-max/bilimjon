@@ -41,7 +41,7 @@ try:
     NAV('uy')
     ok(pg.locator('[data-zal].qulf').count() == 1 and '🔒' in pg.inner_text('[data-zal]'), "Uyda zal tugmasi 🔒 (missiyadan keyin)")
     pg.click('[data-zal]'); pg.wait_for_timeout(200)
-    ok('missiyani bajar' in pg.inner_text('body') and ev("location.hash") in ('#uy', ''), "Qulf tugma bosilsa — toast, zalga o'tmaydi")
+    ok('Zal hali yopiq' in pg.inner_text('body') and ev("location.hash") == '#zal' and pg.locator('[data-rux]').count() == 1, "Qulf tugma bosilsa — «yopiq» ekrani + 🔑 ota-ona ruxsati (0.7.6)")
     GO('zal')
     ok('Zal hali yopiq' in pg.inner_text('body'), "#zal to'g'ridan-to'g'ri — «yopiq» ekrani")
     GO('zal-turbo')
@@ -184,7 +184,7 @@ try:
     pg.select_option('#zl', '20'); pg.click('[data-save]'); pg.wait_for_timeout(300)
     ok(ev("BJ.A.S().sozlama.zal") == 20 and X(K, "A.zal.qoldi(b)") > 500, "20 daqiqa saqlandi → yana vaqt bor")
     ev("BJ.A.S().sozlama.zal = 0; BJ.A.save(true)"); NAV('uy')
-    ok(pg.locator('[data-zal]').count() == 0, "0 — zal yopiq: uyda tugma yo'q")
+    ok(pg.locator('[data-zal].qulf').count() == 1 and '🔑' in pg.inner_text('[data-zal]'), "0 — zal yopiq: uyda faqat «🔑 ota-ona ruxsati bilan» tugmasi (0.7.6)")
     GO('zal'); ok('Zal yopiq' in pg.inner_text('body'), "#zal → «ota-ona o'chirgan»")
     ev("BJ.A.S().sozlama.zal = 10; BJ.A.save(true)"); X(K, "(b.zal.sek={}, A.save(true), 0)")
 
