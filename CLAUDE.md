@@ -35,6 +35,12 @@ Kontent banki `BJ.bank` → generatorlar `BJ.gen` (mat M0–M2, mantiq L, ona ti
 - `obuna`: bulut hujjati `q === 'admin'` bo'lsa undagi `guruh` olinadi.
 - 📱 Bitta bola — bitta qurilma (0.8.0): `b.qurilma {id, nom, ts}` — bolaDefaults'ga QO'SHILMAGAN; sinxronda qurilma maydoni yangirog'i (ts) qoladi (`bolaQabul`, `qurOl`). ⏱ O'yin vaqti — `oyinMin` (oila/bola, bo'sh = 1 daq); eski `oyinDaq` o'qilmaydi.
 
+## 🇬🇧 Road to 8 (IELTS) — `ielts/` (0.4.0, 08.11)
+- Alohida sahifa `…/bilimjon/ielts/` — bolalar ilovasiga tegmaydi (o'z SW'i yo'q). Manba endi `ielts/index.html` o'zi (0.3.0 planshet HTML + ☁️ bulut moduli). Versiya: `R8.meta.version` + `ielts/version.json` (ilova o'zi yangilanadi, mashq paytida emas).
+- Bulut (qoidalar o'zgarmagan): `oila/{uid}/ielts/holat` (`j` = to'liq holat JSON, ≤60 s / mashq tugashi bilan), `jonli` (≤30 s), `sozlama.norma` (faqat admin). Kirish — Bilimjon akkaunti + 🛡️ ruxsat («Road to 8 (IELTS)»); admin akkaunt → 👑 nazorat paneli (jonli, 7 kun, mashqlar, norma, JSON). Faqat Chrome (boshqa brauzer → `intent://` Chrome).
+- 0.4.0: ⚠️ taxmin (o'qishga yetmaydigan vaqt) va ℹ️ 12 soat ichida qayta to'plam — natija/XP/muhrga kirmaydi; takrorlash — darsning 1-qadami; norma 120 daq (yakshanba yarmi); bosh sahifa — norma + bitta tugma.
+- Hafta rejasi (u tasdiqlagan): Tokyo/London + MP3, eslatmalar + 21:00 Telegram hisobot, Bilimjon reytingi (reja % bo'yicha) + zal qulfi, diagnostik mock.
+
 ## 👑 Admin (Claude chatdan; telefon/akkaunt yo'qolsa ham)
 - Yopiq repo `abdurazzoqzzuzb-max/bilimjon-admin`, workflow `admin.yml` (main'dagi `admin/admin.js` ni ishlatadi). Ishga tushirish: GitHub MCP `actions_run_trigger` (run_workflow, `admin.yml`, ref `main`, inputs `{buyruq, a1, a2, tasdiq}`) → `actions_list` (runs → jobs) → `get_job_logs` (job_id, return_content); yoki `bash admin/claude_adm.sh <buyruq> [a1] [a2] [tasdiq]` (gh ishlasa).
 - Buyruqlar: `holat`, `statistika [email]`, `ruxsat <email> ok|rad|blok|ochir`, `ruxsat hammasi ok`, `guruh <email1> <email2>`, `telegram [@user|-]`, `qoidalar <admin email>` (beta/firestore.rules bo'lsa o'sha), `zaxira` (har dushanba o'zi ham), `admin <email> ber|ol`, `parol`, `akkaunt`, `kochir` — oxirgi to'rttasi FAQAT u aniq so'rasa.
