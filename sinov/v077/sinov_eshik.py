@@ -119,20 +119,20 @@ try:
     ok(bad and eg.get('tg') == 'Bilim_Ega' and isinstance(eg.get('ts'), int), "✈️ «💾 Saqlash»: noto'g'ri manzil rad, @Bilim_Ega → ilova/egasi")
     # ===== D) 2-yangi telefon: Telegram tugmasi tayyor xabar bilan =====
     J = tel(br, 'YANGI2'); J.click('[data-sk]'); J.click('[data-nx]'); kut(J, "!!document.querySelector('#be')")
-    royxat(J, 'javlon@test.uz', 'Javlon oila'); kut(J, "!!document.querySelector('a.tg')", 6000)
+    royxat(J, 'dost@test.uz', 'Dost oila'); kut(J, "!!document.querySelector('a.tg')", 6000)
     sur(J, 'e3_kutish'); href = J.get_attribute('a.tg', 'href') or ''; txt = unquote(href.split('?text=')[-1]) if '?text=' in href else ''
-    ok(href.startswith('https://t.me/Bilim_Ega?text=') and 'javlon@test.uz' in txt and 'Javlon oila' in txt and J.get_attribute('a.tg', 'target') == '_blank',
+    ok(href.startswith('https://t.me/Bilim_Ega?text=') and 'dost@test.uz' in txt and 'Dost oila' in txt and J.get_attribute('a.tg', 'target') == '_blank',
        "⏳ kutish ekranida «✈️ Telegram'da egasiga yozish» → t.me/Bilim_Ega, xabarda oila va email")
     ok(J.locator('[data-rxm]').count() == 1 and J.evaluate("document.documentElement.scrollWidth") <= 390, "zaxira: «📤 Boshqa yo'l bilan» · 390 px")
     # ===== E) Egasi ✅ → ilova ochiladi: oila yaratish → ishlaydi =====
-    with LOCK: STORE['ruxsat/U_javlontestuz']['holat'] = 'ok'
+    with LOCK: STORE['ruxsat/U_dosttestuz']['holat'] = 'ok'
     kut(J, "!!document.querySelector('#on')", 12000)
     ok(ONB(J) and HASH(J) in ('', '#'), "egasi ✅ → shu ekran o'zi yangilanadi → oila yaratish (bulut bo'sh)")
-    J.fill('#on', 'Javlon oila'); J.fill('#p1', '4321'); J.fill('#p2', '4321'); J.click('#go'); J.wait_for_timeout(500)
+    J.fill('#on', 'Dost oila'); J.fill('#p1', '4321'); J.fill('#p2', '4321'); J.click('#go'); J.wait_for_timeout(500)
     ok(J.evaluate("!!BJ.A.S().oila") and HASH(J).startswith('#ota'), "oila yaratildi → bola qo'shish (ota-ona paneli)")
     J.goto(URL + '?eshik=1#uy'); J.wait_for_timeout(600); ok(HASH(J) != '#bulut' and HASH(J) != '#tanish', "qayta ochilganda ilova ochiq (eshik yo'q)")
     def oilaBulutda():
-        x = STORE.get('oila/U_javlontestuz'); return bool(x and json.loads(x['j']).get('oila', {}).get('nom') == 'Javlon oila')
+        x = STORE.get('oila/U_dosttestuz'); return bool(x and json.loads(x['j']).get('oila', {}).get('nom') == 'Dost oila')
     t0 = time.time()
     while time.time() - t0 < 12:
         with LOCK:
