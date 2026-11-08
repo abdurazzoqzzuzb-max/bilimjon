@@ -7014,11 +7014,22 @@ function umumiyQabul(o, rh) {
 /* ---------- BOLA ---------- */
 function bolaQabul(bid, d) {
   let b; try { b = JSON.parse(d.j); } catch (e) { return false; }
-  const s = S(); b.id = bid; s.bolalar[bid] = b; if (!s.tartib.includes(bid)) s.tartib.push(bid);
-  A.setS(s); L.sync.b[bid] = { h: hsh(JSON.stringify(S().bolalar[bid])), ts: d.ts || Date.now(), r: hsh(d.j) }; lsave(); return true;
+  const s = S(), m = s.bolalar[bid] && s.bolalar[bid].qurilma, kq = b.qurilma || {};
+  /* 📱 0.8.0: qurilma maydonida yangirog'i (ts) qoladi — eski qurilmaning kech kelgan yozuvi o'tkazishni bekor qilmasin; saqlangan bo'lsa bulutga qayta yuboriladi */
+  const qSaqla = !!(m && m.id && m.id !== kq.id && (m.ts || 0) > (kq.ts || 0));
+  b.id = bid; if (qSaqla) b.qurilma = m; s.bolalar[bid] = b; if (!s.tartib.includes(bid)) s.tartib.push(bid);
+  A.setS(s); L.sync.b[bid] = { h: qSaqla ? 'q' : hsh(JSON.stringify(S().bolalar[bid])), ts: d.ts || Date.now(), r: hsh(d.j) }; lsave(); return true;
+}
+/* 📱 0.8.0: bola shu telefonda faol yoki o'zgargan bo'lsa ham — qurilma maydoni (boshqa qurilmaga o'tkazish, qurilma nomi) darhol olinadi */
+function qurOl(bid, j) {
+  const b = S().bolalar[bid]; if (!b) return; let q; try { q = (JSON.parse(j) || {}).qurilma; } catch (e) { return; }
+  if (!q || !q.id) return; const m = b.qurilma || {};
+  if (q.id === m.id ? q.nom === m.nom : (q.ts || 0) <= (m.ts || 0)) return;
+  const toza = !ozgargan(bid); b.qurilma = q.id === m.id ? Object.assign({}, m, { nom: q.nom }) : q; A.save(true);
+  if (toza && L.sync.b[bid]) { L.sync.b[bid].h = hsh(JSON.stringify(S().bolalar[bid])); lsave(); }
 }
 const ozgargan = bid => { const b = S().bolalar[bid], r = L.sync.b[bid]; return !!b && (!r || r.h !== hsh(JSON.stringify(b))); };
-const faolMi = bid => S().joriy === bid && FAOL.test(location.hash.slice(1));
+const faolMi = bid => S().joriy === bid && FAOL.test(location.hash.slice(1)) && !document.querySelector('.qurq');   /* 📱 «boshqa qurilmada» ekrani — faol emas */
 function qaytaChiz() { if (!FAOL.test(location.hash.slice(1)) && !$('.scrim')) { const h = location.hash.slice(1); if (h.indexOf('ota') !== 0 || h === 'ota' || h === 'ota-bulut') A.render(); } }
 function pendingQabul() { let n = 0; Object.keys(pending).forEach(bid => { if (faolMi(bid)) return; const d = pending[bid]; delete pending[bid]; if (!ozgargan(bid) && bolaQabul(bid, d)) n++; }); if (n) qaytaChiz(); }
 addEventListener('hashchange', () => { if (user) setTimeout(pendingQabul, 50); });
@@ -7080,8 +7091,8 @@ function obuna() {
     snap.docChanges().forEach(ch => { const d = ch.doc, bid = d.id; if (d.metadata.hasPendingWrites) return;
       if (ch.type === 'removed') { if (L.sync.b[bid] && !ozgargan(bid) && S().bolalar[bid] && !faolMi(bid)) { delete L.sync.b[bid]; lsave(); A.delBola(bid); n++; } return; }
       const x = d.data(); if (!x || x.q === my || typeof x.j !== 'string') return; const r = L.sync.b[bid]; if (r && r.r === hsh(x.j)) return; /* 0.6.0: soatga emas, mazmunga qarab */
-      if (S().bolalar[bid] && ozgargan(bid)) return; /* ikkala telefonda o'zgargan — shu telefon (ishlatilayotgan) ustun */
-      if (faolMi(bid)) { pending[bid] = x; return; }
+      if (S().bolalar[bid] && ozgargan(bid)) { qurOl(bid, x.j); return; } /* ikkala telefonda o'zgargan — shu telefon (ishlatilayotgan) ustun; faqat qurilma maydoni olinadi */
+      if (faolMi(bid)) { qurOl(bid, x.j); pending[bid] = x; return; }
       if (bolaQabul(bid, x)) n++; });
     if (n) qaytaChiz(); }, e => { xato = xabar(e); }));
 }
