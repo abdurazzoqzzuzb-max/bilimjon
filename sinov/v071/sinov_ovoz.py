@@ -94,7 +94,7 @@ try:
         NV[0] += 1; pg.goto(URL + f'?tez=1&r={NV[0]}#' + h)
         ev(("BJ.A.otaOk={rol:'admin',t:Date.now()}; " if ota else '') + 'BJ.A.render()'); pg.wait_for_timeout(ms)
     def missiya(bid, fan='mat'):
-        X(bid, f"""(()=>{{const m=b.missiya=A.buildMission(b); const bl=m.steps.find(s=>s.k==='blok'&&s.fan==='{fan}')||m.steps.find(s=>s.k==='blok'); const y=m.steps.find(s=>s.k==='yakun')||{{k:'yakun'}};
+        X(bid, f"""(()=>{{const m=b.missiya=A.buildMission(b); const bl=m.steps.find(s=>s.k==='blok'&&s.fan==='{fan}')||m.steps.find(s=>s.k==='blok')||{{k:'blok',fan:'{fan}',n:3}}; if(!m.steps.some(s=>s.k==='blok')) m.steps.push({{k:'blok',fan:'{fan}'==='mat'?'til':'mat',n:1}}); const y=m.steps.find(s=>s.k==='yakun')||{{k:'yakun'}};
           m.steps=[Object.assign({{}},bl,{{n:3,olimp:0}}), y]; m.si=0; m.res={{}}; m.cur=null; m.done=false; m.soraQ=[]; m.soraN=0; A.save(true); return 1}})()""")
     def setj(bid): ev(f"(()=>{{const s=BJ.A.S(); s.joriy='{bid}'; BJ.A.save(true)}})()")
     mp3 = lambda: len([u for u in REQ if u.endswith('.mp3') and '/namuna/' not in u])

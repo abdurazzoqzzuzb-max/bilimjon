@@ -98,23 +98,28 @@ try:
     ev("location.hash='ota-hisobot'"); sur(pg, '14_hisobot', ms=600)
     pg.context.close()
 
-    # ===== 3) ☁️ oila akkaunti (soxta bulut) =====
+    # ===== 3) 🔒 0.7.7: yangi telefon — 📖 tanishtiruv → ☁️ ro'yxat → 📨 ruxsat → ✈️ Telegram → ✅ → oila (soxta bulut; ?eshik=1 — localhost'da eshik yoqiladi) =====
     pg = kontekst(True); ev = pg.evaluate
-    pg.goto(URL); pg.wait_for_timeout(600); pg.fill('#on', 'Namuna oila'); pg.fill('#p1', '1234'); pg.fill('#p2', '1234'); pg.click('#go'); pg.wait_for_timeout(400)
-    AZ, LO = ev(NAMUNA)
-    ev("BJ.A.otaOk={rol:'admin',t:Date.now()}"); pg.goto(URL + '#ota-bulut'); pg.wait_for_timeout(900)
+    with LOCK: STORE['ilova/egasi'] = {'tg': 'bilimjon_egasi', 'ts': 1}   # namuna manzil (ekranda ko'rinmaydi)
+    pg.goto(URL + '?eshik=1'); pg.wait_for_timeout(700); sur(pg, '30_tanish1', ms=1600)
+    pg.click('.tndots button[data-d="4"]'); sur(pg, '31_tanish5', ms=900)
+    pg.click('[data-nx]'); pg.wait_for_timeout(900)
     pg.fill('#be', 'namuna.oila@gmail.com'); pg.fill('#bp', 'parol123'); sur(pg, '20_akkaunt')
     STORE['ruxsat/U_admin'] = {'holat': 'ok'}
     pg.click('[data-up]'); pg.wait_for_timeout(1500)
     if pg.locator('#rxn').count(): pg.fill('#rxn', 'Namuna oila')
     sur(pg, '21_ruxsat_kerak', ms=500)
-    if pg.locator('[data-rxq]').count(): pg.click('[data-rxq]'); pg.wait_for_timeout(1200)
+    if pg.locator('[data-rxq]').count(): pg.click('[data-rxq]'); pg.wait_for_timeout(1500)
     sur(pg, '22_kutilmoqda', ms=400)
     u = [k.split('/')[1] for k in STORE if k.startswith('ruxsat/') and k != 'ruxsat/U_admin']
     with LOCK:
         for x in u: STORE['ruxsat/' + x] = dict(STORE['ruxsat/' + x], holat='ok', hal=int(time.time() * 1000))
+    try: pg.wait_for_selector('#on', timeout=15000)
+    except Exception: print('⚠️ ruxsatdan keyin oila ekrani chiqmadi')
+    pg.fill('#on', 'Namuna oila'); pg.fill('#p1', '1234'); pg.fill('#p2', '1234'); pg.click('#go'); pg.wait_for_timeout(400)
+    AZ, LO = ev(NAMUNA)
     kutpy(pg, lambda: any(k.startswith('oila/') for k in STORE), 15000); pg.wait_for_timeout(1200)
-    pg.goto(URL + '#ota-bulut'); ev("BJ.A.otaOk={rol:'admin',t:Date.now()}"); ev("BJ.A.render()"); sur(pg, '23_ulandi', ms=900)
+    pg.goto(URL + '?eshik=1#ota-bulut'); ev("BJ.A.otaOk={rol:'admin',t:Date.now()}"); ev("BJ.A.render()"); sur(pg, '23_ulandi', ms=900)
     ev("location.hash='ota-reyting'"); pg.wait_for_timeout(700)
     if pg.locator('#gk').count(): pg.fill('#gk', 'K7M2QX9PLA'); ev("document.querySelector('#gk').scrollIntoView({block:'center'})")
     sur(pg, '24_guruh_kod')
