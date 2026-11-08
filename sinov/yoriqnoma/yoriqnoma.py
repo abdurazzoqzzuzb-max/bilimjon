@@ -101,7 +101,7 @@ qadam(3, '«Установить» → bosh ekrandan oching', 'Tasdiqlang. Endi 
 bosh('🔒', 'Kirish va ruxsat', 'Birinchi ochilganda — 3 daqiqa') + '<div class="qlar">' +
 qadam(1, 'Tanishtiruv → «Ro\'yxatdan o\'tish»', 'Ilova o\'zi <b>5 ta rasmli slayd</b> bilan tanishtiradi. Oxirgisida — <b>«✉️ Ro\'yxatdan o\'tish / kirish»</b>.', f'<div class="row2">{tel("30_tanish1", 132, .43)}{tel("31_tanish5", 132, .43)}</div>') +
 qadam(2, 'Email va yangi parol', 'Email va <b>yangi parol</b> (Gmail paroli emas) → <b>«Ro\'yxatdan o\'tish»</b>.', f'<div class="row2">{tel("20_akkaunt", 132, .5)}<div class="izoh">🔑 iPhone ham, Android ham — <b>faqat email + parol</b>. Parolni yozib qo\'ying: oilaning 2-telefonida ham kerak.</div></div>') +
-qadam(3, 'Ruxsat so\'rang → Telegram', 'Oila nomi → <b>«📨 Ruxsat so\'rash»</b> → <b>«✈️ Telegram\'da egasiga yozish»</b> → Telegram\'da <b>«Yuborish»</b>.', f'<div class="row2">{tel("21_ruxsat_kerak", 132, .48)}{tel("22_kutilmoqda", 132, .48)}</div>') +
+qadam(3, 'Ruxsat so\'rang → Telegram', 'Oila nomi → <b>«📨 Ruxsat so\'rash»</b> → <b>«✈️ Telegram\'da egasiga yozish»</b> → Telegram\'da <b>➤</b> (yuborish).', f'<div class="row2">{tel("21_ruxsat_kerak", 132, .48)}{tel("22_kutilmoqda", 132, .48)}</div>') +
 '</div><div class="eslat">⏳ Ruxsatgacha ilova ochilmaydi. Egasi ✅ bosishi bilan ekran <b>o\'zi</b> yangilanadi — keyingi sahifa.</div>' + oyoq(4),
 # 5 — oila va bola (ruxsatdan keyin)
 bosh('👨‍👩‍👧', 'Oila va bolalar', 'Ruxsatdan keyin — 2 daqiqa') + '<div class="qlar">' +
@@ -110,7 +110,7 @@ qadam(2, 'Bolani qo\'shing', '<b>Laqab</b> (ism-familiya emas), avatar va <b>sin
 '</div><div class="eslat">✅ Tayyor! Natijalar bulutda o\'zi saqlanadi. Bola o\'z rasmini bosadi va <b>«🚀 Missiyani boshlash»</b>.</div>' + oyoq(5),
 # 6 — reyting va kundalik
 bosh('🏆', 'Oilalar o\'rtasida reyting', 'Bolalar boshqa oila bolalari bilan musobaqalashadi') + '<div class="qlar">' +
-qadam(1, 'Guruh kodini kiriting', 'Sizni taklif qilgan oiladan <b>10 belgili guruh kodini</b> so\'rang. 👨‍👩‍👧 → <b>«📲 Oila reytingi»</b> → kod → <b>«🔗 Qo\'shilish»</b>.', f'<div class="row2">{tel("24_guruh_kod", 140, .42)}{tel("10_rekordlar", 140, .42)}</div>') +
+qadam(1, 'Guruh kodini kiriting', 'Sizni taklif qilgan oiladan <b>10 belgili guruh kodini</b> so\'rang. 👨‍👩‍👧 → <b>«📲 Oila reytingi»</b> → kod → <b>«🔗 Qo\'shilish»</b>. Yoki egasiga yozing — o\'zi qo\'shib qo\'yadi.', f'<div class="row2">{tel("24_guruh_kod", 140, .42)}{tel("10_rekordlar", 140, .42)}</div>') +
 '</div><div class="kun"><b>Har kuni</b><ul><li>🚀 <b>1 ta missiya</b> (20–35 daq) — keyin 🎮 <b>o\'yinlar zali</b> ochiladi.</li><li>🔑 Zalni missiyasiz ham ochish mumkin — ota-ona PIN bilan.</li><li>📊 Ota-ona panelida — <b>hafta xulosasi</b> va bolaning savollari.</li>'
 f'<li>🔄 Yangi versiya chiqqanda — ilovani <b>yopib qayta oching</b> (tepada «v{VK}» yozuvi).</li></ul></div>'
 '<div class="maxfiy kichik"><b>🔒 Eslatma</b><span>Ilova shaxsiy — boshqalarga ulashmang. Savol bo\'lsa — sizni taklif qilgan odamga yozing.</span></div>' + oyoq(6),

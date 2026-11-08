@@ -7,6 +7,7 @@ from playwright.sync_api import sync_playwright
 D = os.path.dirname(os.path.abspath(__file__)); SITE = os.path.abspath(os.path.join(D, '..', '..'))
 PORT = 8799; URL = f'http://localhost:{PORT}/'
 srv = subprocess.Popen([sys.executable, '-m', 'http.server', str(PORT)], cwd=SITE, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL); time.sleep(1)
+ESKI = bytes.fromhex('4261626f786174').decode(); YANGI = 'S' + ESKI[1:]   # bolaning ismi repoga ochiq yozilmaydi (ilovada ham — fnv xesh)
 ERR = []
 def ok(c, m): print(('✅ ' if c else '❌ ') + m); (None if c else ERR.append(m))
 try:
@@ -27,12 +28,12 @@ try:
     pg.fill('#on', 'Sinov'); pg.fill('#p1', '1234'); pg.fill('#p2', '1234'); pg.click('#go'); pg.wait_for_timeout(300)
     # ---------- A) bir martalik ism tuzatish ----------
     ev("""(()=>{const A=BJ.A; const a=A.newBola({laqab:'Malika',daraja:'g1',avatar:'🦋',dunyo:'orol'}); const s=A.S(); s.uyqu=''; s.sozlama.uyqu=''; s.joriy=a.id; A.save(true);
-      const raw=JSON.parse(localStorage.getItem(A.KEY)); const id='bxato01'; raw.bolalar[id]=Object.assign(JSON.parse(JSON.stringify(raw.bolalar[a.id])),{id, laqab:'Baboxat', kod:'B9'}); raw.tartib.push(id); A.setS(raw); })()""")   # eski holat yuklanganda (migrate → fixBola)
+      const raw=JSON.parse(localStorage.getItem(A.KEY)); const id='bxato01'; raw.bolalar[id]=Object.assign(JSON.parse(JSON.stringify(raw.bolalar[a.id])),{id, laqab:'""" + ESKI + """', kod:'B9'}); raw.tartib.push(id); A.setS(raw); })()""")   # eski holat yuklanganda (migrate → fixBola)
     pg.reload(); pg.wait_for_timeout(500)
     L = ev("BJ.A.bolalar().map(b => [b.laqab, !!b.ismTuz])")
-    ok(['Saboxat', True] in L and ['Malika', False] in L, f"xatoli ism bir marta tuzatildi, boshqasi o'zgarmadi: {L}")
-    ev("(()=>{const b=BJ.A.bolalar().find(x=>x.ismTuz); b.laqab='Baboxat'; BJ.A.save(true)})()"); pg.reload(); pg.wait_for_timeout(400)
-    ok('Baboxat' in ev("BJ.A.bolalar().map(b=>b.laqab)"), "ota-ona qaytadan o'zgartirsa — ilova qayta tegmaydi (bir martalik)")
+    ok([YANGI, True] in L and ['Malika', False] in L, f"xatoli ism bir marta tuzatildi, boshqasi o'zgarmadi: {L}")
+    ev("(()=>{const b=BJ.A.bolalar().find(x=>x.ismTuz); b.laqab='" + ESKI + "'; BJ.A.save(true)})()"); pg.reload(); pg.wait_for_timeout(400)
+    ok(ESKI in ev("BJ.A.bolalar().map(b=>b.laqab)"), "ota-ona qaytadan o'zgartirsa — ilova qayta tegmaydi (bir martalik)")
     ok('611f9d28' in open(os.path.join(SITE, 'index.html'), encoding='utf-8').read() and 'oxat' not in open(os.path.join(SITE, 'index.html'), encoding='utf-8').read().lower(),
        "repoda ism yo'q — faqat xesh")
     # ---------- B) savol ovozi vaqti javob tezligidan ayiriladi ----------

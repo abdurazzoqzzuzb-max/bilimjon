@@ -20,41 +20,41 @@ const auth = {
 };
 let QOYILDI = null; const rules = { releaseFirestoreRulesetFromSource: async s => { QOYILDI = s; } };
 // --- ma'lumot
-USERS.push(user('UadminUID', 'admin@test.uz'), user('UjavUID', 'javlon@test.uz'), user('Ujav2UID', 'javlon2@test.uz'));
+USERS.push(user('UadminUID', 'admin@test.uz'), user('UjavUID', 'dost@test.uz'), user('Ujav2UID', 'dost2@test.uz'));
 const bu = haftaKunlari(0), otgan = haftaKunlari(1);
 const bola = (id, laqab, d) => ({ id, laqab, avatar: '🌸', daraja: 'g1', kun: d });
 ST['oila/UadminUID'] = { j: JSON.stringify({ oila: { nom: 'Admin oila' }, tartib: ['a1'] }), ts: Date.now(), v: '0.7.5', e: 'admin@test.uz' };
 ST['oila/UadminUID/bolalar/a1'] = { j: JSON.stringify(bola('a1', 'Ali', { [bu[0]]: { faol: 1800, n: 30, ok1: 27, missiya: 1 } })) };
-ST['oila/UjavUID'] = { j: JSON.stringify({ oila: { nom: 'Javlon oila' }, tartib: ['s1'] }), ts: Date.now() - 3600e3, v: '0.7.4' };
+ST['oila/UjavUID'] = { j: JSON.stringify({ oila: { nom: 'Dost oila' }, tartib: ['s1'] }), ts: Date.now() - 3600e3, v: '0.7.4' };
 ST['oila/UjavUID/bolalar/s1'] = { j: JSON.stringify(bola('s1', 'Sabo', { [bu[1]]: { faol: 1500, n: 20, ok1: 17, missiya: 1 }, [otgan[2]]: { faol: 900, n: 10, ok1: 6 } })) };
 ST['oila/UjavUID/log/s1_' + bu[1]] = { bid: 's1', kun: bu[1], e: ['{"t":"ans"}'] };
-ST['ruxsat/UjavUID'] = { email: 'javlon@test.uz', oila: 'Javlon oila', ts: 1, holat: 'ok' };
+ST['ruxsat/UjavUID'] = { email: 'dost@test.uz', oila: 'Dost oila', ts: 1, holat: 'ok' };
 ST['guruh/ABCDEFGH23'] = { yaratdi: 'UadminUID', ts: 1 }; ST['guruh/ABCDEFGH23/oilalar/UadminUID'] = { ts: 1 };
 const L = []; const log = s => L.push(String(s)); const run = (b, x) => ishla(b, Object.assign({ auth, db, rules, log, A1: '', A2: '', TASDIQ: '' }, x || {}));
 const xato = async (b, x) => { try { await run(b, x); return null; } catch (e) { return e.message; } };
 (async () => {
   L.length = 0; await run('holat'); const h = L.join('\n');
-  ok(/akkauntlar: 3 ta/.test(h) && h.includes('javlon2@test.uz') && h.includes('«Javlon oila»') && h.includes('Sabo') && h.includes('v0.7.4'), 'holat: 3 akkaunt (2 sahifa), oila, bola, versiya');
+  ok(/akkauntlar: 3 ta/.test(h) && h.includes('dost2@test.uz') && h.includes('«Dost oila»') && h.includes('Sabo') && h.includes('v0.7.4'), 'holat: 3 akkaunt (2 sahifa), oila, bola, versiya');
   ok(h.includes('ruxsat: ruxsat bor') && h.includes("ruxsat: so'ralmagan") && h.includes("bulutda ma'lumot yo'q"), 'holat: ruxsat holatlari va bulutsiz akkaunt');
-  L.length = 0; await run('statistika', { A1: 'javlon@test.uz' }); const s = L.join('\n');
+  L.length = 0; await run('statistika', { A1: 'dost@test.uz' }); const s = L.join('\n');
   ok(s.includes("bu hafta   : 1 kun · 25 daq · 1 missiya · 85% to'g'ri (20)") && s.includes("1 hafta oldin: 1 kun · 15 daq · 0 missiya · 60% to'g'ri (10)"), 'statistika: bu hafta va o\'tgan hafta');
   L.length = 0; await run('statistika', { A1: 'hammasi' }); ok(L.join('\n').includes('Ali') && L.join('\n').includes('Sabo'), 'statistika hammasi: ikkala oila');
-  await run('ruxsat', { A1: 'javlon2@test.uz', A2: 'ok' });
-  ok(ST['ruxsat/Ujav2UID'] && ST['ruxsat/Ujav2UID'].holat === 'ok' && ST['ruxsat/Ujav2UID'].email === 'javlon2@test.uz', "ruxsat: so'rovsiz akkauntga ham ruxsat (yozuv yaratiladi)");
-  await run('ruxsat', { A1: 'javlon@test.uz', A2: 'blok' }); ok(ST['ruxsat/UjavUID'].holat === 'blok' && ST['ruxsat/UjavUID'].oila === 'Javlon oila', "ruxsat blok: eski maydonlar saqlanadi");
-  ok(/ok \| rad/.test(await xato('ruxsat', { A1: 'javlon@test.uz', A2: 'zo\'r' }) || ''), 'ruxsat: noto\'g\'ri holat rad');
-  await run('admin', { A1: 'javlon2@test.uz', A2: 'ber' }); ok(USERS.find(u => u.uid === 'Ujav2UID').customClaims.admin === true, 'admin ber: custom claim');
-  await run('admin', { A1: 'javlon2@test.uz', A2: 'ol' }); ok(!('admin' in USERS.find(u => u.uid === 'Ujav2UID').customClaims), 'admin ol');
-  ok(/6 belgi/.test(await xato('parol', { A1: 'javlon@test.uz', A2: '123' }) || ''), 'parol: 6 belgidan kam — rad');
-  L.length = 0; await run('parol', { A1: 'javlon@test.uz', A2: '08801991' });
+  await run('ruxsat', { A1: 'dost2@test.uz', A2: 'ok' });
+  ok(ST['ruxsat/Ujav2UID'] && ST['ruxsat/Ujav2UID'].holat === 'ok' && ST['ruxsat/Ujav2UID'].email === 'dost2@test.uz', "ruxsat: so'rovsiz akkauntga ham ruxsat (yozuv yaratiladi)");
+  await run('ruxsat', { A1: 'dost@test.uz', A2: 'blok' }); ok(ST['ruxsat/UjavUID'].holat === 'blok' && ST['ruxsat/UjavUID'].oila === 'Dost oila', "ruxsat blok: eski maydonlar saqlanadi");
+  ok(/ok \| rad/.test(await xato('ruxsat', { A1: 'dost@test.uz', A2: 'zo\'r' }) || ''), 'ruxsat: noto\'g\'ri holat rad');
+  await run('admin', { A1: 'dost2@test.uz', A2: 'ber' }); ok(USERS.find(u => u.uid === 'Ujav2UID').customClaims.admin === true, 'admin ber: custom claim');
+  await run('admin', { A1: 'dost2@test.uz', A2: 'ol' }); ok(!('admin' in USERS.find(u => u.uid === 'Ujav2UID').customClaims), 'admin ol');
+  ok(/6 belgi/.test(await xato('parol', { A1: 'dost@test.uz', A2: '123' }) || ''), 'parol: 6 belgidan kam — rad');
+  L.length = 0; await run('parol', { A1: 'dost@test.uz', A2: '08801991' });
   ok(USERS.find(u => u.uid === 'UjavUID')._parol === '08801991' && !L.join('').includes('08801991'), 'parol o\'rnatildi va logga yozilmadi');
   ok(/yo'q/.test(await xato('parol', { A1: 'yoq@test.uz', A2: '123456' }) || ''), "parol: yo'q email — tushunarli xato");
-  await run('akkaunt', { A1: 'javlon@test.uz', A2: 'ochir' }); ok(USERS.find(u => u.uid === 'UjavUID').disabled, "akkaunt ochir: o'chirib qo'yildi");
-  await run('akkaunt', { A1: 'javlon@test.uz', A2: 'yoq' }); ok(!USERS.find(u => u.uid === 'UjavUID').disabled, 'akkaunt yoq');
-  ok(/TASDIQ=HA/.test(await xato('kochir', { A1: 'javlon@test.uz', A2: 'javlon2@test.uz' }) || ''), "kochir: tasdiqsiz — rad");
-  await run('kochir', { A1: 'javlon@test.uz', A2: 'javlon2@test.uz', TASDIQ: 'HA' });
+  await run('akkaunt', { A1: 'dost@test.uz', A2: 'ochir' }); ok(USERS.find(u => u.uid === 'UjavUID').disabled, "akkaunt ochir: o'chirib qo'yildi");
+  await run('akkaunt', { A1: 'dost@test.uz', A2: 'yoq' }); ok(!USERS.find(u => u.uid === 'UjavUID').disabled, 'akkaunt yoq');
+  ok(/TASDIQ=HA/.test(await xato('kochir', { A1: 'dost@test.uz', A2: 'dost2@test.uz' }) || ''), "kochir: tasdiqsiz — rad");
+  await run('kochir', { A1: 'dost@test.uz', A2: 'dost2@test.uz', TASDIQ: 'HA' });
   ok(ST['oila/Ujav2UID'] && ST['oila/Ujav2UID/bolalar/s1'] && ST['oila/Ujav2UID/log/s1_' + bu[1]] && ST['oila/UjavUID/bolalar/s1'], "kochir: oila + bola + log yangi akkauntda, eskisi qoldi");
-  ok(/TASDIQ=HA/.test(await xato('akkaunt', { A1: 'javlon@test.uz', A2: 'ochirish' }) || ''), "akkaunt ochirish: tasdiqsiz — rad");
+  ok(/TASDIQ=HA/.test(await xato('akkaunt', { A1: 'dost@test.uz', A2: 'ochirish' }) || ''), "akkaunt ochirish: tasdiqsiz — rad");
   const qd = fs.mkdtempSync(path.join(os.tmpdir(), 'bjq')); const R0 = path.join(__dirname, '..', '..'), QF = [path.join(R0, 'firestore.rules'), path.join(R0, 'beta', 'firestore.rules')]   // eng yangi (claim bor) qoidalar
     .find(f => fs.existsSync(f) && fs.readFileSync(f, 'utf8').includes('token.admin')) || path.join(R0, 'firestore.rules');
   fs.copyFileSync(QF, path.join(qd, 'firestore.rules'));
@@ -65,10 +65,10 @@ const xato = async (b, x) => { try { await run(b, x); return null; } catch (e) {
   await run('qoidalar', { A1: 'admin@test.uz', QOIDA_FAYL: path.join(__dirname, '..', '..', 'firestore.rules') }).catch(() => {});
   fs.rmSync(path.join(qd, 'beta'), { recursive: true }); await run('qoidalar', { A1: 'admin@test.uz', QOIDA_FAYL: path.join(qd, 'firestore.rules') });
   ok(QOYILDI && QOYILDI.includes("'UadminUID'") && !QOYILDI.includes('__ADMIN_UID__') && QOYILDI.includes('request.auth.token.admin == true'), "qoidalar: admin uid qo'yildi, claim ham qoldi");
-  // qoidalar ogohlantirishi: bulutda oilasi bor, ruxsati yo'q (javlon — blok) akkauntlar ro'yxati
+  // qoidalar ogohlantirishi: bulutda oilasi bor, ruxsati yo'q (dost — blok) akkauntlar ro'yxati
   L.length = 0; await run('qoidalar', { A1: 'admin@test.uz', QOIDA_FAYL: path.join(qd, 'firestore.rules') }); const qw = L.join('\n');
-  ok(/Ruxsatsiz 1 ta oila/.test(qw) && qw.includes('javlon@test.uz') && !qw.includes('javlon2@test.uz'), "qoidalar: ruxsatsiz oilalar haqida ogohlantirish (admin va ruxsatlilar yo'q)");
-  // ruxsat hammasi ok: admin oilasiga ok, blok qilingan javlon o'zgarmaydi
+  ok(/Ruxsatsiz 1 ta oila/.test(qw) && qw.includes('dost@test.uz') && !qw.includes('dost2@test.uz'), "qoidalar: ruxsatsiz oilalar haqida ogohlantirish (admin va ruxsatlilar yo'q)");
+  // ruxsat hammasi ok: admin oilasiga ok, blok qilingan dost o'zgarmaydi
   L.length = 0; await run('ruxsat', { A1: 'hammasi', A2: 'ok' });
   ok(ST['ruxsat/UadminUID'] && ST['ruxsat/UadminUID'].holat === 'ok' && ST['ruxsat/UadminUID'].oila === 'Admin oila' && ST['ruxsat/UjavUID'].holat === 'blok' && /Ruxsat berildi: 1 ta oila · o'zgarmadi: 2 ta/.test(L.join('\n')), "ruxsat hammasi ok: bulutdagi oilalarga ruxsat, blok/ok o'zgarmaydi");
   ok(/hammasi ok/.test(await xato('ruxsat', { A1: 'hammasi', A2: 'rad' }) || ''), 'ruxsat hammasi: faqat ok');
@@ -106,19 +106,19 @@ const xato = async (b, x) => { try { await run(b, x); return null; } catch (e) {
   ok(/bulutda oila yo'q/.test(await xato('guruh', { A1: 'admin@test.uz', A2: 'bos@test.uz' }) || ''), "guruh: bulutda oilasi yo'q akkaunt — xato (hech narsa yozilmaydi)");
   const jA = j => JSON.parse(ST['oila/' + j].j);
   ST['oila/UadminUID'].j = JSON.stringify(Object.assign(jA('UadminUID'), { guruh: { kod: 'ABCDEFGH23', qoshildi: 1 } }));
-  const tsA = ST['oila/UadminUID'].ts; L.length = 0; await run('guruh', { A1: 'admin@test.uz', A2: 'javlon2@test.uz' });
-  ok(jA('Ujav2UID').guruh.kod === 'ABCDEFGH23' && ST['oila/Ujav2UID'].q === 'admin' && ST['guruh/ABCDEFGH23/oilalar/Ujav2UID'] && ST['oila/UadminUID'].ts === tsA && jA('Ujav2UID').oila.nom === 'Javlon oila' && ST['oila/Ujav2UID'].v === '0.7.4',
+  const tsA = ST['oila/UadminUID'].ts; L.length = 0; await run('guruh', { A1: 'admin@test.uz', A2: 'dost2@test.uz' });
+  ok(jA('Ujav2UID').guruh.kod === 'ABCDEFGH23' && ST['oila/Ujav2UID'].q === 'admin' && ST['guruh/ABCDEFGH23/oilalar/Ujav2UID'] && ST['oila/UadminUID'].ts === tsA && jA('Ujav2UID').oila.nom === 'Dost oila' && ST['oila/Ujav2UID'].v === '0.7.4',
     "guruh: 1-oilaning mavjud guruhi (ABCDEFGH23) — 2-oila qo'shildi, oila hujjati (j) faqat guruh bilan o'zgardi, admin hujjati tegmadi");
-  ok(/ABCDEFGH23/.test(L.join('\n')) && /Javlon oila/.test(L.join('\n')), 'guruh: logda kod va oila nomlari');
-  // boshqa guruhdan ko'chirish: javlon ZZZZZZZZZ2 da edi (o'z bolasi + begona a'zo)
+  ok(/ABCDEFGH23/.test(L.join('\n')) && /Dost oila/.test(L.join('\n')), 'guruh: logda kod va oila nomlari');
+  // boshqa guruhdan ko'chirish: dost ZZZZZZZZZ2 da edi (o'z bolasi + begona a'zo)
   ST['oila/UjavUID'].j = JSON.stringify(Object.assign(jA('UjavUID'), { guruh: { kod: 'ZZZZZZZZZ2' } }));
   ST['guruh/ZZZZZZZZZ2'] = { yaratdi: 'Ux', ts: 1 }; ST['guruh/ZZZZZZZZZ2/oilalar/UjavUID'] = { ts: 1 }; ST['guruh/ZZZZZZZZZ2/azo/s1'] = { uid: 'UjavUID', laqab: 'Sabo' }; ST['guruh/ZZZZZZZZZ2/azo/x9'] = { uid: 'Ux', laqab: 'Begona' };
-  await run('guruh', { A1: 'admin@test.uz', A2: 'javlon@test.uz' });
+  await run('guruh', { A1: 'admin@test.uz', A2: 'dost@test.uz' });
   ok(jA('UjavUID').guruh.kod === 'ABCDEFGH23' && !ST['guruh/ZZZZZZZZZ2/oilalar/UjavUID'] && !ST['guruh/ZZZZZZZZZ2/azo/s1'] && ST['guruh/ZZZZZZZZZ2/azo/x9'] && ST['guruh/ABCDEFGH23/oilalar/UjavUID'],
     "guruh: boshqa guruhdagi oila — u yerdan chiqarildi (faqat o'z a'zo yozuvi o'chdi), yangisiga qo'shildi");
   // ikkalasida ham guruh yo'q — yangi kod
   ST['oila/UadminUID'].j = JSON.stringify(Object.assign(jA('UadminUID'), { guruh: null })); ST['oila/Ujav2UID'].j = JSON.stringify(Object.assign(jA('Ujav2UID'), { guruh: null }));
-  await run('guruh', { A1: 'admin@test.uz', A2: 'javlon2@test.uz' }); const yk = jA('UadminUID').guruh && jA('UadminUID').guruh.kod;
+  await run('guruh', { A1: 'admin@test.uz', A2: 'dost2@test.uz' }); const yk = jA('UadminUID').guruh && jA('UadminUID').guruh.kod;
   ok(/^[A-Z2-9]{10}$/.test(yk || '') && yk !== 'ABCDEFGH23' && jA('Ujav2UID').guruh.kod === yk && ST['guruh/' + yk].yaratdi === 'UadminUID' && ST['guruh/' + yk + '/oilalar/UadminUID'] && ST['guruh/' + yk + '/oilalar/Ujav2UID'],
     `guruh: ikkalasida guruh yo'q — yangi kod ${yk}, guruh hujjati va ikkala oila`);
   L.length = 0; await run('holat'); ok(L.join('\n').includes('🏆 guruh ' + yk), "holat: oila qatorida 🏆 guruh kodi");

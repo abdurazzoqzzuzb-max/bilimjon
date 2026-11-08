@@ -277,32 +277,32 @@ try:
     abid = AD.evaluate("""(()=>{const A=BJ.A; const b=A.newBola({laqab:'Ali',daraja:'g1',avatar:'🦊',dunyo:'garaj'}); b.zal={rek:{turbo:{v:4.2,n:3,sana:A.todayKey(),ts:Date.now(),gl:'g1'}},sek:{},son:{},guv:[],hb:{[A.isoWeek()]:{turbo:[4.2,3]}}}; A.S().sozlama.uyqu=''; A.save(true); return b.id})()""")
     ota(AD); AD.fill('#be', 'admin@test.uz'); AD.fill('#bp', 'parol123'); AD.click('[data-in]')
     ok(kutpy(lambda: 'oila/U_admintestuz' in STORE and f'oila/U_admintestuz/bolalar/{abid}' in STORE, 12000), "Admin oilasi bulutda")
-    STORE['ruxsat/U_javlontestuz'] = {'email': 'javlon@test.uz', 'oila': 'Javlon oila', 'ts': 1, 'holat': 'ok'}
-    JV = tel(br, 'JAVLON'); oila(JV, 'Javlon oila')
+    STORE['ruxsat/U_dosttestuz'] = {'email': 'dost@test.uz', 'oila': 'Dost oila', 'ts': 1, 'holat': 'ok'}
+    JV = tel(br, 'DOST'); oila(JV, 'Dost oila')
     jbid = JV.evaluate("""(()=>{const A=BJ.A; const b=A.newBola({laqab:'Sabo',daraja:'g1',avatar:'🌸',dunyo:'orol'}); A.S().sozlama.uyqu=''; A.S().joriy=b.id; A.save(true); return b.id})()""")
-    ota(JV); JV.fill('#be', 'javlon@test.uz'); JV.fill('#bp', 'parol123'); JV.click('[data-in]')
-    ok(kutpy(lambda: f'oila/U_javlontestuz/bolalar/{jbid}' in STORE, 12000), "Javlon oilasi bulutda (ruxsat bor)")
+    ota(JV); JV.fill('#be', 'dost@test.uz'); JV.fill('#bp', 'parol123'); JV.click('[data-in]')
+    ok(kutpy(lambda: f'oila/U_dosttestuz/bolalar/{jbid}' in STORE, 12000), "Dost oilasi bulutda (ruxsat bor)")
     JV.goto(URL + '#uy'); JV.wait_for_timeout(600)
-    # Javlon telefonida mahalliy o'zgarish (hali bulutga yetmagan) — admin guruh qo'yadi: guruh yo'qolmasligi kerak
+    # Dost telefonida mahalliy o'zgarish (hali bulutga yetmagan) — admin guruh qo'yadi: guruh yo'qolmasligi kerak
     JV.evaluate("window.__fsFail=true; BJ.A.S().sozlama.reyting=false; BJ.A.save(true)"); JV.wait_for_timeout(300)
     KOD = 'QWERTYUP23'; now = int(time.time() * 1000)
     with LOCK:   # admin.js «guruh» buyrug'i kabi
         STORE['guruh/' + KOD] = {'yaratdi': 'U_admintestuz', 'ts': now}
-        for u in ('U_admintestuz', 'U_javlontestuz'):
+        for u in ('U_admintestuz', 'U_dosttestuz'):
             STORE[f'guruh/{KOD}/oilalar/{u}'] = {'ts': now}; o = STORE['oila/' + u]; j = json.loads(o['j']); j['guruh'] = {'kod': KOD, 'qoshildi': now}
             STORE['oila/' + u] = dict(o, j=json.dumps(j, ensure_ascii=False), ts=now, q='admin')
-    ok(kutf(JV, f"(BJ.A.S().guruh||{{}}).kod==='{KOD}'", 8000), "Javlon telefoni (mahalliy o'zgarish bor edi) admin qo'ygan guruhni oldi")
+    ok(kutf(JV, f"(BJ.A.S().guruh||{{}}).kod==='{KOD}'", 8000), "Dost telefoni (mahalliy o'zgarish bor edi) admin qo'ygan guruhni oldi")
     ok(kutf(AD, f"(BJ.A.S().guruh||{{}}).kod==='{KOD}'", 8000), "Admin telefoni guruhni oldi")
     JV.evaluate("window.__fsFail=false")
     ok(kutpy(lambda: f'guruh/{KOD}/azo/{abid}' in STORE and 'zal' in STORE[f'guruh/{KOD}/azo/{abid}'], 15000), "Admin bolasining a'zo yozuvi «zal» maydoni bilan (qoidalar 0.7.6 — qabul qilindi)")
-    ok(kutpy(lambda: f'guruh/{KOD}/azo/{jbid}' in STORE, 15000), "Javlon bolasining a'zo yozuvi ham (o'ynamagan — zal maydonisiz)")
+    ok(kutpy(lambda: f'guruh/{KOD}/azo/{jbid}' in STORE, 15000), "Dost bolasining a'zo yozuvi ham (o'ynamagan — zal maydonisiz)")
     ok(STORE.get(f'guruh/{KOD}/azo/{abid}', {}).get('zal', {}).get('r', {}).get('turbo') == [4.2, 3], f"zal.r.turbo = [4.2, 3] {STORE.get(f'guruh/{KOD}/azo/{abid}', {}).get('zal')}")
     ok(not [x for x in RAD if '/azo/' in x], f"Qoidalar hech bir a'zo yozuvini rad etmadi {RAD[:3]}")
-    ok(kutpy(lambda: json.loads(STORE['oila/U_javlontestuz']['j']).get('guruh', {}).get('kod') == KOD and json.loads(STORE['oila/U_javlontestuz']['j']).get('sozlama', {}).get('reyting') is False, 12000),
-       "Javlon telefoni o'z o'zgarishini yubordi — bulutda guruh ham, mahalliy sozlama ham saqlandi")
-    ok(kutf(JV, "Object.keys(BJ.A.S().oilaTel||{}).some(q=>q.indexOf('G:')===0 && (BJ.A.S().oilaTel[q].bolalar||[]).some(x=>x.zal && x.zal.r && x.zal.r.turbo))", 12000), "Javlon telefoniga admin bolasining o'yin rekordi keldi")
+    ok(kutpy(lambda: json.loads(STORE['oila/U_dosttestuz']['j']).get('guruh', {}).get('kod') == KOD and json.loads(STORE['oila/U_dosttestuz']['j']).get('sozlama', {}).get('reyting') is False, 12000),
+       "Dost telefoni o'z o'zgarishini yubordi — bulutda guruh ham, mahalliy sozlama ham saqlandi")
+    ok(kutf(JV, "Object.keys(BJ.A.S().oilaTel||{}).some(q=>q.indexOf('G:')===0 && (BJ.A.S().oilaTel[q].bolalar||[]).some(x=>x.zal && x.zal.r && x.zal.r.turbo))", 12000), "Dost telefoniga admin bolasining o'yin rekordi keldi")
     JV.goto(URL + '#zal-rekord'); JV.wait_for_timeout(700); t = JV.evaluate("document.body.innerText")
-    ok('Ali' in t and 'Admin oila' in t and '4.2 s' in t, "Javlon bolasi 🏆 Rekordlar ekranida boshqa oila bolasini ko'radi (Ali · Admin oila · 4.2 s)")
+    ok('Ali' in t and 'Admin oila' in t and '4.2 s' in t, "Dost bolasi 🏆 Rekordlar ekranida boshqa oila bolasini ko'radi (Ali · Admin oila · 4.2 s)")
     JV.screenshot(path='/tmp/bj076_guruh.png', full_page=True)
     ok(not PE, f"G: JS xato yo'q {PE[:3]}")
 finally:
