@@ -38,7 +38,7 @@ Kontent banki `BJ.bank` → generatorlar `BJ.gen` (mat M0–M2, mantiq L, ona ti
 
 ## U bilan ish tartibi
 - **Yangi odam ulanishi:** odam ilovada «📨 Ruxsat so'rash» → «✈️ Telegram'da egasiga yozish» → xabar unga keladi → u chatga «ha» + email (yoki xabar) → Claude `ruxsat <email> ok` (rad: `ruxsat <email> rad`); reyting guruhiga — u aytsa `guruh <uning emaili> <yangi email>`. Telegram manzili `ilova/egasi` da (qo'yilgan; `holat` ko'rsatadi).
-- **«yo'riqnoma»:** `python3 sinov/yoriqnoma/yoriqnoma.py <papka>` (`--suratsiz` — eski ekranlar) → «pastki chegara» har sahifada ≤ 925 → PDF + 6 JPG SendUserFile bilan. Matn — `SAHIFALAR`, ekranlar — `suratlar.py` (namuna oila, haqiqiy ism yo'q). PDF/JPG repoga yozilmaydi.
+- **«yo'riqnoma»:** `python3 sinov/yoriqnoma/yoriqnoma.py <papka>` (`--suratsiz` — eski ekranlar) → «pastki chegara» har sahifada ≤ 925 → PDF + 6 JPG SendUserFile bilan. Matn — `SAHIFALAR`, ekranlar — `suratlar.py` (namuna oila, haqiqiy ism yo'q). PDF/JPG repoga yozilmaydi. PDF — sahifa rasmlaridan yig'iladi (HTML'dan to'g'ridan-to'g'ri PDF iPhone/Telegram'da qora to'rtburchak va kesilgan sarlavha berardi, 08.11); tekshiruv: `pdftoppm -r 54 -png <pdf> chk`.
 - **«📚 Bugungi qiyinlar»** matnini tashlasa: o'sha tugunlar uchun `DARS` qoidasi va `DARS_QADAM` ni kuchaytirish → sinov → versiya → beta.
 - Javob oxirida: «🕒 sana · savol vaqti → javob vaqti · 👤 profil». Drive xotirasi (OXIRGI.md) — katta ish tugaganda.
 
