@@ -26,7 +26,7 @@ try:
         pg.goto(URL + f'?tez=1&r={i}#sinov-{t}-1'); ev('BJ.A.render()'); pg.wait_for_timeout(150)
         if ev("!!(window.__bjCur && __bjCur() && __bjCur().it && __bjCur().it.matn===1)"): topildi = True; break
     ok(topildi and pg.locator('details.matn').count() == 0 and pg.locator('#body .opt').count() >= 2, f"ekranda ({t}): masala savoli — ortiqcha oyna yo'q, variantlar bor")
-    ok(ev("BJ.A.VER") == '0.7.7' and 'bj-v0.7.7' in open(os.path.join(SITE, 'sw.js'), encoding='utf-8').read().replace("P + '", 'bj-v'), "VER 0.7.7 · sw.js bj-v0.7.7")
+    VER = ev("BJ.A.VER"); ok(tuple(map(int, VER.split('.'))) >= (0, 7, 7) and ('bj-v' + VER) in open(os.path.join(SITE, 'sw.js'), encoding='utf-8').read().replace("P + '", 'bj-v'), f"VER {VER} (≥ 0.7.7) · sw.js bj-v{VER}")
     src = open(os.path.join(SITE, 'index.html'), encoding='utf-8').read()
     ok('oyang' not in src and src.count('oyingga') >= 3, "Imlo (u ko'rsatdi, 08.11): «oyangga» → «oyingga», «oyang beradi» → «oying beradi»")
     ok(not PE, f"JS xato yo'q {PE[:3]}")
