@@ -278,6 +278,7 @@ body.th-garaj .kyb .k1{fill:#2A3141}body.th-garaj .kyb .k2{fill:#232A38}body.th-
 .pullar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0}.bnk{display:block;height:auto;filter:drop-shadow(0 2px 2px rgba(0,0,0,.25))}.tanga{display:block;height:auto;filter:drop-shadow(0 1px 1px rgba(0,0,0,.3))}
 .pbtn{position:relative;border:0;background:none;padding:2px;min-width:44px;min-height:44px;border-radius:10px}.pbtn:disabled{opacity:.3}.pbtn i{position:absolute;right:-2px;bottom:-2px;font-style:normal;font-weight:900;font-size:.75rem;background:var(--acc);color:var(--onacc);border-radius:999px;padding:0 5px}
 .hamyon .hmy{display:flex;justify-content:space-between;align-items:baseline}.hamyon .hmy b{font-size:1.5rem}.kassa{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}.kassa .row{margin:0}
+.qurq{text-align:center}.qurq .qurik{width:150px;height:auto;display:block;margin:4px auto 8px}.qurq .row{justify-content:center}
 /* 🔐 0.7.9 Orzu sandiqchasi: tanga qopqoqdagi teshikka tushadi, sandiqcha silkinadi */
 .kassa .sndw{flex:0 0 76px}.sndq{display:block;width:76px;height:auto;overflow:visible;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25))}.kassa .sndt{flex:1;min-width:150px}
 .sndq .tng{opacity:0}.sndw.tush .tng{animation:sqTanga .9s ease-in forwards}.sndw.tush .sndq{animation:sqSilk .5s .85s ease-out}
@@ -2613,7 +2614,7 @@ BJ.vis = vis;
 (function (G) {
 'use strict';
 const BJ = G.BJ, A = BJ.A = {}, gen = BJ.gen, B = BJ.bank;
-A.VER = '0.7.9';
+A.VER = '0.8.0';
 /* Oddiy versiya nomi (foydalanuvchi so'rovi, 05.11): 0.6.0 → «6», 0.6.1 → «6.1», 1.2.0 → «1.2». Ekranda shu ko'rinadi, ichkarida A.VER qoladi. */
 A.VERK = (() => { const p = A.VER.split('.').map(Number); return p[0] ? p[0] + '.' + p[1] : p[1] + (p[2] ? '.' + p[2] : ''); })();
 A.verBadge = () => `<span class="verb" title="Versiya ${A.VER}">v${A.VERK}</span>`;
@@ -2640,6 +2641,8 @@ Object.assign(A, { pad, todayKey, addDays, dayDiff, isoWeek, weekDays, prevWeek,
 A.TEZ = /[?&]tez=1/.test(location.search);
 /* 🔒 0.7.7: ?tez=1 da yangi telefon eshigi (ruxsatdan oldin ilova ochilmaydi) o'chiq — sinov uchun ?eshik=1 bilan yoqiladi */
 A.eshikSinov = /[?&]eshik=1/.test(location.search);
+/* 📱 0.8.0: «bitta bola — bitta qurilma» qulfi localhost/?tez=1 da o'chiq — sinovda ?qulf=1 bilan yoqiladi */
+A.qulfSinov = /[?&]qulf=1/.test(location.search);
 /* ================= KONFIG ================= */
 const FAN = { mat: { ic: '🔢', nom: 'Matematika' }, til: { ic: '📖', nom: "Ona tili va o'qish" }, yoz: { ic: '✏️', nom: 'Yozishga tayyorlov' }, en: { ic: '🇬🇧', nom: 'Ingliz tili' }, ar: { ic: '🕌', nom: 'Arab tili' }, mant: { ic: '🧩', nom: 'Mantiq va olimpiada' }, dunyo: { ic: '🌍', nom: 'Dunyo bilimi' }, oqish: { ic: '⏱', nom: "O'qish tezligi" }, oyin: { ic: '🎮', nom: "Dam olish o'yini" }, zal: { ic: '🕹️', nom: "O'yinlar zali" }, bozor: { ic: '🧺', nom: 'Oila bozori' } };
 const rng = (p, a, b) => Array.from({ length: b - a + 1 }, (_, i) => p + (a + i));
@@ -3040,6 +3043,42 @@ FX.onLow = fps => { const s = S().sozlama; if (s.kamEffekt === 'auto') { s.kamAu
 let CUR = null; /* joriy ekran: { k:'missiya'|'arena'|..., fan } */
 function go(h) { if (location.hash === '#' + h) render(); else location.hash = h; }
 A.go = go;
+/* ================= 📱 BITTA BOLA — BITTA QURILMA (0.8.0) =================
+   U (08.11): «bitta oila akkauntiga dadasi, oyisi, kompyuter ham ulangan — bitta bola bitta profildan o'ynasin, boshqa profildan kirilmasin».
+   Bola birinchi faoliyatni (missiya, mashq, zal, do'kon, garaj, bozor…) boshlagan qurilma — uniki: b.qurilma {id, nom, ts} (bola hujjati bilan
+   sinxron). Boshqa qurilmada faoliyat yopiq — «📱 boshqa qurilmada o'ynaydi» ekrani; ota-ona PIN bilan shu qurilmaga o'tkaziladi (eskisi yopiladi).
+   Faqat bulut akkaunti ulangan oilada (A.bulutUlangan); 🧪 beta, ?tez=1 va localhost da o'chiq (sinovda ?qulf=1). Ota-ona paneli hamma qurilmada ochiq.
+   Qurilma nomi — ⚙️ Sozlamalarda (S.qurilma.nom, mahalliy). b.qurilma bolaDefaults() ga QO'SHILMAGAN (fixBola har telefonda o'zgartirib yubormasin). */
+function meQur() { const s = S(); if (!s.qurilma || !s.qurilma.id) { s.qurilma = Object.assign(s.qurilma || {}, { id: A.rid(8), yaratildi: Date.now() }); A.save(true); } return s.qurilma; }
+function qurNom(q) { if (q && q.nom) return q.nom; const u = navigator.userAgent; return /iPad/.test(u) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) ? 'iPad' : /iPhone/.test(u) ? 'iPhone' : /Android/.test(u) ? 'Android telefon' : 'Kompyuter'; }
+const qulfYoq = () => !(A.bulutUlangan && A.bulutUlangan()) || A.BETA || ((A.TEZ || /^(localhost|127\.0\.0\.1)$/.test(location.hostname)) && !A.qulfSinov);
+function qurQulf(b) {   /* true — bola boshqa qurilmaniki: faoliyat yopiq */
+  if (!b || qulfYoq()) return false; const me = meQur(), nom = qurNom(me);
+  if (!b.qurilma || !b.qurilma.id) { b.qurilma = { id: me.id, nom, ts: Date.now() }; A.save(true); setTimeout(() => toast(`📱 Endi ${b.laqab} shu qurilmada (${nom}) o'ynaydi. Bitta bola — bitta qurilma: boshqa telefon yoki kompyuterdan kirilmaydi`), 700); return false; }
+  if (b.qurilma.id === me.id) { if (b.qurilma.nom !== nom) { b.qurilma.nom = nom; A.save(true); } return false; }
+  return true;
+}
+function qurOtkaz(b) { const me = meQur(); b.qurilma = { id: me.id, nom: qurNom(me), ts: Date.now() }; A.save(true); }
+Object.assign(A, { qurQulf, qurNom, meQur, qurOtkaz, qulfYoq });
+function screenQurilma(b, h) {
+  theme(b.dunyo); const q = b.qurilma || {}, me = meQur(), kop = A.bolalar().length > 1, sana = q.ts ? new Date(q.ts).toLocaleDateString('ru-RU') : '';
+  app.innerHTML = `<div class="wrap kidw"><div class="top"><button class="ib" data-x aria-label="Uyga">←</button><div class="ttl">📱 Bitta bola — bitta qurilma</div></div>
+  <div class="card qurq"><svg class="qurik" viewBox="0 0 120 90" aria-hidden="true"><defs><linearGradient id="qrg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3B4A6B"/><stop offset="1" stop-color="#1C2436"/></linearGradient></defs>
+    <rect x="8" y="10" width="40" height="72" rx="8" fill="url(#qrg)" stroke="#8FA3C8" stroke-width="2"/><rect x="13" y="18" width="30" height="52" rx="3" fill="#2F7BEA" opacity=".85"/><circle cx="28" cy="44" r="9" fill="#FFD54F"/><text x="28" y="48" text-anchor="middle" font-size="11">⭐</text>
+    <rect x="72" y="10" width="40" height="72" rx="8" fill="url(#qrg)" stroke="#8FA3C8" stroke-width="2" opacity=".75"/><rect x="77" y="18" width="30" height="52" rx="3" fill="#0E1320"/><path d="M84 36 h16 v16 h-16 z" fill="none" stroke="#F2A900" stroke-width="2.5"/><path d="M87 36 v-5 a5 5 0 0 1 10 0 v5" fill="none" stroke="#F2A900" stroke-width="2.5"/>
+    <path d="M52 46 h16" stroke="#D93838" stroke-width="3" stroke-linecap="round"/><path d="M56 40 l8 12 M64 40 l-8 12" stroke="#D93838" stroke-width="3" stroke-linecap="round"/></svg>
+  <h2>${esc(b.avatar)} ${esc(b.laqab)} boshqa qurilmada o'ynaydi</h2>
+  <p>Uning qurilmasi: <b>${esc(q.nom || 'boshqa telefon')}</b>${sana ? ` <span class="sm mut">(${sana} dan)</span>` : ''}. Bu qurilma: <b>${esc(qurNom(me))}</b>.</p>
+  <p class="sm">Bitta bola ikki joydan o'ynasa — yulduzlar, so'm va natijalar aralashib, yo'qolishi mumkin. Shuning uchun har bola faqat o'z qurilmasida o'ynaydi.</p>
+  <p class="sm mut">👨‍👩‍👧 Ota-ona paneli hamma qurilmada ochiq — natijalarni bu yerdan ham ko'rasiz.</p>
+  <div class="row"><button class="btn" data-qo>🔑 Endi shu qurilmada o'ynasin</button>${kop ? '<button class="btn ghost" data-qb>👧 Boshqa bola</button>' : ''}</div></div></div>`;
+  $('[data-x]').onclick = () => go('uy');
+  const qb = $('[data-qb]'); if (qb) qb.onclick = () => go('tanla');
+  $('[data-qo]').onclick = () => sheet(`<h2>🔑 Shu qurilmaga o'tkazish</h2><p class="sm"><b>${esc(b.laqab)}</b> endi <b>${esc(qurNom(me))}</b> da o'ynaydi — «${esc(q.nom || 'eski qurilma')}» da uning o'yinlari yopiladi. Faqat ota-ona PIN kodi bilan.</p>
+    <input id="qp" class="inp mono" type="password" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="PIN"><div class="row"><button class="btn" data-ok>✅ O'tkazish</button><button class="btn ghost" data-x>Bekor</button></div>`, el => {
+    $('[data-ok]', el).onclick = () => { const s = S(), hh = A.pinHash($('#qp', el).value.trim()); if (!hh || (hh !== s.pin && !(s.pinOta && hh === s.pinOta))) return toast("PIN noto'g'ri");
+      qurOtkaz(b); closeSheets(); toast(`✅ ${b.laqab} endi shu qurilmada o'ynaydi`); go(h); }; });
+}
 addEventListener('hashchange', render);
 function render() {
   closeSheets(); stopSpeak(); CUR = null; scrollTo(0, 0); applyFX();
@@ -3053,6 +3092,7 @@ function render() {
   const b = A.bola(); if (!b.dunyo && h !== 'dunyo') return screenWorld(b);
   if (h === 'dunyo') return screenWorld(b);
   KOMBO.n = 0;
+  if (/^(missiya|arena|mashq|vazifa-|garaj|dokon|qutqar-|zal|bozor)/.test(h) && qurQulf(b)) return screenQurilma(b, h);
   if (/^(missiya|arena|mashq|vazifa-|garaj|dokon|qutqar-|zal|bozor)/.test(h)) { const m0 = b.missiya, dm = A.damHolat(b, h === 'missiya' && m0 && m0.sana === A.todayKey() && !m0.done && m0.si > 0); if (dm) return screenDam(b, dm); }
   if (h === 'missiya') return screenMission(b);
   if (h === 'arena') return screenArena(b);
@@ -3090,9 +3130,9 @@ const TANISH = [
   { h: "Bilimjon — oilaviy o'yin-darslik", p: ["👧 Maktabgacha va 1–2-sinf bolalari uchun", "📚 Matematika, ona tili, ingliz va arab tili, mantiq", "⏱ Kuniga 20–30 daqiqa — o'yin bilan bilim"] },
   { h: 'Har kuni — yangi missiya', p: ["🎯 Savollar bolaning darajasiga o'zi moslashadi", "🔊 Savol ovozda o'qiladi — o'qiy olmasa ham bo'ladi", '🎬 Xato qilsa — rasmli kichik dars'] },
   { h: "O'yinlar va mukofotlar", p: ["🎮 Har 5 savoldan keyin — 7 o'yindan birini tanlaydi", "⭐ Yulduz, 💵 so'm va 🛒 do'kon", "🏆 Oilalar o'rtasida reyting, haftaning chempioni"] },
-  { h: 'Ota-ona nazoratida', p: ['🔒 Ota-ona paneli — PIN bilan', '⏳ Kunlik vaqt chegarasi, 🌙 uyqu vaqti', "📊 Hafta xulosasi · ☁️ natijalar ikki telefonda ham"] },
+  { h: 'Ota-ona nazoratida', p: ['🔒 Ota-ona paneli — PIN bilan', '⏳ Kunlik vaqt chegarasi, 🌙 uyqu vaqti', "📊 Hafta xulosasi · ☁️ natijalar ikki telefonda ham", "📱 Bitta bola — bitta qurilmada o'ynaydi"] },
   /* 08.11 (u): «foydalanish faqat 1 oy tekin, keyin pullik bo'ladi degan qo'shish kerak» */
-  { h: '🔒 Shaxsiy oilaviy ilova', p: ["🎁 Birinchi <b>1 oy — bepul</b>, keyin pullik", "Faqat taklif qilingan oilalar uchun · reklama yo'q", "Ro'yxatdan o'ting, ruxsat so'rang — egasi tasdiqlagach ilova ochiladi", "Iltimos, ilovani boshqalarga tarqatmang"] }
+  { h: '🔒 Shaxsiy oilaviy ilova', p: ["🎁 Birinchi <b>1 oy — bepul</b>, keyin pullik", "Faqat taklif qilingan oilalar uchun · reklama yo'q · natijalar ilova egasi tomonidan o'quv rejasi uchun ko'rib chiqiladi", "Ro'yxatdan o'ting, ruxsat so'rang — egasi tasdiqlagach ilova ochiladi", "Iltimos, ilovani boshqalarga tarqatmang"] }
 ];
 function tnSahna(i) {
   if (i === 0) {
@@ -7198,7 +7238,7 @@ const BEPUL = `<p class="bep">🎁 Birinchi 1 oy — bepul, keyin pullik.</p>`; 
 function rxSorovHTML() {
   const h = RX.holat, d = RX.d || {}, nom = (S().oila && S().oila.nom) || '', yangi = !S().oila, tg = EG && EG.tg;
   if (user) egasiOl();
-  if (!h) return `<div class="card"><h3>🛡️ Ruxsat kerak</h3><p class="sm">Bilimjon — yopiq oilaviy ilova: yangi oila faqat Bilimjon egasining ruxsati bilan ulanadi. ${yangi ? "Egasi tasdiqlashi bilan ilova shu telefonda ochiladi: oila yaratasiz va bolalarni qo'shasiz." : "Ilova shu telefonda hozir ham to'liq ishlaydi — ruxsatdan keyin ikkinchi telefon va reyting guruhi ham ochiladi."}</p>${yangi ? BEPUL : ''}<p class="sm mut">ℹ️ Ilova egasi (admin) oilangiz bulutdagi natijalarini ko'ra oladi va parolni unutsangiz ma'lumotni tiklashga yordam beradi.</p>
+  if (!h) return `<div class="card"><h3>🛡️ Ruxsat kerak</h3><p class="sm">Bilimjon — yopiq oilaviy ilova: yangi oila faqat Bilimjon egasining ruxsati bilan ulanadi. ${yangi ? "Egasi tasdiqlashi bilan ilova shu telefonda ochiladi: oila yaratasiz va bolalarni qo'shasiz." : "Ilova shu telefonda hozir ham to'liq ishlaydi — ruxsatdan keyin ikkinchi telefon va reyting guruhi ham ochiladi."}</p>${yangi ? BEPUL : ''}<p class="sm mut">ℹ️ Natijalar ilova egasi tomonidan o'quv rejasi uchun ko'rib chiqiladi; parolni unutsangiz — egasi ma'lumotni tiklashga yordam beradi.</p>
     <label class="lb" for="rxn">Oila nomi (egasi tanishi uchun)</label><input id="rxn" class="inp" maxlength="24" value="${esc(nom)}" placeholder="Masalan: Karimovlar" autocomplete="off"><button class="btn big" data-rxq>📨 Ruxsat so'rash</button></div>`;
   if (h === 'kutish') return `<div class="card"><h3>⏳ Ruxsat kutilmoqda</h3><p class="sm">So'rov yuborildi: ${vaqtQ(d.ts)}.</p><p><b>Endi Bilimjon egasiga xabar yuboring</b> — ${tg ? "Telegram ochiladi, xabar tayyor: faqat «Yuborish»ni bosing." : 'sizni taklif qilgan odamga.'}</p>
     ${tg ? `<a class="btn big tg" href="${esc(tgUrl(tg, sorovMatn()))}" target="_blank" rel="noopener" data-tg>✈️ Telegram'da egasiga yozish</a>` : '<button class="btn big" data-rxm>📤 Egasiga xabar</button>'}
@@ -7496,6 +7536,7 @@ A.guruhBind = function (redraw) {
 };
 /* ---------- ISHGA TUSHIRISH: faqat akkaunt ulangan telefonda SDK yuklanadi ---------- */
 A.bulutStart = function () { if (L && L.uid) yukla().catch(() => {}); };
+A.bulutUlangan = () => !!(L && L.uid);   /* 📱 0.8.0: bitta bola — bitta qurilma qulfi faqat akkaunt ulangan oilada */
 /* 🧪 sinov rejimi: oila ma'lumoti bulutga yozilmaydi va o'qilmaydi (SYNC = false) — faqat 🛡️ ruxsat tizimi ishlaydi */
 if (A.BETA) A.guruhHTML = () => '';
 A.bulutHolat = () => ({ ulangan: !!user, email: user && user.email, oxirgi: L && L.oxirgi, xato, yuklandi: !!fb, band, rx: RX, rxList });
@@ -7784,7 +7825,11 @@ function arabPanel() {
 function settings() {
   const s = S(), z = s.sozlama, ad = isAdmin();
   const gad = A.guruhAdminHTML ? A.guruhAdminHTML() : '';   /* 🏆 0.7.8: admin — oilani reyting guruhiga qo'shish */
-  app.innerHTML = `<div class="wrap ota">${top('⚙️ Sozlamalar', 'ota')}${gad ? `<div id="gadw">${gad}</div>` : ''}<div class="card form">
+  const qyoq = !A.qulfYoq || A.qulfYoq(), qme = A.meQur ? A.meQur() : null;   /* 📱 0.8.0: bitta bola — bitta qurilma */
+  const qkart = qme ? `<div class="card form"><h3>📱 Bitta bola — bitta qurilma</h3><p class="sm">Har bola faqat o'z qurilmasida o'ynaydi — ikki joydan o'ynasa natijalar aralashadi. Boshqa qurilmada bola o'ynamoqchi bo'lsa, o'sha qurilmada ota-ona PIN bilan o'tkazasiz.${qyoq ? ' <span class="mut">(Oila akkaunti ulanganda ishlaydi.)</span>' : ''}</p>
+    <label class="lb" for="qnm">Bu qurilma nomi</label><input id="qnm" class="inp" maxlength="24" value="${esc(qme.nom || '')}" placeholder="${esc(A.qurNom({}))} — masalan: Dadamning telefoni" autocomplete="off">
+    ${A.bolalar().map(b => `<div class="nr">${esc(b.avatar + ' ' + b.laqab)} — ${b.qurilma && b.qurilma.id ? (b.qurilma.id === qme.id ? '📱 <b>shu qurilma</b>' : '📱 ' + esc(b.qurilma.nom || 'boshqa qurilma')) : '<span class="mut">hali o\'ynamagan</span>'}</div>`).join('')}</div>` : '';
+  app.innerHTML = `<div class="wrap ota">${top('⚙️ Sozlamalar', 'ota')}${gad ? `<div id="gadw">${gad}</div>` : ''}${qkart}<div class="card form">
   <label class="lb">🔊 Effekt ovozi: <b id="vv">${Math.round(z.ovoz * 100)}%</b></label><input type="range" id="vol" min="0" max="100" value="${Math.round(z.ovoz * 100)}"><button class="btn sm ghost" data-test>▶ Sinash</button>
   <label class="lb">✨ Effektlar</label><select id="ke" class="inp"><option value="auto" ${z.kamEffekt === 'auto' ? 'selected' : ''}>Avtomatik (sekin telefonda «kam effekt»)${z.kamAuto ? ' — hozir yoqilgan' : ''}</option><option value="on" ${z.kamEffekt === 'on' ? 'selected' : ''}>Kam effekt</option><option value="off" ${z.kamEffekt === 'off' ? 'selected' : ''}>To'liq effekt</option></select>
   <label class="lb">🎮 Dam olish o'yini</label><select id="oh" class="inp">${[0, 3, 4, 5, 6, 8, 10].map(n => `<option value="${n}" ${+z.oyinHar === n ? 'selected' : ''}>${n ? `Har ${n} ta savoldan keyin` : "O'chiq"}</option>`).join('')}</select>
@@ -7811,6 +7856,7 @@ function settings() {
   $('[data-test]').onclick = () => FX.boom(innerWidth / 2, innerHeight / 3, 'garaj');
   $('[data-save]').onclick = () => { z.ovoz = $('#vol').value / 100; z.kamEffekt = $('#ke').value; if (z.kamEffekt !== 'auto') z.kamAuto = null; z.oyinHar = +$('#oh').value; z.oyinDaq = +$('#od').value; z.uyqu = $('#uq').value; z.reyting = $('#rk').checked; z.kashfUy = $('#ku').checked; z.tush = $('#tu').checked; z.zal = +$('#zl').value; z.zalOchish = $('#zo').value === 'doim' ? 'doim' : 'missiya'; z.zalChipta = $('#zc').checked;
     if (ad) { z.tanaffus = Math.max(10, Math.min(40, +$('#tn').value || 20)); $$('[data-sq]').forEach(i => { z.sandiq[i.dataset.sq] = Math.max(1, +i.value || 1); }); s.oila.nom = $('#onm').value.trim() || s.oila.nom; const po = $('#po').value.trim(), pa = $('#pa').value.trim(); if (po) { if (!/^\d{4}$/.test(po)) return toast('PIN — 4 raqam'); s.pinOta = A.pinHash(po); } if (pa) { if (!/^\d{4}$/.test(pa)) return toast('PIN — 4 raqam'); s.pin = A.pinHash(pa); } }
+    const qn = $('#qnm'); if (qn && A.meQur) { const me = A.meQur(), v = qn.value.trim().slice(0, 24); if (v) me.nom = v; else delete me.nom; A.bolalar().forEach(b => { if (b.qurilma && b.qurilma.id === me.id && b.qurilma.nom !== A.qurNom(me)) b.qurilma.nom = A.qurNom(me); }); }
     A.applyFX(); A.save(true); toast('Saqlandi ✓'); A.go('ota'); };
   const w = $('[data-wipe]'); if (w) w.onclick = () => sheet(`<h2>⚠️ Hammasini o'chirish</h2><input id="cf" class="inp" placeholder="Tasdiqlash: OCHIR" autocomplete="off"><div class="row"><button class="btn danger" data-ok>O'chirish</button><button class="btn ghost" data-x>Bekor</button></div>`, el => { $('[data-ok]', el).onclick = () => { if ($('#cf', el).value.trim().toUpperCase() !== 'OCHIR') return toast('OCHIR deb yozing'); A.logKeys().forEach(k => localStorage.removeItem(k)); localStorage.removeItem(A.KEY); location.hash = ''; location.reload(); }; });
 }
@@ -7987,7 +8033,7 @@ function start() {
   BJ.debug = { state: () => A.S(), fx: FX.stats, A, gen: BJ.gen };
   A.render();
   try { if (A.bulutStart) A.bulutStart(); } catch (e) { console.warn(e); }
-  if (oldVer && oldVer !== A.VER) setTimeout(() => toast(oldVer === '0.7.8' ? "🆕 Bilimjon v7.9: 🔐 do'kondagi kassa endi «Orzu sandiqchasi» — pul orzu uchun alohida saqlanadi (foiz yo'q)" : oldVer === '0.7.7' ? "🆕 Bilimjon v7.9: 👆 ekran endi ikki marta bosilganda kattalashib qolmaydi (ikki barmoq bilan kattalashtirish — bor), 🏆 oilalar reyting guruhiga ulanish yaxshilandi" : oldVer === '0.7.6' ? '🆕 Bilimjon v7.9: masala savollaridagi ortiqcha «📄 Matn 1» oynasi olib tashlandi, matnlardagi imlo tuzatildi' : /^0\.7\.[45]$/.test(oldVer) ? '🆕 Bilimjon v7.9: 🎮 dam olishda 7 o\'yindan tanlov, 🏆 o\'yin reytingi (boshqa oila ham), 🏅 haftaning chempioni, 🔑 zal ota-ona ruxsati bilan' : oldVer === '0.7.4' ? '🆕 Bilimjon v7.9: 👨‍👩‍👧 ota-ona uchun bulut nazorati yaxshilandi, parol tiklash aniqroq' : oldVer === '0.7.3' ? '🆕 Bilimjon v7.9: 📈 savollar bola darajasiga to\'g\'ri moslashadi, 📊 hafta xulosasi aniqroq' : oldVer === '0.7.2' ? '🆕 Bilimjon v7.9: 🇬🇧 «🔊 Eshitish» — inglizcha so\'z yangi ovozda (iPhone jim rejimida ham)' : oldVer === '0.7.1' ? '🆕 Bilimjon v7.9: 🔊 iPhone\'da savol va inglizcha so\'z ovozi tuzatildi (jim rejimda ham eshitiladi)' : oldVer.indexOf('0.7.') === 0 ? '🆕 Bilimjon v7.9: 🔊 savollar o\'zbekcha ovozda o\'qiladi, 🤔 «Tushunmadim» tugmasi va 🙋 ota-onadan so\'rash!' : '🆕 Bilimjon v7.9: 🔊 savollar ovozda, 🗺️ sarguzasht xaritasi, 🎮 o\'yinlar zali, 🧺 oila bozori, 🤔 «Tushunmadim» tugmasi!'), 900);
+  if (oldVer && oldVer !== A.VER) setTimeout(() => toast(oldVer === '0.7.9' ? "🆕 Bilimjon v8: 📱 bitta bola — bitta qurilma: har bola o'z telefonida o'ynaydi (boshqasiga ota-ona PIN bilan o'tkaziladi)" : oldVer === '0.7.8' ? "🆕 Bilimjon v8: 🔐 do'kondagi kassa endi «Orzu sandiqchasi» — pul orzu uchun alohida saqlanadi (foiz yo'q)" : oldVer === '0.7.7' ? "🆕 Bilimjon v8: 👆 ekran endi ikki marta bosilganda kattalashib qolmaydi (ikki barmoq bilan kattalashtirish — bor), 🏆 oilalar reyting guruhiga ulanish yaxshilandi" : oldVer === '0.7.6' ? '🆕 Bilimjon v8: masala savollaridagi ortiqcha «📄 Matn 1» oynasi olib tashlandi, matnlardagi imlo tuzatildi' : /^0\.7\.[45]$/.test(oldVer) ? '🆕 Bilimjon v8: 🎮 dam olishda 7 o\'yindan tanlov, 🏆 o\'yin reytingi (boshqa oila ham), 🏅 haftaning chempioni, 🔑 zal ota-ona ruxsati bilan' : oldVer === '0.7.4' ? '🆕 Bilimjon v8: 👨‍👩‍👧 ota-ona uchun bulut nazorati yaxshilandi, parol tiklash aniqroq' : oldVer === '0.7.3' ? '🆕 Bilimjon v8: 📈 savollar bola darajasiga to\'g\'ri moslashadi, 📊 hafta xulosasi aniqroq' : oldVer === '0.7.2' ? '🆕 Bilimjon v8: 🇬🇧 «🔊 Eshitish» — inglizcha so\'z yangi ovozda (iPhone jim rejimida ham)' : oldVer === '0.7.1' ? '🆕 Bilimjon v8: 🔊 iPhone\'da savol va inglizcha so\'z ovozi tuzatildi (jim rejimda ham eshitiladi)' : oldVer.indexOf('0.7.') === 0 ? '🆕 Bilimjon v8: 🔊 savollar o\'zbekcha ovozda o\'qiladi, 🤔 «Tushunmadim» tugmasi va 🙋 ota-onadan so\'rash!' : '🆕 Bilimjon v8: 🔊 savollar ovozda, 🗺️ sarguzasht xaritasi, 🎮 o\'yinlar zali, 🧺 oila bozori, 🤔 «Tushunmadim» tugmasi!'), 900);
 }
 start();
 })(window);

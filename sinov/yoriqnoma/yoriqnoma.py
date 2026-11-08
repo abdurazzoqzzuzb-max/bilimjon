@@ -83,7 +83,7 @@ f'''<div class="cover"><img class="logo" src="{ICON}" alt=""><h1>Bilimjon</h1><d
 <div class="taklif"><div class="tk">✉️ TAKLIFNOMA</div><h3>Sizni oilamiz ilovasiga taklif qilamiz!</h3>
 <p>Farzandlaringiz har kuni <b>20–30 daqiqa</b> o'ynab o'rganadi: matematika, ona tili va o'qish, ingliz va arab tili, mantiq. Savollar <b>ovozda o'qiladi</b>, xato qilsa — rasmli kichik dars. Missiyadan keyin — o'yinlar zali, sovg'alar va <b>oilalar o'rtasida reyting</b>.</p><p class="bep">🎁 Birinchi <b>1 oy — bepul</b>, keyin pullik.</p></div>
 <div class="fan">{tel('04_uy', 132, .62, 'f1')}{tel('05_savol', 150, .55, 'f2')}{tel('09_zal', 132, .62, 'f3')}</div>
-<div class="maxfiy"><b>🔒 Bu — shaxsiy oilaviy ilova</b><span>Faqat taklif qilingan oilalar uchun. Iltimos, havolani va shu yo'riqnomani boshqa hech kimga yubormang.</span></div>
+<div class="maxfiy"><b>🔒 Bu — shaxsiy oilaviy ilova</b><span>Faqat taklif qilingan oilalar uchun. Iltimos, havolani va shu yo'riqnomani boshqa hech kimga yubormang. Natijalar ilova egasi tomonidan o'quv rejasi uchun ko'rib chiqiladi.</span></div>
 <div class="keyin">📲 O'rnatish — 5 daqiqa: <b>2-sahifa — iPhone</b>, <b>3-sahifa — Android</b></div></div>{oyoq(1)}''',
 # 2 — iPhone
 bosh('', 'iPhone\'ga o\'rnatish', 'Faqat <b>Safari</b> brauzerida (Chrome emas)') + '<div class="qlar">' +
@@ -107,7 +107,8 @@ qadam(3, 'Ruxsat so\'rang → Telegram', 'Oila nomi → <b>«📨 Ruxsat so\'ras
 bosh('👨‍👩‍👧', 'Oila va bolalar', 'Ruxsatdan keyin — 2 daqiqa') + '<div class="qlar">' +
 qadam(1, 'Oila nomi va ota-ona PIN', 'Oila nomini yozing va <b>4 raqamli PIN</b> o\'ylang — u ota-ona paneli uchun. <b>Bolalarga aytmang.</b>', f'<div class="row2">{tel("01_oila", 150, .7)}<div class="izoh">📱 <b>2-telefonda</b> (oyisi yoki dadasi): ilovani o\'rnating → tanishtiruv → <b>«Kirish»</b> — xuddi shu email va parol. Bolalar va natijalar o\'zi keladi.</div></div>') +
 qadam(2, 'Bolani qo\'shing', '<b>Laqab</b> (ism-familiya emas), avatar va <b>sinf</b> → «Saqlash». Har bola uchun takrorlang.', f'<div class="row2">{tel("02_bola", 150, .62)}{tel("03_tanla", 150, .62)}</div>') +
-'</div><div class="eslat">✅ Tayyor! Natijalar bulutda o\'zi saqlanadi. Bola o\'z rasmini bosadi va <b>«🚀 Missiyani boshlash»</b>.</div>' + oyoq(5),
+'</div><div class="eslat">✅ Tayyor! Natijalar bulutda o\'zi saqlanadi. Bola o\'z rasmini bosadi va <b>«🚀 Missiyani boshlash»</b>.</div>' +
+'<div class="eslat ogoh">📱 <b>Bitta bola — bitta qurilma.</b> Har bola faqat o\'z telefonida (yoki kompyuterida) o\'ynaydi — ikki joydan o\'ynasa natijalar aralashadi. Boshqa qurilmada ilova o\'zi to\'xtatadi; kerak bo\'lsa o\'sha qurilmada ota-ona PIN bilan o\'tkazasiz.</div>' + oyoq(5),
 # 6 — reyting va kundalik
 bosh('🏆', 'Oilalar o\'rtasida reyting', 'Bolalar boshqa oila bolalari bilan musobaqalashadi') + '<div class="qlar">' +
 qadam(1, 'Guruh kodini kiriting', 'Sizni taklif qilgan oiladan <b>10 belgili guruh kodini</b> so\'rang. 👨‍👩‍👧 → <b>«📲 Oila reytingi»</b> → kod → <b>«🔗 Qo\'shilish»</b>. Yoki egasiga yozing — o\'zi qo\'shib qo\'yadi.', f'<div class="row2">{tel("24_guruh_kod", 140, .42)}{tel("10_rekordlar", 140, .42)}</div>') +
@@ -148,6 +149,7 @@ h1{font:800 46px/1.05 "Inter Display",Inter;letter-spacing:-.5px;margin-top:12px
 .tel{flex:0 0 auto;border-radius:22px;padding:5px;background:linear-gradient(160deg,#2B3040,#06080D 40%,#1A1E29);box-shadow:0 18px 34px -14px rgba(0,0,0,.95),inset 0 0 0 1px rgba(255,255,255,.12);overflow:hidden}
 .tel img{display:block;width:100%;border-radius:17px}
 .eslat{margin-top:12px;font-size:13.4px;line-height:1.45;color:#C2CCE3;padding:11px 13px;border-radius:14px;background:rgba(0,184,212,.09);border:1px solid rgba(0,184,212,.32)}
+.eslat.ogoh{margin-top:8px;background:rgba(242,169,0,.10);border-color:rgba(242,169,0,.45)}
 .kun{margin-top:12px;padding:13px 15px;border-radius:18px;background:linear-gradient(180deg,rgba(124,77,255,.16),rgba(124,77,255,.05));border:1px solid rgba(124,77,255,.4)}
 .kun>b{font-size:15.5px}.kun ul{list-style:none;margin-top:6px;display:flex;flex-direction:column;gap:5px}.kun li{font-size:13.4px;line-height:1.42;color:#D2D9EC}
 .oyoq{position:absolute;left:30px;right:30px;bottom:18px;display:flex;justify-content:space-between;font-size:11.5px;color:#6F7C99;letter-spacing:.3px}

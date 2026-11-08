@@ -47,6 +47,7 @@ Kontent banki `BJ.bank` → generatorlar `BJ.gen` (mat M0–M2, mantiq L, ona ti
 - Javob oxirida: «🕒 sana · savol vaqti → javob vaqti · 👤 profil». Drive xotirasi (OXIRGI.md) — katta ish tugaganda.
 
 ## Ochiq ishlar (u tasdiqlasa)
+- 🚧 **0.8.0 YARIM (08.11 12:45, limit tugadi) — tarmoq `v0.8.0`:** 📱 bitta bola — bitta qurilma (render'da `qurQulf` → `screenQurilma`, PIN bilan o'tkazish, ⚙️ qurilma nomi; faqat akkaunt ulanganda; localhost/tez da ?qulf=1) + maxfiylik gapi (ruxsat kartasi, tanishtiruv, yo'riqnoma 1-bet) + yo'riqnoma 5-bet ogohlantirish. Sinov `sinov/v080/sinov_qurilma.py`: 17/20 — 3 yiqilish SINOV xatosi: A telefon `#mashq` da turganda o'tkazish `pending` (faolMi) — sinovda A ni avval `#uy` ga o'tkazish kerak. Keyin: hammasi.sh (+v080) → prod_e2e 0.7.9→0.8.0 → chiqarish (u «srazu chiqar», «mayda narsalar bitta to'liq versiyada» dedi) → yo'riqnoma PDF yuborish.
 - ⏭️ **KEYINGI VERSIYADA ALBATTA (u 08.11 11:51 aytdi):** maxfiylik gapi — «Natijalar ilova egasi tomonidan o'quv rejasi uchun ko'rib chiqiladi.» → `sinov/yoriqnoma/yoriqnoma.py` `SAHIFALAR` (1-sahifa, taklifnoma ostida) + ilovadagi 📖 tanishtiruv / 🛡️ ruxsat so'rash kartasi. Alohida versiya chiqarilmaydi — navbatdagi tuzatish bilan birga.
 - 🎁 «1 oy bepul, keyin pullik» — hozircha faqat matn (to'lov va cheklov yo'q).
 - 🎙️ Arab so'zlari qizining ovozida (132 yozuv) — «hali boshlama». Ota-ona ovozi — keyinroq. Gemini ovozi — `GEMINI_API_KEY` qo'yilsa.
