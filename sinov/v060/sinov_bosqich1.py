@@ -20,7 +20,7 @@ with sync_playwright() as p:
     pg.goto(URL); pg.wait_for_timeout(400)
     pg.fill('#on', 'Sinov'); pg.fill('#p1', '1234'); pg.fill('#p2', '1234'); pg.click('#go'); pg.wait_for_timeout(300)
     ids = ev("""(()=>{const A=BJ.A; const k=A.newBola({laqab:'Kichik',daraja:'g0',avatar:'🐯',dunyo:'garaj'}); const q=A.newBola({laqab:'Katta',daraja:'g2',avatar:'🦄',dunyo:'orol'});
-      const s=A.S(); delete s.sozlama.uyqu; [k,q].forEach(b=>{['kunDaq','oyinHar','oyinDaq','qoshDaq','uyquOchiq','komboMax'].forEach(f=>delete b[f]);}); A.save(true); return [k.id,q.id]})()""")
+      const s=A.S(); delete s.sozlama.uyqu; [k,q].forEach(b=>{['kunDaq','oyinHar','oyinDaq','oyinMin','qoshDaq','uyquOchiq','komboMax'].forEach(f=>delete b[f]);}); A.save(true); return [k.id,q.id]})()""")
     pg.reload(); pg.wait_for_timeout(500)
     m = ev("(()=>{const s=BJ.A.S(), b=s.bolalar[Object.keys(s.bolalar)[0]]; return {uyqu:s.sozlama.uyqu, q: JSON.stringify(b.qoshDaq), kd: b.kunDaq}})()")
     ok(m['uyqu'] == '21:00' and m['q'] == '{}' and m['kd'] is None, f'Eski holatdan yangilanish: uyqu 21:00, yangi maydonlar to\'ldi {m}')
@@ -61,7 +61,7 @@ with sync_playwright() as p:
     pg.goto(URL + '#uy'); pg.wait_for_timeout(400)
     ok('daqiqa' in pg.inner_text('.kidw'), 'Uy ekranida «⏳ Bugun yana N daqiqa»')
     # ---- 🎮 o'yin sozlamasi har bolaga
-    c = ev(f"""(()=>{{const A=BJ.A, s=A.S(), k=s.bolalar['{K}'], q=s.bolalar['{Q}']; s.sozlama.oyinHar=5; s.sozlama.oyinDaq=3; k.oyinHar=3; k.oyinDaq=2; q.oyinHar=null;
+    c = ev(f"""(()=>{{const A=BJ.A, s=A.S(), k=s.bolalar['{K}'], q=s.bolalar['{Q}']; s.sozlama.oyinHar=5; s.sozlama.oyinMin=3; k.oyinHar=3; k.oyinMin=2; q.oyinHar=null;
       const r=[A.oyinCfg(k), A.oyinCfg(q)]; k.oyinHar=0; r.push(A.oyinCfg(k)); k.oyinHar=3; return r.map(x=>[x.har,x.daq])}})()""")
     ok(c == [[3, 2], [5, 3], [0, 2]], f'O\'yin sozlamasi: bola o\'zi 3/2, oila 5/3, o\'chiq 0 ({c})')
     ev("BJ.A.otaOk={rol:'admin',t:Date.now()}"); pg.goto(URL + f'#ota-tahrir-{K}'); pg.wait_for_timeout(400)
