@@ -403,3 +403,12 @@ U so'radi (08.11 03:30, «PY»): 1) zal ota-ona ruxsati bilan HAR DOIM ochilsin;
 - Do'kon: `sandiqSvg(to)` — realistik yog'och sandiqcha (temir qoplama, qulf, qopqoqda tanga teshigi), solinganda tanga tushadi + silkinish (`SANDIQ_TUSH`, `.sndw.tush`). Matn: «Pul shu yerda alohida, xavfsiz turadi — tasodifan sarflab qo'ymaysan. Orzuing uchun yig'!»; maqsad bo'lsa — «Orzuing «X»: sandiqcha + hamyon = N / narx». Tugmalar «⬇️ Solish», «↩️ Olish».
 - Uydagi 🎯 maqsad kartasi: to'lish = hamyon + sandiqcha; «🔐 Sandiqchadagi pul bilan yetadi — do'konda sandiqchadan ol!». Ota-ona paneli sozlamasi va hamyonlar «+ 🔐». Bozor tejash mukofoti belgisi 🐷 → 🪙 (mukofot o'zi qoldi — bu ota-ona sovg'asi, foiz emas).
 - Sinov: `sinov/v079/sinov_sandiq.py` (15); `v060/sinov_bosqich5.py` kassa tekshiruvi foizsizga moslandi.
+
+
+## 0.8.0 — «v8» (08.11.2026, saytda 14:5x)
+- U (12:45 gacha): bitta oila akkaunti bir necha qurilmada — bitta bola faqat bitta qurilmadan o'ynasin; maxfiylik gapi navbatdagi versiyada; mayda tuzatishlar bitta to'liq versiyada.
+- U (12:55): «hammada o'yin o'ynash 1 minut bo'lsin, sozlamada kerak bo'lsa o'zlari ko'paytirib olishadi». U (12:58, PY): ilovani yangilash tizimi — eski versiyada qolib ketilmasin, yangi versiya hammaga borsin, oson yo'riqnoma.
+- 📱 `qurQulf`/`screenQurilma`/`qurOtkaz` (PIN), ⚙️ qurilma nomi. Sinxron: `qurOl` — bola telefonda faol yoki o'zgargan bo'lsa ham qurilma maydoni darhol olinadi; `bolaQabul` — eski qurilmaning kech yozuvi o'tkazishni bekor qilmaydi (h:'q' → qayta yuboriladi); «boshqa qurilmada» ekrani faol emas (`faolMi`).
+- ⏱ `oyinCfg`: `b.oyinMin || z.oyinMin || 1` (1–5); ⚙️ «O'yin davomiyligi (har safar)» standart 1, bola tahririda alohida.
+- 🔄 `version.json` + `yvTekshir/yvHal/yvOyna/yvTasma/yangila/yvQollanma/yvKart` (index.html, start() oldidan): o'zi yangilanish oynasi + «Nima yangi», faoliyatda tasma, majburiy `min`, halqa himoyasi (10 daqiqada 2 urinish → «yopib qayta oching»), ?yv= bilan qayta yuklash (brauzer keshi chetlanadi), ilova keshi o'chiriladi (ovoz keshi qoladi), oldin `A.bulutYubor()`. sw.js version.json ni keshlamaydi. beta_yig version.json ni oladi va ver tekshiradi.
+- Sinov: `v080/sinov_qurilma.py` 24, `v080/sinov_yangilash.py` 24; hammasi.sh 27 sinov OK; prod_e2e 0.7.9→0.8.0 23/23.

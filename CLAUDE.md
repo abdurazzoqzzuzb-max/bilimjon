@@ -9,8 +9,9 @@ Javoblar o'zbekcha. Repo PUBLIC: ism, familiya, oila ma'lumoti, Telegram manzili
 - Firebase **bilimjon-4c008** (Spark, eur3), kirish — email + parol (iPhone'da Google yo'q). SDK gstatic 13.2.0, faqat akkauntli telefonda yuklanadi.
 
 ## Versiya va chiqarish
-- Saytda va beta'da: **0.7.9** («v7.9», 08.11; 🔐 Orzu sandiqchasi — cho'chqa-kassa va foiz olib tashlandi). Qoidalar Firebase'da: **0.7.7** (0.7.8–0.7.9 qoidani o'zgartirmaydi).
-- Har versiyada ikkalasi: `index.html` → `A.VER = 'x.y.z'`, `sw.js` → `P + 'x.y.z'`; ekranda `A.VERK` («v7.7»); `start()` dagi versiya toast'i (eski versiyadan kelganlarga).
+- Saytda va beta'da: **0.8.0** («v8», 08.11; 📱 bitta bola — bitta qurilma, ⏱ dam olish o'yini 1 daq, 🔄 ilova o'zi yangilanadi). Qoidalar Firebase'da: **0.7.7** (0.7.8–0.8.0 qoidani o'zgartirmaydi).
+- Har versiyada uchalasi: `index.html` → `A.VER = 'x.y.z'`, `sw.js` → `P + 'x.y.z'`, **`version.json`** → `ver`, `verk`, `yangi[]` (bolalar tushunadigan 2–4 qator «Nima yangi»); ekranda `A.VERK` («v8»); `start()` dagi versiya toast'i.
+- 🔄 Yangilanish (0.8.0): ilova `version.json` ni tekshiradi (ochilganda, qaytganda, 20 daq) → faoliyatda emas — o'zi yangilanadi (oyna 3 s), faoliyatda — tasma [Yangilash][Keyinroq]. Eski telefon albatta yangilansin desangiz: `min` = yangi ver (majburiy — faoliyatda ham 5 s). Sinov: `sinov/v080/sinov_yangilash.py`. 0.7.9 va eskilarda bu kod yo'q — ular 0.8.0 ga faqat ilovani qayta ochganda o'tadi.
 - Tartib: yangi tarmoq `v0.x.y` (main'dan) → har bosqich push → beta: main worktree'da `python3 sinov/beta/beta_yig.py origin/<tarmoq> beta` → faqat `beta/` commit → u sinaydi → **«chiqar»** desa: `prod_e2e.py` (eski main vs main+tarmoq, 23 tekshiruv) → main'ga `merge --no-ff` → push → GitHub API deployments (github.io proksida yopiq) → qoidalar o'zgargan bo'lsa `qoidalar <oila emaili>`.
 - Orqaga: `git revert -m 1 <merge>`; qoidalar eski ilova bilan mos qilib yoziladi; to'liq eski — admin `qoidalar - eski`.
 
@@ -32,6 +33,7 @@ Kontent banki `BJ.bank` → generatorlar `BJ.gen` (mat M0–M2, mantiq L, ona ti
 - 👆 Ikki marta bosish zoom'i yo'q (0.7.8, u so'radi): `html{touch-action:manipulation}`, hamma input ≥ 16px. Ikki barmoq bilan kattalashtirish QOLADI (u tanladi) — viewport'ga `user-scalable=no` qo'ymang. touchend bilan ikki bosishni to'xtatmang (o'yinlarda tez bosish yo'qoladi).
 - 🔐 Pul FOIZSIZ (0.7.9, u: «pul tegilmasa ko'payadi — islomiy jihatdan to'g'ri emas»): sandiqchaga foiz/o'sish qo'shmang, 🐷 cho'chqa tasvirini ishlatmang. Tejash — faqat ota-ona mukofoti (bozor 🪙) yoki orzu uchun yig'ish.
 - `obuna`: bulut hujjati `q === 'admin'` bo'lsa undagi `guruh` olinadi.
+- 📱 Bitta bola — bitta qurilma (0.8.0): `b.qurilma {id, nom, ts}` — bolaDefaults'ga QO'SHILMAGAN; sinxronda qurilma maydoni yangirog'i (ts) qoladi (`bolaQabul`, `qurOl`). ⏱ O'yin vaqti — `oyinMin` (oila/bola, bo'sh = 1 daq); eski `oyinDaq` o'qilmaydi.
 
 ## 👑 Admin (Claude chatdan; telefon/akkaunt yo'qolsa ham)
 - Yopiq repo `abdurazzoqzzuzb-max/bilimjon-admin`, workflow `admin.yml` (main'dagi `admin/admin.js` ni ishlatadi). Ishga tushirish: GitHub MCP `actions_run_trigger` (run_workflow, `admin.yml`, ref `main`, inputs `{buyruq, a1, a2, tasdiq}`) → `actions_list` (runs → jobs) → `get_job_logs` (job_id, return_content); yoki `bash admin/claude_adm.sh <buyruq> [a1] [a2] [tasdiq]` (gh ishlasa).
@@ -47,8 +49,7 @@ Kontent banki `BJ.bank` → generatorlar `BJ.gen` (mat M0–M2, mantiq L, ona ti
 - Javob oxirida: «🕒 sana · savol vaqti → javob vaqti · 👤 profil». Drive xotirasi (OXIRGI.md) — katta ish tugaganda.
 
 ## Ochiq ishlar (u tasdiqlasa)
-- 🚧 **0.8.0 YARIM (08.11 12:45, limit tugadi) — tarmoq `v0.8.0`:** 📱 bitta bola — bitta qurilma (render'da `qurQulf` → `screenQurilma`, PIN bilan o'tkazish, ⚙️ qurilma nomi; faqat akkaunt ulanganda; localhost/tez da ?qulf=1) + maxfiylik gapi (ruxsat kartasi, tanishtiruv, yo'riqnoma 1-bet) + yo'riqnoma 5-bet ogohlantirish. Sinov `sinov/v080/sinov_qurilma.py`: 17/20 — 3 yiqilish SINOV xatosi: A telefon `#mashq` da turganda o'tkazish `pending` (faolMi) — sinovda A ni avval `#uy` ga o'tkazish kerak. Keyin: hammasi.sh (+v080) → prod_e2e 0.7.9→0.8.0 → chiqarish (u «srazu chiqar», «mayda narsalar bitta to'liq versiyada» dedi) → yo'riqnoma PDF yuborish.
-- ⏭️ **KEYINGI VERSIYADA ALBATTA (u 08.11 11:51 aytdi):** maxfiylik gapi — «Natijalar ilova egasi tomonidan o'quv rejasi uchun ko'rib chiqiladi.» → `sinov/yoriqnoma/yoriqnoma.py` `SAHIFALAR` (1-sahifa, taklifnoma ostida) + ilovadagi 📖 tanishtiruv / 🛡️ ruxsat so'rash kartasi. Alohida versiya chiqarilmaydi — navbatdagi tuzatish bilan birga.
+- 📄 Yo'riqnoma PDF (0.8.0 matni: maxfiylik gapi, bitta bola — bitta qurilma, o'zi yangilanadi) — u «yo'riqnoma» desa yasab yuboriladi (ekranlar suratlar.py).
 - 🎁 «1 oy bepul, keyin pullik» — hozircha faqat matn (to'lov va cheklov yo'q).
 - 🎙️ Arab so'zlari qizining ovozida (132 yozuv) — «hali boshlama». Ota-ona ovozi — keyinroq. Gemini ovozi — `GEMINI_API_KEY` qo'yilsa.
 - 11-sinfgacha kengaytirish — avval pilot (1 fan × 1 sinf, darslik PDF'ini u beradi).
