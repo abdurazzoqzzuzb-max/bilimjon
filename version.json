@@ -1,10 +1,12 @@
 {
-  "ver": "0.8.1",
-  "verk": "8.1",
+  "ver": "0.8.2",
+  "verk": "8.2",
   "min": "0.8.0",
   "sana": "2026-11-10",
   "yangi": [
-    "📡 Natijalar yuborilmay qolsa (internet yo'q) — 6 soatda eslatma chiqadi",
-    "🔄 «Hozir yuborish» tugmasi — reyting darrov yangilanadi"
+    "🏁 Gonka va devor: boshida osonroq, 3 ta ketma-ket to'g'ri — qiyinroq",
+    "🤝 Oila sovg'asi: har bola o'z kunlarini bajaradi — jamoa bo'lib",
+    "☁️ Natija yuborildimi — tepada belgi",
+    "🌙 Ota-onaga: bugungi xulosa doim panel tepasida"
   ]
 }
