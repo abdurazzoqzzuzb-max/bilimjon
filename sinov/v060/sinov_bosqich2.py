@@ -28,7 +28,7 @@ with sync_playwright() as p:
     ok(g and g['nom'] == 'Lego mashina' and g['rasm'].startswith('data:image/jpeg') and len(g['rasm']) <= 80000 and g['n'] == 2, f"Sovg'a saqlandi, rasm siqildi ({len(g['rasm']) if g else 0} belgi)")
     # sirli — kattaga, 1 kun; oila — 3 kun
     pg.select_option('#sk', Q); pg.fill('#sn', 'Pushti velosiped'); pg.fill('#sh', '1'); pg.check('#ss'); pg.click('[data-sv]'); pg.wait_for_timeout(300)
-    pg.select_option('#sk', 'oila'); ok(pg.input_value('#sh') == '8', 'Oila tanlanganda shart avtomatik 2×4=8')
+    pg.select_option('#sk', 'oila'); pg.uncheck('#sj'); ok(pg.input_value('#sh') == '8', 'Oila (jamoa belgisi olinsa — yig\'indi) shart avtomatik 2×4=8')
     pg.fill('#sn', 'Hayvonot bog\'i'); pg.fill('#sh', '3'); pg.click('[data-sv]'); pg.wait_for_timeout(300)
     pg.screenshot(path='/tmp/bj060_sovga_ota.png', full_page=True)
     # o'tgan haftadagi bajarilmagan sovg'a — bolaga ko'rinmaydi
