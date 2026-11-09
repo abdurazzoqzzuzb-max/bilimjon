@@ -285,6 +285,7 @@ body.th-garaj .kyb .k1{fill:#2A3141}body.th-garaj .kyb .k2{fill:#232A38}body.th-
 .yvic{width:64px;height:64px;display:block;margin:0 auto}.yvic .yva{transform-origin:32px 32px;animation:yvAyl 1.6s linear infinite}@keyframes yvAyl{to{transform:rotate(360deg)}}
 .yvbar{height:8px;border-radius:999px;background:rgba(127,140,170,.25);overflow:hidden;margin:10px 0 12px}.yvbar i{display:block;height:100%;width:0;background:var(--acc);border-radius:999px;animation:yvBar var(--yvs,3s) linear forwards}@keyframes yvBar{to{width:100%}}
 .yvt{position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:85;display:flex;flex-wrap:wrap;align-items:center;gap:8px;justify-content:center;padding:10px 12px;border-radius:16px;background:var(--card);color:var(--ink);box-shadow:0 10px 28px rgba(0,0,0,.35);border:1px solid var(--line);max-width:520px;margin:0 auto}.yvt span{font-weight:800;flex:1 1 160px;text-align:center}
+.ybt{border-color:rgba(242,169,0,.55);box-shadow:0 10px 28px rgba(0,0,0,.35),0 0 0 1px rgba(242,169,0,.25)}.ybt span{flex:1 1 100%;text-align:left;font-size:.95rem;line-height:1.35}.ybt .btn{flex:1 1 0}
 .yvq{text-align:left;padding-left:20px;margin:6px 0 10px;display:flex;flex-direction:column;gap:7px}.yvq li{line-height:1.4}.qurq .qurik{width:150px;height:auto;display:block;margin:4px auto 8px}.qurq .row{justify-content:center}
 /* 🔐 0.7.9 Orzu sandiqchasi: tanga qopqoqdagi teshikka tushadi, sandiqcha silkinadi */
 .kassa .sndw{flex:0 0 76px}.sndq{display:block;width:76px;height:auto;overflow:visible;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25))}.kassa .sndt{flex:1;min-width:150px}
@@ -2621,7 +2622,7 @@ BJ.vis = vis;
 (function (G) {
 'use strict';
 const BJ = G.BJ, A = BJ.A = {}, gen = BJ.gen, B = BJ.bank;
-A.VER = '0.8.0';
+A.VER = '0.8.1';
 /* Oddiy versiya nomi (foydalanuvchi so'rovi, 05.11): 0.6.0 → «6», 0.6.1 → «6.1», 1.2.0 → «1.2». Ekranda shu ko'rinadi, ichkarida A.VER qoladi. */
 A.VERK = (() => { const p = A.VER.split('.').map(Number); return p[0] ? p[0] + '.' + p[1] : p[1] + (p[2] ? '.' + p[2] : ''); })();
 A.verBadge = () => `<span class="verb" title="Versiya ${A.VER}">v${A.VERK}</span>`;
@@ -7558,6 +7559,10 @@ A.guruhBind = function (redraw) {
 /* ---------- ISHGA TUSHIRISH: faqat akkaunt ulangan telefonda SDK yuklanadi ---------- */
 A.bulutStart = function () { if (L && L.uid) yukla().catch(() => {}); };
 A.bulutUlangan = () => !!(L && L.uid);   /* 📱 0.8.0: bitta bola — bitta qurilma qulfi faqat akkaunt ulangan oilada */
+/* 📡 0.8.1: bulutga yuborilmagan natija bormi (oila yoki bola holati oxirgi yuborilgandan farq qiladi) — eslatma tasmasi uchun */
+A.yuborHolat = () => { let bor = false; const ul = !!(L && L.uid) && !!SYNC;
+  try { if (ul && L.sync && L.sync.s) bor = hsh(JSON.stringify(umumiy())) !== L.sync.s.h || Object.keys(S().bolalar).some(bid => ozgargan(bid)); } catch (e) {}
+  return { ulangan: ul, bor, tayyor: !!user, oxirgi: (L && L.oxirgi) || 0 }; };
 /* 🧪 sinov rejimi: oila ma'lumoti bulutga yozilmaydi va o'qilmaydi (SYNC = false) — faqat 🛡️ ruxsat tizimi ishlaydi */
 if (A.BETA) A.guruhHTML = () => '';
 A.bulutHolat = () => ({ ulangan: !!user, email: user && user.email, oxirgi: L && L.oxirgi, xato, yuklandi: !!fb, band, rx: RX, rxList });
@@ -8151,6 +8156,44 @@ function yvBosh() {
   addEventListener('hashchange', () => setTimeout(() => { if (!yvBor() || YV.toxta) return; if (!yvFaol()) yvOyna(3); else yvHal(); }, 400));
 }
 Object.assign(A, { yvTekshir, yvQollanma, verKatta, yangila, yvHolat: () => Object.assign({}, YV) });
+/* ================= 📡 YUBORILMAGAN NATIJA ESLATMASI (0.8.1) =================
+   U (10.11): kompyuterda internetsiz o'ynalsa natija bulutga bormaydi — oilalar reytingi yangilanmaydi; «har 6 soatda chiqsin».
+   Akkaunt ulangan qurilmada yuborilmagan o'zgarish 6 soatdan ko'p tursa — pastda tasma (bola mashg'ulotda bo'lmaganda):
+   «📡 Natijalar N soatdan beri yuborilmagan» [🔄 Hozir yuborish] [Keyinroq]. «Keyinroq» — yana 6 soatdan keyin. Yuborilgach o'zi yo'qoladi.
+   Holat: localStorage bj_yub = { kut: yuborilmagan o'zgarish birinchi ko'rilgan vaqt, yop: «Keyinroq» bosilgan vaqt }. */
+const YB = { k: A.BETA ? 'bj_beta_yub' : 'bj_yub', SOAT: 6 * 3600e3 };
+function ybO() { try { return JSON.parse(localStorage.getItem(YB.k) || '{}') || {}; } catch (e) { return {}; } }
+function ybY(o) { try { localStorage.setItem(YB.k, JSON.stringify(o)); } catch (e) {} }
+function ybYop() { const t = $('.ybt'); if (t) t.remove(); }
+function ybTekshir() {
+  if (G.BJ_BITTA || !A.yuborHolat) return; const h = A.yuborHolat(), o = ybO(), now = Date.now();
+  if (!h.ulangan || !h.bor) { if (o.kut || o.yop) ybY({}); ybYop(); return; }   /* hammasi yuborilgan */
+  if (!o.kut) { o.kut = now; ybY(o); }
+  if (yvFaol()) { ybYop(); return; }
+  if (now - o.kut < YB.SOAT || now - (o.yop || 0) < YB.SOAT || $('.yvo') || $('.yvt')) return;
+  ybTasma(Math.floor((now - o.kut) / 3600e3));
+}
+function ybTasma(soat) {
+  const t = document.createElement('div'); t.className = 'yvt ybt'; t.setAttribute('role', 'status');
+  t.innerHTML = `<span>📡 Natijalar ${soat} soatdan beri yuborilmagan — oilalar reytingida ko'rinmayapti. Internetni ulang (kattalarga ayting).</span><button class="btn sm" data-ybh>🔄 Hozir yuborish</button><button class="btn sm ghost" data-ybk>Keyinroq</button>`;
+  document.body.appendChild(t);
+  $('[data-ybk]', t).onclick = () => { const o = ybO(); o.yop = Date.now(); ybY(o); ybYop(); toast('👌 6 soatdan keyin yana eslatamiz'); };
+  const b = $('[data-ybh]', t); b.onclick = async () => {
+    if (navigator.onLine === false) return toast("📡 Internet yo'q — Wi-Fi yoki kabelni ulang, keyin qayta bosing");
+    b.disabled = true; b.textContent = '⏳ Yuborilmoqda…';
+    if (!A.yuborHolat().tayyor && A.bulutStart) A.bulutStart();
+    for (let i = 0; i < 20 && A.yuborHolat().bor; i++) { if (i % 3 === 0 && A.bulutYubor) try { await Promise.race([A.bulutYubor(), new Promise(r => setTimeout(r, 4000))]); } catch (e) {} await new Promise(r => setTimeout(r, 1000)); }
+    if (!A.yuborHolat().bor) { ybY({}); ybYop(); toast('✅ Natijalar yuborildi — reyting yangilandi'); }
+    else { b.disabled = false; b.textContent = '🔄 Hozir yuborish'; toast("⚠️ Yuborib bo'lmadi — internetni tekshirib, qayta bosing"); }
+  };
+}
+function ybBosh() {
+  if (G.BJ_BITTA) return;
+  setTimeout(ybTekshir, 4000); setInterval(ybTekshir, 60000);
+  addEventListener('hashchange', () => setTimeout(ybTekshir, 600));
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') setTimeout(ybTekshir, 1500); });
+}
+Object.assign(A, { ybTekshir });
 function start() {
   /* 0.7.1: sinovga kirmasdan ham ☁️ «🛡️ Ruxsat tizimi» (#bulut) — iPhone'da Safari va uy ekranidagi ilova xotirasi alohida, PIN Safari'da bo'lmasligi mumkin */
   if (A.BETA) { if (!betaOk()) return location.hash === '#bulut' && A.bulutPanel ? A.bulutPanel(null) : betaGate(); betaBelgi(); }
@@ -8161,8 +8204,9 @@ function start() {
   BJ.debug = { state: () => A.S(), fx: FX.stats, A, gen: BJ.gen };
   A.render();
   try { yvBosh(); } catch (e) { console.warn(e); }
+  try { ybBosh(); } catch (e) { console.warn(e); }
   try { if (A.bulutStart) A.bulutStart(); } catch (e) { console.warn(e); }
-  if (oldVer && oldVer !== A.VER) setTimeout(() => toast(oldVer === '0.7.9' ? "🆕 Bilimjon v8: 📱 bitta bola — bitta qurilma, ⏱ dam olish o'yini 1 daqiqa (ota-ona ko'paytira oladi), 🔄 ilova endi o'zi yangilanadi" : oldVer === '0.7.8' ? "🆕 Bilimjon v8: 🔐 do'kondagi kassa endi «Orzu sandiqchasi» — pul orzu uchun alohida saqlanadi (foiz yo'q)" : oldVer === '0.7.7' ? "🆕 Bilimjon v8: 👆 ekran endi ikki marta bosilganda kattalashib qolmaydi (ikki barmoq bilan kattalashtirish — bor), 🏆 oilalar reyting guruhiga ulanish yaxshilandi" : oldVer === '0.7.6' ? '🆕 Bilimjon v8: masala savollaridagi ortiqcha «📄 Matn 1» oynasi olib tashlandi, matnlardagi imlo tuzatildi' : /^0\.7\.[45]$/.test(oldVer) ? '🆕 Bilimjon v8: 🎮 dam olishda 7 o\'yindan tanlov, 🏆 o\'yin reytingi (boshqa oila ham), 🏅 haftaning chempioni, 🔑 zal ota-ona ruxsati bilan' : oldVer === '0.7.4' ? '🆕 Bilimjon v8: 👨‍👩‍👧 ota-ona uchun bulut nazorati yaxshilandi, parol tiklash aniqroq' : oldVer === '0.7.3' ? '🆕 Bilimjon v8: 📈 savollar bola darajasiga to\'g\'ri moslashadi, 📊 hafta xulosasi aniqroq' : oldVer === '0.7.2' ? '🆕 Bilimjon v8: 🇬🇧 «🔊 Eshitish» — inglizcha so\'z yangi ovozda (iPhone jim rejimida ham)' : oldVer === '0.7.1' ? '🆕 Bilimjon v8: 🔊 iPhone\'da savol va inglizcha so\'z ovozi tuzatildi (jim rejimda ham eshitiladi)' : oldVer.indexOf('0.7.') === 0 ? '🆕 Bilimjon v8: 🔊 savollar o\'zbekcha ovozda o\'qiladi, 🤔 «Tushunmadim» tugmasi va 🙋 ota-onadan so\'rash!' : '🆕 Bilimjon v8: 🔊 savollar ovozda, 🗺️ sarguzasht xaritasi, 🎮 o\'yinlar zali, 🧺 oila bozori, 🤔 «Tushunmadim» tugmasi!'), 900);
+  if (oldVer && oldVer !== A.VER) setTimeout(() => toast(oldVer === '0.8.0' ? "🆕 Bilimjon v8.1: 📡 natijalar internetsiz yuborilmay qolsa — 6 soatda eslatma chiqadi" : oldVer === '0.7.9' ? "🆕 Bilimjon v8: 📱 bitta bola — bitta qurilma, ⏱ dam olish o'yini 1 daqiqa (ota-ona ko'paytira oladi), 🔄 ilova endi o'zi yangilanadi" : oldVer === '0.7.8' ? "🆕 Bilimjon v8: 🔐 do'kondagi kassa endi «Orzu sandiqchasi» — pul orzu uchun alohida saqlanadi (foiz yo'q)" : oldVer === '0.7.7' ? "🆕 Bilimjon v8: 👆 ekran endi ikki marta bosilganda kattalashib qolmaydi (ikki barmoq bilan kattalashtirish — bor), 🏆 oilalar reyting guruhiga ulanish yaxshilandi" : oldVer === '0.7.6' ? '🆕 Bilimjon v8: masala savollaridagi ortiqcha «📄 Matn 1» oynasi olib tashlandi, matnlardagi imlo tuzatildi' : /^0\.7\.[45]$/.test(oldVer) ? '🆕 Bilimjon v8: 🎮 dam olishda 7 o\'yindan tanlov, 🏆 o\'yin reytingi (boshqa oila ham), 🏅 haftaning chempioni, 🔑 zal ota-ona ruxsati bilan' : oldVer === '0.7.4' ? '🆕 Bilimjon v8: 👨‍👩‍👧 ota-ona uchun bulut nazorati yaxshilandi, parol tiklash aniqroq' : oldVer === '0.7.3' ? '🆕 Bilimjon v8: 📈 savollar bola darajasiga to\'g\'ri moslashadi, 📊 hafta xulosasi aniqroq' : oldVer === '0.7.2' ? '🆕 Bilimjon v8: 🇬🇧 «🔊 Eshitish» — inglizcha so\'z yangi ovozda (iPhone jim rejimida ham)' : oldVer === '0.7.1' ? '🆕 Bilimjon v8: 🔊 iPhone\'da savol va inglizcha so\'z ovozi tuzatildi (jim rejimda ham eshitiladi)' : oldVer.indexOf('0.7.') === 0 ? '🆕 Bilimjon v8: 🔊 savollar o\'zbekcha ovozda o\'qiladi, 🤔 «Tushunmadim» tugmasi va 🙋 ota-onadan so\'rash!' : '🆕 Bilimjon v8: 🔊 savollar ovozda, 🗺️ sarguzasht xaritasi, 🎮 o\'yinlar zali, 🧺 oila bozori, 🤔 «Tushunmadim» tugmasi!'), 900);
 }
 start();
 })(window);

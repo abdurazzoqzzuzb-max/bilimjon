@@ -15,6 +15,7 @@ html = open(os.path.join(SITE, 'index.html'), encoding='utf-8').read(); sw = ope
 VER = re.search(r"A\.VER = '([\d.]+)'", html)[1]; SWV = re.search(r"const V = P \+ '([\d.]+)'", sw)[1]; VJ = json.load(open(os.path.join(SITE, 'version.json'), encoding='utf-8'))
 ok(VJ['ver'] == VER == SWV and VJ.get('verk') and isinstance(VJ.get('yangi'), list) and VJ['yangi'], f"version.json ({VJ['ver']}) = A.VER ({VER}) = sw.js V ({SWV}), verk va «yangi» ro'yxati bor")
 ok("version\\.json" in sw and 'return;' in sw.split('version\\.json')[1][:40], "sw.js version.json ni keshlamaydi (tarmoqqa o'tkazadi)")
+KEYIN = '.'.join(VER.split('.')[:2] + [str(int(VER.split('.')[2]) + 1)])   # joriy versiyadan bitta yangi (soxta)
 def yangiVer(v, mn=None): return json.dumps({'ver': v, 'verk': v.split('.')[1] + '.' + v.split('.')[2], 'min': mn or '0.8.0', 'yangi': ["🎮 Yangi o'yin", '📚 Yangi darslar']})
 def tel(br, nom, fake=None):
     ctx = br.new_context(viewport={'width': 390, 'height': 844}, service_workers='block', device_scale_factor=1)
@@ -48,7 +49,7 @@ try:
     ok('iPhone' in q and 'Android' in q and 'Yangilash' in q, "📖 «Qanday yangilanadi?» — iPhone va Android qadamlari")
     P.screenshot(path='/tmp/bj080y_qollanma.png'); P.context.close()
     # ---- uy ekranida yangi versiya: o'zi yangilanadi, halqa yo'q
-    P = tel(br, 'UY', yangiVer('0.8.1')); oila(P); P.goto(URL + '#uy'); P.wait_for_timeout(300)
+    P = tel(br, 'UY', yangiVer(KEYIN)); oila(P); P.goto(URL + '#uy'); P.wait_for_timeout(300)
     ok(kutf(P, "!!document.querySelector('.yvo')", 8000), "Uy ekranida yangi versiya → «🆕 … keldi» oynasi o'zi chiqdi")
     t = P.inner_text('.yvo') if P.locator('.yvo').count() else ''
     ok('v1.8' in t or '1.8' in t or "Yangi o'yin" in t, f"Oynada versiya va «Nima yangi» ro'yxati ({t[:80]!r})")
@@ -62,7 +63,7 @@ try:
     ok(P.locator('.sheet').count() == 1, "Tasmadagi «📖 Qanday?» qo'llanmani ochadi")
     P.context.close()
     # ---- faoliyatda: tasma, Keyinroq, uyga qaytganda o'zi
-    P = tel(br, 'FAOL', yangiVer('0.8.1')); oila(P); P.goto(URL + '#mashq'); P.wait_for_timeout(300)
+    P = tel(br, 'FAOL', yangiVer(KEYIN)); oila(P); P.goto(URL + '#mashq'); P.wait_for_timeout(300)
     ok(kutf(P, "!!document.querySelector('.yvt')", 8000) and P.locator('.yvo').count() == 0, "Mashq paytida — oyna emas, pastda «🆕 Yangi versiya» tasmasi")
     P.screenshot(path='/tmp/bj080y_tasma.png')
     ok(P.evaluate("document.documentElement.scrollWidth<=390"), "390 px — tasma bilan gorizontal siljish yo'q")
@@ -72,7 +73,7 @@ try:
     P.evaluate("location.hash='uy'"); ok(kutf(P, "!!document.querySelector('.yvo')", 4000), "Uyga qaytganda — o'zi yangilash oynasi")
     P.context.close()
     # ---- majburiy (min)
-    P = tel(br, 'MAJ', yangiVer('0.8.1', '0.8.1')); oila(P); P.goto(URL + '#mashq'); P.wait_for_timeout(300)
+    P = tel(br, 'MAJ', yangiVer(KEYIN, KEYIN)); oila(P); P.goto(URL + '#mashq'); P.wait_for_timeout(300)
     ok(kutf(P, "!!document.querySelector('.yvo')", 8000), "Majburiy versiya — mashq paytida ham oyna")
     ok(P.locator('[data-yvk]').count() == 0, "Majburiyda «Keyinroq» yo'q")
     P.context.close()
