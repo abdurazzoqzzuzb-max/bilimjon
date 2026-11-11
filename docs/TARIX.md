@@ -412,3 +412,16 @@ U so'radi (08.11 03:30, «PY»): 1) zal ota-ona ruxsati bilan HAR DOIM ochilsin;
 - ⏱ `oyinCfg`: `b.oyinMin || z.oyinMin || 1` (1–5); ⚙️ «O'yin davomiyligi (har safar)» standart 1, bola tahririda alohida.
 - 🔄 `version.json` + `yvTekshir/yvHal/yvOyna/yvTasma/yangila/yvQollanma/yvKart` (index.html, start() oldidan): o'zi yangilanish oynasi + «Nima yangi», faoliyatda tasma, majburiy `min`, halqa himoyasi (10 daqiqada 2 urinish → «yopib qayta oching»), ?yv= bilan qayta yuklash (brauzer keshi chetlanadi), ilova keshi o'chiriladi (ovoz keshi qoladi), oldin `A.bulutYubor()`. sw.js version.json ni keshlamaydi. beta_yig version.json ni oladi va ver tekshiradi.
 - Sinov: `v080/sinov_qurilma.py` 24, `v080/sinov_yangilash.py` 24; hammasi.sh 27 sinov OK; prod_e2e 0.7.9→0.8.0 23/23.
+
+
+## 0.8.2 — beta (10.11.2026; CLAUDE.md dan ko'chirildi 11.11)
+- 📡 yuborilmagan natija tasmasi (6 soat, `A.yuborHolat`, `ybTekshir`), ☁️ belgi (`A.syncChip`), 🏁 gonka/devor zinapoyasi (`POG`, `misol`, `pogQadam`, `b.zal.pog[g]`; 3 ketma-ket to'g'ri → +1, xato → −1, keyingi o'yin oxirgi−1 dan), 🤝 jamoa sovg'asi (`g.har` — har bola n kun), 🌙 bugungi xulosa + 🆕 yangilik kartasi (`A.YANGI` = version.json yangi) + 👑 oilalar holati — ota-ona paneli tepasida; panelga kirilganda `yvTekshir('qolda')`.
+
+## 0.9.0 — «v9», 2-bosqich (11.11.2026, beta; tarmoq v0.9.0 = v0.8.2 ustiga)
+- U (10.11): «hammasi yoqdi, o'zing tanla». U (11.11): «Bilimjon ishini davom ettiramiz». Talqin (11.11 xabarda aytildi): 1) daraxt, 2) aynan xato savol 1–3–7, 3) kunning 3 qiyini — darajadan bir pog'ona qiyin 3 savol, 4) ko'zga dam.
+- 🌳 `A.daraxt` (alohida `<script>`, xarita modulidan keyin): shoxlar — bolaning darajasi (M{d}.*, H{d}.*; g0 da yozuv), ingliz — butun zanjir, mantiq — `MANT_KUN[L]`, arab — asosiy ligada `BOLIM.aralash` + AY.4 (tasdiqlanmagan — 🔒 kulrang kurtak), aks holda AL.1–7. Barg: kurtak/barg/sariq/meva (`ozl`|`kalib` = meva). SVG: qalinligi kamayuvchi shoxlar (`tapered`), shamolda tebranish (`.dsh`), yorliqlar ustma-ust tushmaydi (`YL`). 🍎 har 5 yangi o'zlashtirilgan (`ozlSana >= b.daraxt.bosh`) → `narxK(5000)`; 🏅 shox to'lsa → `noyobBer` (dunyo katalogidagi hali yo'q eng qimmat buyum → `pul.ega`; hammasi bo'lsa 10 000·k); 🎁 `S.dsov[bid][p] = {nom, ts}`, `S.dsov[bid].b[p]` = berildi; yetgan pog'onaga keyin sovg'a yozilmaydi. Tekshiruv: uy ekranida va 'ozl' hodisasidan 1,8 s keyin (`tekshir`).
+- 🔁 `xqYoz` (afterAnswer, `!togri_1`): nusxa ≤ 2 500 belgi, kuniga ≤ 4, jami ≤ 12; olinmaydi — dars/sora/duel/kashf/xq/qiyin3, yoz/dunyo, `yigish`, L.4/6/7/8/10/11, KASHF, AY.4. `buildMission`: vaqti kelgani (≤ 3) — 1-qadam `xato` (`ids`); `xqItem` → tur `xq`, banner `xqBanner` (3 nuqta — bosqich). To'g'ri → box++ (1→3→7), box 3 → yengildi +1 ⭐; xato → box 0, ertaga.
+- 🎯 `A.q3`: missiya bajarilgach uy va natija ekranida; fanlar g0 [mat, mant, mat], boshqalar [mat, til, mant]; `q3Sel`: joriy tugunda q+1, q3 bo'lsa keyingi tugun q2; mantiq — UZUN'siz. 3/3 → +3 ⭐ + `narxK(3000)`, 2/3 → +1 ⭐. `oyinN: -99` (o'yin tanaffusi yo'q).
+- 👀 1 s taymerda `kozSek` (missiya/arena/mashq), 15 daq → `kozDam` (`sheet(..., {lock})`, 20 s halqa, keyin «✅ davom»); tanaffus oynasi `kozSek` ni ham nolga tushiradi; ⚙️ checkbox `#kz`.
+- Sinov: `sinov/v090/sinov_v090.py` (hammasi.sh 2-qatorda).
+

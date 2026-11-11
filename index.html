@@ -3122,8 +3122,8 @@ function render() {
   const b = A.bola(); if (!b.dunyo && h !== 'dunyo') return screenWorld(b);
   if (h === 'dunyo') return screenWorld(b);
   KOMBO.n = 0;
-  if (/^(missiya|arena|mashq|vazifa-|garaj|dokon|qutqar-|zal|bozor|daraxt-m-|qiyin3)/.test(h) && qurQulf(b)) return screenQurilma(b, h);
-  if (/^(missiya|arena|mashq|vazifa-|garaj|dokon|qutqar-|zal|bozor|daraxt-m-|qiyin3)/.test(h)) { const m0 = b.missiya, dm = A.damHolat(b, h === 'missiya' && m0 && m0.sana === A.todayKey() && !m0.done && m0.si > 0); if (dm) return screenDam(b, dm); }
+  if ((/^(missiya|arena|mashq|vazifa-|garaj|dokon|qutqar-|zal|bozor)/.test(h) || /^(daraxt-m-|qiyin3)/.test(h)) && qurQulf(b)) return screenQurilma(b, h);
+  if (/^(missiya|arena|mashq|vazifa-|garaj|dokon|qutqar-|zal|bozor)/.test(h) || /^(daraxt-m-|qiyin3)/.test(h)) { const m0 = b.missiya, dm = A.damHolat(b, h === 'missiya' && m0 && m0.sana === A.todayKey() && !m0.done && m0.si > 0); if (dm) return screenDam(b, dm); }
   if (h === 'missiya') return screenMission(b);
   if (h === 'arena') return screenArena(b);
   if (h === 'natija') return screenResult(b);
@@ -3970,11 +3970,11 @@ function soraNatija(b, m, it, fin) {
    Birinchi urinishda to'g'ri — keyingi oraliq; 3 marta to'g'ri → «yengildi» (+1 ⭐, ro'yxatdan chiqadi); yana xato — ertaga qaytadan.
    Oldin (0.2.0 dan) faqat MAVZU qaytardi (b.takror) — u qoladi; bu esa savolning o'zi. b.xq = [{ id, k, sana, tugun, box, due, n, ok, it }]
    (≤ 12 ta, kuniga ≤ 4 yangi, nusxa ≤ 2 500 belgi) — bolaDefaults'ga QO'SHILMAGAN. Uzun topshiriqlar (labirint, sudoku, xotira, shakl yig'ish, kod-yo'l),
-   kashfiyot, duel, yozuv chiziqlari, daftarga yozish — olinmaydi. */
+   kashfiyot, duel, yozuv chiziqlari, daftarga yozish, 1–2-kun kalibrlash savollari (ataylab yuqoridan) — olinmaydi. */
 const XQ_MAX = 12, XQ_KUN = 4, XQ_OR = [1, 3, 7], XQ_YOQ = { 'L.4': 1, 'L.6': 1, 'L.7': 1, 'L.8': 1, 'L.10': 1, 'L.11': 1, KASHF: 1, 'AY.4': 1 };
 const xqKalit = it => (it.tugun + '|' + String(it.sav || '') + '|' + String(it.sav2 || '') + '|' + String(it.a)).slice(0, 200);
 function xqYoz(b, it) {
-  if (!b || !it || !it.tugun || !gen.reg[it.tugun] || XQ_YOQ[it.tugun] || ['dars', 'sora', 'duel', 'kashf', 'xq', 'qiyin3'].includes(it.tur) || ['yoz', 'dunyo'].includes(it.fan) || it.t === 'yigish') return null;
+  if (!b || !it || !it.tugun || it.kalib || !gen.reg[it.tugun] || XQ_YOQ[it.tugun] || ['dars', 'sora', 'duel', 'kashf', 'xq', 'qiyin3'].includes(it.tur) || ['yoz', 'dunyo'].includes(it.fan) || it.t === 'yigish') return null;
   const T = A.todayKey(), L = Array.isArray(b.xq) ? b.xq : (b.xq = []), k = xqKalit(it);
   if (L.some(x => x.k === k) || L.filter(x => x.sana === T).length >= XQ_KUN) return null;
   let c; try { c = JSON.parse(JSON.stringify(it)); } catch (e) { return null; } if (!c) return null;
@@ -7317,6 +7317,8 @@ const CFG = { apiKey: 'AIzaSyCPmq6Bx4R5TQSaCbj_zxCBEmpX6VnvTYs', authDomain: 'bi
 const LK = A.BETA ? 'bj_beta_bulut_v1' : 'bj_bulut_v1', TICK = 6000, KOD_ALF = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 const MAHALLIY = ['bolalar', 'joriy', 'qurilma', 'lastBackup', 'seenVer', 'appVer'];
 const FAOL = /^(missiya|arena|natija|mashq|vazifa-|sinov-|dunyo|zal-|bozor)/;
+const FAOL9 = /^(daraxt-m-|qiyin3)/;   /* 0.9.0: 🌳 mavzu mashqi, 🎯 kunning 3 qiyini — ham faol ekran */
+FAOL.test = (t => h => t(h) || FAOL9.test(h))(FAOL.test.bind(FAOL));
 const logV = {}, gaUrin = {};   /* gaUrin — 0.7.8: guruh/{kod}/oilalar yozuviga shu seansda urinilgan kodlar */
 let fb = null, auth = null, db = null, user = null, loading = null, unsub = [], gUnsub = null, tickT = null, band = false, pending = {}, xato = '', yuklanmadi = false, birinchiBand = false;
 let L = lget();
@@ -8069,6 +8071,9 @@ function yangilikKart() {
   if (bor) return `<div class="card ynk"><h3>🆕 Bilimjon v${esc(yvVerk())} chiqdi</h3>${Array.isArray(YV.info.yangi) ? `<ul>${YV.info.yangi.slice(0, 5).map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}<button class="btn" data-ynh>🔄 Hozir yangilash</button></div>`;
   return `<div class="card ynk"><h3>🆕 Yangilik — v${esc(A.VERK)}</h3><ul>${(A.YANGI || []).map(x => `<li>${esc(x)}</li>`).join('')}</ul><button class="btn sm ghost" data-ynk>✓ Ko'rdim</button></div>`;
 }
+/* 0.9.0: 🌳 daraxt foizi, 🔁 qaytadigan xato savollar, 🎯 kunning 3 qiyini — bir qator */
+function xulosa9(b) { try { const p = A.daraxt ? A.daraxt.hisob(b).p : null, xq = (b.xq || []).length, q3 = b.q3 && b.q3.sana === A.todayKey() ? b.q3 : null;
+  return `<div class="sm mut">${p != null ? `🌳 daraxt ${p}%` : ''}${xq ? ` · 🔁 qaytadigan xato savol: ${xq}` : ''}${q3 ? ` · 🎯 3 qiyin: ${q3.ok}/${q3.n}` : ''}</div>`; } catch (e) { return ''; } }
 function xulosaBola(b) {
   const k = A.todayKey(), a = (b.kun || {})[k] || {}, ans = A.readLog(b.id, k).filter(e => e.t === 'ans');
   const bosh = `<div class="xsh"><span class="av">${esc(b.avatar)}</span><b>${esc(b.laqab)}</b>`;
@@ -8078,7 +8083,7 @@ function xulosaBola(b) {
   const ids = Object.keys(g).sort((p, q) => g[q].n - g[p].n), t = ids[0], nom = t && (((BJ.gen.reg || {})[t] || {}).nom || t), ex = t && g[t].ex;
   const sav = ex && String(ex.savol).replace(/\s*=\s*\?\s*$/, '').trim();
   return `<div class="xsq">${bosh}<span class="sm">${daq} daq · ${n} savol${n ? ` · <b>${Math.round(100 * ok / n)}%</b> to'g'ri` : ''} · 🎯 ${a.missiya ? 'missiya ✅' : 'missiya —'}</span></div>
-    ${t ? `<p>😓 Qiynaldi: <b>${esc(nom)}</b> (${g[t].n} ta xato${ids.length > 1 ? `, yana ${ids.length - 1} mavzuda` : ''})</p>${sav ? `<div class="xsm">✏️ Birga yeching: «${esc(sav)}» — u <b>${esc(ex.javob || '—')}</b> dedi, to'g'risi <b>${esc(ex.togri_javob || '—')}</b></div>` : ''}` : n ? `<p>🌟 Bugun xatosiz — maqtab qo'ying!</p>` : ''}</div>`;
+    ${t ? `<p>😓 Qiynaldi: <b>${esc(nom)}</b> (${g[t].n} ta xato${ids.length > 1 ? `, yana ${ids.length - 1} mavzuda` : ''})</p>${sav ? `<div class="xsm">✏️ Birga yeching: «${esc(sav)}» — u <b>${esc(ex.javob || '—')}</b> dedi, to'g'risi <b>${esc(ex.togri_javob || '—')}</b></div>` : ''}` : n ? `<p>🌟 Bugun xatosiz — maqtab qo'ying!</p>` : ''}${xulosa9(b)}</div>`;
 }
 function xulosaKart(L) {
   if (!L.length) return ''; const d = new Date(), z = x => String(x).padStart(2, '0');
