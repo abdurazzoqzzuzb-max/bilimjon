@@ -13,13 +13,14 @@ SHOT = lambda pg, n: pg.screenshot(path=f'/tmp/bj076_{n}.png', full_page=True)
 
 # ---------- soxta Firebase (qoidalar 0.7.6 — guruh azo: ruxsat etilgan maydonlar + ixtiyoriy zal {r, h, p}) ----------
 STORE = {}; LOCK = threading.RLock(); RULES = {'admin': 'U_admintestuz'}; RAD = []
-AZO = {'uid', 'oila', 'av', 'laqab', 'daraja', 'yulduz', 'kun', 'osish', 'detal', 'missiya', 'wk', 'ts', 'zal', 'bu', 'dz'}   # qoidalar 0.9.0
+AZO = {'uid', 'oila', 'av', 'laqab', 'daraja', 'yulduz', 'kun', 'osish', 'detal', 'missiya', 'wk', 'ts', 'zal', 'bu', 'dz', 'ol'}   # qoidalar 0.9.1
 def ruxsatli(uid): return uid == RULES['admin'] or (STORE.get('ruxsat/' + str(uid)) or {}).get('holat') == 'ok'
 def azo_togri(d, uid):
     if not set(d) <= AZO or d.get('uid') != uid: return False
     if 'zal' in d and not (isinstance(d['zal'], dict) and set(d['zal']) <= {'r', 'h', 'p'}): return False
     if 'bu' in d and not (isinstance(d['bu'], dict) and set(d['bu']) <= {'k', 'm', 'd', 'n', 'p'}): return False
     if 'dz' in d and not (isinstance(d['dz'], int) and 0 <= d['dz'] <= 100): return False
+    if 'ol' in d and not (isinstance(d['ol'], list) and len(d['ol']) <= 10): return False   # 0.9.1: 👏 olqishlar
     return isinstance(d.get('laqab'), str) and len(d['laqab']) <= 24 and isinstance(d.get('yulduz'), int)
 def ruxsat(op, path, who, new=None):
     uid = who.get('uid'); p = path.split('/'); adm = uid is not None and uid == RULES['admin']
@@ -307,6 +308,18 @@ try:
     JV.goto(URL + '#zal-rekord'); JV.wait_for_timeout(700); t = JV.evaluate("document.body.innerText")
     ok('Ali' in t and 'Admin oila' in t and '4.2 s' in t, "Dost bolasi 🏆 Rekordlar ekranida boshqa oila bolasini ko'radi (Ali · Admin oila · 4.2 s)")
     JV.screenshot(path='/tmp/bj076_guruh.png', full_page=True)
+    # ================= H) 👏 0.9.1: boshqa oila bolasiga olqish (guruh a'zo yozuvidagi «ol», qoidalar 0.9.1) =================
+    ok(kutf(AD, f"Object.keys(BJ.A.S().oilaTel||{{}}).some(q=>(BJ.A.S().oilaTel[q].bolalar||[]).some(x=>x.id==='{jbid}'))", 12000), "Admin telefoni Dost bolasini guruhdan ko'radi")
+    r = AD.evaluate(f"(()=>{{const A=BJ.A,b=A.bola('{abid}'); A.S().joriy=b.id; const y=A.olqish.yubor(b,{{id:'{jbid}',laqab:'Sabo',av:'🌸'}},2); A.save(true); A.bulutYubor(); return [y, A.olqish.bulut(b)]}})()")
+    ok(r[0] is True and len(r[1]) == 1 and r[1][0].startswith(jbid + '|2|'), f"Ali → Sabo (boshqa oila): «🔥 Zo'r ketyapsan!» — bulut ro'yxatida {r[1]}")
+    ok(kutpy(lambda: any(str(x).startswith(jbid + '|2|') for x in (STORE.get(f'guruh/{KOD}/azo/{abid}', {}).get('ol') or [])), 15000), "Admin bolasining a'zo yozuvida «ol» (qoidalar 0.9.1 qabul qildi)")
+    ok(not [x for x in RAD if '/azo/' in x], f"«ol» bilan a'zo yozuvi rad etilmadi {RAD[:3]}")
+    ok(kutf(JV, f"((BJ.A.bola('{jbid}').olq||{{}}).k||[]).some(k=>k.f==='{abid}' && k.i===2 && k.yangi)", 15000), "Dost telefonida Sabo olqishni oldi (faqat o'z bolasiga yozilgani)")
+    JV.evaluate(f"(()=>{{BJ.A.S().joriy='{jbid}'; BJ.A.save(true); location.hash='x'; location.hash='uy'}})()"); JV.wait_for_timeout(700)
+    t = JV.inner_text('.olqk') if JV.locator('.olqk').count() else ''
+    ok('Ali' in t and "Zo'r ketyapsan" in t, f"Sabo uy ekranida: «Ali senga: 🔥 Zo'r ketyapsan!» ({t[:60]})")
+    JV.screenshot(path='/tmp/bj076_olqish.png', full_page=True)
+    ok(AD.evaluate(f"BJ.A.olqish.qabul('{jbid}', {{ol:['{abid}|0|'+Date.now(), 'yomon|9|1', '<b>|1|'+Date.now()]}}, new Set(['{abid}']))") == 1, "Qabul: noto'g'ri satrlar (ibora 9, HTML) tashlanadi, faqat o'z bolamizga yozilgani olinadi")
     ok(not PE, f"G: JS xato yo'q {PE[:3]}")
 finally:
   srv.terminate()

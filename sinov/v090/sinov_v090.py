@@ -173,11 +173,11 @@ try:
     ok(r['q']['bu']['k'] == ev("BJ.A.todayKey()") and r['q']['bu']['m'] == 1 and r['q']['bu']['d'] == 25 and isinstance(r['q'].get('dz'), int), f"Guruhga yuboriladigan qo'shimcha: bu {{k, m, d, n, p}} + dz ({r['q']})")
     ok(r['bad'] is None and r['cut'] == {'k': '2026-01-01', 'm': 0, 'd': 600, 'n': 0, 'p': 100}, "Boshqa telefondan kelgan bu — tozalanadi (noto'g'ri sana rad, sonlar chegarada, ortiqcha kalit yo'q)")
     rl = open(os.path.join(SITE, 'firestore.rules'), encoding='utf-8').read()
-    ok("'zal', 'bu', 'dz'])" in rl and "d.bu.keys().hasOnly(['k', 'm', 'd', 'n', 'p'])" in rl and 'd.dz is int' in rl, "firestore.rules 0.9.0: azo ga ixtiyoriy bu {k,m,d,n,p} va dz (int 0–100)")
+    ok("'zal', 'bu', 'dz'" in rl and "d.bu.keys().hasOnly(['k', 'm', 'd', 'n', 'p'])" in rl and 'd.dz is int' in rl, "firestore.rules 0.9.0: azo ga ixtiyoriy bu {k,m,d,n,p} va dz (int 0–100)")
     ev("location.hash='uy'"); P.wait_for_timeout(300)
     # ================= 🆕 YANGILIK TURI + 🔔 UNUTILGAN BO'LIM ESLATMASI (u 11.11 21:52) =================
     def uyga(): ev("BJ.A.closeSheets(); location.hash='x'"); P.wait_for_timeout(120); ev("location.hash='uy'"); P.wait_for_timeout(250); ev("BJ.A.closeSheets(); document.querySelectorAll('.ytur').forEach(x=>x.remove())"); ev("BJ.A.render()"); P.wait_for_timeout(1300)
-    ev(f"(()=>{{const A=BJ.A,b=A.bola('{AZ}'); A.yangiSinov=1; A.S().joriy=b.id; delete b.yv; delete b.kor; delete b.esYop; b.boshlandi=A.addDays(A.todayKey(),-6); A.save(true)}})()")
+    ev(f"(()=>{{const A=BJ.A,b=A.bola('{AZ}'); A.yangiSinov=1; A.yangilik.VER_YANGI[A.VER]=['daraxt','estafeta','q3']; A.S().joriy=b.id; delete b.yv; delete b.kor; delete b.esYop; b.boshlandi=A.addDays(A.todayKey(),-6); A.save(true)}})()")
     uyga()
     ok(P.locator('.ytur').count() == 1 and 'Bilim daraxti' in P.inner_text('.ytb') and '1/' in P.inner_text('.ytb'), "Yangi versiyadan keyin uyda tur: 🆕 1-yangilik — Bilim daraxti (tugma yoritilgan)")
     ok(P.locator('[data-daraxt] .ynb').count() == 1 and P.locator('[data-est] .ynb').count() == 1, "Kirilmagan yangi bo'limlarda «YANGI» belgisi (daraxt, estafeta)")

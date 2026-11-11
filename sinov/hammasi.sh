@@ -24,7 +24,7 @@ run sinov/v060/sinov_bosqich1.py sinov/v060/sinov_bosqich2.py sinov/v060/sinov_b
     sinov/v070/sinov_bosqich1.py sinov/v070/sinov_bosqich1b.py sinov/v070/sinov_bosqich1c.py sinov/bulut/sinov_bulut.py sinov/bulut/sinov_chekka.py \
     sinov/v072/sinov_ovoz_ios.py sinov/v073/sinov_en_ios.py sinov/v077/sinov_v077.py sinov/v078/sinov_v078.py sinov/v078/sinov_zoom.py sinov/v079/sinov_sandiq.py sinov/v080/sinov_yangilash.py sinov/v081/sinov_yuborish.py sinov/v082/sinov_v082.py > "$T/1.log" 2>&1 &
 run sinov/v070/sinov_bosqich2.py sinov/v070/sinov_bosqich3.py sinov/v071/sinov_v071.py sinov/v071/sinov_ovoz.py sinov/v074/sinov_v074.py \
-    sinov/v075/sinov_oilalar.py sinov/v076/sinov_v076.py sinov/v077/sinov_eshik.py sinov/v080/sinov_qurilma.py sinov/admin/sinov_admin.js sinov/v090/sinov_v090.py > "$T/2.log" 2>&1 &
+    sinov/v075/sinov_oilalar.py sinov/v076/sinov_v076.py sinov/v077/sinov_eshik.py sinov/v080/sinov_qurilma.py sinov/admin/sinov_admin.js sinov/v090/sinov_v090.py sinov/v091/sinov_v091.py > "$T/2.log" 2>&1 &
 wait
 cat "$T/1.log" "$T/2.log"
 n=$(cat "$T/1.log" "$T/2.log" | grep -c "^OK\|^XATO"); x=$(cat "$T/1.log" "$T/2.log" | grep -c "^XATO")
