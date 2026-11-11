@@ -3120,6 +3120,7 @@ function render() {
   if (h.indexOf('ota') === 0) return A.screenOta ? A.screenOta(h) : null;
   if (h === 'tanla' || !s.joriy || !s.bolalar[s.joriy]) return screenPicker();
   const b = A.bola(); if (!b.dunyo && h !== 'dunyo') return screenWorld(b);
+  if (A.yangilik) A.yangilik.kordi(b, h);   /* 🆕🔔 0.9.0: bo'limga kirilgan sana */
   if (h === 'dunyo') return screenWorld(b);
   KOMBO.n = 0;
   if ((/^(missiya|arena|mashq|vazifa-|garaj|dokon|qutqar-|zal|bozor)/.test(h) || /^(daraxt-m-|qiyin3)/.test(h)) && qurQulf(b)) return screenQurilma(b, h);
@@ -3297,7 +3298,7 @@ function reytingHTML(b) {
 function screenHome(b) {
   theme(b.dunyo); const t = A.agg(b), m = b.missiya, today = A.todayKey(), done = m && m.sana === today && m.done, going = m && m.sana === today && !m.done, sq = A.sandiq(b);
   app.innerHTML = `<div class="wrap kidw"><div class="top"><button class="ib av" data-tanla aria-label="Bola almashtirish">${b.avatar}</button><div class="ttl">${esc(b.laqab)}<br>${A.verBadge()}</div><span class="sp"></span><span class="pill">⭐ ${b.yulduz}</span><span class="pill">${sq.ic}</span><button class="ib" data-ota aria-label="Ota-ona paneli">👨‍👩‍👧</button></div>
-  ${A.xarita ? A.xarita.html(b) : worldScene(b, true)}<div class="bubble">${esc(A.xarita && A.xarita.qutRoyxat(b).length ? "Tumanli bekat bor — 🛟 qutqaramizmi?" : done ? 'Bugungi missiya bajarildi! Arenada mashq qilsang ham bo\'ladi.' : going ? 'Missiya kutib turibdi — davom etamiz!' : A.isSunday() && A.dayNo(b) >= 3 ? 'Bugun yakshanba — KATTA FINAL!' : 'Salom! Bugungi missiyaga tayyormisan?')}</div>
+  ${A.xarita ? A.xarita.html(b) : worldScene(b, true)}<div class="bubble">${esc(A.xarita && A.xarita.qutRoyxat(b).length ? "Tumanli bekat bor — 🛟 qutqaramizmi?" : done ? 'Bugungi missiya bajarildi! Arenada mashq qilsang ham bo\'ladi.' : going ? 'Missiya kutib turibdi — davom etamiz!' : A.isSunday() && A.dayNo(b) >= 3 ? 'Bugun yakshanba — KATTA FINAL!' : 'Salom! Bugungi missiyaga tayyormisan?')}</div><div data-eslat></div>
   ${done && A.q3 ? A.q3.html(b) : ''}<div class="row cta">${done ? `<button class="btn big alt" data-arena>⚔️ Arena</button>` : `<button class="btn big" data-start>${going ? '▶ Davom etish' : A.isSunday() && A.dayNo(b) >= 3 ? '🏆 Finalni boshlash' : '🚀 Missiyani boshlash'}</button>`}</div>
   ${A.xarita ? A.xarita.qutTugma(b) : ''}<div class="row"><button class="btn ghost" data-mashq>📚 Mashq — fanni o'zing tanla</button></div>${A.daraxt ? A.daraxt.tugma(b) : ''}${A.bozor ? A.bozor.uyHTML(b) : ''}${A.zal ? A.zal.tugma(b) : ''}${A.garajTugma ? `<div class="row">${A.garajTugma(b)}</div>` : ''}${A.pul ? A.pul.uyHTML(b) : ''}${sovgaHTML(b)}${kashfUyHTML(b)}${vazifaHTML(b)}
   <div class="stats"><div><b>⭐ ${t.yulduz}</b><span>bugun</span></div><div><b>⏱ ${Math.round(t.faol / 60)}</b><span>daqiqa</span></div><div><b>${b.detal.length}</b><span>${b.dunyo === 'orol' ? 'bezak' : 'detal'}</span></div></div>
@@ -3320,6 +3321,7 @@ function screenHome(b) {
   const dkb = $('[data-dokon]'); if (dkb) dkb.onclick = () => go('dokon');
   $$('[data-vz]').forEach(x => x.onclick = () => go('vazifa-' + x.dataset.vz)); bindKashfUy(b);
   $$('[data-vzok]').forEach(x => x.onclick = () => { const v = (b.vazifa || []).find(y => y.id === x.dataset.vzok); if (!v) return; v.done = true; v.qolda = 1; v.doneTs = Date.now(); v.doneSana = A.todayKey(); A.addStar(b, 2); A.pushLog(b.id, { t: 'vazifa', ts: Date.now(), bola: b.id, id: v.id, fan: v.fan, n: 0, qolda: 1 }); const pv = A.pul ? A.pul.vazifa(b) : 0; A.save(true); FX.play('ding'); toast('✅ Barakalla! +2 ⭐' + (pv ? ' · 💵 +' + A.pul.som(pv) : '')); screenHome(b); });
+  if (A.yangilik) A.yangilik.uy(b);   /* 🆕 yangilik turi / 🔔 unutilgan bo'lim eslatmasi */
 }
 /* ================= OVOZ (ingliz — telefon TTS) ================= */
 let spk = null;
@@ -6797,6 +6799,103 @@ const css = `.eswrap,.esmini{border-radius:18px;overflow:hidden;box-shadow:0 6px
 .esc{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:6px;font-size:.88rem}.esb{margin-top:6px;font-size:.85rem}.esbtn{margin-top:4px}`;
 if (typeof document !== 'undefined') { const st = document.createElement('style'); st.textContent = css; document.head.appendChild(st); }
 A.estafeta = { yuguruvchilar, svg, mini, screen, jonla, karta, qoshimcha, buToza, bugun, holat, OLDX };
+})(typeof window !== 'undefined' ? window : globalThis);
+</script>
+<script>
+/* Bilimjon — 🆕 YANGILIK TURI va 🔔 UNUTILGAN BO'LIM ESLATMASI (0.9.0; u 11.11 21:52: «yangi versiyada nima o'zgargani belgilab ko'rsatilsin,
+   bolalar 1-marta bosib ishlatib ko'rsin; qaysidir bo'limni anchadan beri ko'rmagan bo'lsa — eslatma: shu bo'limga kir, shunaqa ma'lumot bor»).
+   🆕 Yangi versiyadan keyin bola uy ekraniga birinchi kirganda — qadamma-qadam tur: yangi tugma yoritiladi (atrofi xiralashadi), «👆 Bosib ko'r» → o'sha bo'limga;
+   qaytganda tur keyingi yangilikdan davom etadi. Kirilmagan yangi bo'lim tugmasida «YANGI» belgisi turadi (kirguncha). «Keyinroq» — ertaga yana.
+   🔔 Eslatma: bo'limga N kundan beri kirilmagan bo'lsa (daraxt 3, estafeta 2, do'kon 4, garaj 4, mashq 5, o'yinlar zali 5, bozor 6) — uy ekranida bitta karta,
+   ichida aniq ma'lumot (yangi pishgan mevalar, estafetadagi o'rning, do'konga yetadigan pul…). ✕ — bugun boshqa chiqmaydi.
+   b.kor = {bo'lim: oxirgi kirgan sana}, b.yv = {v: versiya, sana, tur: null|'ok'|'keyin'|'yoq', qadam, keyin}, b.esYop = {bo'lim: sana} — bolaDefaults'ga qo'shilmagan.
+   Yangi bola (1-kun) uchun tur yo'q. ?tez=1 da o'chiq (A.yangiSinov bilan yoqiladi). */
+(function (G) {
+'use strict';
+const BJ = G.BJ, A = BJ.A, FX = BJ.fx;
+const { $, $$, esc } = A;
+const S = () => A.S();
+const VER_YANGI = { '0.9.0': ['daraxt', 'estafeta', 'q3'] };
+const kunlar = (a, b) => A.dayDiff(a, b);
+const nomOf = id => { try { return (BJ.gen.reg[id] || {}).nom || id; } catch (e) { return id; } };
+const B = {
+  daraxt: { ic: '🌳', nom: 'Bilim daraxti', sel: '[data-daraxt]', h: 'daraxt', kun: 3, tur: "Har mavzu — bitta barg. O'zlashtirsang, meva pishadi! Bargni bossang — shu mavzuni mashq qilasan.",
+    xabar(b, k) { if (!A.daraxt) return null; const D = A.daraxt, H = D.hisob(b), ids = new Set([].concat(...H.L.map(s => s.ids)));
+      const yangi = Object.keys(b.tugun || {}).filter(id => ids.has(id) && b.tugun[id].holat === 'ozl' && b.tugun[id].ozlSana && (!k || b.tugun[id].ozlSana > k)).length;
+      if (yangi) return `${yangi} ta yangi meva pishdi — ko'rib chiq!`; const q = Object.keys(b.tugun || {}).filter(id => ids.has(id) && b.tugun[id].holat === 'qiyin').length;
+      return q ? `${q} ta barg sarg'ayib qoldi — ularni mashq qilsang, yana yashil bo'ladi` : `Daraxting ${H.p}% — keyingi mevani pishir!`; } },
+  estafeta: { ic: '🏃', nom: 'Estafeta', sel: '[data-est]', h: 'estafeta', kun: 2, tur: "Do'stlaring bilan hafta yugurishi: har kunlik missiya — bitta bosqich. Kim qayerda — ko'rib tur!",
+    xabar(b) { if (!A.estafeta) return null; const L = A.estafeta.yuguruvchilar().filter(x => !x.eski); if (L.length < 2) return null; const i = L.findIndex(x => x.id === b.id); if (i < 0) return null;
+      return i === 0 ? `Sen 1-o'rindasan (${L[0].bos}/7) — boshqalar quvib kelyapti!` : `Sen ${i + 1}-o'rindasan — ${esc(L[0].laqab)} oldinda (${L[0].bos}/7). Yetib ol!`; } },
+  q3: { ic: '🎯', nom: 'Kunning 3 qiyini', sel: '[data-q3]', h: 'qiyin3', kun: 0, tur: "Missiyadan keyin 3 ta qiyinroq savol. 3 tadan 3 ta topsang — bonus ⭐ va so'm!" },
+  dokon: { ic: '🛒', nom: "Do'kon", sel: '[data-dokon]', h: 'dokon', kun: 4,
+    xabar(b) { const P = A.pul; if (!P || S().sozlama.pul === false) return null; const h = P.st(b).h, K = b.dunyo === 'orol' ? P.SALON : P.TUN; let min = null;
+      Object.keys(K || {}).forEach(k => (K[k].v || []).forEach(([v, n, narx]) => { if (!P.ega(b, k, v)) { const c = P.narxK(b, narx); if (min == null || c < min.c) min = { c, n }; } }));
+      return min && h >= min.c ? `💵 ${P.fmt(h)} so'm yig'ding — «${esc(min.n)}» ga yetadi!` : `Hamyoningda 💵 ${P.fmt(h)} so'm — do'konga bir qarab chiq`; } },
+  garaj: { ic: '🏎️', nom: 'Garaj', sel: '[data-garaj]', h: 'garaj', kun: 4, xabar: () => "Mashinangni ko'rib chiq — missiyalarda yangi detallar to'plangan" },
+  mashq: { ic: '📚', nom: 'Mashq', sel: '[data-mashq]', h: 'mashq', kun: 5,
+    xabar(b) { const q = Object.keys(b.tugun || {}).filter(id => b.tugun[id].holat === 'qiyin' && BJ.gen.reg[id] && BJ.gen.reg[id].fan !== 'dunyo'); return q.length ? `«${esc(nomOf(q[0]))}» hali qiyin — Mashqda o'zing tanlab mashq qil` : "Mashqda fanni o'zing tanlaysan — sevimli faningdan boshla"; } },
+  zal: { ic: '🎮', nom: "O'yinlar zali", sel: '[data-zal]', h: 'zal', kun: 5, xabar: () => "O'yinlar zalida rekordingni yangilab ko'r!" },
+  bozor: { ic: '🧺', nom: 'Oila bozori', sel: '[data-bozor]', h: 'bozor', kun: 6, xabar: () => "Oila bozori — uy uchun xarid qilib, pulni to'g'ri sarflashni o'rgan" }
+};
+const yoq = () => A.TEZ && !A.yangiSinov;
+let TUR_KUT = 0;   /* tur rejalashtirilgan payt — bir nechta chizishda ikki marta chiqmasin */
+function bolimOf(h) { h = String(h || ''); return /^daraxt/.test(h) ? 'daraxt' : h === 'estafeta' ? 'estafeta' : h === 'qiyin3' ? 'q3' : /^mashq/.test(h) ? 'mashq' : h === 'garaj' ? 'garaj' : h === 'dokon' ? 'dokon' : /^zal/.test(h) ? 'zal' : h === 'bozor' ? 'bozor' : null; }
+/* router: bo'limga kirildi (kuniga bir marta yoziladi) */
+function kordi(b, h) { const id = bolimOf(h); if (!id || !b) return; const T = A.todayKey(), k = b.kor && typeof b.kor === 'object' ? b.kor : (b.kor = {}); if (k[id] === T) return; k[id] = T; A.save(); }
+/* versiya: birinchi ko'rishda — boshlang'ich holat (eski bo'limlar «yaqinda ko'rilgan» deb olinadi — bir kunda eslatmalar yog'ilmasin) */
+function vInit(b) {
+  const T = A.todayKey(); if (b.yv && b.yv.v === A.VER) return b.yv;
+  const k = b.kor && typeof b.kor === 'object' ? b.kor : (b.kor = {}), yangiIds = VER_YANGI[A.VER] || [];
+  Object.keys(B).forEach(id => { if (!yangiIds.includes(id) && !k[id]) k[id] = T; });
+  b.yv = { v: A.VER, sana: T, tur: !b.yv && A.dayNo(b) <= 1 ? 'yoq' : null, qadam: 0 }; A.save(true); return b.yv;
+}
+const korilgan = (b, id) => !!(b.kor && b.kor[id] && b.yv && b.kor[id] >= b.yv.sana);
+function yangilar(b) { return (VER_YANGI[A.VER] || []).filter(id => !korilgan(b, id) && document.querySelector(B[id].sel)); }
+/* eslatma tanlash: eng uzoq kirilmagan (chegara bo'yicha), ma'lumoti bor bo'lim */
+function eslatma(b) {
+  const T = A.todayKey(), yop = b.esYop || {}, out = [];
+  Object.keys(B).forEach(id => { const x = B[id]; if (!x.kun || !x.xabar || yop[id] === T || !document.querySelector(x.sel)) return; const k = b.kor && b.kor[id]; if (!k) return;
+    const n = kunlar(k, T); if (n < x.kun) return; let t = null; try { t = x.xabar(b, k); } catch (e) { t = null; } if (!t) return; out.push({ id, n, t, s: n / x.kun }); });
+  out.sort((p, q) => q.s - p.s); return out[0] || null;
+}
+function uy(b) {
+  if (!b || yoq()) return; const yv = vInit(b), T = A.todayKey();
+  const Y = yangilar(b); Y.forEach(id => { const el = $(B[id].sel); if (el && !el.querySelector('.ynb')) { el.classList.add('ypuls'); el.insertAdjacentHTML('beforeend', '<span class="ynb">YANGI</span>'); } });
+  const turKerak = Y.length && (yv.tur == null || (yv.tur === 'keyin' && yv.keyin !== T));
+  if (turKerak) { if (Date.now() - TUR_KUT < 1600) return; TUR_KUT = Date.now(); setTimeout(() => { if (location.hash.replace('#', '') !== 'uy' && location.hash !== '') return; if ($('.scrim') || $('.ytur')) return; tur(b, Y); }, 700); return; }
+  const e = eslatma(b), w = $('[data-eslat]'); if (!e || !w) return; const x = B[e.id];
+  w.innerHTML = `<div class="eslat" data-es="${e.id}"><span class="eic">${x.ic}</span><div class="etx"><b>${esc(x.nom)}ga ${e.n} kundan beri kirmading</b><small>${e.t}</small></div><button class="btn sm" data-esgo>Kirish</button><button class="ib esx" data-esx aria-label="Yopish">✕</button></div>`;
+  const tg = $(x.sel); if (tg) tg.classList.add('ypuls');
+  $('[data-esgo]', w).onclick = () => { FX.play('bosish'); A.go(x.h); };
+  $('[data-esx]', w).onclick = () => { b.esYop = b.esYop || {}; Object.keys(b.esYop).forEach(k => { if (b.esYop[k] !== T) delete b.esYop[k]; }); b.esYop[e.id] = T; A.save(); w.innerHTML = ''; if (tg) tg.classList.remove('ypuls'); };
+}
+/* 🆕 tur: yoritilgan tugma + izoh pufagi */
+function tur(b, Y) {
+  const yv = b.yv, i = Math.min(yv.qadam || 0, Y.length - 1), id = Y[i], x = B[id], el = $(x.sel); if (!el) return;
+  try { el.scrollIntoView({ block: 'center', behavior: 'instant' }); } catch (e) { el.scrollIntoView(); }
+  setTimeout(() => {
+    if ($('.ytur')) return; const r = el.getBoundingClientRect(), ov = document.createElement('div'), pad = 8, past = r.top > innerHeight * 0.55;
+    ov.className = 'ytur'; ov.innerHTML = `<div class="ytt" style="left:${r.left - pad}px;top:${r.top - pad}px;width:${r.width + pad * 2}px;height:${r.height + pad * 2}px"></div>
+    <div class="ytb" style="${past ? `bottom:${Math.round(innerHeight - r.top + pad + 14)}px` : `top:${Math.round(r.bottom + pad + 14)}px`}"><div class="yth">🆕 Yangilik ${i + 1}/${Y.length}</div><h3>${x.ic} ${esc(x.nom)}</h3><p>${esc(x.tur)}</p>
+    <div class="row"><button class="btn" data-ybos>👆 Bosib ko'r</button>${i + 1 < Y.length ? '<button class="btn ghost" data-ykey>Keyingisi ›</button>' : ''}</div><button class="ytk" data-ykn>Keyinroq</button></div>`;
+    document.body.appendChild(ov); FX.play('ding');
+    const yop = () => ov.remove();
+    $('[data-ybos]', ov).onclick = () => { yv.qadam = i + 1; if (yv.qadam >= Y.length) yv.tur = 'ok'; A.save(true); yop(); A.go(x.h); };
+    $('.ytt', ov).onclick = () => $('[data-ybos]', ov).onclick();
+    const ky = $('[data-ykey]', ov); if (ky) ky.onclick = () => { yv.qadam = i + 1; A.save(true); yop(); tur(b, Y); };
+    $('[data-ykn]', ov).onclick = () => { yv.tur = 'keyin'; yv.keyin = A.todayKey(); A.save(true); yop(); };
+  }, 320);
+}
+const css = `.ynb{position:absolute;top:-8px;right:10px;background:linear-gradient(135deg,#FF3D71,#FF9F1C);color:#fff;font-size:.68rem;font-weight:900;letter-spacing:.06em;padding:2px 8px;border-radius:999px;box-shadow:0 2px 8px rgba(255,61,113,.5)}
+[data-daraxt],[data-est],[data-q3],[data-mashq],[data-garaj],[data-dokon],[data-zal],[data-bozor]{position:relative}.ypuls{animation:ypl 1.6s ease-in-out infinite}@keyframes ypl{50%{box-shadow:0 0 0 4px rgba(255,159,28,.55),0 5px 0 var(--acc2)}}
+.ytur{position:fixed;inset:0;z-index:70}.ytt{position:fixed;border-radius:20px;box-shadow:0 0 0 9999px rgba(5,8,15,.72);outline:3px solid #FFB020;animation:ytp 1.4s ease-in-out infinite;cursor:pointer}@keyframes ytp{50%{outline-color:#fff;outline-offset:3px}}
+.ytb{position:fixed;left:12px;right:12px;background:var(--card);color:var(--ink);border-radius:20px;padding:12px 14px;box-shadow:0 12px 32px rgba(0,0,0,.45);max-width:480px;margin:0 auto}.ytb h3{margin:4px 0}.ytb p{margin:4px 0 8px;font-size:.95rem}
+.yth{font-size:.78rem;font-weight:900;color:#FF7A1C;letter-spacing:.04em}.ytk{display:block;margin:2px auto 0;background:none;border:0;color:var(--mut);font-weight:700;padding:8px;font-size:.9rem}
+.eslat{display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,rgba(255,176,32,.18),rgba(255,61,113,.12));border:1px solid rgba(255,176,32,.55);border-radius:18px;padding:10px 10px 10px 12px;margin:8px 0}
+.eic{font-size:1.8rem}.etx{flex:1;min-width:0;display:flex;flex-direction:column}.etx b{font-size:.95rem}.etx small{font-size:.85rem;color:var(--mut);margin-top:2px}.eslat .btn{min-height:44px;padding:4px 12px}.esx{min-width:36px;min-height:36px;font-size:.9rem}`;
+if (typeof document !== 'undefined') { const st = document.createElement('style'); st.textContent = css; document.head.appendChild(st); }
+A.yangilik = { kordi, uy, vInit, eslatma, yangilar, bolimOf, B, VER_YANGI, tur };
 })(typeof window !== 'undefined' ? window : globalThis);
 </script>
 <script>
