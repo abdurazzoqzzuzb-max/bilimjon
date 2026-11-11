@@ -13,11 +13,13 @@ SHOT = lambda pg, n: pg.screenshot(path=f'/tmp/bj076_{n}.png', full_page=True)
 
 # ---------- soxta Firebase (qoidalar 0.7.6 — guruh azo: ruxsat etilgan maydonlar + ixtiyoriy zal {r, h, p}) ----------
 STORE = {}; LOCK = threading.RLock(); RULES = {'admin': 'U_admintestuz'}; RAD = []
-AZO = {'uid', 'oila', 'av', 'laqab', 'daraja', 'yulduz', 'kun', 'osish', 'detal', 'missiya', 'wk', 'ts', 'zal'}
+AZO = {'uid', 'oila', 'av', 'laqab', 'daraja', 'yulduz', 'kun', 'osish', 'detal', 'missiya', 'wk', 'ts', 'zal', 'bu', 'dz'}   # qoidalar 0.9.0
 def ruxsatli(uid): return uid == RULES['admin'] or (STORE.get('ruxsat/' + str(uid)) or {}).get('holat') == 'ok'
 def azo_togri(d, uid):
     if not set(d) <= AZO or d.get('uid') != uid: return False
     if 'zal' in d and not (isinstance(d['zal'], dict) and set(d['zal']) <= {'r', 'h', 'p'}): return False
+    if 'bu' in d and not (isinstance(d['bu'], dict) and set(d['bu']) <= {'k', 'm', 'd', 'n', 'p'}): return False
+    if 'dz' in d and not (isinstance(d['dz'], int) and 0 <= d['dz'] <= 100): return False
     return isinstance(d.get('laqab'), str) and len(d['laqab']) <= 24 and isinstance(d.get('yulduz'), int)
 def ruxsat(op, path, who, new=None):
     uid = who.get('uid'); p = path.split('/'); adm = uid is not None and uid == RULES['admin']
@@ -298,6 +300,7 @@ try:
     ok(kutpy(lambda: f'guruh/{KOD}/azo/{jbid}' in STORE, 15000), "Dost bolasining a'zo yozuvi ham (o'ynamagan — zal maydonisiz)")
     ok(STORE.get(f'guruh/{KOD}/azo/{abid}', {}).get('zal', {}).get('r', {}).get('turbo') == [4.2, 3], f"zal.r.turbo = [4.2, 3] {STORE.get(f'guruh/{KOD}/azo/{abid}', {}).get('zal')}")
     ok(not [x for x in RAD if '/azo/' in x], f"Qoidalar hech bir a'zo yozuvini rad etmadi {RAD[:3]}")
+    ok(all('bu' in STORE[k] and 'dz' in STORE[k] for k in STORE if f'guruh/{KOD}/azo/' in k), "0.9.0 qoidalari bilan a'zo yozuvida bu (bugun) va dz (daraxt %) bor — estafeta uchun")
     ok(kutpy(lambda: json.loads(STORE['oila/U_dosttestuz']['j']).get('guruh', {}).get('kod') == KOD and json.loads(STORE['oila/U_dosttestuz']['j']).get('sozlama', {}).get('reyting') is False, 12000),
        "Dost telefoni o'z o'zgarishini yubordi — bulutda guruh ham, mahalliy sozlama ham saqlandi")
     ok(kutf(JV, "Object.keys(BJ.A.S().oilaTel||{}).some(q=>q.indexOf('G:')===0 && (BJ.A.S().oilaTel[q].bolalar||[]).some(x=>x.zal && x.zal.r && x.zal.r.turbo))", 12000), "Dost telefoniga admin bolasining o'yin rekordi keldi")

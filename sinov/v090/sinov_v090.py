@@ -150,6 +150,31 @@ try:
     ok(kutf(P, "!!document.querySelector('.kozw')", 4000) is False, "Mashq boshida chiqmaydi")
     ev("(()=>{BJ.A.S().sozlama.kozDam=false})()"); ok(ev("BJ.A.S().sozlama.kozDam") is False, "⚙️ Sozlamada o'chirsa bo'ladi (sozlama.kozDam = false)")
     ev("(()=>{delete BJ.A.S().sozlama.kozDam; BJ.A.kozSinov=0})()")
+    # ================= 🏃 ESTAFETA (u 11.11: «bolalar bir-birini ko'rib tursin, estafeta animatsiyasi, 4 ta bola») =================
+    ev(f"""(()=>{{const A=BJ.A,T=A.todayKey(),D=A.weekDays(A.isoWeek()),a=A.bola('{AZ}'),k=A.bola('{KI}'); A.S().joriy='{AZ}'; A.S().sozlama.reyting=true;
+      D.forEach(d=>{{ if(a.kun[d]) a.kun[d].missiya=0; if(k.kun[d]) k.kun[d].missiya=0; }}); a.kun[T]=Object.assign(A.agg(a,T),{{missiya:1,faol:1500,n:40,ok1:33}}); if(D.indexOf(T)>0) a.kun[D[0]]=Object.assign(A.agg(a,D[0]),{{missiya:1}});
+      A.S().oilaTel={{'G:u1':{{nom:'Dost oila',wk:A.isoWeek(),ts:Date.now()-5*60000,guruh:1,bolalar:[{{id:'bx1',av:'🌸',laqab:'Zuhra',daraja:'g1',yulduz:31,kun:3,osish:2,detal:4,missiya:2,wkB:A.isoWeek(),bu:{{k:T,m:1,d:22,n:30,p:83}},dz:28}}]}},
+        'G:u2':{{nom:'Uzoq oila',wk:'2000-W01',ts:Date.now()-3*86400e3,guruh:1,eski:1,bolalar:[{{id:'bx2',av:'🚗',laqab:'Bek',daraja:'g2',yulduz:0,kun:0,osish:0,detal:9,missiya:0,wkB:'2000-W01'}}]}}}}; A.save(true)}})()""")
+    ev("location.hash='x'"); P.wait_for_timeout(150); ev("location.hash='uy'"); P.wait_for_timeout(600); ev("BJ.A.closeSheets()")
+    ok(P.locator('.rey .esmini svg.ests').count() == 1 and P.locator('[data-est]').count() == 1, "Uyda hafta reytingi ichida kichik estafeta yo'lagi + «🏃 Estafeta — hammasini ko'rish»")
+    P.click('[data-est]'); P.wait_for_timeout(2300)
+    L = ev("[...document.querySelectorAll('.estw .rmv')].map(g=>[g.dataset.id, +g.dataset.dx, g.style.transform])")
+    ok(len(L) == 4, f"Estafeta ekrani: 4 bola — 4 yo'lak ({len(L)})")
+    bos = ev(f"BJ.A.estafeta.yuguruvchilar().map(x=>[x.id,x.bos])"); bd = dict(bos)
+    ok(all(abs(dx - round(bd[i] / 7 * 294, 1)) < 0.6 and tr == f'translateX({dx:g}px)' for i, dx, tr in L), f"Yuguruvchi joyi = bosqich/7 (Du…Ya), animatsiya oxirida joyida ({L})")
+    t = P.inner_text('.estw')
+    ok('Zuhra' in t and 'Dost oila' in t and '28%' in t and 'missiya bajarildi' in t and '22 daq' in t, "Boshqa oila bolasi: ism, oila, 🌳 28%, bugun ✅ missiya · ⏱ 22 daq")
+    ok("ma'lumot kelmadi" in t and P.locator('.esk.eski').count() == 1, "Eski hafta bolasi — xira, «bu hafta ma'lumot kelmadi»")
+    ok('Jamoa estafetasi' in t and re.search(r'\b\d+/21\b', t), "🤝 Jamoa estafetasi: 3 faol bola × 7 = 21 bosqich")
+    ok(P.locator('.esh.live').count() == 1 and P.locator('.esh.ok').count() == 2, "Holat nuqtasi: 🟢 hozir (5 daq oldin), o'z bolalari — shu telefonda")
+    ok(ev("document.documentElement.scrollWidth") <= 390, "390 px da gorizontal siljish yo'q")
+    P.screenshot(path='/tmp/bj090_estafeta.png', full_page=True)
+    r = ev(f"""(()=>{{const E=BJ.A.estafeta, q=E.qoshimcha(BJ.A.bola('{AZ}')); return {{q, bad:E.buToza({{k:'x',m:1}}), cut:E.buToza({{k:'2026-01-01',d:9999,n:-3,p:150,z:1}})}}}})()""")
+    ok(r['q']['bu']['k'] == ev("BJ.A.todayKey()") and r['q']['bu']['m'] == 1 and r['q']['bu']['d'] == 25 and isinstance(r['q'].get('dz'), int), f"Guruhga yuboriladigan qo'shimcha: bu {{k, m, d, n, p}} + dz ({r['q']})")
+    ok(r['bad'] is None and r['cut'] == {'k': '2026-01-01', 'm': 0, 'd': 600, 'n': 0, 'p': 100}, "Boshqa telefondan kelgan bu — tozalanadi (noto'g'ri sana rad, sonlar chegarada, ortiqcha kalit yo'q)")
+    rl = open(os.path.join(SITE, 'firestore.rules'), encoding='utf-8').read()
+    ok("'zal', 'bu', 'dz'])" in rl and "d.bu.keys().hasOnly(['k', 'm', 'd', 'n', 'p'])" in rl and 'd.dz is int' in rl, "firestore.rules 0.9.0: azo ga ixtiyoriy bu {k,m,d,n,p} va dz (int 0–100)")
+    ev("location.hash='uy'"); P.wait_for_timeout(300)
     ok(not PE, f"Sahifa xatolari yo'q {PE[:3]}")
 finally:
     srv.terminate()
