@@ -1,12 +1,12 @@
 {
-  "ver": "0.8.2",
-  "verk": "8.2",
+  "ver": "0.9.0",
+  "verk": "9",
   "min": "0.8.0",
-  "sana": "2026-11-10",
+  "sana": "2026-11-11",
   "yangi": [
-    "🏁 Gonka va devor: boshida osonroq, 3 ta ketma-ket to'g'ri — qiyinroq",
-    "🤝 Oila sovg'asi: har bola o'z kunlarini bajaradi — jamoa bo'lib",
-    "☁️ Natija yuborildimi — tepada belgi",
-    "🌙 Ota-onaga: bugungi xulosa doim panel tepasida"
+    "🌳 Bilim daraxti: har mavzu — barg, o'zlashtirsang — meva pishadi",
+    "🔁 Xato qilgan savoling 1, 3 va 7 kundan keyin qaytadi — yengib ol!",
+    "🎯 Missiyadan keyin: kunning 3 qiyini — bonus uchun",
+    "👀 Har 15 daqiqada ko'zlarga 20 soniya dam"
   ]
 }
