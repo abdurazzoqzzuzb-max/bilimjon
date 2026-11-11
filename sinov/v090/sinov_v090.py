@@ -85,7 +85,7 @@ try:
     r = ev(f"""(()=>{{const A=BJ.A,b=A.bola('{KI}'),D=A.daraxt; A.ZANJIR.yoz.forEach(id=>{{A.nodeSt(b,id).holat='kalib'}}); const e=D.tekshir(b,true).find(x=>x.t==='medal'); return e&&e.nb ? [e.fan, e.nb.k, !!A.pul.SALON[e.nb.k]] : null}})()""")
     ok(r and r[0] == 'yoz' and r[2], f"Orol (salon) bolasida noyob buyum — salon katalogidan ({r})")
     # ================= 🔁 XATONI QAYTARISH =================
-    ev(f"(()=>{{BJ.A.S().joriy='{AZ}'; BJ.A.save(true)}})()")
+    ev(f"(()=>{{const b=BJ.A.bola('{AZ}'); Object.values(b.fan).forEach(F=>{{if(F&&F.kalib) F.kalib.done=true}}); BJ.A.S().joriy='{AZ}'; BJ.A.save(true)}})()")  # kalibrlash savollari (1–2-kun) ro'yxatga olinmaydi
     ev("location.hash='mashq-mat'"); P.wait_for_timeout(700)
     it0 = ev("(()=>{const it=window.__bjCur().it; return {sav:it.sav, a:String(it.a), tugun:it.tugun}})()")
     ev("window.__bjJavob(false)"); P.wait_for_timeout(500)
@@ -113,6 +113,8 @@ try:
       for(let i=0;i<10;i++) A.xqYoz(b,A.makeItem(b,{{tugun:'M2.'+(3+i%6),q:1+i%3,tur:'mashq'}}));
       return {{box:x.box, due:x.due, kut:A.addDays(A.todayKey(),1), n:b.xq.length, bugun:b.xq.filter(y=>y.sana===A.todayKey()).length, sudoku:b.xq.some(y=>y.tugun==='L.7')}}}})()""")
     ok(r['box'] == 0 and r['due'] == r['kut'], "Qaytgan savolda yana xato → boshidan (ertaga)")
+    r2 = ev(f"(()=>{{const A=BJ.A,b=A.bola('{AZ}'); b.xq=[]; const it=A.makeItem(b,{{tugun:'M2.4',q:2,tur:'mashq',kalib:1}}); A.xqYoz(b,it); return b.xq.length}})()")
+    ok(r2 == 0, "Kalibrlash savoli (1–2-kun, ataylab yuqoridan) ro'yxatga olinmaydi")
     ok(not r['sudoku'] and r['bugun'] <= 4, f"Uzun topshiriq (sudoku) olinmaydi; kuniga ≤ 4 yangi xato ({r['bugun']})")
     # ================= 🎯 KUNNING 3 QIYINI =================
     r = ev(f"""(()=>{{const A=BJ.A,b=A.bola('{AZ}'); b.fan.mat.cur='M2.6'; A.nodeSt(b,'M2.6').q=1; const s1=A.q3.sel(b,'mat',0); A.nodeSt(b,'M2.6').q=3; const s2=A.q3.sel(b,'mat',0); const s3=A.q3.sel(b,'mant',0); return {{s1,s2,s3,uzun:!!A.UZUN[s3.tugun]}}}})()""")
