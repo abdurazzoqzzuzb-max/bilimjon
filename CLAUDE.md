@@ -9,7 +9,7 @@ Javoblar o'zbekcha. Repo PUBLIC: ism, familiya, oila ma'lumoti, Telegram manzili
 - Firebase **bilimjon-4c008** (Spark, eur3), kirish — email + parol (iPhone'da Google yo'q). SDK gstatic 13.2.0, faqat akkauntli telefonda yuklanadi.
 
 ## Versiya va chiqarish
-- Saytda va beta'da: **0.9.1** («v9.1», 12.11; 0.8.0 dan to'g'ri: 🌳 daraxt, 🔁 xato savol, 🎯 3 qiyin, 👀 ko'z dami, 🏃 estafeta, 🆕 yangilik turi + 👏 olqish, 🃏 albom, 🎯 o'z maqsadi, 🔥 olov, 📖 hikoya, 👨‍👩‍👧 viktorina, 🎤 ovozim). Qoidalar Firebase'da: **0.9.1** (azo: ixtiyoriy zal, bu, dz, ol).
+- Saytda va beta'da: **0.9.2** («v9.2», 12.11 — 🎤 iPhone mikrofoni tuzatildi; 0.9.1 = 0.8.0 dan to'g'ri: 🌳 daraxt, 🔁 xato savol, 🎯 3 qiyin, 👀 ko'z dami, 🏃 estafeta, 🆕 yangilik turi + 👏 olqish, 🃏 albom, 🎯 o'z maqsadi, 🔥 olov, 📖 hikoya, 👨‍👩‍👧 viktorina, 🎤 ovozim). Qoidalar Firebase'da: **0.9.1** (azo: ixtiyoriy zal, bu, dz, ol).
 - Har versiyada uchalasi: `index.html` → `A.VER = 'x.y.z'`, `sw.js` → `P + 'x.y.z'`, **`version.json`** → `ver`, `verk`, `yangi[]` (bolalar tushunadigan 2–4 qator «Nima yangi»); ekranda `A.VERK` («v8»); `start()` dagi versiya toast'i.
 - 🔄 Yangilanish (0.8.0): ilova `version.json` ni tekshiradi (ochilganda, qaytganda, 20 daq) → faoliyatda emas — o'zi yangilanadi (oyna 3 s), faoliyatda — tasma [Yangilash][Keyinroq]. Eski telefon albatta yangilansin desangiz: `min` = yangi ver (majburiy — faoliyatda ham 5 s). Sinov: `sinov/v080/sinov_yangilash.py`. 0.7.9 va eskilarda bu kod yo'q — ular 0.8.0 ga faqat ilovani qayta ochganda o'tadi.
 - Tartib: yangi tarmoq `v0.x.y` (main'dan) → har bosqich push → beta: main worktree'da `python3 sinov/beta/beta_yig.py origin/<tarmoq> beta` → faqat `beta/` commit → u sinaydi → **«chiqar»** desa: `prod_e2e.py` (eski main vs main+tarmoq, 23 tekshiruv) → main'ga `merge --no-ff` → push → GitHub API deployments (github.io proksida yopiq) → qoidalar o'zgargan bo'lsa `qoidalar <oila emaili>`.
@@ -31,6 +31,7 @@ Kontent banki `BJ.bank` → generatorlar `BJ.gen` (mat M0–M2, mantiq L, ona ti
 - Oila darajasidagi yangi sozlamani `defaults()` ga QO'SHMANG (`migrate` umumiy holatni o'zgartirib, bulut yangiligini bosib ketadi) — `=== 'x'` / `!== false` bilan o'qing.
 - `fixBola`/`migrate` ichida faqat hoisted `function` yoki ichki o'zgaruvchi (TDZ — holat bo'sh qaytgan).
 - NUTQ yoki generator matni o'zgarsa — `python3 sinov/ovoz/inventar.py ovoz/iboralar.json` → main'ga push (Actions mp3 yasaydi). Ovozni o'sha id bilan qayta yasasangiz — `sw.js` `OV` ni oshiring.
+- 🎤 iPhone: ilova `navigator.audioSession.type = 'playback'` qo'yadi (jim rejimda ovoz) — bu turda mikrofon BERILMAYDI. Mikrofon kerak bo'lsa `asYoz(true)` ('play-and-record' + `FX.rec`), tugagach `asYoz(false)`; yangi 'playback' qo'yuvchi kod `FX.rec` ni tekshirsin.
 - Lookbehind regex yo'q (eski iOS). Firestore hujjati ≤1 MB (`S.sovga` + `S.dokon` rasmlari ~720 KB — oshirmang).
 - Dizayn: realistik + animatsiya, multfilm emas (u 4 marta aytgan). 390 px da gorizontal siljish yo'q.
 - 👆 Ikki marta bosish zoom'i yo'q (0.7.8, u so'radi): `html{touch-action:manipulation}`, hamma input ≥ 16px. Ikki barmoq bilan kattalashtirish QOLADI (u tanladi) — viewport'ga `user-scalable=no` qo'ymang. touchend bilan ikki bosishni to'xtatmang (o'yinlarda tez bosish yo'qoladi).
