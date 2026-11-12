@@ -6860,7 +6860,7 @@ const B = {
   vikt: { ic: '👨‍👩‍👧', nom: 'Oilaviy viktorina', sel: '[data-vikt]', h: 'viktorina', kun: 0, tur: "Shanba–yakshanba butun oila bitta telefonda navbatma-navbat savol yechadi. Kattalarni yengib ko'r!" }
 };
 const yoq = () => A.TEZ && !A.yangiSinov;
-let TUR_KUT = 0;   /* tur rejalashtirilgan payt — bir nechta chizishda ikki marta chiqmasin */
+let TUR_T = 0;   /* 0.9.2: tur taymeri — oxirgi chizishdan 700 ms keyin bir marta (avval 1,6 s bloklash edi: tez qaytilsa tur umuman chiqmay qolardi) */
 function bolimOf(h) { h = String(h || ''); return /^daraxt/.test(h) ? 'daraxt' : h === 'estafeta' ? 'estafeta' : h === 'qiyin3' ? 'q3' : /^mashq/.test(h) ? 'mashq' : h === 'garaj' ? 'garaj' : h === 'dokon' ? 'dokon' : /^zal/.test(h) ? 'zal' : h === 'bozor' ? 'bozor'
   : h === 'hikoya' || h === 'albom' || h === 'ovozim' || h === 'maqsad' ? h : h === 'viktorina' ? 'vikt' : null; }
 /* router: bo'limga kirildi (kuniga bir marta yoziladi) */
@@ -6887,7 +6887,7 @@ function uy(b) {
   if (!b || yoq()) return; const yv = vInit(b), T = A.todayKey();
   const Y = yangilar(b); Y.forEach(id => { const el = $(B[id].sel); if (el && !el.querySelector('.ynb')) { el.classList.add('ypuls'); el.insertAdjacentHTML('beforeend', '<span class="ynb">YANGI</span>'); } });
   const turKerak = Y.length && (yv.tur == null || (yv.tur === 'keyin' && yv.keyin !== T));
-  if (turKerak) { if (Date.now() - TUR_KUT < 1600) return; TUR_KUT = Date.now(); setTimeout(() => { if (location.hash.replace('#', '') !== 'uy' && location.hash !== '') return; if ($('.scrim') || $('.ytur')) return; tur(b, Y); }, 700); return; }
+  if (turKerak) { clearTimeout(TUR_T); TUR_T = setTimeout(() => { if (location.hash.replace('#', '') !== 'uy' && location.hash !== '') return; if ($('.scrim') || $('.ytur')) return; tur(b, Y); }, 700); return; }
   const e = eslatma(b), w = $('[data-eslat]'); if (!e || !w) return; const x = B[e.id];
   w.innerHTML = `<div class="eslat" data-es="${e.id}"><span class="eic">${x.ic}</span><div class="etx"><b>${esc(x.nom)}ga ${e.n} kundan beri kirmading</b><small>${e.t}</small></div><button class="btn sm" data-esgo>Kirish</button><button class="ib esx" data-esx aria-label="Yopish">✕</button></div>`;
   const tg = $(x.sel); if (tg) tg.classList.add('ypuls');
