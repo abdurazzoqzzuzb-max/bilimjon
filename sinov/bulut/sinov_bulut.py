@@ -95,7 +95,7 @@ with sync_playwright() as p:
     ta = ev(A, "Object.keys(BJ.A.S().oilaTel).filter(q=>q.startsWith('G:')).length"); ok(ta == 1, 'A: guruhda C oilasi ko\'rindi')
     rr = ev(A, "BJ.A.reytingRoyxat().map(x=>x.laqab)"); ok('Zuhra' in rr, f'A: reyting ro\'yxatida Zuhra ({rr})')
     azo = [k for k in STORE if k.startswith(f'guruh/{kod}/azo/')]; d0 = STORE[azo[0]]
-    ok(set(d0.keys()) <= {'uid','oila','av','laqab','daraja','yulduz','kun','osish','detal','missiya','wk','ts'}, 'Guruhga faqat ruxsat etilgan maydonlar yozildi (ism-familiya yo\'q)')
+    ok(set(d0.keys()) <= {'uid','oila','av','laqab','daraja','yulduz','kun','osish','detal','missiya','wk','ts','bu','dz','ol'} and set((d0.get('bu') or {}).keys()) <= {'k','m','d','n','p'}, 'Guruhga faqat ruxsat etilgan maydonlar yozildi (ism-familiya yo\'q; 0.9.0: bu, dz; 0.9.1: ol)')
     # ---- akkauntsiz telefon: SDK umuman yuklanmaydi
     ctx = br.new_context(service_workers='block'); n = []
     ctx.on('request', lambda r: n.append(r.url) if 'firebasejs' in r.url else None)

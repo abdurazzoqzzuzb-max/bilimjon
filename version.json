@@ -1,11 +1,12 @@
 {
-  "ver": "0.8.0",
-  "verk": "8",
+  "ver": "0.9.1",
+  "verk": "9.1",
   "min": "0.8.0",
-  "sana": "2026-11-08",
+  "sana": "2026-11-12",
   "yangi": [
-    "📱 Har bola o'z telefonida o'ynaydi — boshqa qurilmaga ota-ona PIN bilan o'tkaziladi",
-    "⏱ Dam olish o'yini — 1 daqiqa (ota-ona sozlamada ko'paytira oladi)",
-    "🔄 Ilova endi o'zi yangilanadi — eski versiyada qolib ketilmaydi"
+    "📖 Har missiya — hikoyaning yangi sahifasi · 🃏 kashfiyot albomi kartalari",
+    "🎯 Hafta maqsadingni o'zing tanla · 🔥 ketma-ket kunlar olovi",
+    "🌳 Bilim daraxti · 🏃 estafeta — do'stingga 👏 olqish yubor",
+    "👨‍👩‍👧 Dam olish kuni oilaviy viktorina · 🎤 o'qishingni yozib, o'sganingni eshit"
   ]
 }

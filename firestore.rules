@@ -1,9 +1,9 @@
 rules_version = '2';
-// Bilimjon 0.7.7 — Firestore xavfsizlik qoidalari (Firebase konsoli → Firestore → Rules ga qo'yiladi).
+// Bilimjon 0.9.1 — Firestore xavfsizlik qoidalari (Firebase konsoli → Firestore → Rules ga qo'yiladi).
 // 🛡️ RUXSAT TIZIMI: yangi oila bulutga faqat admin (Bilimjon egasi) tasdig'i bilan yoza oladi — ruxsat/{uid}.holat == 'ok'.
 // admin() dagi ID — admin akkaunt ID si. Uni QO'LDA yozmang: ilova o'zi qo'yadi (👨‍👩‍👧 → ☁️ Oila akkaunti → 🛡️ → «📋 Qoidalarni nusxalash»).
 // Bu fayl repo'da namuna sifatida turadi. Eski (0.5.0–0.7.0) qoidalar: qoidalar/firestore-0.5.0.rules
-// oila/{uid}/** — shu akkaunt egasi (yozish — ruxsat bilan) va admin (👨‍👩‍👧 Hamma oilalar: ko'rish, ma'lumotni yangi akkauntga ko'chirish). guruh/{kod} — faqat a'zo oilalar o'qiydi; har oila faqat o'z bolalarining haftalik xulosasini yozadi (0.7.6 dan — ixtiyoriy «zal»: o'yin rekordlari).
+// oila/{uid}/** — shu akkaunt egasi (yozish — ruxsat bilan) va admin (👨‍👩‍👧 Hamma oilalar: ko'rish, ma'lumotni yangi akkauntga ko'chirish). guruh/{kod} — faqat a'zo oilalar o'qiydi; har oila faqat o'z bolalarining haftalik xulosasini yozadi (0.7.6 dan — ixtiyoriy «zal»: o'yin rekordlari; 0.9.0 dan — ixtiyoriy «bu»: bugungi xulosa {k, m, d, n, p} va «dz»: bilim daraxti %, estafeta uchun; 0.9.1 dan — ixtiyoriy «ol»: boshqa oila bolalariga 👏 olqishlar ro'yxati, ≤ 10 qator).
 service cloud.firestore {
   match /databases/{database}/documents {
     function kirgan() { return request.auth != null; }
@@ -68,9 +68,12 @@ service cloud.firestore {
       match /azo/{bid} {
         function togri() {
           let d = request.resource.data;
-          return d.keys().hasOnly(['uid', 'oila', 'av', 'laqab', 'daraja', 'yulduz', 'kun', 'osish', 'detal', 'missiya', 'wk', 'ts', 'zal'])
+          return d.keys().hasOnly(['uid', 'oila', 'av', 'laqab', 'daraja', 'yulduz', 'kun', 'osish', 'detal', 'missiya', 'wk', 'ts', 'zal', 'bu', 'dz', 'ol'])
             && d.uid == request.auth.uid
             && (!('zal' in d) || (d.zal is map && d.zal.keys().hasOnly(['r', 'h', 'p'])))
+            && (!('bu' in d) || (d.bu is map && d.bu.keys().hasOnly(['k', 'm', 'd', 'n', 'p'])))
+            && (!('dz' in d) || (d.dz is int && d.dz >= 0 && d.dz <= 100))
+            && (!('ol' in d) || (d.ol is list && d.ol.size() <= 10))
             && d.laqab is string && d.laqab.size() <= 24
             && d.oila is string && d.oila.size() <= 24
             && d.av is string && d.av.size() <= 8

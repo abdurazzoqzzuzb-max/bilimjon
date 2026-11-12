@@ -119,7 +119,10 @@ try:
     ok(kutpy(lambda: f'guruh/{ESKI}/oilalar/U_dosttestuz' not in STORE and f'guruh/{ESKI}/azo/{dbid}' not in STORE, 10000), "Eski guruhdan Dost yozuvlari olib tashlandi")
     ok(kutf(AD, "Object.keys(BJ.A.S().oilaTel||{}).some(q=>q.indexOf('G:')===0 && (BJ.A.S().oilaTel[q].bolalar||[]).some(x=>x.laqab==='Lola'))", 15000), "Admin telefoniga Dost bolasi (Lola) reytingda keldi")
     ok(kutf(DS, "Object.keys(BJ.A.S().oilaTel||{}).some(q=>q.indexOf('G:')===0 && (BJ.A.S().oilaTel[q].bolalar||[]).some(x=>x.laqab==='Aziz'))", 15000), "Dost telefoniga admin bolasi (Aziz) keldi")
-    ok(not [r for r in RAD if '/azo/' in r[1] or '/oilalar/' in r[1]], f"Qoidalar a'zo/oilalar yozuvini rad etmadi {RAD[:4]}")
+    # 0.9.0: bu sinovda Firebase'da hali ESKI qoidalar (0.7.7) — ilova bu/dz maydonli yozuv rad etilsa, ularsiz qayta yozadi
+    rad_oil = [r for r in RAD if '/oilalar/' in r[1]]; rad_azo = sorted(set(r[1] for r in RAD if '/azo/' in r[1]))
+    azo_bor = [k for k in STORE if '/azo/' in k]
+    ok(not rad_oil and azo_bor and all('bu' not in STORE[k] for k in azo_bor) and all(k in STORE for k in rad_azo if k.split('/')[1] in [x.split('/')[1] for x in azo_bor]), f"Eski qoidalar (0.7.7): oilalar yozuvi rad etilmadi; bu/dz li a'zo yozuvi rad etilsa — o'sha zahoti ularsiz yozildi (rad {len(rad_azo)}, yozuv {len(azo_bor)}) {rad_oil[:2]}")
     # ---- C) takror, 📲 Oila reytingi, oddiy oila ----
     ota(AD, '#ota-reyting'); ok(AD.locator('#gadw').count() == 1 and 'Oilalar reyting guruhi' in AD.inner_text('#gadw'), "📲 Oila reytingi: admin kartasi ham bor")
     AD.click('#gadw [data-gal]'); ok(kutf(AD, "document.querySelector('#gadw') && document.querySelector('#gadw').innerText.includes('guruhda')", 6000), "Reyting panelida ham «🏆 guruhda»")
