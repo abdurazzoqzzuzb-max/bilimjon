@@ -1,4 +1,4 @@
 Bilimjon sinov rejimi
-tarmoq: origin/v0.9.0
-commit: 3c5f68b
-VER: 0.9.0
+tarmoq: origin/v0.9.1
+commit: 34c86c5
+VER: 0.9.1

@@ -1,12 +1,12 @@
 {
-  "ver": "0.9.0",
-  "verk": "9",
+  "ver": "0.9.1",
+  "verk": "9.1",
   "min": "0.8.0",
-  "sana": "2026-11-11",
+  "sana": "2026-11-12",
   "yangi": [
-    "🌳 Bilim daraxti: har mavzu — barg, o'zlashtirsang — meva pishadi",
-    "🏃 Estafeta: do'stlaring bilan hafta yugurishi — kim qayerda, ko'rib tur",
-    "🔁 Xato savoling 1, 3, 7 kundan keyin qaytadi · 🎯 kunning 3 qiyini",
-    "👀 Har 15 daqiqada ko'zlarga 20 soniya dam"
+    "📖 Har missiya — hikoyaning yangi sahifasi · 🃏 kashfiyot albomi kartalari",
+    "🎯 Hafta maqsadingni o'zing tanla · 🔥 ketma-ket kunlar olovi",
+    "🌳 Bilim daraxti · 🏃 estafeta — do'stingga 👏 olqish yubor",
+    "👨‍👩‍👧 Dam olish kuni oilaviy viktorina · 🎤 o'qishingni yozib, o'sganingni eshit"
   ]
 }

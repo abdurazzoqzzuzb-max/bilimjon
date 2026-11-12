@@ -1,7 +1,7 @@
 /* Bilimjon — offline kesh. 0.5.0: Firebase SDK ham keshlanadi. Har yangilanishda V ni oshiring. Natija hech qachon keshda emas — u localStorage'da (bj_state_v1). */
 /* 🧪 0.7.0: …/beta/sw.js (sinov rejimi) — alohida kesh (bj-beta-…); har SW faqat o'z prefiksidagi eski keshlarni o'chiradi */
 const BETA = self.location.pathname.indexOf('/beta/') >= 0, P = BETA ? 'bj-beta-' : 'bj-v';
-const V = P + '0.9.0';
+const V = P + '0.9.1';
 const OV = 'bj-ovoz-1';
 const SHELL = ['./', 'index.html', 'manifest.webmanifest', 'icon.svg', 'icon-192.png', 'icon-512.png'];
 /* 0.7.1 (07.11): GitHub Pages fayllarni 10 daqiqa keshlaydi (max-age=600) — oddiy fetch() eski index.html ni brauzer keshidan berib, yangilanish 10 daqiqagacha kechikardi.
