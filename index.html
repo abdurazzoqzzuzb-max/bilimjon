@@ -2229,7 +2229,7 @@ let ac = null, master = null;
    eski iOS'da — jim <audio> sikl (HTML media kanali WebAudio'ni ham ochadi). 2) Ochish (unlock) faqat haqiqiy harakatda: touchend / pointerup / click / keydown —
    sensorli ekranda pointerdown foydalanuvchi harakati HISOBLANMAYDI (avval faqat pointerdown edi → iPhone'da AudioContext ochilmasdi). 3) 'interrupted' holat ham ochiladi. */
 const IOSF = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-function asPlay() { try { if (navigator.audioSession && navigator.audioSession.type !== 'playback') navigator.audioSession.type = 'playback'; } catch (e) {} }
+function asPlay() { try { if (!FX.rec && navigator.audioSession && navigator.audioSession.type !== 'playback') navigator.audioSession.type = 'playback'; } catch (e) {} }   /* 0.9.2: FX.rec — 🎤 ovoz yozilyapti */
 asPlay();
 let jimEl = null, ochildi = false;
 function jimWav() { const n = 4000, b = new Uint8Array(44 + n), v = new DataView(b.buffer), w = (o, t) => { for (let i = 0; i < t.length; i++) b[o + i] = t.charCodeAt(i); };
@@ -2631,9 +2631,9 @@ BJ.vis = vis;
 (function (G) {
 'use strict';
 const BJ = G.BJ, A = BJ.A = {}, gen = BJ.gen, B = BJ.bank;
-A.VER = '0.9.1';
+A.VER = '0.9.2';
 /* 🆕 Shu versiyada nima yangi — version.json «yangi» bilan bir xil (sinov tekshiradi); ota-ona panelida «🆕 Yangilik» kartasi shundan */
-A.YANGI = ["📖 Har missiya — hikoyaning yangi sahifasi · 🃏 kashfiyot albomi kartalari", "🎯 Hafta maqsadingni o'zing tanla · 🔥 ketma-ket kunlar olovi", "🌳 Bilim daraxti · 🏃 estafeta — do'stingga 👏 olqish yubor", "👨‍👩‍👧 Dam olish kuni oilaviy viktorina · 🎤 o'qishingni yozib, o'sganingni eshit"];
+A.YANGI = ["🎤 Ovozim: o'qishingni yozib, o'sganingni eshit — endi iPhone'da ham", "📖 Har missiya — hikoyaning yangi sahifasi · 🃏 kashfiyot albomi", "🎯 Hafta maqsadingni o'zing tanla · 🔥 ketma-ket kunlar olovi", "🏃 Estafetada do'stingga 👏 olqish · 👨‍👩‍👧 dam olish kuni oilaviy viktorina"];
 /* Oddiy versiya nomi (foydalanuvchi so'rovi, 05.11): 0.6.0 → «6», 0.6.1 → «6.1», 1.2.0 → «1.2». Ekranda shu ko'rinadi, ichkarida A.VER qoladi. */
 A.VERK = (() => { const p = A.VER.split('.').map(Number); return p[0] ? p[0] + '.' + p[1] : p[1] + (p[2] ? '.' + p[2] : ''); })();
 /* ☁️ 0.8.2: yuborish belgisi (faqat oila akkaunti ulangan qurilmada): ☁️✓ yuborilgan · ⏳ yuborilyapti · 📡✕ internet yo'q (natija shu qurilmada) */
@@ -6827,6 +6827,7 @@ const BJ = G.BJ, A = BJ.A, FX = BJ.fx;
 const { $, $$, esc } = A;
 const S = () => A.S();
 const VER_YANGI = { '0.9.0': ['daraxt', 'estafeta', 'q3'], '0.9.1': ['q3', 'maqsad', 'hikoya', 'albom', 'ovozim', 'vikt', 'daraxt', 'estafeta'] };
+VER_YANGI['0.9.2'] = VER_YANGI['0.9.1'];   /* 0.9.2 — 🎤 iPhone tuzatishi; 0.9.1 da ko'rilganlar b.yv.old orqali qayta chiqmaydi */
 const kunlar = (a, b) => A.dayDiff(a, b);
 const nomOf = id => { try { return (BJ.gen.reg[id] || {}).nom || id; } catch (e) { return id; } };
 const B = {
@@ -6859,7 +6860,7 @@ const B = {
   vikt: { ic: '👨‍👩‍👧', nom: 'Oilaviy viktorina', sel: '[data-vikt]', h: 'viktorina', kun: 0, tur: "Shanba–yakshanba butun oila bitta telefonda navbatma-navbat savol yechadi. Kattalarni yengib ko'r!" }
 };
 const yoq = () => A.TEZ && !A.yangiSinov;
-let TUR_KUT = 0;   /* tur rejalashtirilgan payt — bir nechta chizishda ikki marta chiqmasin */
+let TUR_T = 0;   /* 0.9.2: tur taymeri — oxirgi chizishdan 700 ms keyin bir marta (avval 1,6 s bloklash edi: tez qaytilsa tur umuman chiqmay qolardi) */
 function bolimOf(h) { h = String(h || ''); return /^daraxt/.test(h) ? 'daraxt' : h === 'estafeta' ? 'estafeta' : h === 'qiyin3' ? 'q3' : /^mashq/.test(h) ? 'mashq' : h === 'garaj' ? 'garaj' : h === 'dokon' ? 'dokon' : /^zal/.test(h) ? 'zal' : h === 'bozor' ? 'bozor'
   : h === 'hikoya' || h === 'albom' || h === 'ovozim' || h === 'maqsad' ? h : h === 'viktorina' ? 'vikt' : null; }
 /* router: bo'limga kirildi (kuniga bir marta yoziladi) */
@@ -6886,7 +6887,7 @@ function uy(b) {
   if (!b || yoq()) return; const yv = vInit(b), T = A.todayKey();
   const Y = yangilar(b); Y.forEach(id => { const el = $(B[id].sel); if (el && !el.querySelector('.ynb')) { el.classList.add('ypuls'); el.insertAdjacentHTML('beforeend', '<span class="ynb">YANGI</span>'); } });
   const turKerak = Y.length && (yv.tur == null || (yv.tur === 'keyin' && yv.keyin !== T));
-  if (turKerak) { if (Date.now() - TUR_KUT < 1600) return; TUR_KUT = Date.now(); setTimeout(() => { if (location.hash.replace('#', '') !== 'uy' && location.hash !== '') return; if ($('.scrim') || $('.ytur')) return; tur(b, Y); }, 700); return; }
+  if (turKerak) { clearTimeout(TUR_T); TUR_T = setTimeout(() => { if (location.hash.replace('#', '') !== 'uy' && location.hash !== '') return; if ($('.scrim') || $('.ytur')) return; tur(b, Y); }, 700); return; }
   const e = eslatma(b), w = $('[data-eslat]'); if (!e || !w) return; const x = B[e.id];
   w.innerHTML = `<div class="eslat" data-es="${e.id}"><span class="eic">${x.ic}</span><div class="etx"><b>${esc(x.nom)}ga ${e.n} kundan beri kirmading</b><small>${e.t}</small></div><button class="btn sm" data-esgo>Kirish</button><button class="ib esx" data-esx aria-label="Yopish">✕</button></div>`;
   const tg = $(x.sel); if (tg) tg.classList.add('ypuls');
@@ -7292,13 +7293,23 @@ function ovTozala() { OVURL.forEach(u => { try { URL.revokeObjectURL(u); } catch
 function recTugat(saqlama) {
   const R = REC; if (!R) return; R.on = false; clearInterval(R.tm); if (saqlama) R.bekor = 1;
   try { if (R.mr && R.mr.state !== 'inactive') R.mr.stop(); } catch (e) {}
-  try { R.st.getTracks().forEach(t => t.stop()); } catch (e) {} try { if (R.ac) R.ac.close(); } catch (e) {}
+  try { R.st.getTracks().forEach(t => t.stop()); } catch (e) {} try { const ac = R.ac; R.ac = null; if (ac) ac.close().catch(() => {}); } catch (e) {}   /* 0.9.2: ikki marta yopilmasin */
+  asYoz(false);
+}
+/* 0.9.2 (u 12.11 05:30, iPhone: Safari'da mikrofon «Разрешить», lekin ilovada «ruxsat kerak»): ilova jim rejimda ham ovoz chiqarishi uchun
+   navigator.audioSession.type = 'playback' qo'yadi (0.7.1) — bu turda iOS mikrofonni bermaydi. Yozishdan oldin 'play-and-record', tugagach — 'playback';
+   yozish paytida FX.rec — boshqa kod 'playback' ga qaytarmaydi. Murakkab sozlama rad etilsa — oddiy {audio: true}. Oynada xato nomi ko'rinadi (tashxis uchun). */
+function asYoz(on) { try { FX.rec = !!on; } catch (e) {} try { if (navigator.audioSession) navigator.audioSession.type = on ? 'play-and-record' : 'playback'; } catch (e) {} }
+async function micOl() {
+  try { return await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true } }); }
+  catch (e) { if (e && (e.name === 'NotAllowedError' || e.name === 'SecurityError')) throw e; return navigator.mediaDevices.getUserMedia({ audio: true }); }
 }
 async function recBosh(b) {
   if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || typeof MediaRecorder === 'undefined') return toast("Bu brauzerda ovoz yozib bo'lmaydi — Safari yoki Chrome'ni yangilang");
-  let st; try { st = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true } }); }
-  catch (e) { return sheet(`<h2>🎤 Mikrofonga ruxsat kerak</h2><p>Telefon mikrofonni bermadi.</p><p class="sm">iPhone: Настройки → Приложения → Safari → Микрофон → «Разрешить» (eski iOS: Настройки → Safari → Микрофон).<br>Android: Chrome → ⋮ → Настройки → Настройки сайтов → Микрофон → ruxsat.</p><button class="btn big" data-x>Tushunarli</button>`); }
-  if (location.hash !== '#ovozim') { try { st.getTracks().forEach(t => t.stop()); } catch (e) {} return; }
+  asYoz(true); let st; try { st = await micOl(); }
+  catch (e) { asYoz(false); const nom = esc(String((e && e.name) || 'xato')), pwa = (navigator.standalone === true) || (typeof matchMedia !== 'undefined' && matchMedia('(display-mode: standalone)').matches);
+    return sheet(`<h2>🎤 Mikrofonga ruxsat kerak</h2><p>Telefon mikrofonni bermadi.</p><p class="sm">iPhone: Настройки → Приложения → Safari → Микрофон → «Разрешить» (eski iOS: Настройки → Safari → Микрофон).${pwa ? "<br>Ilova bosh ekrandan ochilgan: uni to'liq yoping (pastdan yuqoriga surib), qayta oching va 🎤 bosganda chiqqan oynada «Разрешить» ni bosing." : ''}<br>Android: Chrome → ⋮ → Настройки → Настройки сайтов → Микрофон → ruxsat.</p><p class="sm mut">Xato: ${nom}</p><button class="btn big" data-x>Tushunarli</button>`); }
+  if (location.hash !== '#ovozim') { try { st.getTracks().forEach(t => t.stop()); } catch (e) {} asYoz(false); return; }
   const mt = ['audio/mp4', 'audio/webm;codecs=opus', 'audio/webm', 'audio/ogg;codecs=opus'].find(t => { try { return MediaRecorder.isTypeSupported(t); } catch (e) { return false; } }) || '';
   let mr; try { mr = mt ? new MediaRecorder(st, { mimeType: mt }) : new MediaRecorder(st); } catch (e) { mr = new MediaRecorder(st); }
   const matn = ovMatn(b, OVTIL), R = REC = { mr, st, ch: [], t0: Date.now(), til: OVTIL, matn, on: true, mt: mr.mimeType || mt || 'audio/webm' };
@@ -7844,7 +7855,7 @@ async function oqi(r, el, opt) {
   const media = mediaYol(), kut = res => ({ r, el, opt: Object.assign({}, opt, { mb }), res });
   if (media) { if (!MEo) { EL = null; tegHint(el); return new Promise(res => { KUT = kut(res); }); } }
   else {
-    try { if (navigator.audioSession && navigator.audioSession.type !== 'playback') navigator.audioSession.type = 'playback'; } catch (e) {}
+    try { if (!(BJ.fx && BJ.fx.rec) && navigator.audioSession && navigator.audioSession.type !== 'playback') navigator.audioSession.type = 'playback'; } catch (e) {}
     /* resume() iPhone'da ruxsatsiz holatda hech qachon tugamasligi mumkin — 450 ms dan ortiq kutilmaydi */
     if (ac.state !== 'running') { try { const p = ac.resume(); if (p && p.then) await Promise.race([p.catch(() => {}), new Promise(z => setTimeout(z, 450))]); } catch (e) {} }
     if (id !== IJ) return false;
@@ -7922,7 +7933,7 @@ async function ingliz(t, el, opt) {
     /* teginish ichida ochilgan jim tovush (FX.onGesture) tugashini qisqa kutamiz — aks holda ikki play() bir-birini to'xtatadi */
     if (!MEo) await new Promise(z => { let n = 0; const iv = setInterval(() => { if (MEo || ++n > 12 || id !== IJ) { clearInterval(iv); z(); } }, 50); });
   } else {
-    try { if (navigator.audioSession && navigator.audioSession.type !== 'playback') navigator.audioSession.type = 'playback'; } catch (e) {}
+    try { if (!(BJ.fx && BJ.fx.rec) && navigator.audioSession && navigator.audioSession.type !== 'playback') navigator.audioSession.type = 'playback'; } catch (e) {}
     if (ac.state !== 'running') { try { const p = ac.resume(); if (p && p.then) await Promise.race([p.catch(() => {}), new Promise(z => setTimeout(z, 450))]); } catch (e) {} }
     if (ac.state !== 'running') { if (id !== IJ) return false; return enTel(t, el); }
   }
@@ -9350,7 +9361,7 @@ function start() {
   try { yvBosh(); } catch (e) { console.warn(e); }
   try { ybBosh(); } catch (e) { console.warn(e); }
   try { if (A.bulutStart) A.bulutStart(); } catch (e) { console.warn(e); }
-  if (oldVer && oldVer !== A.VER) setTimeout(() => toast(/^0\.(8\.|9\.0)/.test(oldVer) ? "🆕 Bilimjon v9.1: 📖 hikoya, 🃏 albom, 🎯 o'z maqsading, 🔥 olov, 👏 olqish, 👨‍👩‍👧 oilaviy viktorina, 🎤 ovozim — uy ekranida ko'rsatamiz!" : oldVer === '0.8.0' || oldVer === '0.8.1' ? "🆕 Bilimjon v8.2: 🏁 gonka endi asta-sekin qiyinlashadi, 🤝 jamoa sovg'asi, ☁️ yuborish belgisi" : oldVer === '0.8.0' ? "🆕 Bilimjon v8.1: 📡 natijalar internetsiz yuborilmay qolsa — 6 soatda eslatma chiqadi" : oldVer === '0.7.9' ? "🆕 Bilimjon v8: 📱 bitta bola — bitta qurilma, ⏱ dam olish o'yini 1 daqiqa (ota-ona ko'paytira oladi), 🔄 ilova endi o'zi yangilanadi" : oldVer === '0.7.8' ? "🆕 Bilimjon v8: 🔐 do'kondagi kassa endi «Orzu sandiqchasi» — pul orzu uchun alohida saqlanadi (foiz yo'q)" : oldVer === '0.7.7' ? "🆕 Bilimjon v8: 👆 ekran endi ikki marta bosilganda kattalashib qolmaydi (ikki barmoq bilan kattalashtirish — bor), 🏆 oilalar reyting guruhiga ulanish yaxshilandi" : oldVer === '0.7.6' ? '🆕 Bilimjon v8: masala savollaridagi ortiqcha «📄 Matn 1» oynasi olib tashlandi, matnlardagi imlo tuzatildi' : /^0\.7\.[45]$/.test(oldVer) ? '🆕 Bilimjon v8: 🎮 dam olishda 7 o\'yindan tanlov, 🏆 o\'yin reytingi (boshqa oila ham), 🏅 haftaning chempioni, 🔑 zal ota-ona ruxsati bilan' : oldVer === '0.7.4' ? '🆕 Bilimjon v8: 👨‍👩‍👧 ota-ona uchun bulut nazorati yaxshilandi, parol tiklash aniqroq' : oldVer === '0.7.3' ? '🆕 Bilimjon v8: 📈 savollar bola darajasiga to\'g\'ri moslashadi, 📊 hafta xulosasi aniqroq' : oldVer === '0.7.2' ? '🆕 Bilimjon v8: 🇬🇧 «🔊 Eshitish» — inglizcha so\'z yangi ovozda (iPhone jim rejimida ham)' : oldVer === '0.7.1' ? '🆕 Bilimjon v8: 🔊 iPhone\'da savol va inglizcha so\'z ovozi tuzatildi (jim rejimda ham eshitiladi)' : oldVer.indexOf('0.7.') === 0 ? '🆕 Bilimjon v8: 🔊 savollar o\'zbekcha ovozda o\'qiladi, 🤔 «Tushunmadim» tugmasi va 🙋 ota-onadan so\'rash!' : '🆕 Bilimjon v8: 🔊 savollar ovozda, 🗺️ sarguzasht xaritasi, 🎮 o\'yinlar zali, 🧺 oila bozori, 🤔 «Tushunmadim» tugmasi!'), 900);
+  if (oldVer && oldVer !== A.VER) setTimeout(() => toast(oldVer === '0.9.1' ? "🆕 Bilimjon v" + A.VERK + ": 🎤 Ovozim endi iPhone'da ham ovoz yozadi" : /^0\.(8\.|9\.0)/.test(oldVer) ? "🆕 Bilimjon v" + A.VERK + ": 📖 hikoya, 🃏 albom, 🎯 o'z maqsading, 🔥 olov, 👏 olqish, 👨‍👩‍👧 oilaviy viktorina, 🎤 ovozim — uy ekranida ko'rsatamiz!" : oldVer === '0.8.0' || oldVer === '0.8.1' ? "🆕 Bilimjon v8.2: 🏁 gonka endi asta-sekin qiyinlashadi, 🤝 jamoa sovg'asi, ☁️ yuborish belgisi" : oldVer === '0.8.0' ? "🆕 Bilimjon v8.1: 📡 natijalar internetsiz yuborilmay qolsa — 6 soatda eslatma chiqadi" : oldVer === '0.7.9' ? "🆕 Bilimjon v8: 📱 bitta bola — bitta qurilma, ⏱ dam olish o'yini 1 daqiqa (ota-ona ko'paytira oladi), 🔄 ilova endi o'zi yangilanadi" : oldVer === '0.7.8' ? "🆕 Bilimjon v8: 🔐 do'kondagi kassa endi «Orzu sandiqchasi» — pul orzu uchun alohida saqlanadi (foiz yo'q)" : oldVer === '0.7.7' ? "🆕 Bilimjon v8: 👆 ekran endi ikki marta bosilganda kattalashib qolmaydi (ikki barmoq bilan kattalashtirish — bor), 🏆 oilalar reyting guruhiga ulanish yaxshilandi" : oldVer === '0.7.6' ? '🆕 Bilimjon v8: masala savollaridagi ortiqcha «📄 Matn 1» oynasi olib tashlandi, matnlardagi imlo tuzatildi' : /^0\.7\.[45]$/.test(oldVer) ? '🆕 Bilimjon v8: 🎮 dam olishda 7 o\'yindan tanlov, 🏆 o\'yin reytingi (boshqa oila ham), 🏅 haftaning chempioni, 🔑 zal ota-ona ruxsati bilan' : oldVer === '0.7.4' ? '🆕 Bilimjon v8: 👨‍👩‍👧 ota-ona uchun bulut nazorati yaxshilandi, parol tiklash aniqroq' : oldVer === '0.7.3' ? '🆕 Bilimjon v8: 📈 savollar bola darajasiga to\'g\'ri moslashadi, 📊 hafta xulosasi aniqroq' : oldVer === '0.7.2' ? '🆕 Bilimjon v8: 🇬🇧 «🔊 Eshitish» — inglizcha so\'z yangi ovozda (iPhone jim rejimida ham)' : oldVer === '0.7.1' ? '🆕 Bilimjon v8: 🔊 iPhone\'da savol va inglizcha so\'z ovozi tuzatildi (jim rejimda ham eshitiladi)' : oldVer.indexOf('0.7.') === 0 ? '🆕 Bilimjon v8: 🔊 savollar o\'zbekcha ovozda o\'qiladi, 🤔 «Tushunmadim» tugmasi va 🙋 ota-onadan so\'rash!' : '🆕 Bilimjon v8: 🔊 savollar ovozda, 🗺️ sarguzasht xaritasi, 🎮 o\'yinlar zali, 🧺 oila bozori, 🤔 «Tushunmadim» tugmasi!'), 900);
 }
 start();
 })(window);
