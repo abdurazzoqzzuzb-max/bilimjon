@@ -6851,7 +6851,7 @@ const B = {
   /* 🧩 0.9.1 */
   maqsad: { ic: '🎯', nom: "O'z maqsadim", sel: '[data-maqsad]', h: 'maqsad', kun: 0, tur: "Har hafta maqsadni o'zing tanlaysan: missiya kunlari, yulduz yoki yangi meva. 👍 — o'tgan haftadan bir qadam!" },
   hikoya: { ic: '📖', nom: 'Hikoya', sel: '[data-hikoya]', h: 'hikoya', kun: 2, tur: "Har kunlik missiya — hikoyaning bitta yangi sahifasi. 7 sahifa — bitta hikoya!",
-    xabar(b) { if (!A.hikoya) return null; const h = A.hikoya.st(b); return h.yangi ? `${h.n}-sahifa seni kutyapti — nima bo'larkin?` : `Hikoyang ${h.n}/7 — davomi uchun bugungi missiyani bajar`; } },
+    xabar(b) { if (!A.hikoya) return null; const h = A.hikoya.st(b); return h.yangi ? `${h.n}-sahifa seni kutyapti — nima bo'larkin?` : `Hikoyada ${h.n}/7 sahifa ochiq — davomi uchun bugungi missiyani bajar`; } },
   albom: { ic: '🃏', nom: 'Kashfiyot albomi', sel: '[data-albom]', h: 'albom', kun: 5, tur: "Har kunlik kashfiyot — albomingda yangi karta. Kartani bosib savol yech — ★★★ oltin qil!",
     xabar(b) { if (!A.albom) return null; const H = A.albom.hisob(b); return `Albomingda ${H.n}/${H.jami} karta — birini ★★★ oltin qilib ko'r`; } },
   ovozim: { ic: '🎤', nom: 'Ovozim', sel: '[data-ovozim]', h: 'ovozim', kun: 7, tur: "Matnni o'qib, ovozingni yozib qo'y. Bir oydan keyin solishtirib, qanchalik o'sganingni eshitasan!",

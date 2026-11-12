@@ -9,7 +9,7 @@ Javoblar o'zbekcha. Repo PUBLIC: ism, familiya, oila ma'lumoti, Telegram manzili
 - Firebase **bilimjon-4c008** (Spark, eur3), kirish — email + parol (iPhone'da Google yo'q). SDK gstatic 13.2.0, faqat akkauntli telefonda yuklanadi.
 
 ## Versiya va chiqarish
-- Saytda va beta'da: **0.8.0** («v8», 08.11; 📱 bitta bola — bitta qurilma, ⏱ dam olish o'yini 1 daq, 🔄 ilova o'zi yangilanadi). Qoidalar Firebase'da: **0.7.7** (0.7.8–0.8.0 qoidani o'zgartirmaydi).
+- Saytda va beta'da: **0.9.1** («v9.1», 12.11; 0.8.0 dan to'g'ri: 🌳 daraxt, 🔁 xato savol, 🎯 3 qiyin, 👀 ko'z dami, 🏃 estafeta, 🆕 yangilik turi + 👏 olqish, 🃏 albom, 🎯 o'z maqsadi, 🔥 olov, 📖 hikoya, 👨‍👩‍👧 viktorina, 🎤 ovozim). Qoidalar Firebase'da: **0.9.1** (azo: ixtiyoriy zal, bu, dz, ol).
 - Har versiyada uchalasi: `index.html` → `A.VER = 'x.y.z'`, `sw.js` → `P + 'x.y.z'`, **`version.json`** → `ver`, `verk`, `yangi[]` (bolalar tushunadigan 2–4 qator «Nima yangi»); ekranda `A.VERK` («v8»); `start()` dagi versiya toast'i.
 - 🔄 Yangilanish (0.8.0): ilova `version.json` ni tekshiradi (ochilganda, qaytganda, 20 daq) → faoliyatda emas — o'zi yangilanadi (oyna 3 s), faoliyatda — tasma [Yangilash][Keyinroq]. Eski telefon albatta yangilansin desangiz: `min` = yangi ver (majburiy — faoliyatda ham 5 s). Sinov: `sinov/v080/sinov_yangilash.py`. 0.7.9 va eskilarda bu kod yo'q — ular 0.8.0 ga faqat ilovani qayta ochganda o'tadi.
 - Tartib: yangi tarmoq `v0.x.y` (main'dan) → har bosqich push → beta: main worktree'da `python3 sinov/beta/beta_yig.py origin/<tarmoq> beta` → faqat `beta/` commit → u sinaydi → **«chiqar»** desa: `prod_e2e.py` (eski main vs main+tarmoq, 23 tekshiruv) → main'ga `merge --no-ff` → push → GitHub API deployments (github.io proksida yopiq) → qoidalar o'zgargan bo'lsa `qoidalar <oila emaili>`.
@@ -22,7 +22,7 @@ Javoblar o'zbekcha. Repo PUBLIC: ism, familiya, oila ma'lumoti, Telegram manzili
 - Tasodifiy yiqilishi mumkin (qayta ishga tushiring): `v060/4` ovchi q3, `v071` «o'rniga yangi savol», `v070/1c` parallel yuklamada.
 
 ## Kod xaritasi (index.html, tartib bilan)
-Kontent banki `BJ.bank` → generatorlar `BJ.gen` (mat M0–M2, mantiq L, ona tili H, yozuv Y, OL, EN, AR, KASHF, arab 2 `BJ.arab`: AQ/AY/TJ.1–8) → core `BJ.A` (holat `A.S()`, log, `makeItem`, `buildMission`, `recordAnswer`, kun chegarasi, xulosa) → bola tomoni (router `render()`, missiya, mashq, vazifa, arena, kichik dars + kino, Tushunmadim, 📖 tanishtiruv `screenTanish`) → o'yinlar `A.oyin` → garaj → zal `A.zal` → so'm `A.pul` → bozor `A.bozor` → xarita `A.xarita` → uch o'qish `A.uch` → ovoz `A.ovoz` → ☁️ bulut (sinxron, 🛡️ ruxsat, 👑 hamma oilalar, ✈️ Telegram, 🔒 `A.eshik`, reyting guruhi) → ota-ona paneli (`ota-*`) → `start()`.
+Kontent banki `BJ.bank` → generatorlar `BJ.gen` (mat M0–M2, mantiq L, ona tili H, yozuv Y, OL, EN, AR, KASHF, arab 2 `BJ.arab`: AQ/AY/TJ.1–8) → core `BJ.A` (holat `A.S()`, log, `makeItem`, `buildMission`, `recordAnswer`, kun chegarasi, xulosa) → bola tomoni (router `render()`, missiya, mashq, vazifa, arena, kichik dars + kino, Tushunmadim, 📖 tanishtiruv `screenTanish`) → o'yinlar `A.oyin` → garaj → zal `A.zal` → so'm `A.pul` → bozor `A.bozor` → xarita `A.xarita` → 🌳 `A.daraxt` → 🏃 `A.estafeta` → 🆕 `A.yangilik` → 🧩 0.9.1 (`A.t91`, `A.olov`, `A.maqsad`, `A.albom`, `A.hikoya`, `A.olqish`, `A.viktorina`, `A.ovozim`) → uch o'qish `A.uch` → ovoz `A.ovoz` → ☁️ bulut (sinxron, 🛡️ ruxsat, 👑 hamma oilalar, ✈️ Telegram, 🔒 `A.eshik`, reyting guruhi) → ota-ona paneli (`ota-*`) → `start()`.
 
 ## O'zgarmas qoidalar (buzilsa — xato bo'lgan)
 - Oila darajasidagi yangi sozlamani `defaults()` ga QO'SHMANG (`migrate` umumiy holatni o'zgartirib, bulut yangiligini bosib ketadi) — `=== 'x'` / `!== false` bilan o'qing.
@@ -32,6 +32,7 @@ Kontent banki `BJ.bank` → generatorlar `BJ.gen` (mat M0–M2, mantiq L, ona ti
 - Dizayn: realistik + animatsiya, multfilm emas (u 4 marta aytgan). 390 px da gorizontal siljish yo'q.
 - 👆 Ikki marta bosish zoom'i yo'q (0.7.8, u so'radi): `html{touch-action:manipulation}`, hamma input ≥ 16px. Ikki barmoq bilan kattalashtirish QOLADI (u tanladi) — viewport'ga `user-scalable=no` qo'ymang. touchend bilan ikki bosishni to'xtatmang (o'yinlarda tez bosish yo'qoladi).
 - 🔐 Pul FOIZSIZ (0.7.9, u: «pul tegilmasa ko'payadi — islomiy jihatdan to'g'ri emas»): sandiqchaga foiz/o'sish qo'shmang, 🐷 cho'chqa tasvirini ishlatmang. Tejash — faqat ota-ona mukofoti (bozor 🪙) yoki orzu uchun yig'ish.
+- 🧩 0.9.1 maydonlari (`b.olq/albom/maqsad/mqTarix/olovMax/olovBos/hikoya/ovozYoz`, `S.vikt/viktOchiq`) defaults'ga QO'SHILMAGAN. Olqish — faqat 6 tayyor ibora (erkin matn bolalar orasida YO'Q). 🎤 ovoz fayli faqat IndexedDB'da — bulutga yubormang. Yangi bo'lim qo'shsangiz: `A.yangilik.B` + `bolimOf` + `VER_YANGI[ver]` (tur — doim birinchi kirilmagani).
 - `obuna`: bulut hujjati `q === 'admin'` bo'lsa undagi `guruh` olinadi.
 - 📱 Bitta bola — bitta qurilma (0.8.0): `b.qurilma {id, nom, ts}` — bolaDefaults'ga QO'SHILMAGAN; sinxronda qurilma maydoni yangirog'i (ts) qoladi (`bolaQabul`, `qurOl`). ⏱ O'yin vaqti — `oyinMin` (oila/bola, bo'sh = 1 daq); eski `oyinDaq` o'qilmaydi.
 
