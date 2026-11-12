@@ -43,7 +43,7 @@ try:
 
     # ================= 0. VERSIYA =================
     yang = ev("BJ.A.YANGI")
-    ok(VER == SWV == VJ['ver'] == '0.9.1' and VJ['verk'] == '9.1' and ev("BJ.A.VERK") == '9.1', f"Versiya 0.9.1: index {VER} = sw.js {SWV} = version.json {VJ['ver']} (v{VJ['verk']})")
+    ok(VER == SWV == VJ['ver'] and tuple(map(int, VER.split('.'))) >= (0, 9, 1) and VJ['verk'] == ev("BJ.A.VERK"), f"Versiya: index {VER} = sw.js {SWV} = version.json {VJ['ver']} (v{VJ['verk']})")
     ok(VJ['yangi'] == yang and 2 <= len(yang) <= 4 and all(len(x) <= 90 for x in yang), f"version.json «yangi» = A.YANGI ({len(yang)} qator, qisqa)")
     bd = html.split('function bolaDefaults()')[1][:1500]; dfl = html.split('function defaults()')[1][:1500]
     ok(not any(k + ':' in bd for k in ('olq', 'albom', 'maqsad', 'mqTarix', 'olovMax', 'hikoya', 'ovozYoz')) and 'vikt' not in dfl, "Yangi maydonlar bolaDefaults/defaults ga QO'SHILMAGAN")
@@ -221,6 +221,29 @@ try:
     ok(P.locator('.ovtx.arab[dir="rtl"]').count() == 1, "🕌 Arabcha matn — o'ngdan chapga")
     P.click('[data-ovgo]'); kutf(P, "!!document.querySelector('[data-ovstop]')", 6000); P.wait_for_timeout(400)
     GO('uy', 500); ok(ev("BJ.A.ovozim.holat()") is None, "Yozish paytida chiqib ketilsa — mikrofon yopiladi")
+    # --- 0.9.2: iPhone audioSession (u 12.11 05:30: Safari'da «Разрешить», ilovada «ruxsat kerak») — iOS xatti-harakati soxtalanadi:
+    #     audioSession 'playback' bo'lsa mikrofon rad etiladi (NotAllowedError), yozish paytida 'playback' ga o'tsa — yozuv buziladi
+    ev("""(()=>{const AS={type:'auto', tarix:[]}; window.__AS=AS; Object.defineProperty(navigator,'audioSession',{configurable:true,get:()=>AS});
+      const o=navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices); window.__gum=o; window.__gumN=0;
+      navigator.mediaDevices.getUserMedia=c=>{window.__gumN++; AS.tarix.push(AS.type); if(AS.type==='playback') return Promise.reject(Object.assign(new Error('playback'),{name:'NotAllowedError'})); return o(c)};
+      BJ.fx.unlock(); return AS.type})()""")
+    ok(ev("window.__AS.type") == 'playback', "Soxta iPhone: ilova ovoz uchun audioSession = 'playback' (jim rejimda ham eshitilsin)")
+    ev("BJ.A.ovozim.til('uz')"); GO('ovozim', 600); P.click('[data-ovgo]')
+    ok(kutf(P, "!!document.querySelector('[data-ovstop]')", 6000) and ev("window.__AS.tarix.slice(-1)[0]") == 'play-and-record' and ev("BJ.fx.rec") is True, "🎤 bosilganda: audioSession 'play-and-record' → mikrofon berildi, yozish boshlandi")
+    ev("BJ.fx.unlock(); BJ.fx.play('ding')"); P.wait_for_timeout(300)
+    ok(ev("window.__AS.type") == 'play-and-record', "Yozish paytida boshqa ovozlar 'playback' ga qaytarmaydi")
+    P.wait_for_timeout(900); P.click('[data-ovstop]'); kutf(P, "!!document.querySelector('[data-ovs]')", 6000)
+    ok(ev("window.__AS.type") == 'playback' and ev("BJ.fx.rec") is False, "To'xtatilgach — yana 'playback' (jim rejimda ovoz chiqaveradi)")
+    P.click('[data-ovq]'); P.wait_for_timeout(300)
+    ev("""(()=>{navigator.mediaDevices.getUserMedia=c=>Promise.reject(Object.assign(new Error('x'),{name:'NotAllowedError'}));})()""")
+    P.click('[data-ovgo]'); P.wait_for_timeout(500)
+    t = P.inner_text('.sheet') if P.locator('.sheet').count() else ''
+    ok('ruxsat kerak' in t and 'NotAllowedError' in t and ev("window.__AS.type") == 'playback' and ev("BJ.fx.rec") is False, "Haqiqatan rad etilsa: oyna + xato nomi (NotAllowedError), audioSession 'playback' ga qaytdi")
+    P.screenshot(path='/tmp/bj091_mic_rad.png')
+    ev("""(()=>{BJ.A.closeSheets(); let n=0; navigator.mediaDevices.getUserMedia=c=>{n++; window.__gumN2=n; return (c&&c.audio&&c.audio.echoCancellation) ? Promise.reject(Object.assign(new Error('x'),{name:'OverconstrainedError'})) : window.__gum({audio:true})};})()""")
+    P.click('[data-ovgo]'); ok(kutf(P, "!!document.querySelector('[data-ovstop]')", 6000) and ev("window.__gumN2") == 2, "Sozlama rad etilsa — oddiy {audio: true} bilan qayta urinadi va yozadi")
+    P.click('[data-ovstop]'); P.wait_for_timeout(600)
+    ev("""(()=>{navigator.mediaDevices.getUserMedia=window.__gum; delete navigator.audioSession; BJ.A.closeSheets()})()""")
 
     # ================= 10. 🆕 YANGILIK TURI 0.9.1 =================
     X(AZ, "(()=>{A.yangiSinov=1; delete b.yv; delete b.kor; delete b.esYop; b.boshlandi=A.addDays(A.todayKey(),-6); delete b.missiya; A.save(true); return 1})()")
@@ -241,6 +264,8 @@ try:
     X(AZ, "(()=>{const T=A.todayKey(); b.yv.tur='ok'; Object.keys(A.yangilik.B).forEach(k=>{b.kor[k]=T}); b.kor.hikoya=A.addDays(T,-3); b.hikoya.yangi=1; A.save(true); return 1})()")
     GO('uy', 1400); t = P.inner_text('[data-eslat]') if P.locator('.eslat').count() else ''
     ok('Hikoya' in t and '3 kundan beri' in t and 'kutyapti' in t, f"🔔 3 kundan beri kirilmagan hikoya eslatmasi ({t[:70]})")
+    r = X(AZ, """(()=>{const T=A.todayKey(), y=A.addDays(T,-1); b.yv={v:'0.9.1',sana:A.addDays(T,-2),tur:'ok',qadam:6}; b.kor={}; ['q3','maqsad','hikoya','albom','ovozim','vikt','daraxt','estafeta'].forEach(k=>{b.kor[k]=y}); A.save(true); A.yangilik.vInit(b); return [b.yv.old||[], (A.yangilik.VER_YANGI[A.VER]||[]).length]})()""")
+    ok(len(r[0]) == 8 and r[1] == 8, f"0.9.1 da hammasini ko'rgan bola yangi versiyada turni qayta ko'rmaydi (old {len(r[0])}/8)")
     ev("BJ.A.yangiSinov=0")
 
     # ================= 11. OTA-ONA PANELI =================
