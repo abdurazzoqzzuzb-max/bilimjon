@@ -448,3 +448,9 @@ U so'radi (08.11 03:30, «PY»): 1) zal ota-ona ruxsati bilan HAR DOIM ochilsin;
 - Tuzatish: `asYoz(on)` — yozishdan oldin 'play-and-record' + `FX.rec = true`, to'xtaganda/rad etilganda 'playback'; `asPlay` va ovoz modulidagi 2 joy `FX.rec` da tegmaydi. `micOl()` — murakkab sozlama rad etilsa `{audio: true}` (NotAllowed/Security bundan mustasno). Rad oynasida xato nomi (tashxis) va bosh ekran ilovasi uchun «to'liq yopib qayta oching». `recTugat` — AudioContext ikki marta yopilmaydi (unhandled rejection edi).
 - Versiya: `VER_YANGI['0.9.2'] = VER_YANGI['0.9.1']` (0.9.1 da ko'rganlar `b.yv.old` orqali qayta ko'rmaydi); toast: 0.9.1 dan — «🎤 Ovozim endi iPhone'da ham ovoz yozadi».
 - Sinov: v091 ga soxta iOS audioSession (playback → NotAllowedError), yozish paytida 'playback' ga qaytmaslik, rad oynasi + xato nomi, {audio:true} qayta urinish, 0.9.1 → 0.9.2 tur (86 tekshiruv).
+
+
+## 🇬🇧 Road to 8 0.5.0 (14.11.2026) — bitta versiya
+- Muammo: o'quvchi Telegram'dagi html faylni ochgan — `file:` da bulut o'chiq, natija nazoratga yetmagan. 13.11 da alohida (bulutsiz) v0.4 qilingan, 08.11 dagi bulutli `ielts/` esa eski dizaynda edi.
+- Yechim: v0.4 + bulut moduli birlashtirildi (manba — yopiq bilimjon-admin/road-to-8). Fayl rejimida banner va manzil; internet versiyada fayldan natija qo'shish (mergeStates). Admin panelga haftalik reja bo'limi. Kodda ism/yosh yo'q.
+- Sinov: fayl 42/42, soxta Firebase bilan bulut 15/15.

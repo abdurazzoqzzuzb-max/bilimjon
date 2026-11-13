@@ -40,11 +40,11 @@ Kontent banki `BJ.bank` → generatorlar `BJ.gen` (mat M0–M2, mantiq L, ona ti
 - `obuna`: bulut hujjati `q === 'admin'` bo'lsa undagi `guruh` olinadi.
 - 📱 Bitta bola — bitta qurilma (0.8.0): `b.qurilma {id, nom, ts}` — bolaDefaults'ga QO'SHILMAGAN; sinxronda qurilma maydoni yangirog'i (ts) qoladi (`bolaQabul`, `qurOl`). ⏱ O'yin vaqti — `oyinMin` (oila/bola, bo'sh = 1 daq); eski `oyinDaq` o'qilmaydi.
 
-## 🇬🇧 Road to 8 (IELTS) — `ielts/` (0.4.0, 08.11)
-- Alohida sahifa `…/bilimjon/ielts/` — bolalar ilovasiga tegmaydi (o'z SW'i yo'q). Manba endi `ielts/index.html` o'zi (0.3.0 planshet HTML + ☁️ bulut moduli). Versiya: `R8.meta.version` + `ielts/version.json` (ilova o'zi yangilanadi, mashq paytida emas).
-- Bulut (qoidalar o'zgarmagan): `oila/{uid}/ielts/holat` (`j` = to'liq holat JSON, ≤60 s / mashq tugashi bilan), `jonli` (≤30 s), `sozlama.norma` (faqat admin). Kirish — Bilimjon akkaunti + 🛡️ ruxsat («Road to 8 (IELTS)»); admin akkaunt → 👑 nazorat paneli (jonli, 7 kun, mashqlar, norma, JSON). Faqat Chrome (boshqa brauzer → `intent://` Chrome).
-- 0.4.0: ⚠️ taxmin (o'qishga yetmaydigan vaqt) va ℹ️ 12 soat ichida qayta to'plam — natija/XP/muhrga kirmaydi; takrorlash — darsning 1-qadami; norma 120 daq (yakshanba yarmi); bosh sahifa — norma + bitta tugma.
-- Hafta rejasi (u tasdiqlagan): Tokyo/London + MP3, eslatmalar + 21:00 Telegram hisobot, Bilimjon reytingi (reja % bo'yicha) + zal qulfi, diagnostik mock.
+## 🇬🇧 Road to 8 (IELTS) — `ielts/` (0.5.0, 14.11)
+- Alohida sahifa `…/bilimjon/ielts/` — bolalar ilovasiga tegmaydi (o'z SW'i yo'q). **Manba bu repoda EMAS:** yopiq `bilimjon-admin/road-to-8/` (DAVOM.md → app/; `python3 app/build_single.py` → `dist/RoadTo8_planshet.html` = shu `ielts/index.html`). Versiya: `R8.meta.version` + `ielts/version.json` (ochiq ilova o'zi yangilanadi, mashq paytida emas).
+- 0.5.0 = 13.11 dagi v0.4 (🗓 haftalik reja: kun lentasi, 3 qadamli vazifa, 2 xatoda to'xtash, yakshanba imtihoni 80/60, 📅 kalendar, 🔤 tarjimon, 🎬 kinolar, pudra dizayn) + 08.11 bulut. Bulut faqat github.io/localhost'da; `file:` (Telegram'dagi html) — bulutsiz, bosh sahifada «internet versiyasiga o't» banneri; internet versiyada «📂 Fayldagi natijalarni qo'shish» (bir nechta fayl birlashadi).
+- Bulut (qoidalar o'zgarmagan): `oila/{uid}/ielts/holat` (`j` = to'liq holat), `jonli`, `sozlama.norma` (admin). Kirish — Bilimjon akkaunti + 🛡️ ruxsat; admin akkaunt → 👑 nazorat (jonli, 7 kun, 🗓 haftalik reja va vazifa ballari, imtihon, kino/yangilik javoblari, norma, JSON). Faqat Chrome. ⚠️ taxmin / ℹ️ 12 soat — natijaga kirmaydi.
+- Sinov (arxivda): `test_v4.py` (fayl), `test_bulut.py <bu repo>/sinov/bulut` (soxta Firebase).
 
 ## 👑 Admin (Claude chatdan; telefon/akkaunt yo'qolsa ham)
 - Yopiq repo `abdurazzoqzzuzb-max/bilimjon-admin`, workflow `admin.yml` (main'dagi `admin/admin.js` ni ishlatadi). Ishga tushirish: GitHub MCP `actions_run_trigger` (run_workflow, `admin.yml`, ref `main`, inputs `{buyruq, a1, a2, tasdiq}`) → `actions_list` (runs → jobs) → `get_job_logs` (job_id, return_content); yoki `bash admin/claude_adm.sh <buyruq> [a1] [a2] [tasdiq]` (gh ishlasa).
