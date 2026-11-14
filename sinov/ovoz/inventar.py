@@ -24,6 +24,7 @@ JS = r"""(N) => {
  NQ.ISMLAR.forEach(i => ['', 'niki', 'ning', 'dan', 'da', 'ga', 'ni'].forEach(s => add(NQ.reja(i + s))));
  Object.keys(NQ.HARF_NOM).forEach(k => add([NQ.harfQism(k)]));   // 07.11: harflar nomi (a, be, de …) — hammasi kafolatli
  if (BJ.A.hikoya) BJ.A.hikoya.matnlar().forEach(t => add(O.reja(t)));   // 0.9.1: 📖 hikoya sahifalari («🔊 Eshit»)
+ if (BJ.A.mantiq) BJ.A.mantiq.matnlar().forEach(t => add(O.reja(t)));   // 0.10.0: 🧠 mantiq o'yinlari tushuntirishi
  const en = {}, enYoq = new Set(); O.enMatnlar().forEach(t => { en[O.enId(t)] = t; });
  for (const id of Object.keys(reg)) for (let q = 1; q <= 3; q++) for (let i = 0; i < 40; i++) { let it; try { it = BJ.gen.make(id, q, ctxs[i % 3]); } catch (e) { break; } if (it.tts && !en[O.enId(it.tts)]) enYoq.add(it.tts); }
  return { n, ib, en, enYoq: [...enYoq] };

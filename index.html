@@ -2460,7 +2460,39 @@ function icon(k, o) {
 const ICON_KEYS = Object.keys(IC);
 /* ---------- PUSHTI UCHAR OT ---------- */
 const YOL = [['#E040A0', '#C2185B'], ['#B388FF', '#FF4FB0'], ['#FF5252', '#FFD740', '#69F0AE', '#40C4FF', '#B388FF'], ['#FFD54F', '#FFF8E1']];
-function pegasus(d, o) {
+/* 🦄 Realistik uchar ot (0.10.0, u: «qizlarning oti — realistik bo'lsin»). viewBox 0 0 200 160 (eski bilan bir xil — sahna, poyga, xarita joyida qoladi).
+   d: yol (yol va dum ranglari YOL), qanot (0 oq · 1 kristall uchlar · 2 kamalak), toj (0 · 1 oltin · 2 yoqutli), taqa (tuyoq: tabiiy · oltin · zangori), kokil (bant: pushti · binafsha). */
+function pegasusR(d, o) {
+  d = d || {}; o = o || {}; const id = 'pr' + (++PRN).toString(36), t = k => +d[k] || 0;
+  const Y = [['#E35BAE', '#B0287A'], ['#B79BFF', '#F06BB8'], ['#FF5A5A', '#FFC93D', '#5BE39A', '#3FB8FF', '#A98BFF'], ['#F7D774', '#FFF5D6']][Math.min(3, t('yol'))];
+  const ys = Y.map((c, i) => `<stop offset="${Y.length > 1 ? i / (Y.length - 1) : 0}" stop-color="${c}"/>`).join('');
+  const q = t('qanot'), hoof = ['#4A4550', '#FFD54F', '#81D4FA'][t('taqa')] || '#4A4550', toj = t('toj'), kk = ['', '#FF4FB0', '#7C4DFF'][t('kokil')] || '';
+  const wingTip = q === 2 ? `<stop offset=".55" stop-color="#FFFFFF"/><stop offset=".75" stop-color="#FFD1E8"/><stop offset=".88" stop-color="#C9B6FF"/><stop offset="1" stop-color="#9FE3FF"/>` : q === 1 ? `<stop offset=".6" stop-color="#FFFFFF"/><stop offset="1" stop-color="#BDEBFF"/>` : `<stop offset=".6" stop-color="#FFFFFF"/><stop offset="1" stop-color="#E9E1F2"/>`;
+  const defs = `<defs><radialGradient id="${id}c" cx=".45" cy=".3" r=".85"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".55" stop-color="#F6F1F8"/><stop offset=".85" stop-color="#E2D6EA"/><stop offset="1" stop-color="#CDBDD9"/></radialGradient>
+    <linearGradient id="${id}l" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#D3C4DF"/><stop offset=".45" stop-color="#FBF8FC"/><stop offset=".7" stop-color="#EEE6F3"/><stop offset="1" stop-color="#C9B8D7"/></linearGradient><linearGradient id="${id}f" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#BBA9CB"/><stop offset=".5" stop-color="#DDD1E7"/><stop offset="1" stop-color="#B3A1C4"/></linearGradient>
+    <linearGradient id="${id}m" x1="0" y1="0" x2="1" y2="1">${ys}</linearGradient><linearGradient id="${id}w" x1="1" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#F3EEF7"/>${wingTip}</linearGradient>
+    <linearGradient id="${id}w2" x1="1" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#D9CFE3"/><stop offset="1" stop-color="#C3B5D2"/></linearGradient><filter id="${id}s" x="-10%" y="-50%" width="120%" height="200%"><feGaussianBlur stdDeviation="2"/></filter></defs>`;
+  const wingP = 'M112 78C106 62 98 46 86 32C78 23 66 15 52 10C60 18 66 26 70 34C62 30 53 28 44 28C54 36 63 42 71 48C62 48 55 50 48 55C61 58 73 60 86 64C95 67 104 72 112 78Z';
+  const feathers = `<path d="M86 32C80 30 72 28 64 27M78 41C70 40 62 40 54 41M76 51C68 51 60 52 52 55M90 60C82 60 74 60 66 61" stroke="#CFC2DB" stroke-width=".9" fill="none" opacity=".9"/>
+    <path d="M100 66C96 60 94 54 92 48M104 70C100 62 98 56 97 50M108 74C104 66 103 60 102 54" stroke="#D8CDE3" stroke-width=".8" fill="none"/>${q === 1 ? `<path d="M52 10l2 4l4 1l-4 1l-2 4l-2-4l-4-1l4-1z" fill="#BDEBFF"/><path d="M44 28l1.5 3l3 .8l-3 .8l-1.5 3l-1.5-3l-3-.8l3-.8z" fill="#DFF6FF"/>` : ''}`;
+  const farWing = `<path d="${wingP}" fill="url(#${id}w2)" transform="translate(-8 4) rotate(-6 112 78)" opacity=".85"/>`;
+  const farLegs = `<path d="M122 104C123 112 124 119 125 125C125 132 125 138 126 142C126 145 127 146 128 147L134 147C134 144 132 142 132 139C131 132 131 126 132 120C132 113 132 108 130 103Z" fill="url(#${id}f)"/><path d="M124 146H135L136 151H123Z" fill="${shade(hoof, -0.2)}"/>
+    <path d="M78 104C78 112 80 118 82 124C83 129 82 134 82 139C82 143 82 145 82 147L88 147C88 144 88 141 88 137C88 131 89 126 91 121C93 114 93 109 91 104Z" fill="url(#${id}f)"/><path d="M80 146H90L91 151H79Z" fill="${shade(hoof, -0.2)}"/>`;
+  const tail = `<path d="M55 82C40 86 32 100 31 116C30 128 35 138 43 145C38 132 40 118 46 108C48 100 53 93 58 88Z" fill="url(#${id}m)"/><path d="M50 90C42 98 38 110 38 124M54 88C47 98 44 112 45 130" stroke="#fff" stroke-width=".8" fill="none" opacity=".35"/>`;
+  const body = `<path d="M62 76C74 70 96 72 112 74C118 72 124 68 128 62C134 52 144 42 152 36C156 33 160 32 163 33L165 25.5L168.5 33.5C174 38 182 46 188 54C191 58 190.5 63 186 64.5C182 66 178 64 174 62C168 60 164 58 160 60C156 64 150 76 146 88C144 96 142 102 138 106C130 112 112 114 96 113C82 113 70 112 62 108C54 104 50 96 52 88C53 82 56 78 62 76Z" fill="url(#${id}c)" stroke="#CDBFD9" stroke-width=".7"/>
+    <path d="M130 70C134 80 136 92 134 104M64 82C72 86 76 96 74 108M146 60C150 52 156 46 162 42" stroke="#D8CBE2" stroke-width="1" fill="none" opacity=".8"/><path d="M96 112C106 110 118 110 128 106" stroke="#CBBBD8" stroke-width="1.4" fill="none" opacity=".6"/>`;
+  const nearLegs = `<path d="M128 104C130 112 132 118 133 124C133 132 133 138 134 142C134 145 136 146 137 147L144 147C144 144 141 142 140 139C140 133 140 127 141 121C142 113 142 108 140 102Z" fill="url(#${id}l)" stroke="#CDBFD9" stroke-width=".5"/><path d="M132 146H145L146 151.5H131Z" fill="${hoof}"/><path d="M133 141C136 142 139 142 141 141" stroke="#D2C4DE" stroke-width="1" fill="none"/>
+    <path d="M58 100C56 110 58 118 60 124C62 128 62 132 62 138C62 142 61 145 62 147L69 147C69 144 68 141 68 137C68 131 69 127 72 122C76 114 78 108 76 102Z" fill="url(#${id}l)" stroke="#CDBFD9" stroke-width=".5"/><path d="M60 146H71L72 151.5H59Z" fill="${hoof}"/><path d="M61 127C64 126 67 126 70 128" stroke="#D2C4DE" stroke-width="1" fill="none"/>`;
+  const mane = `<path d="M163 33C152 37 141 48 133 58C127 66 121 72 114 76C123 77 131 73 137 67C133 75 129 81 126 88C135 81 141 71 145 61C145 69 145 75 142 82C149 72 153 60 156 49C158 44 160 39 163 33Z" fill="url(#${id}m)"/><path d="M160 36C150 44 142 54 136 64M156 42C150 52 146 62 143 72" stroke="#fff" stroke-width=".8" fill="none" opacity=".4"/>
+    <path d="M164 33C166 37 168 41 167 46C165 42 163 39 161 37Z" fill="url(#${id}m)"/>${kk ? `<g class="bant" transform="translate(150 44) rotate(-30)"><path d="M0 0L-7 -4L-7 4ZM0 0L7 -4L7 4Z" fill="${kk}"/><circle r="2.2" fill="${shade(kk, 0.3)}"/></g>` : ''}`;
+  const face = `<path d="M174 41.5C176 40.5 178.5 41 179.5 43C177.5 44.5 175.5 44.6 173.8 43.6Z" fill="#2A2230"/><circle cx="177.4" cy="42.4" r=".7" fill="#fff"/><path d="M173.5 41C175.5 39.6 178.5 39.6 180.4 41.3" stroke="#5B4A66" stroke-width=".6" fill="none"/>
+    <path d="M185.5 58.5C186.8 59.3 187.2 60.6 186.6 61.6" stroke="#8C7A98" stroke-width=".9" fill="none"/><path d="M181 63.8C179 63.6 177 63 175.6 62.2" stroke="#A895B4" stroke-width=".7" fill="none"/><path d="M164 50C168 47 172 47 176 49" stroke="#DCCFE6" stroke-width=".8" fill="none"/>`;
+  const crown = toj ? `<g transform="translate(158 26) rotate(-8)"><path d="M0 6L2 0L5 4L8 -1L11 4L14 0L16 6Z" fill="${toj === 2 ? '#F4C542' : '#F7D774'}" stroke="#B8860B" stroke-width=".6"/>${toj === 2 ? '<circle cx="8" cy="2.6" r="1.6" fill="#E0115F"/>' : '<circle cx="8" cy="2.8" r="1.1" fill="#fff"/>'}</g>` : '';
+  const shad = `<ellipse cx="104" cy="152" rx="56" ry="4" fill="#5B3F6E" opacity=".25" filter="url(#${id}s)"/>`;
+  return `<svg class="pegasus" viewBox="0 0 200 160" style="width:${o.w || 200}px;max-width:100%" aria-label="Uchar ot">${defs}${shad}${farWing}${farLegs}${tail}${body}${nearLegs}${mane}${face}${crown}<path d="${wingP}" fill="url(#${id}w)" stroke="#CDBFD9" stroke-width=".7"/>${feathers}</svg>`;
+}
+let PRN = 0;
+function pegasusEski(d, o) {
   d = d || {}; o = o || {}; const id = uid('p'), t = k => d[k] || 0, yol = YOL[Math.min(3, t('yol'))], q = t('qanot'), toj = t('toj');
   const tq = t('taqa'), hf = ['#7B1FA2', '#FFD54F', '#81D4FA'][tq] || '#7B1FA2', hs = tq ? ` stroke="${tq === 1 ? '#FF8F00' : '#0288D1'}" stroke-width="1.4"` : '', kk = t('kokil'), kc = ['', '#FF4FB0', '#7C4DFF'][kk] || '';
   const bant = kc ? `<g class="bant" transform="translate(133 46) rotate(-20)"><path d="M0 0 L-8 -5 L-8 5Z M0 0 L8 -5 L8 5Z" fill="${kc}" stroke="${shade(kc, -0.4)}" stroke-width="1"/><path d="M-1 2 L-4 9 M1 2 L4 9" stroke="${kc}" stroke-width="1.6" stroke-linecap="round"/><circle r="2.4" fill="${shade(kc, 0.35)}" stroke="${shade(kc, -0.4)}" stroke-width=".8"/></g>` : '';
@@ -2537,7 +2569,7 @@ function vis(v) {
 /* ---------- KATTA SAHNALAR (≤8 s) ---------- */
 function svgImg(svg) { const im = new Image(); im.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg.replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" ')); return im; }
 function race(dunyo, d, opts) {
-  opts = opts || {}; const tema = dunyo === 'orol' ? 'orol' : 'garaj', img = svgImg(tema === 'orol' ? pegasus(d, { w: 200 }) : car(d, { w: 200 }));
+  opts = opts || {}; const tema = dunyo === 'orol' ? 'orol' : 'garaj', img = svgImg(tema === 'orol' ? (BJ.art && BJ.art.pegasus ? BJ.art.pegasus : pegasus)(d, { w: 200 }) : (BJ.art && BJ.art.car ? BJ.art.car : car)(d, { w: 200 }));
   let hit = false, fw = 0, slowEnd = 0; const T = opts.ms || 6800;
   FX.play(tema === 'orol' ? 'vush' : 'motor', tema === 'orol' ? 1 : 3.2);
   return FX.bigScene('katta', T, (c, t, f, W, H) => {
@@ -2620,7 +2652,8 @@ function kashfSahna(kat) {
 }
 /* 🕌 TJ.8 vaqf belgisi — alohida nishon (Qur'on belgilari shriftga bog'liq, shuning uchun oddiy harf bilan chiziladi) */
 function vqb(x) { return `<span class="vqb vq-${x.k || 'x'}" title="${esc(x.nom || '')}"><i dir="rtl" lang="ar">${esc(x.b)}</i></span>`; }
-BJ.art = { kashfSahna, vqb, dragon, car, pegasus, island, vis, shapeSvg, race, nextReward, decor, DETAL, SH, svgImg, RANGLAR, icon, ICON_KEYS, shade, KZ, gdefs };
+const pegasus = pegasusR;
+BJ.art = { kashfSahna, vqb, dragon, car, pegasus, pegasusEski, island, vis, shapeSvg, race, nextReward, decor, DETAL, SH, svgImg, RANGLAR, icon, ICON_KEYS, shade, KZ, gdefs };
 BJ.vis = vis;
 })(typeof window !== 'undefined' ? window : globalThis);
 
@@ -3140,7 +3173,7 @@ function render() {
   if (h === 'dunyo') return screenWorld(b);
   KOMBO.n = 0;
   { const bo = A.sv ? A.sv.bolimOfH(h) : null; if (bo && !A.bolimOn(b, bo)) { try { history.replaceState(null, '', '#uy'); } catch (e) {} return screenHome(b); } }   /* 🎛 0.10.0: ota-ona o'chirgan bo'lim */
-  if ((/^(missiya|arena|mashq|vazifa-|garaj|dokon|qutqar-|zal|bozor|sovga|rassom)/.test(h) || /^(daraxt-m-|qiyin3)/.test(h) || /^(hikoya|albom|ovozim)$/.test(h)) && qurQulf(b)) return screenQurilma(b, h);
+  if ((/^(missiya|arena|mashq|vazifa-|garaj|dokon|qutqar-|zal|bozor|sovga|rassom|avto|mantiq)/.test(h) || /^(daraxt-m-|qiyin3)/.test(h) || /^(hikoya|albom|ovozim)$/.test(h)) && qurQulf(b)) return screenQurilma(b, h);
   if (/^(missiya|arena|mashq|vazifa-|garaj|dokon|qutqar-|zal|bozor)/.test(h) || /^(daraxt-m-|qiyin3)/.test(h) || /^(albom|ovozim)$/.test(h)) { const m0 = b.missiya, dm = A.damHolat(b, h === 'missiya' && m0 && m0.sana === A.todayKey() && !m0.done && m0.si > 0); if (dm) return screenDam(b, dm); }
   if (h === 'missiya') return screenMission(b);
   if (h === 'arena') return screenArena(b);
@@ -3154,6 +3187,9 @@ function render() {
   if (h === 'bozor') return A.bozor ? A.bozor.screen(b) : screenHome(b);
   if ((m = h.match(/^sovga(?:-([a-z]+))?$/))) return A.sv ? A.sv.screen(b, m[1]) : screenHome(b);   /* 🎁 0.10.0 */
   if (h === 'rassom') return A.sv ? A.sv.rassom(b) : screenHome(b);
+  if (h === 'avto') return A.avto ? A.avto.garaj(b) : screenHome(b);   /* 🏎️ 0.10.0 */
+  if (h === 'mantiq') return A.mantiq ? A.mantiq.menyu(b) : screenHome(b);
+  if ((m = h.match(/^mantiq-([a-z]+)$/))) return A.mantiq ? A.mantiq.oyin(b, m[1]) : screenHome(b);
   if ((m = h.match(/^mashq-([a-z]+)(?:-([a-z]+))?$/))) return mashqStart(b, m[1], m[2]);
   if ((m = h.match(/^vazifa-(\w+)$/))) return vazifaStart(b, m[1]);
   if ((m = h.match(/^qutqar-(\d{4}-\d{2}-\d{2})$/))) return qutStart(b, m[1]);
@@ -4528,7 +4564,7 @@ const OYIN = {
 /* 0.7.6 (u so'radi): dam olishda HAMMA bolaga yoshidan qat'iy nazar hamma 7 o'yin — bola o'zi tanlaydi.
    Zal o'yinlari (turbo, svetofor, devor, xotira) A.zal.damRun orqali: vaqt — shu dam olish oynasidan (S0.end), zal daqiqalariga sanalmaydi. */
 const ZALT = ['turbo', 'svetofor', 'devor', 'xotira'];
-const turlar = b => A.zal ? A.zal.TARTIB.slice() : ['poyga', 'pazl', 'kozgu'];
+const turlar = b => (A.zal ? A.zal.TARTIB.slice() : ['poyga', 'pazl', 'kozgu']).concat(A.mantiq && A.bolimOn(b, 'mantiq') ? A.mantiq.turlar(b) : []);   /* 🧠 0.10.0: mantiq o'yinlari — har safar qiyinroq */
 const zalMi = t => ZALT.includes(t) && !!(A.zal && A.zal.damRun);
 const ozt = t => OYIN[t] || (A.zal && A.zal.OY[t]) || { ic: '🎮', nom: t, izoh: '' };
 const nomi = (tur, b) => tur === 'poyga' && b.dunyo === 'orol' ? '🦄 Parvoz poygasi' : ozt(tur).ic + ' ' + ozt(tur).nom;
@@ -4560,7 +4596,7 @@ function pickScreen(S0) {
   clearInterval(S0.iv); S0.game = null;
   if (S0.t0 && q <= 0) return finish(false);
   const card = t => { const o = ozt(t), r = Z && Z.st(b).rek[t];
-    return `<button class="zcard${t === last ? ' oxir' : ''}" data-o="${t}"><span class="zi">${Z ? Z.zIcon(t, 50) : o.ic}</span><b>${t === 'poyga' && b.dunyo === 'orol' ? 'Parvoz poygasi' : o.nom}</b><small>${esc(o.izoh)}</small>${r ? `<span class="zr">🏆 ${esc(Z.OY[t].fmt(r.v))}</span>` : ''}</button>`; };
+    return `<button class="zcard${t === last ? ' oxir' : ''}" data-o="${t}"><span class="zi">${/^mt_/.test(t) ? `<span class="zmt">${o.ic}</span>` : Z ? Z.zIcon(t, 50) : o.ic}</span><b>${t === 'poyga' && b.dunyo === 'orol' ? 'Parvoz poygasi' : o.nom}</b><small>${esc(o.izoh)}</small>${r ? `<span class="zr">🏆 ${esc(Z.OY[t].fmt(r.v))}</span>` : ''}</button>`; };
   app.innerHTML = `<div class="wrap play oyin damp"><div class="top"><div class="ttl">🎮 Dam olish vaqti!</div><span class="sp"></span><span class="pill mono" data-tm>⏱ ${A.fmtMS(q)}</span></div>
   <div class="zhero dmh"><div class="zhl"><div class="sm">${S0.raund ? 'Vaqt hali bor ⏱' : "Zo'r ishlading! ✅"}</div><b>${S0.raund ? "Yana bir o'yin?" : 'Dam olish'}</b><div class="sm">Miyang dam olsin — o'yinni o'zing tanla</div></div></div>
   <div class="zgrid damg">${S0.tl.map(card).join('')}</div>
@@ -4588,7 +4624,7 @@ function run(tur) {
   app.innerHTML = `<div class="wrap play oyin"><div class="top"><div class="ttl">${nomi(tur, S0.b)}</div><span class="sp"></span><span class="pill mono" data-tm>${A.fmtMS(qolSek(S0))}</span></div><div id="oy"></div><div id="oyfb"></div>
   <button class="btn ghost oqayt" data-qayt>${S0.zal ? '↩ Zalga' : '↩ Darsga qaytish'}</button></div>`;
   $('[data-qayt]').onclick = () => finish(true);
-  S0.game = GAME[tur]($('#oy'), S0);
+  S0.game = (GAME[tur] || (A.mantiq && /^mt_/.test(tur) ? A.mantiq.dam(tur) : GAME.poyga))($('#oy'), S0);
   S0.iv = setInterval(() => tick(S0), 250);
 }
 function tick(S0) {
@@ -5840,7 +5876,7 @@ function tolov(b, narx, nom, ok, o) {
 /* ---------- 🛒 DO'KON (bola ekrani) ---------- */
 let TAB = 'sovga', KT = null, TV = null;
 function screenDokon(b) {
-  if (yoq()) return A.go('uy'); A.theme(b.dunyo); const p = st(b), K = KAT(b), orol = b.dunyo === 'orol';
+  if (yoq()) return A.go('uy'); if (b.dunyo === 'garaj' && A.avto && TAB === 'tun') TAB = 'sovga'; A.theme(b.dunyo); const p = st(b), K = KAT(b), orol = b.dunyo === 'orol';
   if (!KT || !K[KT]) KT = Object.keys(K)[0];
   const tg = sovgalar(b), kut = p.xarid.filter(x => x.holat === 'kutish');
   let body = '';
@@ -5866,7 +5902,7 @@ function screenDokon(b) {
   <div class="dtabs"><button class="btn${TAB === 'sovga' ? '' : ' ghost'}" data-tab="sovga">🎁 Sovg'alar</button><button class="btn${TAB === 'tun' ? '' : ' ghost'}" data-tab="tun">${orol ? '🦄 Salon' : '🏎️ Tuning'}</button></div>${body}</div>`;
   const again = () => screenDokon(b);
   $('[data-x]').onclick = () => { TV = null; A.go('uy'); };
-  $$('[data-tab]').forEach(x => x.onclick = () => { TAB = x.dataset.tab; TV = null; again(); });
+  $$('[data-tab]').forEach(x => x.onclick = () => { if (x.dataset.tab === 'tun' && b.dunyo === 'garaj' && A.avto) return A.go('avto'); TAB = x.dataset.tab; TV = null; again(); });   /* 🏎️ 0.10.0: tuning — Garajda */
   $$('[data-kt]').forEach(x => x.onclick = () => { KT = x.dataset.kt; TV = null; again(); });
   $$('[data-tv]').forEach(x => x.onclick = () => { TV = +x.dataset.tv; FX.play('bosish'); again(); });
   $$('[data-mq]').forEach(x => x.onclick = () => { p.maqsad = p.maqsad === x.dataset.mq ? null : x.dataset.mq; A.save(true); again(); });
@@ -6886,7 +6922,7 @@ const B = {
 const yoq = () => A.TEZ && !A.yangiSinov;
 let TUR_T = 0;   /* 0.9.2: tur taymeri — oxirgi chizishdan 700 ms keyin bir marta (avval 1,6 s bloklash edi: tez qaytilsa tur umuman chiqmay qolardi) */
 function bolimOf(h) { h = String(h || ''); return /^daraxt/.test(h) ? 'daraxt' : h === 'estafeta' ? 'estafeta' : h === 'qiyin3' ? 'q3' : /^mashq/.test(h) ? 'mashq' : h === 'garaj' ? 'garaj' : h === 'dokon' ? 'dokon' : /^zal/.test(h) ? 'zal' : h === 'bozor' ? 'bozor'
-  : h === 'hikoya' || h === 'albom' || h === 'ovozim' || h === 'maqsad' ? h : h === 'viktorina' ? 'vikt' : /^sovga/.test(h) ? 'sovga' : h === 'rassom' ? 'rassom' : null; }
+  : h === 'hikoya' || h === 'albom' || h === 'ovozim' || h === 'maqsad' ? h : h === 'viktorina' ? 'vikt' : /^sovga/.test(h) ? 'sovga' : h === 'rassom' ? 'rassom' : h === 'avto' ? 'avto' : /^mantiq/.test(h) ? 'mantiq' : null; }
 /* router: bo'limga kirildi (kuniga bir marta yoziladi) */
 function kordi(b, h) { const id = bolimOf(h); if (!id || !b) return; const T = A.todayKey(), k = b.kor && typeof b.kor === 'object' ? b.kor : (b.kor = {}); if (k[id] === T) return; k[id] = T; A.save(); }
 /* versiya: birinchi ko'rishda — boshlang'ich holat (eski bo'limlar «yaqinda ko'rilgan» deb olinadi — bir kunda eslatmalar yog'ilmasin) */
@@ -7003,10 +7039,7 @@ const K = [
   ['k_krossovka', 'kiy', 'Krossovka', '👟', 1, { s: 'oyoq' }], ['k_etik', 'kiy', 'Etik', '🥾', 2, { s: 'oyoq' }], ['k_qishetik', 'kiy', 'Qishki etik', '👢', 2, { j: 'q', s: 'oyoq' }],
   ['k_ryukzak', 'kiy', 'Ryukzak', '🎒', 1, { s: 'aks' }], ['k_sharf', 'kiy', 'Sharf', '🧣', 1, { s: 'aks' }], ['k_qolqop', 'kiy', "Qo'lqop", '🧤', 1, { s: 'aks' }], ['k_kozoynak', 'kiy', "Ko'zoynak", '🕶️', 2, { s: 'aks' }],
   /* 🚗 ulovlar — garajda realistik mashina (ART.car), orolda uchar ot (ART.pegasus); tanlangani yo'l, sahna va poygada ko'rinadi */
-  ['u_kupe', 'ulov', 'Qizil sport kupe', '🏎️', 1, { w: 'garaj', dd: { kuzov: 1, rang: 5, gildirak: 1 } }], ['u_drift', 'ulov', 'Yashil drift mashinasi', '🏎️', 1, { w: 'garaj', dd: { kuzov: 1, rang: 2, stiker: 2, shina: 2 } }],
-  ['u_sariq', 'ulov', 'Sariq kupe', '🏎️', 1, { w: 'garaj', dd: { kuzov: 1, rang: 3, stiker: 1, fara: 1 } }], ['u_super', 'ulov', "Ko'k superkar", '🏎️', 2, { w: 'garaj', dd: { kuzov: 2, rang: 0, gildirak: 2, neon: 1, spoyler: 1 } }],
-  ['u_marvarid', 'ulov', 'Oq marvarid superkar', '🏎️', 2, { w: 'garaj', dd: { kuzov: 2, rang: 7, gildirak: 2, fara: 2, bamper: 1 } }], ['u_poyga', 'ulov', 'Olovrang poyga mashinasi', '🏎️', 2, { w: 'garaj', dd: { kuzov: 2, rang: 1, stiker: 3, spoyler: 2, nitro: 1 } }],
-  ['u_grafit', 'ulov', 'Grafit giperkar', '🏎️', 3, { w: 'garaj', dd: { kuzov: 3, rang: 6, neon: 3, gildirak: 3, nitro: 2, motor: 2 } }], ['u_binafsha', 'ulov', 'Binafsha giperkar', '🏎️', 3, { w: 'garaj', dd: { kuzov: 3, rang: 4, neon: 2, stiker: 3, spoyler: 3, gildirak: 3 } }],
+  /* garaj mashinalari — 🏎️ Avtosalon (A.avto): qism yig'ib ochiladi, ⭐/so'm bilan tuning */
   ['u_kamalak', 'ulov', 'Kamalak yolli pegas', '🦄', 1, { w: 'orol', dd: { yol: 2 } }], ['u_lavanda', 'ulov', 'Lavanda pegas', '🦄', 1, { w: 'orol', dd: { yol: 1, kokil: 2 } }],
   ['u_kristall', 'ulov', 'Kristall qanotli pegas', '🦄', 2, { w: 'orol', dd: { qanot: 1, taqa: 2 } }], ['u_oltinyol', 'ulov', 'Oltin yolli pegas', '🦄', 2, { w: 'orol', dd: { yol: 3, taqa: 1 } }],
   ['u_malika', 'ulov', 'Tojli malika pegasi', '🦄', 3, { w: 'orol', dd: { toj: 2, qanot: 2, yol: 2, kokil: 1 } }], ['u_osmon', 'ulov', 'Osmon pegasi', '🦄', 3, { w: 'orol', dd: { qanot: 2, toj: 1, yol: 3, taqa: 2 } }],
@@ -7071,7 +7104,9 @@ const XTRA = {
   x_ovq: b => ({ id: 'x_ovq', t: 'x', nom: 'Jonivor ovqati ×3', ic: '🍎', d: 1 }),
   x_yul: (b, d) => ({ id: 'x_yul' + d, t: 'x', nom: `+${d * 10} yulduz`, ic: '⭐', d })
 };
-const xOf = (b, id) => id === 'x_ovq' ? XTRA.x_ovq(b) : /^x_yul\d$/.test(id) ? XTRA.x_yul(b, +id.slice(5)) : null;
+XTRA.x_qism = () => ({ id: 'x_qism', t: 'x', nom: '🔩 Mashina qismi ×2', ic: '🔩', d: 2 });
+XTRA.x_tun = () => ({ id: 'x_tun', t: 'x', nom: '+15 ⭐ tuning uchun', ic: '🏎️', d: 2 });
+const xOf = (b, id) => id === 'x_ovq' ? XTRA.x_ovq(b) : id === 'x_qism' ? XTRA.x_qism() : id === 'x_tun' ? XTRA.x_tun() : /^x_yul\d$/.test(id) ? XTRA.x_yul(b, +id.slice(5)) : null;
 const itOf = (b, id) => KAT[id] || xOf(b, id);
 function tanlov(b, kalit, d) {
   const v = st(b); if (Array.isArray(v.tq[kalit]) && v.tq[kalit].length === 3) return v.tq[kalit].map(id => itOf(b, id)).filter(Boolean);
@@ -7080,13 +7115,15 @@ function tanlov(b, kalit, d) {
   /* 1 — eng sevimli turidan, keyingilari — boshqa turlardan (xilma-xillik) */
   for (const t of pr) { if (out.length >= 3) break; const c = P.filter(k => k.t === t && !out.includes(k)); if (c.length) out.push(rnd(c)); }
   while (out.length < 3 && P.some(k => !out.includes(k))) out.push(rnd(P.filter(k => !out.includes(k))));
+  /* 🏎️ garaj bolasi (u: «mashinalar tezroq ochilsin, tuning uchun yulduz ko'proq»): 1 buyum + 🔩 qism ×2 + ⭐ tuning */
+  if (b.dunyo === 'garaj' && A.avto) { const s = A.avto.st(b); out.splice(1, 2, s.maq ? XTRA.x_qism() : XTRA.x_yul(b, d), XTRA.x_tun()); while (out.length > 3) out.pop(); }
   if (out.length < 3 && Object.keys(v.jon).length) out.push(XTRA.x_ovq(b));
   while (out.length < 3) out.push(XTRA.x_yul(b, Math.min(3, d + out.length - 1) || 1));
   const ids = out.slice(0, 3).map(k => k.id); v.tq[kalit] = ids; A.save(); return ids.map(id => itOf(b, id));
 }
 function olish(b, kalit, id, manba) {
   const v = st(b); if (v.ol[kalit]) return null; const it = itOf(b, id); if (!it) return null;
-  if (it.t === 'x') { if (id === 'x_ovq') v.ovq += 3; else A.addStar(b, it.d * 10); A.pushLog(b.id, { t: 'sovga', ts: Date.now(), bola: b.id, tur: manba, id }); }
+  if (it.t === 'x') { if (id === 'x_ovq') v.ovq += 3; else if (id === 'x_qism') { if (A.avto) A.avto.qism(b, 2, 'sovga'); } else if (id === 'x_tun') A.addStar(b, 15); else A.addStar(b, it.d * 10); A.pushLog(b.id, { t: 'sovga', ts: Date.now(), bola: b.id, tur: manba, id }); }
   else ber(b, id, manba);
   v.ol[kalit] = id; delete v.tq[kalit]; tozala(v); A.save(true); return it;
 }
@@ -7129,8 +7166,8 @@ function bosqich(b, m, davom) {
   const n = bq + 1, kalit = m.sana + ':' + n;
   if (st(b).ol[kalit]) { m.bq = n; A.save(); return false; }
   A.app.innerHTML = `<div class="wrap kidw svbos"><div class="svbs">${[1, 2, 3].map(i => `<span class="${i <= n ? 'ok' : ''}">${i <= n ? '✅' : i === 3 ? '🏁' : '🎁'} ${i}-bosqich</span>`).join('')}</div>${A.worldScene(b, true)}<div class="bubble">Zo'r! ${n}-bosqich tugadi — sovg'angni tanla!</div></div>`;
-  oyna(b, { kalit, d: 1, manba: 'bosqich', ic: n === 1 ? '🎁' : '🎀', sarlavha: `🎉 ${n}-bosqich tugadi!`, izoh: n === 1 ? "3 ta sovg'adan birini tanla. Missiya oxirida — KATTA sovg'a!" : "Yana bitta bosqich — keyin KATTA sovg'a!", ovq: 1,
-    keyinOl: () => { m.bq = n; A.save(true); }, keyin: () => A.go('uy'),
+  oyna(b, { kalit, d: 1, manba: 'bosqich', ic: n === 1 ? '🎁' : '🎀', sarlavha: `🎉 ${n}-bosqich tugadi!`, izoh: (n === 1 ? "3 ta sovg'adan birini tanla. Missiya oxirida — KATTA sovg'a!" : "Yana bitta bosqich — keyin KATTA sovg'a!") + (b.dunyo === 'garaj' && A.avto ? ' (+🔩 1 mashina qismi)' : ''), ovq: 1,
+    keyinOl: () => { m.bq = n; if (A.avto && b.dunyo === 'garaj') A.avto.qism(b, 1, 'bosqich'); A.save(true); }, keyin: () => A.go('uy'),
     tugmalar: [['▶ Davom etamiz', () => davom()], ['🏠 Keyinroq', () => A.go('uy')]] });
   return true;
 }
@@ -7152,7 +7189,7 @@ function kutOch(b, keyin) {
   oyna(b, Object.assign({}, o, { keyin: keyin || null, tugmalar: [[L.length > 1 ? "🎁 Yana bir sovg'a!" : '👀 Sovg\'alarimni ko\'rish', it => { if (L.length > 1) kutOch(b, keyin); else A.go('sovga-' + (it.t === 'x' ? 'jon' : tabOf(it.t))); }], ['Yopish', () => { if (location.hash === '#uy' || location.hash === '') A.render(); }]] }));
   return true;
 }
-function natija(b) { if (yoqSinov()) return; setTimeout(() => { if (location.hash === '#natija' && !$('.scrim')) kutOch(b, () => {}); }, 900); }
+function natija(b) { if (A.avto && b.missiya && b.missiya.done) A.avto.missiyaQism(b); if (yoqSinov()) return; setTimeout(() => { if (location.hash === '#natija' && !$('.scrim')) kutOch(b, () => {}); }, 900); }
 
 /* ================= ⭐ / 💵 BILAN SOTIB OLISH ================= */
 function sotib(b, id, pul, tayyor) {
@@ -7193,7 +7230,7 @@ function amal(b, id, tur) {
 }
 
 /* ================= EKRAN: 🎁 SOVG'ALARIM ================= */
-const TABS = [['jon', '🐾', 'Jonivor'], ['xona', '🧸', 'Xonam'], ['kiy', '👕', 'Kiyinish'], ['ulov', '🚗', 'Ulovlar'], ['dokon', '🛍', "Do'kon"]];
+const TABS = [['jon', '🐾', 'Jonivor'], ['xona', '🧸', 'Xonam'], ['kiy', '👕', 'Kiyinish'], ['ulov', '🚗', 'Ulovlar'], ['dokon', '🛍', "Do'kon"]];   /* garaj bolasida 🚗 → 🏎️ Avtosalon */
 const tabOf = t => t === 'oyin' ? 'xona' : t === 'ras' ? 'dokon' : t;
 let DT = 'jon';   /* do'kon turi */
 function top(b, ttl, orqa) {
@@ -7207,7 +7244,7 @@ function screen(b, tab) {
   if (tab === 'jon') body = jonHTML(b);
   else if (tab === 'xona') body = xonaHTML(b);
   else if (tab === 'kiy') body = kiyHTML(b);
-  else if (tab === 'ulov') body = ulovHTML(b);
+  else if (tab === 'ulov') { if (b.dunyo === 'garaj' && A.avto) return A.avto.garaj(b); body = ulovHTML(b); }
   else body = dokonHTML(b);
   const nEga = Object.keys(v.ega).length;
   app.innerHTML = `<div class="wrap kidw svw">${top(b, "🎁 Sovg'alarim")}
@@ -7323,28 +7360,29 @@ function dokonBind(b, again) {
 
 /* ================= UY EKRANI ================= */
 function uyHTML(b) {
-  const s = on(b), r = A.bolimOn(b, 'rassom'); if (!s && !r) return '';
+  const s = on(b), r = A.bolimOn(b, 'rassom'); if (!s && !r && !A.bolimOn(b, 'mantiq')) return '';
   const v = st(b), kt = s ? kutilgan(b) : [], ids = Object.keys(v.jon).filter(id => KAT[id]), jf = ids.includes(v.jf) ? v.jf : ids[0], och = ochmi(b), n = Object.keys(v.ega).length;
   return `<div class="svh">${s ? `<button class="svt${kt.length || och ? ' hot' : ''}" data-svgo><span class="svti">${jf ? KAT[jf].ic : '🎁'}</span><b>Sovg'alarim</b><small>${kt.length ? "🎁 Sovg'ang kutyapti!" : och ? '🍎 Jonivoring och qoldi' : n ? `${n} ta sovg'a · ⭐ ${yul(b)}` : "Jonivor, o'yinchoq, kiyim"}</small></button>` : ''}
-    ${r ? `<button class="svt" data-rassom><span class="svti">🎨</span><b>Rassom</b><small>${v.rasN ? `🖼 ${v.rasN} ta rasm` : "Chiz va bo'ya"}</small></button>` : ''}</div>`;
+    ${r ? `<button class="svt" data-rassom><span class="svti">🎨</span><b>Rassom</b><small>${v.rasN ? `🖼 ${v.rasN} ta rasm` : "Chiz va bo'ya"}</small></button>` : ''}${A.avto ? A.avto.uyHTML(b) : ''}</div>`;
 }
 function uyBind(b) {
   const g = $('[data-svgo]'); if (g) g.onclick = () => { play('bosish'); if (kutilgan(b).length) return kutOch(b, () => A.render()); A.go('sovga'); };
   const r = $('[data-rassom]'); if (r) r.onclick = () => { play('bosish'); A.go('rassom'); };
+  if (A.avto) A.avto.uyBind(b);
 }
 
 /* ================= ROUTER YORDAMCHISI (ota-ona o'chirgan bo'lim) ================= */
 function bolimOfH(h) {
   h = String(h || ''); if (h === 'arena') return 'arena'; if (/^zal/.test(h)) return 'zal'; if (h === 'bozor') return 'bozor'; if (h === 'dokon') return 'dokon'; if (h === 'garaj') return 'garaj';
-  if (/^daraxt/.test(h)) return 'daraxt'; if (h === 'hikoya' || h === 'albom' || h === 'ovozim') return h; if (h === 'viktorina') return 'vikt'; if (/^sovga/.test(h)) return 'sovga'; if (h === 'rassom') return 'rassom'; return null;
+  if (/^daraxt/.test(h)) return 'daraxt'; if (h === 'hikoya' || h === 'albom' || h === 'ovozim') return h; if (h === 'viktorina') return 'vikt'; if (/^sovga/.test(h) || h === 'avto') return 'sovga'; if (h === 'rassom') return 'rassom'; if (/^mantiq/.test(h)) return 'mantiq'; return null;
 }
-const BOLIMLAR = [['sovga', "🎁 Sovg'alarim (jonivor, kiyim, do'kon)"], ['rassom', '🎨 Rassom studiyasi'], ['arena', '⚔️ Arena'], ['daraxt', '🌳 Bilim daraxti'], ['hikoya', '📖 Hikoya'], ['albom', '🃏 Albom'],
+const BOLIMLAR = [['sovga', "🎁 Sovg'alarim (jonivor, kiyim, garaj, do'kon)"], ['mantiq', "🧠 Mantiq o'yinlari"], ['rassom', '🎨 Rassom studiyasi'], ['arena', '⚔️ Arena'], ['daraxt', '🌳 Bilim daraxti'], ['hikoya', '📖 Hikoya'], ['albom', '🃏 Albom'],
   ['ovozim', '🎤 Ovozim'], ['vikt', '👨‍👩‍👧 Viktorina'], ['zal', "🎮 O'yinlar zali"], ['garaj', '🔧 Garaj'], ['dokon', "🛒 So'm do'koni"], ['bozor', '🧺 Oila bozori']];
 const FANLAR = [['mat', ''], ['til', ''], ['yoz', 'maktabgacha'], ['en', ''], ['mant', ''], ['ar', ''], ['oqish', '1-sinfdan'], ['dunyo', 'kunlik kashfiyot']];
 
 /* ================= 🚗 ulov — mashina/uchar ot bezagi (A.bezak ustidan) ================= */
 const aslBezak = A.bezak;
-A.bezak = b => { const d = aslBezak ? aslBezak(b) : ART.decor(b.detal), u = ulovOl(b); return u ? Object.assign({}, d, u.dd) : d; };
+A.bezak = b => { const d = aslBezak ? aslBezak(b) : ART.decor(b.detal); if (b && b.dunyo === 'garaj' && A.avto) return Object.assign({}, d, A.avto.decor(b)); const u = ulovOl(b); return u ? Object.assign({}, d, u.dd) : d; };
 
 /* ================= 🎨 RASSOM STUDIYASI ================= */
 const ASOS_RANG = ['#1B1B1B', '#E53935', '#FB8C00', '#FDD835', '#43A047', '#1E88E5', '#FFFFFF'];
@@ -7536,9 +7574,13 @@ if (A.yangilik) {
     sovga: { ic: '🎁', nom: "Sovg'alarim", sel: '[data-svgo]', h: 'sovga', kun: 2, tur: "Missiya endi 3 bosqich — har bosqichdan keyin 3 ta sovg'adan birini o'zing tanlaysan: jonivor, o'yinchoq, kiyim, mashina! Do'kondan ⭐ yoki so'mga ham olasan.",
       xabar(b) { if (ochmi(b)) return '🍎 Jonivoring qorni ochdi — borib boq!'; const n = yul(b), k = K.filter(x => mos(b, x) && !ega(b, x.id) && narx(x) <= n)[0]; return k ? `⭐ ${n} yig'ding — «${esc(k.nom)}» ga yetadi!` : "Sovg'alaringni ko'rib chiq"; } },
     rassom: { ic: '🎨', nom: 'Rassom', sel: '[data-rassom]', h: 'rassom', kun: 3, tur: "Rasm chiz, raqamli bo'yashda misol yechib rasm bo'ya. Rasmlaring galereyaga tushadi — dadang-oyingga ko'rsat!",
-      xabar: () => "Yangi rasm chizib, dadang-oyingga ko'rsat — olqish olasan!" }
+      xabar: () => "Yangi rasm chizib, dadang-oyingga ko'rsat — olqish olasan!" },
+    avto: { ic: '🏎️', nom: 'Avtosalon', sel: '[data-avgo]', h: 'avto', kun: 2, tur: "Sening sport sedaning! Tuning qil: disk, bo'yoq, spoyler, neon. Missiya bosqichlarida qism yig'ib, yangi mashinalarni och!",
+      xabar(b) { if (!A.avto) return null; const s = A.avto.st(b); return s.maq ? `🔩 ${s.q}/${A.avto.MODEL[s.maq].qism} — «${esc(A.avto.MODEL[s.maq].nom)}» ga oz qoldi!` : 'Mashinangni tuning qil!'; } },
+    mantiq: { ic: '🧠', nom: "Mantiq o'yinlari", sel: '[data-mtgo]', h: 'mantiq', kun: 3, tur: "7 xil mantiq o'yini: naqsh, chiroqlar, robot yo'li, minora, tarozi, sudoku. Har yutganingda sal qiyinroq bo'ladi!",
+      xabar: () => "Mantiq o'yinida keyingi darajani ochib ko'r!" }
   });
-  A.yangilik.VER_YANGI['0.10.0'] = ['sovga', 'rassom'];
+  A.yangilik.VER_YANGI['0.10.0'] = ['sovga', 'avto', 'mantiq', 'rassom'];
 }
 
 /* ================= CSS ================= */
@@ -7594,6 +7636,464 @@ const css = `
 if (typeof document !== 'undefined') { const s = document.createElement('style'); s.textContent = css; document.head.appendChild(s); }
 A.sv = { K, KAT, TUR, st, yul, ega, ber, tanlov, olish, oyna, bosqich, yolBelgi, kutilgan, kutOch, natija, sotib, ovqSot, amal, jh, kayfiyat, ochmi, osish, screen, uyHTML, uyBind, bolimOfH, BOLIMLAR, FANLAR,
   ulovOl, rassom, ifoda, RR, rasmlar, rasmSaqla, toldir, kj, mos, narx, OLOV_SOV, qahramon };
+})(typeof window !== 'undefined' ? window : globalThis);
+</script>
+<script>
+/* Bilimjon — 🏎️ AVTOSALON (realistik mashinalar, qism yig'ib ochish, tuning) va 🧠 MANTIQ O'YINLARI (0.10.0).
+   U (14.11 21:37): «mashina, qizlarning oti, o'yinchoqlar — maksimal ideal, realistik dizayn. Abubakrga sport sedan (NFS ruhida) — o'shani tuning qiladi,
+   yana 3–4 mashina; har darsdan keyin mashinaning bo'laklarini yig'ib ochsin, tezroq, maqsad qo'yib. Tuning uchun yulduz yoki pul ko'proq bersin.
+   Hamma bolaga mantiqni kuchaytiradigan har xil o'yinlar: ikkinchi marta o'ynaganda sal qiyinroq bo'lsin; ovoz bilan tushuntirsin — Abubakr yoshidagilarga ham».
+   Haqiqiy brend (nom, logotip, kuzov nusxasi) YO'Q — o'zimizning original modellarimiz. Mashina SVG: viewBox 0 0 200 110 (poyga va zal shu nisbatni kutadi).
+   b.avto = { a: faol model, ega{model:1}, t{model:{rang,disk,spoyler,kit,vinil,neon,tonir,past,egzoz,fara}}, tq{model:{kat:[v…]}} (sotib olingan), maq, q (maqsad qismlari), jami, yangi, mk{sana:1} }
+   b.mt = { o'yin: { lv, n, x } } — mantiq o'yinlari darajasi. Ikkalasi ham bolaDefaults'ga QO'SHILMAGAN. */
+(function (G) {
+'use strict';
+const BJ = G.BJ, A = BJ.A, FX = BJ.fx, ART = BJ.art;
+const { $, $$, esc, toast, sheet, closeSheets, app } = A;
+const S = () => A.S();
+const T = () => A.todayKey();
+const play = n => { try { FX.play(n); } catch (e) {} };
+const rnd = n => Math.floor(Math.random() * n), pick = a => a[rnd(a.length)];
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = rnd(i + 1); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const pulBor = () => !!A.pul && S().sozlama.pul !== false;
+const yul = b => A.sv ? A.sv.yul(b) : (+b.yulduz || 0);
+let UID = 0; const uid = p => p + (++UID).toString(36) + rnd(1e4).toString(36);
+const shade = (c, k) => ART.shade ? ART.shade(c, k) : c;
+
+/* ================= 🏎️ MODELLAR (original dizayn) ================= */
+/* w: [orqa g'ildirak x, old x, markaz y, shina r, disk r]; ar — arka radiusi; ch — arka vatarı (y); sp — spoyler joyi [x, y, uzunlik]; ex — egzoz [x, y] */
+const MODEL = {
+  sedan: { nom: 'S7 sport sedan', ic: '🚘', qism: 0, rang: 8, w: [46, 156, 92, 14.2, 9.6], ar: 20, ch: 100,
+    body: 'M8 68C8 63 12 60 20 59L52 57C61 46 70 39 82 37L110 36C119 37 127 44 138 54C152 56 170 58 183 62C191 64 195 68 195 74L195 92C195 97 192 100 186 100L174.33 100A20 20 0 1 0 137.67 100L64.33 100A20 20 0 1 0 27.67 100L16 100C11 100 8 97 8 92Z',
+    glass: 'M57 57C65 47 72 41 83 40L109 39C116 40 122 45 131 54Z', pil: [[94, 39, 4, 17]], seam: [[60, 58, 63, 89], [99, 56, 100, 89], [136, 55, 134, 88]], hand: [[72, 64], [110, 64]],
+    mir: 'M126 52L134 50L135 55L127 56Z', hl: 'M180 63L193 68L193 72L182 69Z', tl: 'M9 64L18 62L19 68L9 70Z', sh: 'M14 70C60 69 140 70 192 72', sp: [10, 59, 26], ex: [14, 97], nose: 195 },
+  kupe: { nom: 'GT kupe', ic: '🏎️', qism: 6, rang: 4, w: [46, 156, 92, 14.2, 10], ar: 20, ch: 100,
+    body: 'M8 70C8 65 12 62 20 61L46 60C60 47 74 41 90 40L108 40C120 41 130 47 142 56C156 58 172 60 185 64C192 66 196 70 196 76L196 92C196 97 193 100 187 100L174.33 100A20 20 0 1 0 137.67 100L64.33 100A20 20 0 1 0 27.67 100L16 100C11 100 8 97 8 92Z',
+    glass: 'M54 59C64 49 76 44 91 43L107 43C117 44 125 49 134 56Z', pil: [[90, 43, 4, 15]], seam: [[92, 58, 94, 89], [137, 57, 135, 88]], hand: [[100, 65]],
+    mir: 'M130 54L138 52L139 57L131 58Z', hl: 'M182 65L195 70L195 74L184 71Z', tl: 'M9 66L18 64L19 70L9 72Z', sh: 'M14 72C60 71 140 72 193 74', sp: [10, 61, 26], ex: [14, 97], nose: 196 },
+  jip: { nom: 'Terra jip', ic: '🚙', qism: 8, rang: 7, w: [44, 158, 88, 17, 11], ar: 22, ch: 95,
+    body: 'M8 58C8 52 11 48 18 47L24 46C30 30 36 24 48 23L118 22C126 22 132 26 140 40L150 47C166 49 182 52 190 56C195 58 196 62 196 68L196 87C196 92 193 95 187 95L178.86 95A22 22 0 1 0 137.14 95L64.86 95A22 22 0 1 0 23.14 95L16 95C11 95 8 92 8 87Z',
+    glass: 'M30 46C34 32 39 27 50 26L116 25C122 25 127 29 133 40L138 46Z', pil: [[63, 26, 4, 20], [98, 25, 4, 21]], seam: [[66, 48, 66, 85], [100, 48, 100, 85], [138, 47, 137, 85]], hand: [[76, 54], [110, 54]],
+    mir: 'M136 42L145 40L146 46L137 47Z', hl: 'M183 54L195 58L195 63L184 60Z', tl: 'M9 52L16 50L17 58L9 60Z', sh: 'M12 60C60 59 140 60 192 62', sp: [24, 23, 22], ex: [16, 92], nose: 196, rels: 1 },
+  rally: { nom: 'Rally hetchbek', ic: '🚗', qism: 10, rang: 0, vinil: 4, w: [42, 152, 91, 15, 10], ar: 20, ch: 98,
+    body: 'M10 52C10 46 14 42 22 40L32 39C40 32 48 30 60 30L104 30C114 31 122 38 134 50C148 52 166 56 180 60C188 62 193 66 193 72L193 90C193 95 190 98 184 98L170.73 98A20 20 0 1 0 133.27 98L60.73 98A20 20 0 1 0 23.27 98L17 98C12 98 9 95 9 90Z',
+    glass: 'M30 46L36 37C44 34 50 33 62 33L103 33C111 34 117 40 126 49Z', pil: [[58, 33, 4, 14], [94, 33, 4, 16]], seam: [[61, 48, 62, 88], [97, 48, 98, 88], [131, 50, 130, 87]], hand: [[72, 56], [106, 56]],
+    mir: 'M124 47L132 45L133 51L125 52Z', hl: 'M176 59L191 64L191 69L178 65Z', tl: 'M10 50L16 49L16 58L10 59Z', sh: 'M14 62C60 61 140 62 190 64', sp: [12, 39, 24], ex: [16, 95], nose: 193, wide: 1 },
+  super: { nom: 'Strela superkar', ic: '🏎️', qism: 14, rang: 6, w: [48, 158, 93, 14, 10.5], ar: 19, ch: 100,
+    body: 'M6 76C6 70 10 66 18 64L40 61C56 52 70 46 86 45L106 45C118 46 128 52 140 60C156 62 174 66 188 72C194 75 197 78 197 82L197 92C197 97 194 100 188 100L175.66 100A19 19 0 1 0 140.34 100L65.66 100A19 19 0 1 0 30.34 100L14 100C9 100 6 97 6 92Z',
+    glass: 'M64 58C72 51 80 48 88 48L105 48C114 49 121 53 130 59Z', pil: [], seam: [[92, 60, 94, 90], [132, 61, 131, 89]], hand: [],
+    mir: 'M128 57L136 55L137 60L129 61Z', hl: 'M183 70L196 77L195 80L184 75Z', tl: 'M7 70L20 66L21 70L7 74Z', sh: 'M12 76C60 72 140 72 194 79', sp: [8, 63, 26], ex: [12, 97], nose: 197, intake: 'M60 66L86 65L80 79L58 77Z' }
+};
+const TARTIB = ['sedan', 'kupe', 'jip', 'rally', 'super'];
+const RANG = [["Qor oq", '#E8ECF1'], ['Kumush', '#A7B2BD'], ['Grafit', '#3A4049'], ['Qora', '#16181B'], ['Qizil', '#C8102E'], ['Olovrang', '#F26B1D'], ['Sariq', '#F2C200'], ['Yashil', '#1F8A4C'], ["Ko'k", '#1E5BD0'], ['Moviy', '#16A6C9'], ['Binafsha', '#6A3FC8'], ['Oltin', '#C9A227']];
+const NEON = [null, '#2F9BFF', '#FF3FB0', '#2BE36B', '#FFC233'];
+/* tuning: [nom, ⭐ narxi]; so'm = narxK(⭐ × 200) */
+const TUN = {
+  rang: { ic: '🎨', nom: "Bo'yoq", v: RANG.map(([n], i) => [n, i === 11 ? 30 : 15]) },
+  disk: { ic: '🛞', nom: 'Disklar', v: [['Standart', 0], ["Ko'p parrakli", 15], ['Qora sport', 20], ["Oltin to'r", 30], ['Neon turbina', 40]] },
+  spoyler: { ic: '🪽', nom: 'Spoyler', v: [["Yo'q", 0], ['Kichik lab', 10], ['Sport qanot', 20], ['GT qanot', 35]] },
+  kit: { ic: '🛠️', nom: "Kuzov to'plami", v: [['Zavod', 0], ['Sport yubka', 20], ['Keng kuzov', 35]] },
+  vinil: { ic: '⚡', nom: 'Vinil', v: [['Toza', 0], ['Poyga chiziqlari', 15], ['Alanga', 25], ['Chaqmoq', 25], ['Poyga raqami', 15], ['Sport bloklar', 20]] },
+  neon: { ic: '💡', nom: 'Neon', v: [["Yo'q", 0], ["Ko'k neon", 20], ['Pushti neon', 20], ['Yashil neon', 20], ['Oltin neon', 25]] },
+  tonir: { ic: '🕶️', nom: 'Tonirovka', v: [['Ochiq', 0], ["To'q", 10], ['Qora', 15]] },
+  past: { ic: '⬇️', nom: 'Pasaytirish', v: [['Zavod', 0], ['Pastroq', 15], ['Juda past', 25]] },
+  egzoz: { ic: '💨', nom: 'Egzoz', v: [['Bitta', 0], ["Qo'sh", 15], ['Katta xrom', 25]] },
+  fara: { ic: '🔦', nom: 'Faralar', v: [['Oddiy', 0], ['LED', 15], ['Ksenon halqa', 25]] }
+};
+const QISM_NOM = ["G'ildirak", "G'ildirak", 'Eshik', 'Kapot', 'Motor', 'Faralar', "G'ildirak", "G'ildirak", "O'rindiq", 'Rul', 'Bagaj', 'Oyna', 'Egzoz', 'Spoyler'];
+const QISM_IC = ['🛞', '🛞', '🚪', '🔧', '⚙️', '💡', '🛞', '🛞', '💺', '🎡', '🧳', '🪟', '💨', '🪽'];
+
+/* ================= 🖌 REALISTIK MASHINA SVG ================= */
+function wheel(cx, cy, R, r, disk, id) {
+  const sp = (n, w, c, len) => Array.from({ length: n }, (_, i) => `<rect x="${-w / 2}" y="${-len}" width="${w}" height="${len}" rx="${w / 2}" fill="${c}" transform="rotate(${i * 360 / n})"/>`).join('');
+  let rim = '';
+  if (disk === 1) rim = `<circle r="${r}" fill="url(#${id}rs)"/><circle r="${r * .82}" fill="#5D6670"/>${sp(10, 1.3, '#DCE2E7', r * .95)}`;
+  else if (disk === 2) rim = `<circle r="${r}" fill="#1E2125"/><circle r="${r * .8}" fill="#0E1012"/>${sp(6, 2.6, '#3B4148', r * .96)}<circle r="${r * .96}" fill="none" stroke="#4A5058" stroke-width=".8"/>`;
+  else if (disk === 3) rim = `<circle r="${r}" fill="url(#${id}rg)"/>${sp(12, .9, '#7A5C10', r * .92)}${Array.from({ length: 12 }, (_, i) => `<circle r="${r * .55}" fill="none" stroke="#E9C55A" stroke-width=".5" transform="rotate(${i * 30}) translate(${r * .35} 0)"/>`).join('')}`;
+  else if (disk === 4) rim = `<circle r="${r}" fill="#0B0F14"/>${Array.from({ length: 7 }, (_, i) => `<path d="M0 0C${r * .3} ${-r * .3} ${r * .6} ${-r * .55} ${r * .95} ${-r * .3}" stroke="#2EE6FF" stroke-width="1.6" fill="none" transform="rotate(${i * 360 / 7})"/>`).join('')}<circle r="${r}" fill="none" stroke="#2EE6FF" stroke-width="1" opacity=".9"/>`;
+  else rim = `<circle r="${r}" fill="url(#${id}rs)"/><circle r="${r * .78}" fill="#6E7882"/>${sp(5, 3.4, '#E3E8EC', r * .96)}`;
+  const cal = disk >= 1 ? `<path d="M${-r * .62} ${-r * .55}A${r * .84} ${r * .84} 0 0 1 ${r * .35} ${-r * .78}" stroke="#D32F2F" stroke-width="${r * .34}" fill="none" stroke-linecap="round"/>` : '';
+  return `<g transform="translate(${cx} ${cy})"><circle r="${R}" fill="url(#${id}ti)"/><circle r="${R - 1.6}" fill="none" stroke="#3C3F44" stroke-width="1"/><path d="M${-R * .72} ${-R * .62}A${R - .8} ${R - .8} 0 0 1 ${R * .3} ${-R * .93}" fill="none" stroke="#fff" stroke-width="1.1" opacity=".13"/><circle r="${r + .9}" fill="#9AA3AB"/>${cal}${rim}<circle r="${r * .22}" fill="#E8ECEF" stroke="#7C858D" stroke-width=".5"/>${disk === 4 ? `<circle r="${R + 1}" fill="none" stroke="#2EE6FF" stroke-width=".6" opacity=".5"/>` : ''}</g>`;
+}
+function carM(d, o) {
+  o = o || {}; const M = MODEL[d.model] || MODEL.sedan, id = uid('m'), t = k => +d[k] || 0;
+  const col = (RANG[t('rang')] || RANG[M.rang])[1], [rx, fx, wy, R, r] = M.w, dy = Math.min(2, t('past')) * 1.6, mx = (rx + fx) / 2, sy = M.ch - 19;
+  const hw = Math.sqrt(M.ar * M.ar - Math.pow(M.ch - wy, 2)), top = Math.min(...(M.body.match(/[\d.]+ [\d.]+/g) || ['0 30']).map(q => +q.split(' ')[1])), shY = +(/M[\d.]+ ([\d.]+)/.exec(M.sh) || [0, 70])[1], hz = Math.max(.2, Math.min(.8, (shY + 1 - top) / (M.ch - top)));
+  const arka = (c, rr) => { const h2 = Math.sqrt(Math.max(1, rr * rr - Math.pow(M.ch - wy, 2))); return `M${c - h2} ${M.ch}A${rr} ${rr} 0 1 1 ${c + h2} ${M.ch}`; };
+  const dark = shade(col, -0.5), lite = shade(col, 0.35), metal = t('rang') === 1 || t('rang') === 11;
+  const tint = [0.12, 0.42, 0.7][Math.min(2, t('tonir'))], ne = NEON[t('neon')];
+  const defs = `<defs><linearGradient id="${id}b" gradientUnits="userSpaceOnUse" x1="0" y1="${top}" x2="0" y2="${M.ch}"><stop offset="0" stop-color="${lite}"/><stop offset="${hz - .06}" stop-color="${shade(col, 0.14)}"/><stop offset="${hz}" stop-color="${shade(col, -0.2)}"/><stop offset="${hz + .03}" stop-color="${col}"/><stop offset=".8" stop-color="${shade(col, -0.08)}"/><stop offset=".9" stop-color="${shade(col, -0.34)}"/><stop offset="1" stop-color="${dark}"/></linearGradient>
+    <linearGradient id="${id}rf" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".45" stop-color="#fff" stop-opacity=".22"/><stop offset=".55" stop-color="#fff" stop-opacity=".05"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+    <linearGradient id="${id}h" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="${metal ? .65 : .5}"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+    <linearGradient id="${id}g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B9CCDD"/><stop offset=".55" stop-color="#4F6578"/><stop offset="1" stop-color="#18222C"/></linearGradient>
+    <linearGradient id="${id}hl" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#C9D3DA"/><stop offset="1" stop-color="#FFFFFF"/></linearGradient>
+    <linearGradient id="${id}tl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF6B6B"/><stop offset="1" stop-color="#9E0E0E"/></linearGradient>
+    <radialGradient id="${id}ti" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#3A3D42"/><stop offset=".75" stop-color="#17191C"/><stop offset="1" stop-color="#0A0B0C"/></radialGradient>
+    <radialGradient id="${id}rs" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".5" stop-color="#C7CED5"/><stop offset="1" stop-color="#7E8892"/></radialGradient>
+    <radialGradient id="${id}rg" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#FFF3C4"/><stop offset=".5" stop-color="#D9AE3C"/><stop offset="1" stop-color="#8A6512"/></radialGradient>
+    <linearGradient id="${id}f" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FF3D00" stop-opacity="0"/><stop offset=".35" stop-color="#FF3D00"/><stop offset=".8" stop-color="#FFB300"/><stop offset="1" stop-color="#FFEB3B"/></linearGradient>
+    <clipPath id="${id}c"><path d="${M.body}"/></clipPath><clipPath id="${id}gc"><path d="${M.glass}"/></clipPath>
+    <filter id="${id}bl" x="-20%" y="-200%" width="140%" height="500%"><feGaussianBlur stdDeviation="3"/></filter><filter id="${id}sb" x="-10%" y="-100%" width="120%" height="300%"><feGaussianBlur stdDeviation="1.6"/></filter></defs>`;
+  const vin = (() => { const v = t('vinil'), wc = t('rang') <= 1 || t('rang') === 6 ? '#1A1A1A' : '#FFFFFF';
+    if (v === 1) return `<path d="M0 ${shY + 5}H200M0 ${shY + 9}H200" stroke="${wc}" stroke-width="2" opacity=".92"/>`;
+    if (v === 2) return `<path d="M${fx + 18} ${sy - 4}C${fx - 4} ${sy - 9} ${fx - 16} ${sy + 2} ${fx - 30} ${sy - 4}C${fx - 40} ${sy - 9} ${fx - 50} ${sy + 3} ${fx - 64} ${sy - 1}C${fx - 52} ${sy + 9} ${fx - 30} ${sy + 6} ${fx - 12} ${sy + 9}C${fx} ${sy + 10} ${fx + 10} ${sy + 6} ${fx + 18} ${sy + 6}Z" fill="url(#${id}f)" opacity=".95"/>`;
+    if (v === 3) return `<path d="M${rx + 6} ${sy + 4}L${mx - 16} ${sy - 4}L${mx - 10} ${sy + 1}L${mx + 18} ${sy - 7}L${mx + 12} ${sy - 1}L${fx - 2} ${sy - 9}L${mx + 22} ${sy + 3}L${mx - 4} ${sy + 9}L${mx - 10} ${sy + 4}Z" fill="#FFD600" stroke="${dark}" stroke-width=".6"/>`;
+    if (v === 4) return `<circle cx="${mx - 4}" cy="${sy + 2}" r="8.5" fill="#FFFFFF" stroke="#111" stroke-width="1"/><text x="${mx - 4}" y="${sy + 6}" font-size="11" font-weight="900" text-anchor="middle" font-family="Arial,sans-serif" fill="#111">7</text>`;
+    if (v === 5) return `<path d="M${rx - 14} ${sy + 12}L${rx + 6} ${sy - 10}H${rx + 16}L${rx - 4} ${sy + 12}ZM${rx + 2} ${sy + 12}L${rx + 22} ${sy - 10}H${rx + 28}L${rx + 8} ${sy + 12}Z" fill="${wc}" opacity=".85"/>`;
+    return ''; })();
+  const kit = (() => { const k = t('kit'); if (!k) return '';
+    const sk = `<path d="M${rx + hw - 1} ${M.ch - 4}H${fx - hw + 1}V${M.ch + .5}H${rx + hw - 1}Z" fill="#14161A"/><path d="M${M.nose - 26} ${M.ch - .5}L${M.nose - 1} ${M.ch - 2.5}L${M.nose} ${M.ch + .8}L${M.nose - 26} ${M.ch + 1.8}Z" fill="#14161A"/>`;
+    if (k === 1) return sk;
+    const fl = (c) => `<path d="${arka(c, M.ar + 2)}" fill="none" stroke="${shade(col, -0.12)}" stroke-width="4"/><path d="${arka(c, M.ar + 3.6)}" fill="none" stroke="${lite}" stroke-width=".7" opacity=".55"/>`;
+    return sk + fl(rx) + fl(fx) + `<path d="M8 ${M.ch - 4}h16v4h-16z" fill="#14161A"/>${[0, 1, 2].map(i => `<path d="M${10 + i * 5} ${M.ch}v3" stroke="#14161A" stroke-width="1.5"/>`).join('')}`; })();
+  const spo = (() => { const s = t('spoyler'), [x, y, L] = M.sp; if (!s) return '';
+    if (s === 1) return `<path d="M${x} ${y + 1}L${x + L} ${y}L${x + 3} ${y - 4}Z" fill="${dark}"/>`;
+    const h = s === 3 ? 12 : 7, w0 = s === 3 ? L + 6 : L, carb = '#1B1D21';
+    return `<path d="M${x + 6} ${y}L${x + 7} ${y - h}M${x + L - 6} ${y}L${x + L - 5} ${y - h}" stroke="${carb}" stroke-width="2"/><path d="M${x - (s === 3 ? 4 : 0)} ${y - h - 1}Q${x + w0 / 2} ${y - h - 4.5} ${x + w0 - (s === 3 ? 4 : 0)} ${y - h - 1}L${x + w0 - (s === 3 ? 4 : 0)} ${y - h + 2}L${x - (s === 3 ? 4 : 0)} ${y - h + 2}Z" fill="${carb}"/><path d="M${x} ${y - h - 2}H${x + w0 - 6}" stroke="#4A4F57" stroke-width=".6"/>${s === 3 ? `<path d="M${x - 5} ${y - h - 4}v8M${x + w0 - 3} ${y - h - 4}v8" stroke="${carb}" stroke-width="2"/>` : ''}`; })();
+  const egz = (() => { const e = t('egzoz'), [x, y] = M.ex, p = (xx, rr) => `<ellipse cx="${xx}" cy="${y}" rx="${rr * 1.6}" ry="${rr}" fill="#C9D0D6" stroke="#59616A" stroke-width=".5"/><ellipse cx="${xx - .5}" cy="${y}" rx="${rr * .9}" ry="${rr * .55}" fill="#22262B"/>`;
+    const fl = o.olov ? `<path d="M${x - 4} ${y}L${x - 22} ${y - 3}L${x - 14} ${y}L${x - 24} ${y + 3}Z" fill="#FF9100" opacity=".9"/>` : '';
+    return fl + (e === 2 ? p(x, 2.6) + p(x + 7, 2.6) : e === 1 ? p(x, 1.8) + p(x + 5, 1.8) : p(x, 1.6)); })();
+  const fara = (() => { const f = t('fara'); let s = `<path d="${M.hl}" fill="url(#${id}hl)" stroke="${shade(col, -0.6)}" stroke-width=".6"/>`;
+    if (f === 1) s += `<path d="${M.hl}" fill="none" stroke="#E1F6FF" stroke-width="1.4" opacity=".95"/>`;
+    if (f === 2) { const m = /M([\d.]+) ([\d.]+)L([\d.]+) ([\d.]+)/.exec(M.hl); const cx = m ? (+m[1] + +m[3]) / 2 + 1 : M.nose - 6, cy = m ? (+m[2] + +m[4]) / 2 + 1.5 : 70; s += `<circle cx="${cx}" cy="${cy}" r="2.2" fill="none" stroke="#BFF0FF" stroke-width="1.1"/><circle cx="${cx}" cy="${cy}" r="5" fill="#9FE7FF" opacity=".35" filter="url(#${id}sb)"/>`; }
+    return s; })();
+  const glassHTML = `<path d="${M.glass}" fill="url(#${id}g)"/><g clip-path="url(#${id}gc)"><path d="${M.glass}" fill="#000" opacity="${tint}"/><path d="M${mx - 40} 60L${mx - 6} 20L${mx + 6} 20L${mx - 28} 60Z" fill="#fff" opacity=".22"/><path d="M${mx - 18} 60L${mx + 12} 20L${mx + 16} 20L${mx - 13} 60Z" fill="#fff" opacity=".14"/></g>${M.pil.map(([x, y, w, h]) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="#101317"/>`).join('')}`;
+  const wells = `<path d="${arka(rx, M.ar)}Z" fill="#0A0B0D"/><path d="${arka(fx, M.ar)}Z" fill="#0A0B0D"/>`;
+  const lip = c => `<path d="${arka(c, M.ar)}" fill="none" stroke="${shade(col, -0.55)}" stroke-width="1.1"/><path d="${arka(c, M.ar + 1)}" fill="none" stroke="${lite}" stroke-width=".5" opacity=".5"/>`;
+  const old = `<rect x="${M.nose - 18}" y="${M.ch - 13}" width="15" height="4.2" rx="2" fill="#0F1114"/><rect x="${M.nose - 17}" y="${M.ch - 12.2}" width="13" height=".7" fill="#9AA4AD"/><circle cx="${M.nose - 5}" cy="${M.ch - 6}" r="1.6" fill="#EEF3F6" stroke="#7D868F" stroke-width=".4"/><rect x="${(M.body.match(/Z/) ? 0 : 0) + 9}" y="${M.ch - 10}" width="6" height="1.4" rx=".7" fill="#B71C1C"/>`;
+  const body = `<g transform="translate(0 ${dy})">${wells}<path d="${M.body}" fill="url(#${id}b)"/>
+    <g clip-path="url(#${id}c)">${vin}<path d="${M.sh}L200 0L0 0Z" fill="url(#${id}h)" opacity=".38"/><path d="${M.sh}" fill="none" stroke="#fff" stroke-width=".9" opacity=".5"/><path d="${M.sh}" fill="none" stroke="#000" stroke-width=".7" opacity=".25" transform="translate(0 1.4)"/><rect x="0" y="${top}" width="200" height="${M.ch - top}" fill="url(#${id}rf)"/><rect x="0" y="${M.ch - 7}" width="200" height="9" fill="#000" opacity=".2"/>${M.intake ? `<path d="${M.intake}" fill="#0E1013"/><path d="${M.intake}" fill="none" stroke="${lite}" stroke-width=".6" opacity=".5"/>` : ''}</g>
+    ${glassHTML}${M.rels ? `<path d="M40 21.5L122 20.5" stroke="#202328" stroke-width="2.2" stroke-linecap="round"/>` : ''}
+    <path d="${M.glass}" fill="none" stroke="#D5DCE2" stroke-width=".9" opacity=".8"/>${M.seam.map(([a, b2, c]) => `<path d="M${a} ${b2}L${c} ${M.ch - 3}" stroke="#000" stroke-opacity=".4" stroke-width=".8"/><path d="M${a + .8} ${b2}L${c + .8} ${M.ch - 3}" stroke="#fff" stroke-opacity=".12" stroke-width=".6"/>`).join('')}${lip(rx)}${lip(fx)}${old}${M.hand.map(([x, y]) => `<rect x="${x}" y="${y}" width="8" height="2" rx="1" fill="${shade(col, -0.35)}"/><rect x="${x}" y="${y}" width="8" height=".8" rx=".4" fill="#fff" opacity=".45"/>`).join('')}
+    <path d="${M.mir}" fill="#1C2026" stroke="#0B0D10" stroke-width=".5" transform="translate(2 1) scale(.86)" transform-origin="center"/>${fara}<path d="${M.tl}" fill="url(#${id}tl)" stroke="#5B0A0A" stroke-width=".5"/><path d="${M.tl}" fill="none" stroke="#fff" stroke-width=".5" opacity=".35"/>
+    ${kit}${spo}${egz}</g>`;
+  const neon = ne ? `<ellipse cx="${mx}" cy="${M.ch + 9}" rx="${(fx - rx) / 2 + 30}" ry="5.5" fill="${ne}" opacity=".9" filter="url(#${id}bl)"/>` : '';
+  const shad = `<ellipse cx="${mx}" cy="${wy + R - .5}" rx="${(fx - rx) / 2 + 44}" ry="3.6" fill="#000" opacity=".42" filter="url(#${id}sb)"/>`;
+  const w = o.w || 200;
+  return `<svg viewBox="0 0 200 110" width="${w}" height="${Math.round(w * 0.55)}" aria-hidden="true" class="car carm">${defs}${shad}${neon}${body}${wheel(rx, wy, R, r, t('disk'), id)}${wheel(fx, wy, R, r, t('disk'), id)}</svg>`;
+}
+/* ART.car ustidan: d.model bo'lsa — realistik model, bo'lmasa — eski chizma (orol, eski joylar) */
+const eskiCar = ART.car;
+ART.car = (d, o) => d && d.model ? carM(d, o) : eskiCar(d, o);
+ART.carM = carM;
+
+/* ================= HOLAT ================= */
+function st(b) {
+  if (!b.avto || typeof b.avto !== 'object') b.avto = {};
+  const v = b.avto; ['ega', 't', 'tq', 'mk'].forEach(k => { if (!v[k] || typeof v[k] !== 'object') v[k] = {}; });
+  if (!v.ega.sedan) v.ega.sedan = Date.now();
+  TARTIB.forEach(m => { if (v.ega[m] && !v.t[m]) v.t[m] = { rang: MODEL[m].rang, vinil: MODEL[m].vinil || 0 }; });
+  if (!MODEL[v.a] || !v.ega[v.a]) v.a = 'sedan';
+  if (!v.maq || v.ega[v.maq]) v.maq = TARTIB.find(m => !v.ega[m]) || null;
+  v.q = Math.max(0, +v.q || 0); v.jami = Math.max(0, +v.jami || 0);
+  Object.keys(v.mk).forEach(k => { if (k < A.addDays(T(), -10)) delete v.mk[k]; });
+  return v;
+}
+const garajMi = b => b && b.dunyo === 'garaj';
+/* eski missiya detallari (b.detal) — bepul tuning sifatida: g'ildirak → disk, spoyler, stiker → vinil, fara, nitro → egzoz, kuzov → kit */
+const DETAL_MAP = { gildirak: 'disk', spoyler: 'spoyler', stiker: 'vinil', fara: 'fara', nitro: 'egzoz', kuzov: 'kit' };
+function tEga(b, m, k, v) {
+  if (!v) return true; const s = st(b), x = (s.tq[m] || {})[k]; if (Array.isArray(x) && x.includes(v)) return true;
+  if (MODEL[m] && ((k === 'rang' && v === MODEL[m].rang) || (k === 'vinil' && v === (MODEL[m].vinil || 0)))) return true;
+  const D = ART.decor(b.detal || []); for (const dk in DETAL_MAP) if (DETAL_MAP[dk] === k && (D[dk] || 0) >= v) return true;
+  return false;
+}
+function decor(b) { const s = st(b), m = s.a; return Object.assign({ model: m }, s.t[m] || {}); }
+/* 🔩 qism: bosqich +1, missiya +2, sovg'a +2, mantiq g'alabasi (har 3 tasiga) +1 */
+function qism(b, n, sabab) {
+  if (!garajMi(b) || !n) return null; const s = st(b); s.jami += n;
+  if (!s.maq) { if (A.addStar) A.addStar(b, 5 * n); A.save(true); return null; }
+  s.q += n; const kerak = MODEL[s.maq].qism; let ochildi = null;
+  if (s.q >= kerak) { ochildi = s.maq; s.ega[ochildi] = Date.now(); s.t[ochildi] = { rang: MODEL[ochildi].rang, vinil: MODEL[ochildi].vinil || 0 }; s.q -= kerak; s.yangi = ochildi; s.maq = TARTIB.find(m => !s.ega[m]) || null; if (!s.maq) s.q = 0; }
+  A.pushLog(b.id, { t: 'avto', ts: Date.now(), bola: b.id, tur: 'qism', n, sabab, ochildi });
+  A.save(true); return ochildi;
+}
+function missiyaQism(b) { if (!garajMi(b)) return null; const s = st(b), k = T(); if (s.mk[k]) return null; s.mk[k] = 1; return qism(b, 2, 'missiya'); }
+function yangiKor(b, keyin) {
+  const s = st(b); if (!garajMi(b) || !s.yangi || !MODEL[s.yangi]) return false; const m = s.yangi, M = MODEL[m];
+  sheet(`<div class="avnew"><div class="avsh">${carM(Object.assign({ model: m }, s.t[m]), { w: 330 })}</div><h2>🎉 Yangi mashina ochildi!</h2><p><b>${esc(M.nom)}</b> — hamma qismlarini yig'ding!</p>
+    <div class="row"><button class="btn big" data-ok>🏎️ Shu bilan haydayman</button><button class="btn ghost" data-x>Keyin</button></div></div>`, el => {
+    play('fanfar'); try { FX.burst(innerWidth / 2, innerHeight * 0.35, { tema: 'garaj', n: 70 }); } catch (e) {}
+    $('[data-ok]', el).onclick = () => { s.a = m; delete s.yangi; A.save(true); closeSheets(); keyin ? keyin() : A.go('avto'); };
+    $$('[data-x]', el).forEach(x => x.addEventListener('click', () => { delete s.yangi; A.save(true); }));
+  }, { lock: true });
+  return true;
+}
+
+/* ================= 🏎️ GARAJ EKRANI ================= */
+let GK = 'rang', GV = null;
+function garaj(b) {
+  if (!garajMi(b)) return A.go(A.sv ? 'sovga-ulov' : 'uy');
+  A.theme('garaj'); const s = st(b), m = s.a, M = MODEL[m], tu = s.t[m], d = Object.assign({ model: m }, tu), prev = GV != null ? Object.assign({}, d, { [GK]: GV }) : d;
+  const K = TUN[GK], cur = +tu[GK] || 0, sel = GV != null ? GV : cur, n = K.v[sel][1], e = tEga(b, m, GK, sel), pb = pulBor();
+  const mq = s.maq ? MODEL[s.maq] : null;
+  app.innerHTML = `<div class="wrap kidw avw"><div class="top"><button class="ib" data-x aria-label="Orqaga">←</button><div class="ttl">🏎️ Avtosalon</div><span class="sp"></span><span class="pill" data-yul>⭐ ${yul(b)}</span>${pb ? A.pul.pill(b) : ''}</div>
+  <div class="avshow"><div class="avspot"></div><div class="avcar">${carM(prev, { w: 340 })}</div><div class="avrefl">${carM(prev, { w: 340 })}</div><div class="avname"><b>${esc(M.nom)}</b><small>${s.jami ? `🔩 jami ${s.jami} qism yig'ding` : 'Seniki — tuning qil!'}</small></div></div>
+  <div class="avcars">${TARTIB.map(k => { const ega = s.ega[k]; return `<button class="avc${k === m ? ' on' : ''}${ega ? '' : ' lock'}" data-avc="${k}"><span class="avcs">${carM(Object.assign({ model: k }, s.t[k] || { rang: MODEL[k].rang }), { w: 96 })}</span><small>${ega ? esc(MODEL[k].nom.split(' ')[0]) : k === s.maq ? `🔩 ${s.q}/${MODEL[k].qism}` : `🔒 ${MODEL[k].qism}`}</small></button>`; }).join('')}</div>
+  ${mq ? `<div class="card avgoal"><div class="avgh"><b>🎯 Maqsad: ${esc(mq.nom)}</b><button class="btn sm ghost" data-avmaq>Almashtirish</button></div>
+    <div class="avqs">${Array.from({ length: mq.qism }, (_, i) => `<span class="${i < s.q ? 'ok' : ''}" title="${esc(QISM_NOM[i] || 'Qism')}">${QISM_IC[i] || '🔩'}</span>`).join('')}</div>
+    <div class="sm mut">Har missiya bosqichi — 🔩 1 qism, missiya oxiri — 🔩 2 qism, mantiq o'yinlari ham qism beradi. Hammasi yig'ilsa — mashina seniki!</div></div>` : `<div class="card"><b>🏆 Hamma mashinalar seniki!</b> <span class="sm">Endi har qism — ⭐ 5 yulduz.</span></div>`}
+  <h3 class="msh">🔧 Tuning</h3><div class="avtk">${Object.keys(TUN).map(k => `<button class="avt${k === GK ? ' on' : ''}" data-avk="${k}"><i>${TUN[k].ic}</i><small>${esc(TUN[k].nom)}</small></button>`).join('')}</div>
+  <div class="avop">${K.v.map(([nom, nr], i) => { const eg = tEga(b, m, GK, i); return `<button class="avo${i === sel ? ' sel' : ''}${i === cur ? ' on' : ''}" data-avv="${i}">${GK === 'rang' ? `<span class="avsw" style="background:${RANG[i][1]}"></span>` : ''}<b>${esc(nom)}</b><small>${i === cur ? '✅ O\'rnatilgan' : eg ? 'Seniki' : `⭐ ${nr}`}</small></button>`; }).join('')}</div>
+  ${sel !== cur ? `<div class="avact">${e ? `<button class="btn big" data-avset>🔧 O'rnatish</button>` : `<button class="btn big${yul(b) >= n ? '' : ' ghost'}" data-avbuy="yul">⭐ ${n} — sotib olish</button>${pb ? `<button class="btn ghost" data-avbuy="som">💵 ${A.pul.fmt(A.pul.narxK(b, n * 200))}</button>` : ''}`}</div>` : ''}
+  <div class="row"><button class="btn alt" data-avrace>🏁 Sinov poygasi</button></div></div>`;
+  const again = () => garaj(b);
+  $('[data-x]').onclick = () => { GV = null; A.go('uy'); };
+  $$('[data-avc]').forEach(x => x.onclick = () => { const k = x.dataset.avc; if (!s.ega[k]) { if (k !== s.maq) return toast(`🔒 ${MODEL[k].nom}: ${MODEL[k].qism} ta qism kerak. «Almashtirish» bilan maqsad qilib qo'y!`); return toast(`🔩 Yana ${MODEL[k].qism - s.q} ta qism — missiya bosqichlarida yig'asan!`); } s.a = k; GV = null; A.save(true); play('motor'); again(); });
+  $$('[data-avk]').forEach(x => x.onclick = () => { GK = x.dataset.avk; GV = null; play('bosish'); again(); });
+  $$('[data-avv]').forEach(x => x.onclick = () => { GV = +x.dataset.avv; play('bosish'); again(); });
+  const set = $('[data-avset]'); if (set) set.onclick = () => { tu[GK] = sel; GV = null; A.save(true); play('ding'); A.pushLog(b.id, { t: 'avto', ts: Date.now(), bola: b.id, tur: 'tuning', m, k: GK, v: sel }); again(); };
+  $$('[data-avbuy]').forEach(x => x.onclick = () => {
+    const ol = () => { const q = s.tq[m] || (s.tq[m] = {}); (q[GK] = q[GK] || []).push(sel); tu[GK] = sel; GV = null; A.pushLog(b.id, { t: 'avto', ts: Date.now(), bola: b.id, tur: 'xarid', m, k: GK, v: sel, pul: x.dataset.avbuy }); A.save(true); play('fanfar'); try { FX.burst(innerWidth / 2, innerHeight * 0.25, { tema: 'garaj', n: 36 }); } catch (e2) {} toast(`✨ ${K.v[sel][0]} — o'rnatildi!`); again(); };
+    if (x.dataset.avbuy === 'som') return A.pul.tolov(b, A.pul.narxK(b, n * 200), K.nom + ': ' + K.v[sel][0], ol);
+    if (yul(b) < n) return toast(`Yana ${n - yul(b)} ⭐ kerak — missiya, mashq va mantiq o'yinlarida yig'asan`);
+    if (b.sv && A.sv) { A.sv.st(b).sarf += n; ol(); }
+  });
+  const mb = $('[data-avmaq]'); if (mb) mb.onclick = () => sheet(`<h2>🎯 Qaysi mashinani yig'amiz?</h2><div class="avml">${TARTIB.filter(k => !s.ega[k]).map(k => `<button class="avc${k === s.maq ? ' on' : ''}" data-mq="${k}"><span class="avcs">${carM({ model: k, rang: MODEL[k].rang, vinil: MODEL[k].vinil || 0 }, { w: 130 })}</span><b>${esc(MODEL[k].nom)}</b><small>🔩 ${MODEL[k].qism} qism</small></button>`).join('')}</div><p class="sm mut">Yig'ilgan qismlar yangi maqsadga o'tadi.</p>`, el => {
+    $$('[data-mq]', el).forEach(y => y.onclick = () => { s.maq = y.dataset.mq; A.save(true); closeSheets(); again(); });
+  });
+  $('[data-avrace]').onclick = () => { if (ART.race) ART.race('garaj', A.bezak ? A.bezak(b) : d, { txt: "ZO'R MASHINA!" }); };
+  if (s.yangi) setTimeout(() => yangiKor(b, again), 300);
+}
+
+/* ================= 🧠 MANTIQ O'YINLARI ================= */
+const OY = {
+  naqsh: { ic: '🔷', nom: 'Naqsh', izoh: 'Keyingisini top', max: 14, ayt: "Naqshga diqqat bilan qara. Qaysi biri keyingi bo'ladi? Qoidani top va tanla." },
+  ortiqcha: { ic: '🔍', nom: 'Ortiqchasi', izoh: "O'xshamaganini top", max: 10, ayt: "Qaysi biri boshqalariga o'xshamaydi? O'ylab ko'r va o'shani bos." },
+  chiroq: { ic: '💡', nom: 'Chiroqlar', izoh: "Hammasini o'chir", max: 14, ayt: "Chiroqni bossang, o'zi va yonidagi chiroqlar almashadi. Hamma chiroqni o'chir. Shoshilma, avval o'yla." },
+  robot: { ic: '🤖', nom: "Robot yo'li", izoh: "Robotga yo'l tuz", max: 12, ayt: "Strelkalarni bosib, robotga yo'l tuz. Robot yulduzga yetishi kerak. Keyin ishga tushir tugmasini bos." },
+  minora: { ic: '🗼', nom: 'Minora', izoh: "Halqalarni ko'chir", max: 8, ayt: "Hamma halqalarni o'ng tayoqqa o'tkaz. Bir marta faqat bitta halqa ko'chadi. Katta halqani kichigi ustiga qo'yib bo'lmaydi." },
+  tarozi: { ic: '⚖️', nom: 'Tarozi', izoh: "Og'irini top", max: 10, ayt: "Tarozilarga diqqat bilan qara. Og'ir tomon pastga tushadi. Savolga javob ber." },
+  sudoku: { ic: '🔲', nom: 'Sudoku', izoh: 'Takrorlanmasin', max: 10, ayt: "Har qatorda va har ustunda har bir rasm faqat bir marta bo'lsin. Bo'sh katakni bos va rasmni tanla." }
+};
+const ORD = ['naqsh', 'ortiqcha', 'chiroq', 'robot', 'minora', 'tarozi', 'sudoku'];
+const GAP = { yut: ['Barakalla! Keyingi daraja qiyinroq bo\'ladi.', "Zo'r! Miyang yaxshi ishlayapti.", "To'g'ri! Sen haqiqiy mantiqchisan."], xato: ["Yana bir o'ylab ko'r.", 'Shoshilma, qoidani qayta ko\'r.'], yordam: ["Mana to'g'ri javob. Keyingisida albatta topasan."] };
+const BOSH = { g0: 1, g1: 3, g2: 5 };
+function mt(b, g) { if (!b.mt || typeof b.mt !== 'object') b.mt = {}; const x = b.mt[g] || (b.mt[g] = { lv: Math.min(OY[g].max, g === 'minora' ? 1 : BOSH[A.gl(b.daraja)] || 1), n: 0, x: 0 }); return x; }
+function ayt(t, el) { try { const O = A.ovoz; if (!O || !O.reja) return false; const r = O.reja(t); if (r && r.length && O.manba(r)) { O.oqi(r, el || null); return true; } } catch (e) {} return false; }
+function natijaMt(b, g, yutdi) {
+  const x = mt(b, g); if (yutdi) { x.n++; x.x = 0; const eski = x.lv; x.lv = Math.min(OY[g].max, x.lv + 1); const k = T(); b.mtK = b.mtK && b.mtK.s === k ? b.mtK : { s: k, y: 0, w: 0 };
+    let yl = 0; if (b.mtK.y < 20) { yl = 2; b.mtK.y += 2; if (A.addStar) A.addStar(b, 2); } b.mtK.w++; let q = null; if (garajMi(b) && b.mtK.w % 3 === 0 && b.mtK.w <= 6) q = qism(b, 1, 'mantiq') || 'ok';
+    A.pushLog(b.id, { t: 'mantiq', ts: Date.now(), bola: b.id, oyin: g, lv: eski, yutdi: 1 }); A.save(true); return { lv: x.lv, oshdi: x.lv > eski, yl, q }; }
+  x.x++; if (x.x >= 2 && x.lv > 1) { x.lv--; x.x = 0; } A.pushLog(b.id, { t: 'mantiq', ts: Date.now(), bola: b.id, oyin: g, lv: x.lv, yutdi: 0 }); A.save(true); return { lv: x.lv };
+}
+/* --- O'yinlar: (host, ctx{ b, lv, yut(), xato(soft), yordam }) → { stop } --- */
+const EM = { meva: ['🍎', '🍌', '🍇', '🍓', '🍐', '🍑', '🍒', '🍉'], hayvon: ['🐱', '🐰', '🐻', '🦁', '🐯', '🐮', '🐴', '🐑'], transport: ['🚗', '🚌', '🚲', '✈️', '🚂', '🚀', '⛵', '🚁'], kiyim: ['👕', '👗', '🧢', '👟', '🧤', '🧣', '👖', '🧥'],
+  sabzavot: ['🥕', '🥒', '🥔', '🌽', '🍆', '🥦', '🧅', '🫑'], qush: ['🦜', '🐧', '🦉', '🐦', '🦆', '🦢', '🐓', '🕊️'], dengiz: ['🐟', '🐬', '🐙', '🦀', '🐳', '🐠', '🦈', '🐢'], maktab: ['✏️', '📏', '📚', '✂️', '🖍️', '📐', '📒', '🎒'] };
+const ENOM = { meva: 'mevalar', hayvon: 'hayvonlar', transport: 'transport', kiyim: 'kiyimlar', sabzavot: 'sabzavotlar', qush: 'qushlar', dengiz: 'dengiz jonivorlari', maktab: 'maktab buyumlari' };
+const RANGLI = ['🔴', '🟡', '🔵', '🟢', '🟣', '🟠'], SHAKL = [['🔺', '🔻'], ['🟦', '🟥'], ['⭐', '🌟']];
+function optHTML(L, cls) { return `<div class="mtop ${cls || ''}">${L.map((v, i) => `<button class="mto" data-mo="${i}">${v}</button>`).join('')}</div>`; }
+function g_naqsh(host, c) {
+  const lv = c.lv; let seq = [], ans, opts, qoida = '';
+  const rep = (p, n) => Array.from({ length: n }, (_, i) => p[i % p.length]);
+  if (lv <= 5) { const pool = shuffle(lv <= 2 ? EM.meva.slice(0, 6) : RANGLI), P = lv === 1 ? [0, 1] : lv === 2 ? [0, 1, 2] : lv === 3 ? [0, 0, 1] : lv === 4 ? [0, 1, 1] : [0, 1, 2, 3];
+    const len = P.length * 2 + (lv >= 4 ? 1 : 0), all = rep(P, len + 1).map(i => pool[i]); seq = all.slice(0, len); ans = all[len]; opts = shuffle(Array.from(new Set([ans].concat(pool.slice(0, 4)))).slice(0, lv <= 2 ? 3 : 4)); if (!opts.includes(ans)) opts[0] = ans; qoida = 'takrorlanadi'; }
+  else if (lv === 6) { const s = 1 + rnd(2); seq = [0, 1, 2].map(i => '●'.repeat(s + i)); ans = '●'.repeat(s + 3); opts = shuffle([ans, '●'.repeat(s + 2), '●'.repeat(s + 4), '●'.repeat(Math.max(1, s + 1))]); }
+  else { const step = lv === 7 ? 1 : lv === 8 ? 2 : lv === 9 ? -2 : lv === 10 ? pick([3, 5, 10]) : 0; let a = 1 + rnd(lv >= 10 ? 9 : 5);
+    if (lv === 9) a = 14 + rnd(6);
+    if (step) { seq = [0, 1, 2, 3].map(i => a + i * step); ans = a + 4 * step; }
+    else if (lv === 11) { seq = [a]; for (let i = 1; i < 5; i++) seq.push(seq[i - 1] + (i % 2 ? 1 : 2)); ans = seq[4] + 1; seq = seq.slice(0, 5); }
+    else if (lv === 12) { a = 1 + rnd(3); seq = [0, 1, 2, 3].map(i => a * Math.pow(2, i)); ans = a * 16; }
+    else if (lv === 13) { seq = [1, 1, 2, 3, 5]; ans = 8; }
+    else { a = 2 + rnd(4); seq = [0, 1, 2, 3].map(i => a + i * i); ans = a + 16; }
+    const d = Math.abs(step) || 2; opts = shuffle(Array.from(new Set([ans, ans + d, ans - d, ans + 1, ans - 1].filter(x => x >= 0))).slice(0, 4)); if (!opts.includes(ans)) opts[0] = ans; }
+  c.ans = ans; host.innerHTML = `<div class="mtq">${seq.map(v => `<span class="mtc">${v}</span>`).join('')}<span class="mtc q">?</span></div>${optHTML(opts)}`;
+  let x = 0; $$('[data-mo]', host).forEach(el => el.onclick = () => { const v = opts[+el.dataset.mo]; if (String(v) === String(ans)) { el.classList.add('ok'); $('.mtc.q', host).textContent = ans; c.yut(); } else { el.classList.add('no'); x++; if (x >= 2) { $$('[data-mo]', host).forEach(y => { if (String(opts[+y.dataset.mo]) === String(ans)) y.classList.add('ok'); }); c.yordam(); } else c.xato(); } });
+  return {};
+}
+function g_ortiqcha(host, c) {
+  const lv = c.lv; let L, ans, sabab;
+  const kat = (yaqin) => { const K = Object.keys(EM), a = pick(K); let bk = pick(K.filter(k => k !== a)); if (yaqin) bk = ({ meva: 'sabzavot', sabzavot: 'meva', hayvon: 'qush', qush: 'dengiz', dengiz: 'qush', transport: 'maktab', kiyim: 'maktab', maktab: 'kiyim' })[a]; return [a, bk]; };
+  if (lv === 2) { const c0 = pick(RANGLI), c1 = pick(RANGLI.filter(x => x !== c0)); L = [c0, c0, c0, c1]; ans = c1; sabab = "Qolganlari bir xil rangda."; }
+  else if (lv === 3) { const sh = pick(SHAKL); L = [sh[0], sh[0], sh[0], sh[1]]; ans = sh[1]; sabab = "Qolganlari bir xil."; }
+  else if (lv === 6) { const n = 2 + rnd(3), m2 = n + (rnd(2) ? 1 : -1); L = [n, n, n, m2].map(k => '●'.repeat(k)); ans = '●'.repeat(m2); sabab = "Qolganlarida nuqtalar soni bir xil."; }
+  else if (lv === 7) { const E = shuffle([2, 4, 6, 8, 10, 12, 14]).slice(0, 3), o = pick([3, 5, 7, 9, 11]); L = E.concat([o]); ans = o; sabab = "Qolganlari juft sonlar."; }
+  else if (lv === 8) { const E = shuffle([10, 15, 20, 25, 30, 35]).slice(0, 3), o = pick([12, 18, 23, 27, 33]); L = E.concat([o]); ans = o; sabab = "Qolganlari beshga bo'linadi."; }
+  else { const [a, bk] = kat(lv === 5 || lv >= 9), n = lv >= 9 ? 5 : lv >= 4 ? 4 : 3; L = shuffle(EM[a]).slice(0, n); ans = pick(EM[bk]); L.push(ans); sabab = 'Qolganlari ' + ENOM[a] + '.'; }
+  L = shuffle(L); c.ans = ans;
+  host.innerHTML = `<div class="mtbig">${optHTML(L, 'g' + Math.min(5, L.length))}</div><div class="mtsab" hidden></div>`;
+  let x = 0; $$('[data-mo]', host).forEach(el => el.onclick = () => { const v = L[+el.dataset.mo]; const sb = $('.mtsab', host);
+    if (String(v) === String(ans)) { el.classList.add('ok'); sb.hidden = false; sb.textContent = "To'g'ri! " + sabab; ayt("To'g'ri! " + sabab); setTimeout(() => c.yut(true), 900); }
+    else { el.classList.add('no'); x++; if (x >= 2) { $$('[data-mo]', host).forEach(y => { if (String(L[+y.dataset.mo]) === String(ans)) y.classList.add('ok'); }); sb.hidden = false; sb.textContent = sabab; ayt(sabab); c.yordam(true); } else c.xato(); } });
+  return {};
+}
+function g_chiroq(host, c) {
+  const LV = [[2, 1], [3, 1], [3, 2], [3, 3], [3, 4], [4, 3], [4, 4], [4, 5], [4, 6], [5, 4], [5, 5], [5, 6], [5, 7], [5, 8]], [n, k] = LV[Math.min(LV.length, c.lv) - 1];
+  const g = Array(n * n).fill(0), bos = i => { const x = i % n, y = Math.floor(i / n); [[0, 0], [1, 0], [-1, 0], [0, 1], [0, -1]].forEach(([dx, dy]) => { const a = x + dx, b2 = y + dy; if (a >= 0 && b2 >= 0 && a < n && b2 < n) g[b2 * n + a] ^= 1; }); };
+  shuffle(Array.from({ length: n * n }, (_, i) => i)).slice(0, k).forEach(bos); if (g.every(v => !v)) bos(0);
+  let yur = 0; const chiz = () => { host.innerHTML = `<div class="mtinfo">Kamida <b>${k}</b> ta bosish · sen: <b>${yur}</b></div><div class="mtl" style="grid-template-columns:repeat(${n},1fr)">${g.map((v, i) => `<button class="mtb${v ? ' on' : ''}" data-l="${i}" aria-label="chiroq"></button>`).join('')}</div><div class="row"><button class="btn ghost sm" data-lr>↺ Qaytadan</button></div>`;
+    $$('[data-l]', host).forEach(el => el.onclick = () => { bos(+el.dataset.l); yur++; play('bosish'); if (g.every(v => !v)) { chiz(); c.yut(); } else chiz(); });
+    $('[data-lr]', host).onclick = () => { c.xato(true); g_chiroq(host, c); }; };
+  chiz(); return {};
+}
+function g_robot(host, c) {
+  const lv = c.lv, n = lv <= 2 ? 3 : lv <= 5 ? 4 : lv <= 8 ? 5 : 6, devN = lv <= 3 ? 0 : lv <= 5 ? 2 + (lv - 4) : lv <= 8 ? 3 + (lv - 6) * 2 : 6 + (lv - 9) * 2, minL = lv <= 1 ? 2 : lv <= 3 ? 3 : Math.min(12, lv + 1);
+  let D, s0, g0, yo; for (let t = 0; t < 400; t++) {
+    D = new Set(); const all = Array.from({ length: n * n }, (_, i) => i); s0 = pick(all); g0 = pick(all.filter(i => i !== s0)); shuffle(all.filter(i => i !== s0 && i !== g0)).slice(0, devN).forEach(i => D.add(i));
+    const dist = { [s0]: 0 }, q = [s0]; while (q.length) { const u = q.shift(), x = u % n, y = Math.floor(u / n); [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(([dx, dy]) => { const a = x + dx, b2 = y + dy, v = b2 * n + a; if (a >= 0 && b2 >= 0 && a < n && b2 < n && !D.has(v) && dist[v] == null) { dist[v] = dist[u] + 1; q.push(v); } }); }
+    yo = dist[g0]; if (yo != null && yo >= minL && yo <= minL + 2) break; }
+  const MAX = yo + 3, DIR = { '⬆️': [0, -1], '⬇️': [0, 1], '⬅️': [-1, 0], '➡️': [1, 0] }; let P = [], pos = s0, busy = false;
+  const chiz = () => { host.innerHTML = `<div class="mtinfo">Eng qisqa yo'l: <b>${yo}</b> qadam · dastur: ${P.length}/${MAX}</div><div class="mtr" style="grid-template-columns:repeat(${n},1fr)">${Array.from({ length: n * n }, (_, i) => `<span class="mtrc${D.has(i) ? ' dev' : ''}">${i === pos ? '🤖' : i === g0 ? '⭐' : D.has(i) ? '🧱' : ''}</span>`).join('')}</div>
+    <div class="mtprog">${P.map((d, i) => `<span data-pd="${i}">${d}</span>`).join('') || '<i>Strelkalarni bos…</i>'}</div><div class="mtar">${Object.keys(DIR).map(d => `<button class="btn" data-dir="${d}">${d}</button>`).join('')}<button class="btn ghost" data-del>⌫</button></div>
+    <div class="row"><button class="btn big" data-run${P.length ? '' : ' disabled'}>▶ Ishga tushir</button></div>`;
+    $$('[data-dir]', host).forEach(el => el.onclick = () => { if (busy || P.length >= MAX) return; P.push(el.dataset.dir); play('bosish'); chiz(); });
+    $('[data-del]', host).onclick = () => { if (!busy) { P.pop(); chiz(); } };
+    $('[data-run]', host).onclick = () => { if (busy || !P.length) return; busy = true; let i = 0; pos = s0;
+      const qadam = () => { if (i >= P.length) { busy = false; if (pos === g0) { c.yut(); } else { c.xato(); toast('Robot yulduzga yetmadi — dasturni tuzat'); pos = s0; chiz(); } return; }
+        const [dx, dy] = DIR[P[i]], x = pos % n + dx, y = Math.floor(pos / n) + dy, v = y * n + x;
+        if (x < 0 || y < 0 || x >= n || y >= n || D.has(v)) { busy = false; play('yumshoq'); c.xato(); toast("🧱 Robot to'siqqa urildi — dasturni tuzat"); pos = s0; chiz(); return; }
+        pos = v; i++; chiz(); const pe = $(`[data-pd="${i - 1}"]`, host); if (pe) pe.classList.add('on'); play('bosish'); if (pos === g0) { busy = false; c.yut(); return; } setTimeout(qadam, A.TEZ ? 60 : 380); };
+      qadam(); }; };
+  chiz(); return { stop() { busy = true; } };
+}
+function g_minora(host, c) {
+  const LV = [[2, 0], [3, 0], [3, 9], [4, 0], [4, 17], [5, 0], [5, 35], [6, 0]], [n, lim] = LV[Math.min(LV.length, c.lv) - 1], min = Math.pow(2, n) - 1;
+  const P = [Array.from({ length: n }, (_, i) => n - i), [], []]; let sel = null, yur = 0;
+  const RC = ['#E53935', '#FB8C00', '#FDD835', '#43A047', '#1E88E5', '#8E24AA'];
+  const chiz = () => { host.innerHTML = `<div class="mtinfo">Eng kam: <b>${min}</b> yurish${lim ? ` · chegara: <b>${lim}</b>` : ''} · sen: <b>${yur}</b></div><div class="mth">${P.map((p, i) => `<button class="mthp${sel === i ? ' sel' : ''}" data-p="${i}"><span class="mthst"></span>${p.map(dk => `<span class="mthd" style="width:${30 + dk * 11}%;background:linear-gradient(${RC[dk - 1]},${shade(RC[dk - 1], -0.35)})"></span>`).join('')}</button>`).join('')}</div>`;
+    $$('[data-p]', host).forEach(el => el.onclick = () => { const i = +el.dataset.p;
+      if (sel == null) { if (!P[i].length) return; sel = i; play('bosish'); return chiz(); }
+      if (sel === i) { sel = null; return chiz(); }
+      const a = P[sel], z = P[i], top = a[a.length - 1]; if (z.length && z[z.length - 1] < top) { play('yumshoq'); toast("Katta halqani kichigi ustiga qo'yib bo'lmaydi"); ayt("Katta halqani kichigi ustiga qo'yib bo'lmaydi."); sel = null; return chiz(); }
+      z.push(a.pop()); sel = null; yur++; play('ding');
+      if (P[2].length === n) { chiz(); if (lim && yur > lim) { c.xato(true); toast(`Ko'chdi, lekin ${lim} yurishdan ko'p bo'ldi — yana urin!`); setTimeout(() => g_minora(host, c), 1200); } else c.yut(); return; }
+      chiz(); }); };
+  chiz(); return {};
+}
+function g_tarozi(host, c) {
+  const lv = c.lv, I = shuffle(['🍎', '🍐', '🍋', '🍉', '🍇', '🥕', '🧸', '⚽']);
+  const tz = (l, r, eg) => `<div class="mtt"><svg viewBox="0 0 160 70"><defs><linearGradient id="tzm" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#E3E7EB"/><stop offset="1" stop-color="#8B96A1"/></linearGradient></defs><rect x="76" y="20" width="8" height="44" rx="2" fill="url(#tzm)"/><rect x="58" y="62" width="44" height="6" rx="3" fill="#6B7680"/><g transform="rotate(${eg} 80 20)"><rect x="18" y="17" width="124" height="5" rx="2.5" fill="url(#tzm)"/><path d="M22 22L14 40H50L42 22M118 22L110 40H146L138 22" stroke="#7C8792" fill="none" stroke-width="1.2"/><path d="M12 40H52Q32 50 12 40ZM108 40H148Q128 50 108 40Z" fill="#B0BAC3"/><text x="32" y="38" font-size="${l.length > 4 ? 11 : 16}" text-anchor="middle">${l}</text><text x="128" y="38" font-size="${r.length > 4 ? 11 : 16}" text-anchor="middle">${r}</text></g><circle cx="80" cy="20" r="4" fill="#5C6670"/></svg></div>`;
+  let html = '', sav = '', opts = [], ans;
+  if (lv <= 5) { const n = lv === 1 ? 2 : lv <= 3 ? 3 : 4, X = I.slice(0, n);   /* X[0] eng og'ir */
+    const sc = []; for (let i = 0; i < n - 1; i++) sc.push(rnd(2) ? tz(X[i], X[i + 1], -12) : tz(X[i + 1], X[i], 12));   /* X[i] og'irroq — u turgan palla pastda */
+    html = shuffle(sc).join(''); const yengil = lv === 3 || lv === 5; sav = lv === 1 ? "Qaysi biri og'irroq?" : yengil ? 'Eng yengili qaysi?' : "Eng og'iri qaysi?"; ans = yengil ? X[n - 1] : X[0]; opts = shuffle(X.slice()); }
+  else { const a = I[0], bq = I[1], cq = I[2], k1 = lv <= 7 ? 2 + rnd(2) : 2, k2 = 2;
+    if (lv <= 7) { html = tz(a.repeat(k1), bq, 0); const m = lv === 6 ? 1 : 2; sav = `${m === 1 ? 'Bitta' : 'Ikkita'} ${bq} ga nechta ${a} teng?`; ans = k1 * m; }
+    else { html = tz(a.repeat(k1), bq, 0) + tz(bq.repeat(k2), cq, 0); sav = `Bitta ${cq} ga nechta ${a} teng?`; ans = k1 * k2; }
+    opts = shuffle(Array.from(new Set([ans, ans + 1, ans - 1, ans + 2].filter(x => x > 0))).slice(0, 4)); }
+  c.ans = ans; host.innerHTML = `<div class="mtts">${html}</div><div class="mtsav">${sav}</div>${optHTML(opts)}`;
+  let x = 0; $$('[data-mo]', host).forEach(el => el.onclick = () => { const v = opts[+el.dataset.mo]; if (String(v) === String(ans)) { el.classList.add('ok'); c.yut(); } else { el.classList.add('no'); x++; if (x >= 2) { $$('[data-mo]', host).forEach(y => { if (String(opts[+y.dataset.mo]) === String(ans)) y.classList.add('ok'); }); c.yordam(); } else c.xato(); } });
+  return {};
+}
+function g_sudoku(host, c) {
+  const lv = c.lv, n = lv <= 3 ? 3 : 4, bo = n === 4, blank = lv <= 3 ? lv + 1 : lv;
+  const sym = A.gl(c.b.daraja) === 'g2' && lv >= 6 ? ['1', '2', '3', '4'] : n === 3 ? shuffle(['🍎', '🍌', '🍇', '🍓']).slice(0, 3) : shuffle(['🍎', '🍌', '🍇', '🍓']);
+  let base = n === 3 ? [[0, 1, 2], [1, 2, 0], [2, 0, 1]] : [[0, 1, 2, 3], [2, 3, 0, 1], [1, 0, 3, 2], [3, 2, 1, 0]];
+  const rp = n === 3 ? shuffle([0, 1, 2]) : [].concat(...shuffle([[0, 1], [2, 3]]).map(p => shuffle(p))), cp = n === 3 ? shuffle([0, 1, 2]) : [].concat(...shuffle([[0, 1], [2, 3]]).map(p => shuffle(p)));
+  const G0 = rp.map(r => cp.map(cc => base[r][cc])), g = G0.map(r => r.slice()); const bos = shuffle(Array.from({ length: n * n }, (_, i) => i)).slice(0, Math.min(blank, n * n - 2)); bos.forEach(i => { g[Math.floor(i / n)][i % n] = null; });
+  let sel = null, xato = 0;
+  const ok = (r, cc, v) => { for (let i = 0; i < n; i++) { if (i !== cc && g[r][i] === v) return false; if (i !== r && g[i][cc] === v) return false; } if (bo) { const r0 = r - r % 2, c0 = cc - cc % 2; for (let a = r0; a < r0 + 2; a++) for (let z = c0; z < c0 + 2; z++) if ((a !== r || z !== cc) && g[a][z] === v) return false; } return true; };
+  const chiz = () => { host.innerHTML = `<div class="mts${bo ? ' b4' : ''}" style="grid-template-columns:repeat(${n},1fr)">${g.map((row, r) => row.map((v, cc) => `<button class="mtsc${v == null ? ' bo' : ''}${sel === r * n + cc ? ' sel' : ''}" data-s="${r * n + cc}">${v == null ? '' : sym[v]}</button>`).join('')).join('')}</div>
+    <div class="mtop">${sym.map((s, i) => `<button class="mto" data-v="${i}"${sel == null ? ' disabled' : ''}>${s}</button>`).join('')}</div><div class="mtinfo">${sel == null ? "Bo'sh katakni bos" : 'Rasmni tanla'} · xato: ${xato}/3</div>`;
+    $$('[data-s]', host).forEach(el => el.onclick = () => { const i = +el.dataset.s; if (g[Math.floor(i / n)][i % n] != null && !bos.includes(i)) return; sel = i; play('bosish'); chiz(); });
+    $$('[data-v]', host).forEach(el => el.onclick = () => { if (sel == null) return; const r = Math.floor(sel / n), cc = sel % n, v = +el.dataset.v;
+      if (!ok(r, cc, v)) { xato++; play('yumshoq'); toast(bo ? "Bu qatorda, ustunda yoki kvadratda bor" : 'Bu qatorda yoki ustunda bor'); if (xato >= 3) { c.xato(true); toast('3 ta xato — yangi sudoku'); return setTimeout(() => g_sudoku(host, c), 900); } return chiz(); }
+      g[r][cc] = v; sel = null; play('ding'); if (g.every(row => row.every(x => x != null))) { chiz(); c.yut(); } else chiz(); }); };
+  chiz(); return {};
+}
+const GAME = { naqsh: g_naqsh, ortiqcha: g_ortiqcha, chiroq: g_chiroq, robot: g_robot, minora: g_minora, tarozi: g_tarozi, sudoku: g_sudoku };
+/* Ekran: alohida (uydan) */
+function menyu(b) {
+  if (!A.bolimOn(b, 'mantiq')) return A.go('uy'); A.theme(b.dunyo);
+  app.innerHTML = `<div class="wrap kidw mtw"><div class="top"><button class="ib" data-x aria-label="Orqaga">←</button><div class="ttl">🧠 Mantiq o'yinlari</div><span class="sp"></span><span class="pill" data-yul>⭐ ${yul(b)}</span></div>
+  <div class="bubble">O'yinni tanla! Har yutganingda keyingi daraja sal qiyinroq bo'ladi.</div>
+  <div class="mtg">${ORD.map(g => { const x = mt(b, g); return `<button class="mtk" data-g="${g}"><i>${OY[g].ic}</i><b>${OY[g].nom}</b><small>${esc(OY[g].izoh)}</small><span class="mtlv">${x.lv}-daraja${x.n ? ` · 🏆 ${x.n}` : ''}</span><span class="mtbar"><i style="width:${Math.round(100 * x.lv / OY[g].max)}%"></i></span></button>`; }).join('')}</div>
+  <p class="sm mut">Har g'alaba — ⭐ 2 (kuniga 20 gacha)${garajMi(b) ? ", har 3 g'alaba — 🔩 mashina qismi" : ''}.</p></div>`;
+  $('[data-x]').onclick = () => A.go('uy');
+  $$('[data-g]').forEach(x => x.onclick = () => { play('bosish'); A.go('mantiq-' + x.dataset.g); });
+}
+const AYTILDI = {};
+function oyin(b, g) {
+  if (!OY[g] || !A.bolimOn(b, 'mantiq')) return A.go('mantiq'); A.theme(b.dunyo);
+  const x = mt(b, g), O = OY[g];
+  app.innerHTML = `<div class="wrap kidw mtw"><div class="top"><button class="ib" data-x aria-label="Orqaga">←</button><div class="ttl">${O.ic} ${O.nom}</div><span class="sp"></span><span class="pill">${x.lv}-daraja</span><button class="ib" data-say aria-label="Tushuntirish">🔊</button></div>
+    <div class="mtqoida">${esc(O.ayt)}</div><div id="mtg" class="mtgame"></div></div>`;
+  $('[data-x]').onclick = () => A.go('mantiq');
+  $('[data-say]').onclick = e => { if (!ayt(O.ayt, e.currentTarget)) toast('🔊 Ovoz hali yuklanmagan — matnni o\'qib bering'); };
+  if (!AYTILDI[b.id + g] && !A.TEZ) { AYTILDI[b.id + g] = 1; setTimeout(() => ayt(O.ayt, $('[data-say]')), 400); }
+  const host = $('#mtg'); let tugadi = false;
+  const ctx = { b, lv: x.lv, g,
+    yut: (sekin) => { if (tugadi) return; tugadi = true; const r = natijaMt(b, g, true); play('fanfar'); try { FX.burst(innerWidth / 2, innerHeight * 0.4, { tema: b.dunyo, n: 40 }); } catch (e) {} const gp = pick(GAP.yut); if (!sekin) ayt(gp);
+      setTimeout(() => sheet(`<div class="svo"><div class="svoh">🏆</div><h2>${esc(gp)}</h2>${r.oshdi ? `<p>Endi <b>${r.lv}-daraja</b> ochildi!</p>` : `<p>Eng yuqori darajadasan!</p>`}${r.yl ? `<p>+${r.yl} ⭐</p>` : ''}${r.q ? `<p>🔩 +1 mashina qismi!</p>` : ''}
+        <div class="row"><button class="btn big" data-ok>▶ Keyingi daraja</button><button class="btn ghost" data-boshqa>🧠 Boshqa o'yin</button></div></div>`, el => {
+          $('[data-ok]', el).onclick = () => { closeSheets(); oyin(b, g); }; $('[data-boshqa]', el).onclick = () => { closeSheets(); A.go('mantiq'); }; }, { lock: true }), sekin ? 1200 : 700); },
+    xato: (jim) => { if (!jim) { play('yumshoq'); ayt(pick(GAP.xato)); } },
+    yordam: (jim) => { if (tugadi) return; tugadi = true; natijaMt(b, g, false); if (!jim) ayt(GAP.yordam[0]); setTimeout(() => sheet(`<div class="svo"><div class="svoh">💡</div><h2>Hechqisi yo'q!</h2><p>To'g'ri javobni ko'rsatdim. Keyingisini albatta topasan.</p><div class="row"><button class="btn big" data-ok>▶ Yana</button><button class="btn ghost" data-boshqa>🧠 Boshqa o'yin</button></div></div>`, el => {
+      $('[data-ok]', el).onclick = () => { closeSheets(); oyin(b, g); }; $('[data-boshqa]', el).onclick = () => { closeSheets(); A.go('mantiq'); }; }, { lock: true }), 1600); } };
+  if (A.TEZ) A.mantiq._c = ctx;   /* sinov: javob (c.ans) */
+  GAME[g](host, ctx);
+}
+/* Dam olish oynasida (A.oyin): vaqt tugaguncha, har g'alabada daraja oshadi */
+function dam(tur) {
+  const g = tur.replace(/^mt_/, ''); return (host, S0) => {
+    let stop = false; const b = S0.b;
+    const raund = () => { if (stop) return; const x = mt(b, g); host.innerHTML = `<div class="mtqoida sm">${OY[g].ic} ${esc(OY[g].izoh)} · ${x.lv}-daraja</div><div class="mtgame" id="mtd"></div>`;
+      const h = $('#mtd', host); GAME[g](h, { b, lv: x.lv, yut: () => { if (stop) return; S0.ok++; natijaMt(b, g, true); play('fanfar'); setTimeout(raund, 900); }, xato: () => play('yumshoq'), yordam: () => { if (stop) return; natijaMt(b, g, false); setTimeout(raund, 1500); } }); };
+    if (!AYTILDI['d' + b.id + g] && !A.TEZ) { AYTILDI['d' + b.id + g] = 1; ayt(OY[g].ayt); }
+    raund(); return { stop() { stop = true; } };
+  };
+}
+/* dam olishda: har safar bitta mantiq o'yini navbat bilan (tanlov ekrani sig'sin; hammasi — 🧠 Mantiq bo'limida) */
+const turlar = b => { if (!b) return ORD.map(g => 'mt_' + g); const i = ((+b.mtR || 0) + 1) % ORD.length; b.mtR = i; return ['mt_' + ORD[i]]; };
+const OYINLAR = {}; ORD.forEach(g => { OYINLAR['mt_' + g] = { ic: OY[g].ic, nom: OY[g].nom, izoh: OY[g].izoh }; });
+if (A.oyin && A.oyin.OYIN) Object.assign(A.oyin.OYIN, OYINLAR);
+function matnlar() { return ORD.map(g => OY[g].ayt).concat(GAP.yut, GAP.xato, GAP.yordam, Object.keys(ENOM).map(k => "To'g'ri! Qolganlari " + ENOM[k] + '.'), Object.keys(ENOM).map(k => 'Qolganlari ' + ENOM[k] + '.'),
+  ["To'g'ri! Qolganlari bir xil rangda.", 'Qolganlari bir xil rangda.', "To'g'ri! Qolganlari bir xil.", 'Qolganlari bir xil.', "To'g'ri! Qolganlarida nuqtalar soni bir xil.", 'Qolganlarida nuqtalar soni bir xil.', "To'g'ri! Qolganlari juft sonlar.", 'Qolganlari juft sonlar.', "To'g'ri! Qolganlari beshga bo'linadi.", "Qolganlari beshga bo'linadi.", "Katta halqani kichigi ustiga qo'yib bo'lmaydi."]); }
+
+/* ================= uy plitkalari ================= */
+function uyHTML(b) {
+  const out = [];
+  if (garajMi(b) && A.bolimOn(b, 'sovga')) { const s = st(b), mq = s.maq ? MODEL[s.maq] : null; out.push(`<button class="svt${s.yangi ? ' hot' : ''}" data-avgo><span class="svti avti">${carM(decor(b), { w: 64 })}</span><b>Avtosalon</b><small>${s.yangi ? '🎉 Yangi mashina!' : mq ? `🔩 ${s.q}/${mq.qism} · ${esc(mq.nom.split(' ')[0])}` : 'Tuning qil!'}</small></button>`); }
+  if (A.bolimOn(b, 'mantiq')) { const lv = ORD.reduce((a, g) => a + mt(b, g).lv, 0); out.push(`<button class="svt" data-mtgo><span class="svti">🧠</span><b>Mantiq</b><small>7 o'yin · har safar qiyinroq</small></button>`); }
+  return out.join('');
+}
+function uyBind(b) { const a = $('[data-avgo]'); if (a) a.onclick = () => { play('bosish'); A.go('avto'); }; const m = $('[data-mtgo]'); if (m) m.onclick = () => { play('bosish'); A.go('mantiq'); }; if (garajMi(b) && st(b).yangi && location.hash.replace('#', '') === 'uy' && !$('.scrim')) setTimeout(() => { if (!$('.scrim')) yangiKor(b); }, 1500); }
+
+const css = `
+.svh{grid-auto-flow:row!important;grid-template-columns:repeat(2,minmax(0,1fr))}
+.zmt{font-size:44px;line-height:1;display:block}
+.avti svg{width:64px;height:auto;display:block}.avw .top{margin-bottom:6px}
+.avshow{position:relative;height:250px;border-radius:24px;overflow:hidden;background:radial-gradient(120% 80% at 50% 10%,#3B4A63 0,#1A2130 55%,#0D1118 100%);box-shadow:inset 0 0 50px rgba(0,0,0,.5),0 10px 24px -12px rgba(0,0,0,.6)}
+.avshow:after{content:'';position:absolute;left:0;right:0;bottom:0;height:42%;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(0,0,0,.35));border-top:1px solid rgba(255,255,255,.08)}
+.avspot{position:absolute;left:50%;top:-40px;width:340px;height:260px;transform:translateX(-50%);background:radial-gradient(closest-side,rgba(255,244,214,.28),transparent);pointer-events:none}
+.avcar{position:absolute;left:50%;bottom:58px;transform:translateX(-50%);z-index:2;animation:avin .6s cubic-bezier(.2,1.2,.4,1)}@keyframes avin{from{transform:translateX(-30%);opacity:0}}
+.avrefl{position:absolute;left:50%;bottom:-128px;transform:translateX(-50%) scaleY(-1);opacity:.16;z-index:1;-webkit-mask-image:linear-gradient(to top,#000 0,transparent 55%);mask-image:linear-gradient(to top,#000 0,transparent 55%)}
+.avcar svg,.avrefl svg{width:min(340px,86vw);height:auto;display:block}
+.avname{position:absolute;left:14px;top:12px;z-index:3;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.6)}.avname b{display:block;font-size:1.15rem}.avname small{opacity:.8}
+.avcars{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin:10px 0}.avc{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 2px;border-radius:14px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;cursor:pointer;min-width:0}
+.avc small{font-size:.68rem;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}.avc.on{box-shadow:0 0 0 3px var(--acc)}.avcs svg{width:100%;height:auto;display:block}.avc.lock .avcs{filter:brightness(0) opacity(.45)}
+.avml{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.avml .avc b{font-size:.85rem}
+.avgoal .avgh{display:flex;align-items:center;gap:8px;justify-content:space-between}.avqs{display:flex;flex-wrap:wrap;gap:5px;margin:8px 0}.avqs span{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.15rem;background:rgba(127,127,127,.12);filter:grayscale(1);opacity:.45}
+.avqs span.ok{filter:none;opacity:1;background:linear-gradient(160deg,#FFE082,#F2A900);box-shadow:0 2px 6px rgba(242,169,0,.45)}
+.avtk{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}.avt{display:flex;flex-direction:column;align-items:center;gap:1px;padding:6px 2px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;cursor:pointer;min-width:0}
+.avt i{font-style:normal;font-size:1.3rem}.avt small{font-size:.66rem;line-height:1.1;text-align:center}.avt.on{box-shadow:0 0 0 3px var(--acc)}
+.avop{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:8px 0}.avo{display:flex;flex-direction:column;align-items:flex-start;gap:1px;padding:8px 10px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;cursor:pointer;text-align:left;min-width:0;position:relative}
+.avo b{font-size:.86rem}.avo small{font-size:.74rem;color:var(--mut)}.avo.sel{box-shadow:0 0 0 3px var(--acc)}.avo.on small{color:#2E9E44;font-weight:700}.avsw{position:absolute;right:8px;top:8px;width:20px;height:20px;border-radius:50%;box-shadow:inset 0 -3px 6px rgba(0,0,0,.35),0 0 0 1px rgba(0,0,0,.2)}
+.avact{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 10px}.avact .btn{flex:1}.avnew{text-align:center}.avsh svg{width:100%;max-width:330px;height:auto}
+.mtg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:8px 0}.mtk{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:1px;padding:10px 12px 14px;border-radius:18px;border:1px solid var(--line);background:linear-gradient(160deg,rgba(124,77,255,.16),var(--card));color:var(--ink);font:inherit;text-align:left;cursor:pointer;min-width:0;box-shadow:0 3px 0 var(--line)}
+.mtk i{font-style:normal;font-size:1.8rem}.mtk small{color:var(--mut);font-size:.76rem}.mtlv{font-size:.74rem;font-weight:700;margin-top:2px}.mtbar{position:absolute;left:12px;right:12px;bottom:6px;height:4px;border-radius:2px;background:rgba(127,127,127,.2)}.mtbar i{display:block;height:100%;border-radius:2px;background:linear-gradient(90deg,#7C4DFF,#00B8D4)}
+.mtqoida{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:8px 12px;margin:6px 0 10px;font-size:.92rem}.mtgame{min-height:200px}
+.mtq{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:10px 0 14px}.mtc{min-width:48px;height:56px;padding:0 6px;border-radius:14px;background:var(--card);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:1.7rem;font-weight:800;letter-spacing:-2px}.mtc.q{border:2px dashed var(--acc);color:var(--acc)}
+.mtop{display:grid;grid-template-columns:repeat(auto-fit,minmax(64px,1fr));gap:8px;margin:8px 0}.mto{height:64px;border-radius:16px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:1.7rem;font-weight:800;cursor:pointer;letter-spacing:-2px}
+.mto.ok{background:#2E9E44;color:#fff;border-color:#2E9E44;animation:svwin .4s}.mto.no{background:#C62828;color:#fff;animation:rrno2 .4s}@keyframes rrno2{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}.mto:disabled{opacity:.4}
+.mtbig .mtop{grid-template-columns:repeat(2,minmax(0,1fr))}.mtbig .mtop.g5{grid-template-columns:repeat(3,minmax(0,1fr))}.mtbig .mto{height:84px;font-size:2.4rem}.mtsab{text-align:center;font-weight:700;margin-top:6px}
+.mtinfo{text-align:center;font-size:.9rem;margin:4px 0 8px}.mtl{display:grid;gap:8px;max-width:330px;margin:0 auto 10px}
+.mtb{aspect-ratio:1;border-radius:50%;border:0;cursor:pointer;background:radial-gradient(circle at 40% 35%,#5B6470,#262B32 70%);box-shadow:inset 0 -4px 8px rgba(0,0,0,.5),0 2px 4px rgba(0,0,0,.3);transition:background .2s,box-shadow .2s}
+.mtb.on{background:radial-gradient(circle at 40% 35%,#FFFDE7,#FFD54F 45%,#F9A825 80%);box-shadow:0 0 18px 4px rgba(255,214,79,.75),inset 0 -3px 6px rgba(180,110,0,.4)}
+.mtr{display:grid;gap:3px;max-width:330px;margin:0 auto 8px;background:#3E4A2E;padding:4px;border-radius:12px}.mtrc{aspect-ratio:1;border-radius:7px;background:linear-gradient(160deg,#A5D6A7,#7CB97F);display:flex;align-items:center;justify-content:center;font-size:1.5rem}.mtrc.dev{background:linear-gradient(160deg,#A1887F,#6D4C41)}
+.mtprog{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;min-height:36px;margin:6px 0;font-size:1.3rem}.mtprog span{padding:2px 4px;border-radius:8px;background:var(--card);border:1px solid var(--line)}.mtprog span.on{background:var(--acc)}.mtprog i{font-size:.85rem;color:var(--mut)}
+.mtar{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin:6px 0}.mtar .btn{font-size:1.4rem;padding:8px 0}
+.mth{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:6px 0 10px}.mthp{position:relative;height:190px;border-radius:14px;border:1px solid var(--line);background:linear-gradient(#0000,rgba(127,127,127,.08));display:flex;flex-direction:column-reverse;align-items:center;justify-content:flex-start;gap:2px;padding:0 0 12px;cursor:pointer}
+.mthp:before{content:'';position:absolute;left:8%;right:8%;bottom:6px;height:6px;border-radius:3px;background:linear-gradient(#A1887F,#5D4037)}.mthst{position:absolute;bottom:10px;width:6px;height:150px;border-radius:3px;background:linear-gradient(90deg,#8D6E63,#D7CCC8,#8D6E63)}
+.mthd{position:relative;height:18px;border-radius:9px;box-shadow:inset 0 -3px 5px rgba(0,0,0,.3),0 1px 2px rgba(0,0,0,.3);z-index:1}.mthp.sel .mthd:last-child{transform:translateY(-14px)}.mthp.sel{box-shadow:0 0 0 3px var(--acc)}
+.mtts{display:flex;flex-direction:column;gap:6px;align-items:center}.mtt{position:relative;width:260px;max-width:100%}.mtt svg{width:100%;height:auto;display:block}.mttl,.mttr{position:absolute;top:2px;font-size:1.5rem;transition:transform .3s;width:34%;text-align:center;letter-spacing:-6px}.mttl{left:2%}.mttr{right:2%}
+.mtsav{text-align:center;font-weight:800;margin:10px 0 4px;font-size:1.05rem}
+.mts{display:grid;gap:4px;max-width:300px;margin:6px auto 8px;padding:4px;border-radius:14px;background:#455A64}.mtsc{aspect-ratio:1;border:0;border-radius:9px;background:#ECEFF1;font-size:1.8rem;font-weight:800;cursor:pointer;color:#263238}.mtsc.bo{background:#FFFFFF;box-shadow:inset 0 0 0 2px #90A4AE}.mtsc.sel{box-shadow:inset 0 0 0 3px var(--acc)}
+.mts.b4 .mtsc:nth-child(4n+2){margin-right:4px}.mts.b4 .mtsc:nth-child(n+5):nth-child(-n+8){margin-bottom:4px}
+`;
+if (typeof document !== 'undefined') { const s2 = document.createElement('style'); s2.textContent = css; document.head.appendChild(s2); }
+A.avto = { MODEL, TARTIB, TUN, RANG, st, decor, qism, missiyaQism, yangiKor, garaj, tEga, carM, uyHTML, uyBind, garajMi };
+A.mantiq = { OY, ORD, GAME, mt, natijaMt, menyu, oyin, dam, turlar, matnlar, ayt, OYINLAR };
 })(typeof window !== 'undefined' ? window : globalThis);
 </script>
 <script>

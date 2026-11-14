@@ -246,6 +246,7 @@ try:
     ev("""(()=>{navigator.mediaDevices.getUserMedia=window.__gum; delete navigator.audioSession; BJ.A.closeSheets()})()""")
 
     # ================= 10. 🆕 YANGILIK TURI 0.9.1 =================
+    ev("(()=>{const Y=BJ.A.yangilik.VER_YANGI; window.__vy=Y[BJ.A.VER]; Y[BJ.A.VER]=Y['0.9.1']})()")   # 0.10.0+: tur mexanizmi 0.9.1 ro'yxati bilan tekshiriladi
     X(AZ, "(()=>{A.yangiSinov=1; delete b.yv; delete b.kor; delete b.esYop; b.boshlandi=A.addDays(A.todayKey(),-6); delete b.missiya; A.save(true); return 1})()")
     GO('uy', 900); kutf(P, "!!document.querySelector('.ytb')", 4000); P.wait_for_timeout(200)
     ok(P.locator('.ytur').count() == 1 and "O'z maqsadim" in P.inner_text('.ytb'), "0.8.0 dan kelgan bola: tur 1-yangilik — 🎯 O'z maqsadim")

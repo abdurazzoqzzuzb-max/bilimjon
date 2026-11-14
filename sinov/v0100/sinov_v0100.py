@@ -32,7 +32,7 @@ try:
     ok(VJ['yangi'] == yang and 2 <= len(yang) <= 4 and all(len(x) <= 90 for x in yang), f"version.json «yangi» = A.YANGI ({len(yang)} qator)")
     bd = html.split('function bolaDefaults()')[1][:1500]; dfl = html.split('function defaults()')[1][:1500]
     ok(not any(k + ':' in bd for k in ('fanOff', 'bolimOff', 'uzun', 'kjins', 'sv')) and 'fanOff' not in dfl, "Yangi maydonlar (fanOff, bolimOff, uzun, kjins, sv) bolaDefaults/defaults ga QO'SHILMAGAN")
-    ok(ev("BJ.A.yangilik.VER_YANGI['0.10.0'].join(',')") == 'sovga,rassom' and ev("!!BJ.A.yangilik.B.sovga && !!BJ.A.yangilik.B.rassom"), "🆕 Yangilik turi: 🎁 Sovg'alarim va 🎨 Rassom")
+    ok(ev("BJ.A.yangilik.VER_YANGI['0.10.0'].join(',')") == 'sovga,avto,mantiq,rassom' and ev("['sovga','avto','mantiq','rassom'].every(k=>!!BJ.A.yangilik.B[k])"), "🆕 Yangilik turi: 🎁 Sovg'alarim, 🏎️ Garaj, 🧠 Mantiq, 🎨 Rassom")
     ok(not re.search(r"j_it|kuchuk|'🐕'|'🐶'|🐷|cho'chqa", html.split('/* ================= KATALOG')[1][:9000]), "Katalogda it va cho'chqa yo'q (u: itsiz)")
 
     # ================= 1. UY EKRANI =================
@@ -74,7 +74,7 @@ try:
 
     # ================= 5. 👨‍👩‍👧 OTA-ONA FORMASI =================
     ev("BJ.A.otaOk={rol:'admin',t:Date.now()}"); GO('ota-tahrir-' + SB, 700)
-    ok(P.locator('[data-fan]').count() == 8 and P.locator('[data-bolim]').count() == 12 and P.locator('#fun').count() == 1 and P.locator('#fkj').count() == 1, "Formada: 8 fan, 12 bo'lim, missiya uzunligi, kiyim to'plami")
+    ok(P.locator('[data-fan]').count() == 8 and P.locator('[data-bolim]').count() == 13 and P.locator('#fun').count() == 1 and P.locator('#fkj').count() == 1, "Formada: 8 fan, 13 bo'lim, missiya uzunligi, kiyim to'plami")
     ok(not P.locator('[data-fan="ar"]').is_checked() and ev("document.getElementById('farab').hidden"), "Arab o'chiq — arab daraja tanlovlari yashirin")
     P.locator('[data-fan="ar"]').check(); ok(not ev("document.getElementById('farab').hidden"), "Arab yoqilsa — tanlovlar ko'rinadi"); P.locator('[data-fan="ar"]').uncheck()
     for f in ('mat', 'til', 'en', 'mant'): P.locator(f'[data-fan="{f}"]').uncheck()
@@ -127,18 +127,34 @@ try:
     X(OM, "(b.yulduz=b.sv.sarf+5, A.save(true), 1)"); GO('sovga-dokon', 500)
     P.locator('[data-svdt="jon"]').click(); P.wait_for_timeout(300); P.locator('[data-svsot][data-p="yul"]').first.click(); P.wait_for_timeout(300)
     ok(P.locator('.sheet').count() == 0, "⭐ yetmasa — sotib olinmaydi (eslatma)")
-    setj(AB); X(AB, "(A.pul.st(b).h=50000, A.save(true), 1)"); GO('sovga-dokon', 500); P.locator('[data-svdt="ulov"]').click(); P.wait_for_timeout(300)
-    uid = P.locator('[data-svsot][data-p="som"]').first.get_attribute('data-svsot'); sn = X(AB, f"A.pul.narxK(b, 3000)")
+    setj(AB); X(AB, "(A.pul.st(b).h=50000, A.save(true), 1)"); GO('sovga-dokon', 500); P.locator('[data-svdt="oyin"]').click(); P.wait_for_timeout(300)
+    uid = P.locator('[data-svsot][data-p="som"]').first.get_attribute('data-svsot'); sn = X(AB, f"A.pul.narxK(b, ({{1:3000,2:7000,3:15000}})[V.KAT['{uid}'].d])")
     P.locator('[data-svsot][data-p="som"]').first.click(); P.wait_for_timeout(300); P.click('.sheet [data-ok]'); P.wait_for_timeout(700)
     ok(X(AB, f"V.ega(b,'{uid}') && A.pul.st(b).h===50000-{sn}"), f"💵 so'm bilan sotib olindi ({uid}, {sn} so'm)")
     ok(W() <= 390, f"390 px: do'kon ({W()})"); P.screenshot(path='/tmp/bj0100_dokon.png')
 
-    # ================= 9. 🚗 ULOV — poyga/sahna bezagi =================
-    X(AB, "(V.ber(b,'u_kupe'), A.save(true), 1)")
-    ok(X(AB, "A.bezak(b).kuzov===1 && A.bezak(b).rang===5"), "Tanlangan mashina (Qizil sport kupe) — A.bezak orqali yo'l, sahna va poygada")
-    GO('sovga-ulov', 500); P.locator('[data-svul="asl"]').click(); P.wait_for_timeout(300)
-    ok(X(AB, "!b.sv.ulov && (A.bezak(b).kuzov||0)===0"), "«Asl mashinam» — o'z tuning mashinasi qaytadi")
-    ok(X(OM, "V.mos(b,V.KAT['u_kupe'])===false && V.mos(b,V.KAT['u_malika'])===true"), "Orol dunyosida — uchar otlar, garajda — mashinalar")
+    # ================= 9. 🏎️ AVTOSALON — realistik mashina, qism yig'ish, tuning =================
+    ok(X(AB, "A.bezak(b).model==='sedan'") and 'carm"' in X(AB, "BJ.art.car(A.bezak(b),{w:200})"), "Garaj bolasining o'z mashinasi — realistik sport sedan (sahna, yo'l, poyga — A.bezak)")
+    ok(X(OM, "V.mos(b,V.KAT['u_malika'])===true && !V.KAT['u_kupe']") and 'class="pegasus"' in X(OM, "BJ.art.pegasus({}, {w:200})"), "Orolda — realistik uchar otlar; garaj presetlari olib tashlangan (mashina — qism yig'ib)")
+    GO('avto', 600)
+    ok(P.locator('.avcar svg.carm').count() == 1 and P.locator('.avc').count() == 5 and P.locator('.avt').count() == 10, "🏎️ Garaj: shou-rum, 5 mashina, 10 tuning turi")
+    ok(X(AB, "A.avto.st(b).maq") == 'kupe' and P.locator('.avqs span').count() == 6, "Maqsad: GT kupe — 6 qism uyasi")
+    X(AB, "(A.avto.qism(b,5,'sinov'), 1)"); ok(X(AB, "A.avto.st(b).q===5 && !A.avto.st(b).ega.kupe"), "5 qism — hali ochilmadi")
+    o1 = X(AB, "A.avto.qism(b,2,'sinov')"); ok(o1 == 'kupe' and X(AB, "!!A.avto.st(b).ega.kupe && A.avto.st(b).q===1 && A.avto.st(b).maq==='jip' && A.avto.st(b).yangi==='kupe'"), "6-qismda GT kupe ochildi, ortgan qism keyingi maqsadga (jip) o'tdi")
+    GO('uy', 2000); ok(P.locator('.sheet .avnew').count() == 1, "Uyga kirganda: «🎉 Yangi mashina ochildi!» oynasi")
+    P.click('.sheet [data-ok]'); P.wait_for_timeout(600); ok(X(AB, "A.avto.st(b).a==='kupe' && A.bezak(b).model==='kupe' && !A.avto.st(b).yangi"), "«Shu bilan haydayman» — faol mashina GT kupe")
+    X(AB, "(b.yulduz=(b.sv&&b.sv.sarf||0)+100, A.save(true), 1)"); GO('avto', 500); P.click('[data-avk="disk"]'); P.wait_for_timeout(200); P.click('[data-avv="2"]'); P.wait_for_timeout(200)
+    ok(P.locator('.avcar svg.carm').count() == 1 and 'Qora sport' in P.locator('.avo.sel').inner_text(), "Tuningni bosganda katta mashinada oldindan ko'rinadi")
+    s1 = X(AB, "b.sv.sarf"); P.click('[data-avbuy="yul"]'); P.wait_for_timeout(500)
+    ok(X(AB, f"A.avto.st(b).t.kupe.disk===2 && b.sv.sarf==={s1}+20 && A.bezak(b).disk===2"), "⭐ 20 ga «Qora sport» disk sotib olindi va o'rnatildi")
+    P.click('[data-avk="neon"]'); P.wait_for_timeout(200); P.click('[data-avv="1"]'); P.wait_for_timeout(200); h0 = X(AB, "A.pul.st(b).h"); P.click('[data-avbuy="som"]'); P.wait_for_timeout(300); P.click('.sheet [data-ok]'); P.wait_for_timeout(600)
+    ok(X(AB, f"A.avto.st(b).t.kupe.neon===1 && A.pul.st(b).h==={h0}-A.pul.narxK(b,4000)"), "💵 so'm bilan «Ko'k neon» olindi")
+    ok(X(AB, "(b.detal=[{k:'spoyler',t:2}], A.avto.tEga(b,'kupe','spoyler',2) && !A.avto.tEga(b,'kupe','spoyler',3))"), "Eski missiya detallari — bepul tuning (spoyler 2-daraja)")
+    ok(W() <= 390, f"390 px: garaj ({W()})"); P.screenshot(path='/tmp/bj0100_garaj.png', full_page=True)
+    tv2 = X(AB, "(()=>{delete b.sv.tq['t-g']; return V.tanlov(b,'t-g',1).map(k=>k.id)})()")
+    ok('x_qism' in tv2 and 'x_tun' in tv2, f"Garaj bolasining sovg'a tanlovida: 🔩 qism ×2 va ⭐ tuning ({tv2})")
+    q0 = X(AB, "A.avto.st(b).q"); X(AB, "V.olish(b,'t-g','x_qism','sinov')"); ok(X(AB, f"A.avto.st(b).q==={q0}+2"), "«🔩 Mashina qismi ×2» tanlansa — maqsadga 2 qism")
+    ok(X(AB, "(()=>{const k=A.todayKey(); delete A.avto.st(b).mk[k]; const q=A.avto.st(b).q; A.avto.missiyaQism(b); A.avto.missiyaQism(b); return A.avto.st(b).q-q})()") == 2, "Missiya oxiri — 🔩 2 qism (kuniga bir marta)")
 
     # ================= 10. 👕 KIYIMLAR (qizlar — yopiq) =================
     ok(X(SB, "V.kj(b)==='q' && !V.mos(b,V.KAT['k_futbolka']) && V.mos(b,V.KAT['k_romol']) && V.mos(b,V.KAT['k_chopon'])"), "Qizlar to'plami: ro'mol, chopon bor; o'g'il bolalar kiyimi yo'q")
@@ -198,6 +214,34 @@ try:
     P.click('.sheet [data-o="3"]'); P.wait_for_timeout(700)
     ok(P.locator('.ragol').count() == 1 and X(OM, "b.yulduz") == y1 + 2, "👨‍👩‍👧 Ota-ona olqishi (PIN bilan) 🏆 → rasmda belgi, bolaga +2⭐")
     ok(W() <= 390, f"390 px: rassom ({W()})")
+
+    # ================= 12b. 🧠 MANTIQ O'YINLARI =================
+    setj(AB); GO('mantiq', 500)
+    ok(P.locator('.mtk').count() == 7, "🧠 Mantiq: 7 xil o'yin (naqsh, ortiqcha, chiroqlar, robot, minora, tarozi, sudoku)")
+    ok(X(AB, "A.mantiq.mt(b,'naqsh').lv") == 1 and X(OM, "A.mantiq.mt(b,'naqsh').lv") == 5, "Boshlang'ich daraja yoshga qarab: maktabgacha 1, 2-sinf 5")
+    for g in ['naqsh', 'ortiqcha', 'chiroq', 'robot', 'minora', 'tarozi', 'sudoku']:
+        GO('mantiq-' + g, 450); ok(P.locator('#mtg').inner_html().strip() != '' and W() <= 390 and P.locator('[data-say]').count() == 1, f"{g}: o'yin chizildi, 🔊 tushuntirish tugmasi, 390 px")
+    GO('mantiq-naqsh', 450); a = ev("String(BJ.A.mantiq._c.ans)")
+    opts = [P.locator(f'[data-mo="{i}"]').inner_text() for i in range(P.locator('[data-mo]').count())]
+    P.locator(f'[data-mo="{opts.index(a)}"]').click(); P.wait_for_timeout(1200)
+    ok(X(AB, "A.mantiq.mt(b,'naqsh').lv") == 2 and P.locator('.sheet').count() == 1 and '2-daraja' in P.locator('.sheet').inner_text(), "Naqsh yutildi → 2-daraja ochildi (keyingisi qiyinroq)")
+    P.click('.sheet [data-ok]'); P.wait_for_timeout(500); a2 = ev("String(BJ.A.mantiq._c.ans)"); o2 = [P.locator(f'[data-mo="{i}"]').inner_text() for i in range(P.locator('[data-mo]').count())]
+    ok(len(o2) >= 3 and ev("BJ.A.mantiq._c.lv") == 2, "Keyingi daraja yangi naqsh bilan boshlandi")
+    lvx = X(AB, "(()=>{const x=A.mantiq.mt(b,'tarozi'); x.lv=4; x.x=0; A.mantiq.natijaMt(b,'tarozi',false); A.mantiq.natijaMt(b,'tarozi',false); return x.lv})()")
+    ok(lvx == 3, "2 marta ketma-ket yutqazsa — bir daraja osonlashadi (bola zerikmasin, qiynalmasin)")
+    GO('mantiq-minora', 450)
+    def hp(i): P.locator(f'[data-p="{i}"]').click(); P.wait_for_timeout(120)
+    hp(0); hp(1); hp(0); hp(1); P.wait_for_timeout(300)
+    ok(X(AB, "true") and P.locator('.mthp').nth(1).locator('.mthd').count() == 1, "Minora: katta halqani kichigi ustiga qo'yib bo'lmaydi")
+    hp(0); hp(2); hp(1); hp(2); P.wait_for_timeout(1000)
+    ok(P.locator('.sheet').count() == 1 and X(AB, "A.mantiq.mt(b,'minora').lv") == 2, "Minora 2 halqa — yechildi, 2-daraja (3 halqa)")
+    GO('mantiq-chiroq', 450); on0 = P.locator('.mtb.on').count(); P.locator('.mtb').first.click(); P.wait_for_timeout(200)
+    ok(P.locator('.mtb.on').count() != on0 or P.locator('.sheet').count() == 1, "Chiroqlar: bosilganda o'zi va qo'shnilari almashadi")
+    GO('mantiq-sudoku', 450); blank = P.locator('.mtsc.bo').first; blank.click(); P.wait_for_timeout(150)
+    ok(P.locator('[data-v]:not([disabled])').count() >= 3, "Sudoku: bo'sh katak tanlanganda rasmlar tanlovi ochiladi")
+    ok(any(t.startswith('mt_') for t in ev("BJ.A.oyin.turlar(BJ.A.bola())")), "Dam olish oynasida ham mantiq o'yinlari (bir xil o'yin takrorlanmasin)")
+    mt_txt = ev("BJ.A.mantiq.matnlar()"); ok(len(mt_txt) >= 20 and not any(ch.isdigit() for t in mt_txt for ch in t), f"🔊 Ovozli tushuntirishlar: {len(mt_txt)} ta ibora (raqamsiz — neyron ovozga tayyor)")
+    X(AB, "(b.bolimOff={mantiq:1}, A.save(true), 1)"); GO('uy', 500); ok(P.locator('[data-mtgo]').count() == 0 and not any(t.startswith('mt_') for t in ev("BJ.A.oyin.turlar(BJ.A.bola())")), "Ota-ona 🧠 Mantiqni o'chirsa — uyda ham, dam olishda ham yo'q"); X(AB, "(b.bolimOff={}, A.save(true), 1)")
 
     # ================= 13. 🎁 SOVG'A TANLOVI — xilma-xillik, 3A =================
     tv = X(AB, "(()=>{const L=V.tanlov(b,'t-x',1); return L.map(k=>k.t)})()")

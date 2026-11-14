@@ -134,11 +134,11 @@ try:
     ev("BJ.A.S().sozlama.zalOchish='missiya'; BJ.A.S().sozlama.zalChipta=true; BJ.A.save(true)")
 
     # ================= B) 🎮 DAM OLISHDA 7 O'YIN =================
-    ok(ev("Object.values(BJ.A.S().bolalar).map(b=>BJ.A.oyin.turlar(b).length)") == [7, 7, 7], "Dam olish: har yoshga 7 ta o'yin (g0, g1, g2)")
+    ok(ev("Object.values(BJ.A.S().bolalar).map(b=>BJ.A.oyin.turlar(b).length)") == [8, 8, 8], "Dam olish: har yoshga 7 ta o'yin + 1 ta 🧠 mantiq o'yini (0.10.0, navbat bilan)")
     setj(K); NAV('uy'); ev("window.__dn=0")
     BOSH = "BJ.A.oyin.boshla(BJ.A.bola(), {k:'sinov'}, ()=>{window.__dn=(window.__dn||0)+1})"
     ev(BOSH); pg.wait_for_timeout(250)
-    ok(pg.locator('.damg .zcard').count() == 7 and 'Darsga qaytish' in pg.inner_text('body') and ev("BJ.A.CUR().k") == 'oyin', "Maktabgacha bolaga ham tanlov ekrani: 7 o'yin (zIcon), «↩ Darsga qaytish», CUR=oyin")
+    ok(pg.locator('.damg .zcard').count() == 8 and 'Darsga qaytish' in pg.inner_text('body') and ev("BJ.A.CUR().k") == 'oyin', "Maktabgacha bolaga ham tanlov ekrani: 7 o'yin (zIcon) + 🧠 mantiq, «↩ Darsga qaytish», CUR=oyin")
     ok(W() <= 391 and ev("document.querySelector('.damg').getBoundingClientRect().bottom") < 844 + 40, f"390 px: tanlov ekrani sig'adi ({W()})")
     SHOT(pg, 'dam_tanlov')
     ev("window.__bjOyin().sek = 120")
@@ -159,7 +159,7 @@ try:
     ok(r[0] and r[1] and [1, 0] in r[2], f"Rekord, hafta natijasi (hb) va zal logi dam:1 bilan yozildi {r}")
     SHOT(pg, 'dam_natija')
     pg.click('[data-boshqa]'); pg.wait_for_timeout(300)
-    ok(pg.locator('.damg .zcard').count() == 7 and "Yana bir o'yin" in pg.inner_text('body'), "«Boshqa o'yin» → tanlov ekrani (vaqt davom etadi)")
+    ok(pg.locator('.damg .zcard').count() == 8 and "Yana bir o'yin" in pg.inner_text('body'), "«Boshqa o'yin» → tanlov ekrani (vaqt davom etadi)")
     pg.click('[data-o="xotira"]'); pg.wait_for_timeout(300)
     s = ev("window.__bjZal().game.state()"); dk = s['deck']; i0 = 0; j = next(i for i in range(1, len(dk)) if dk[i] == dk[0])
     rest = [i for i in range(len(dk)) if i not in (0, j)]
@@ -191,7 +191,7 @@ try:
         b = pg.locator('#app .btn.big, [data-next], [data-ok]')
         if b.count(): b.first.click(); pg.wait_for_timeout(400)
         else: pg.wait_for_timeout(200)
-    ok(pg.locator('.damg .zcard').count() == 7, "Missiyada (2-sinf): savoldan keyin dam olish — 7 o'yin tanlovi")
+    ok(pg.locator('.damg .zcard').count() == 8, "Missiyada (2-sinf): savoldan keyin dam olish — 7 o'yin + 🧠 mantiq tanlovi")
     pg.click('[data-qayt]'); pg.wait_for_timeout(400)
     ok(ev("location.hash") == '#missiya' and pg.locator('.damg').count() == 0, "«↩ Darsga qaytish» → missiya davom etadi")
     ev("(()=>{const b=BJ.A.bola(); b.oyinHar=null; b.oyinDaq=null; BJ.A.save(true)})()")
