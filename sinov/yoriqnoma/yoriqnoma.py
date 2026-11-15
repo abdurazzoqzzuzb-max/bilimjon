@@ -1,5 +1,6 @@
 """Bilimjon 📘 YO'RIQNOMA + TAKLIFNOMA — yangi oilaga yuboriladi (iPhone va Android, rasmli, 6 sahifa 9:16).
-Ishlatish:  python3 sinov/yoriqnoma/yoriqnoma.py [papka=/tmp/bj_yoriqnoma] [--suratsiz]
+Ishlatish:  python3 sinov/yoriqnoma/yoriqnoma.py [papka=/tmp/bj_yoriqnoma] [--suratsiz] [--qisqa]
+  --qisqa (u 15.11: «qisqa, tushunarli, ssilkasi bilan — Telegram'da tashlash uchun»): 4 sahifa — taklifnoma, iPhone, Android, birinchi ochilish (rasmsiz)
   → <papka>/Bilimjon_yoriqnoma_v7.6.pdf  +  <papka>/Bilimjon_1.jpg … Bilimjon_6.jpg (1080×1920 — Telegram albomi uchun)
   • versiya (v7.6) index.html dagi A.VER dan o'zi olinadi; ekran rasmlari — sinov/yoriqnoma/suratlar.py (haqiqiy ilova, namuna oila);
   • matnni o'zgartirish — pastdagi SAHIFALAR (har sahifa — sarlavha + qadamlar). Yangi versiyada: matnni tuzatish → qayta ishga tushirish.
@@ -73,7 +74,8 @@ def qadam(n, sar, mat, rasm=''):
     return f'<div class="qd"><div class="qn">{n}</div><div class="qm"><b>{sar}</b><p>{mat}</p>{rasm}</div></div>'
 def bosh(ic, sar, kichik=''):
     return f'<div class="bsh"><span class="bic">{ic}</span><div><h2>{sar}</h2>{f"<small>{kichik}</small>" if kichik else ""}</div><span class="vpill">v{VK}</span></div>'
-def oyoq(n): return f'<div class="oyoq"><span>Bilimjon · oilaviy o\'yin-darslik</span><span>{n} / 6</span></div>'
+QISQA = '--qisqa' in sys.argv; JAMI = 4 if QISQA else 6
+def oyoq(n): return f'<div class="oyoq"><span>Bilimjon · oilaviy o\'yin-darslik</span><span>{n} / {JAMI}</span></div>'
 LINK = f'<a class="url" href="{SAYT}">{e(SAYT_K)}</a>'
 
 # ======================= SAHIFALAR (matnni shu yerda o'zgartiring) =======================
@@ -81,10 +83,10 @@ SAHIFALAR = [
 # 1 — taklifnoma
 f'''<div class="cover"><img class="logo" src="{ICON}" alt=""><h1>Bilimjon</h1><div class="sub">oilaviy o'yin-darslik · v{VK}</div>
 <div class="taklif"><div class="tk">✉️ TAKLIFNOMA</div><h3>Sizni oilamiz ilovasiga taklif qilamiz!</h3>
-<p>Farzandlaringiz har kuni <b>20–30 daqiqa</b> o'ynab o'rganadi: matematika, ona tili va o'qish, ingliz va arab tili, mantiq. Savollar <b>ovozda o'qiladi</b>, xato qilsa — rasmli kichik dars. Missiyadan keyin — o'yinlar zali, sovg'alar va <b>oilalar o'rtasida reyting</b>.</p><p class="bep">🎁 Birinchi <b>1 oy — bepul</b>, keyin pullik.</p></div>
+<p>Farzandlaringiz har kuni <b>20–30 daqiqa</b> o'ynab o'rganadi: matematika, ona tili va o'qish, ingliz va arab tili, mantiq. Savollar <b>ovozda o'qiladi</b>, xato qilsa — rasmli kichik dars. Har bosqichdan keyin — <b>sovg'a tanlaydi</b> (jonivor, mashina, kiyim), mantiq o'yinlari, rassom va <b>oilalar o'rtasida reyting</b>.</p><p class="bep">🎁 Birinchi <b>1 oy — bepul</b>, keyin pullik.</p></div>
 <div class="fan">{tel('04_uy', 132, .62, 'f1')}{tel('05_savol', 150, .55, 'f2')}{tel('09_zal', 132, .62, 'f3')}</div>
 <div class="maxfiy"><b>🔒 Bu — shaxsiy oilaviy ilova</b><span>Faqat taklif qilingan oilalar uchun. Iltimos, havolani va shu yo'riqnomani boshqa hech kimga yubormang. Natijalar ilova egasi tomonidan o'quv rejasi uchun ko'rib chiqiladi.</span></div>
-<div class="keyin">📲 O'rnatish — 5 daqiqa: <b>2-sahifa — iPhone</b>, <b>3-sahifa — Android</b></div></div>{oyoq(1)}''',
+<div class="keyin">📲 O'rnatish — 5 daqiqa: <b>2-sahifa — iPhone</b>, <b>3-sahifa — Android</b><br>{LINK}</div></div>{oyoq(1)}''',
 # 2 — iPhone
 bosh('', 'iPhone\'ga o\'rnatish', 'Faqat <b>Safari</b> brauzerida (Chrome emas)') + '<div class="qlar">' +
 qadam(1, 'Safari\'da oching', f'Havolani bosing yoki Safari\'ga yozing:<br>{LINK}', '') +
@@ -112,10 +114,21 @@ qadam(2, 'Bolani qo\'shing', '<b>Laqab</b> (ism-familiya emas), avatar va <b>sin
 # 6 — reyting va kundalik
 bosh('🏆', 'Oilalar o\'rtasida reyting', 'Bolalar boshqa oila bolalari bilan musobaqalashadi') + '<div class="qlar">' +
 qadam(1, 'Guruh kodini kiriting', 'Sizni taklif qilgan oiladan <b>10 belgili guruh kodini</b> so\'rang. 👨‍👩‍👧 → <b>«📲 Oila reytingi»</b> → kod → <b>«🔗 Qo\'shilish»</b>. Yoki egasiga yozing — o\'zi qo\'shib qo\'yadi.', f'<div class="row2">{tel("24_guruh_kod", 140, .42)}{tel("10_rekordlar", 140, .42)}</div>') +
-'</div><div class="kun"><b>Har kuni</b><ul><li>🚀 <b>1 ta missiya</b> (20–35 daq) — keyin 🎮 <b>o\'yinlar zali</b> ochiladi.</li><li>🔑 Zalni missiyasiz ham ochish mumkin — ota-ona PIN bilan.</li><li>📊 Ota-ona panelida — <b>hafta xulosasi</b> va bolaning savollari.</li>'
+'</div><div class="kun"><b>Har kuni</b><ul><li>🚀 <b>1 ta missiya</b> (3 bosqich, har biridan keyin sovg\'a) — keyin 🎮 <b>o\'yinlar zali</b> ochiladi.</li><li>🔑 Zalni missiyasiz ham ochish mumkin — ota-ona PIN bilan.</li><li>📊 Ota-ona panelida — <b>hafta xulosasi</b> va bolaning savollari.</li>'
 f'<li>🔄 Yangi versiya chiqqanda ilova <b>o\'zi yangilanadi</b>. Tepada eski raqam qolsa — yopib qayta oching (hozir «v{VK}»).</li></ul></div>'
 '<div class="maxfiy kichik"><b>🔒 Eslatma</b><span>Ilova shaxsiy — boshqalarga ulashmang. Savol bo\'lsa — sizni taklif qilgan odamga yozing.</span></div>' + oyoq(6),
 ]
+
+# 4 (faqat --qisqa) — birinchi ochilish: kirish, ruxsat, oila, bola — rasmsiz, bitta sahifada
+Q4 = (bosh('🔑', 'Birinchi ochilganda', '3–5 daqiqa, bir marta') + '<div class="qlar">' +
+qadam(1, 'Ro\'yxatdan o\'ting', 'Tanishtiruv oxirida <b>«✉️ Ro\'yxatdan o\'tish / kirish»</b> → email va <b>yangi parol</b> (Gmail paroli emas). Parolni yozib qo\'ying — oilaning 2-telefonida ham kerak.') +
+qadam(2, 'Ruxsat so\'rang', 'Oila nomini yozing → <b>«📨 Ruxsat so\'rash»</b> → <b>«✈️ Telegram\'da egasiga yozish»</b> → Telegram\'da yuboring. Egasi ✅ bosgach ilova <b>o\'zi</b> ochiladi.') +
+qadam(3, 'Ota-ona PIN va bolalar', '<b>4 raqamli PIN</b> o\'ylang (bolalarga aytmang). Keyin har bola: <b>laqab</b>, avatar va <b>sinf</b> → «Saqlash».') +
+qadam(4, 'Boshladik!', 'Bola o\'z rasmini bosadi → <b>«🚀 Missiyani boshlash»</b>. Har bosqichdan keyin 3 ta sovg\'adan birini tanlaydi.') +
+'</div><div class="eslat ogoh">📱 <b>Bitta bola — bitta qurilma.</b> 2-telefonda (oyisi yoki dadasi): ilovani o\'rnating → <b>«Kirish»</b> — o\'sha email va parol.</div>'
+f'<div class="eslat">🔄 Yangi versiya chiqqanda ilova <b>o\'zi yangilanadi</b> (hozir «v{VK}»).</div>'
+'<div class="maxfiy kichik"><b>🔒 Shaxsiy ilova</b><span>Havolani va shu yo\'riqnomani boshqalarga yubormang. Savol bo\'lsa — sizni taklif qilgan odamga yozing.</span></div>' + oyoq(4))
+if QISQA: SAHIFALAR = SAHIFALAR[:3] + [Q4]
 
 CSS = '''
 @page { size: 540px 960px; margin: 0 }
@@ -156,7 +169,7 @@ h1{font:800 46px/1.05 "Inter Display",Inter;letter-spacing:-.5px;margin-top:12px
 '''
 HTML = '<!doctype html><html lang="uz"><head><meta charset="utf-8"><title>Bilimjon — yo\'riqnoma</title><style>' + CSS + '</style></head><body>' + ''.join(f'<section class="pg">{s}</section>' for s in SAHIFALAR) + '</body></html>'
 hf = os.path.join(OUT, 'yoriqnoma.html'); open(hf, 'w', encoding='utf-8').write(HTML)
-PDF = os.path.join(OUT, f'Bilimjon_yoriqnoma_v{VK}.pdf')
+PDF = os.path.join(OUT, f'Bilimjon_ornatish_v{VK}.pdf' if QISQA else f'Bilimjon_yoriqnoma_v{VK}.pdf')
 with sync_playwright() as p:
     br = p.chromium.launch(); pg = br.new_page(viewport={'width': 540, 'height': 960}, device_scale_factor=2)
     pg.goto('file://' + hf); pg.wait_for_timeout(600)
