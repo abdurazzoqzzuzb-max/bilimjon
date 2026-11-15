@@ -11,6 +11,7 @@
      holat                          — hamma akkauntlar: email, admin, ruxsat, oila, bolalar, oxirgi kirish/sinxron, versiya
      statistika [email|hammasi]     — bolalar: bu hafta va o'tgan 4 hafta (kun, daqiqa, missiya, aniqlik), oxirgi faol kun
      tahlil [kun=21]                — 📈 hamma oila: bola holati + oxirgi N kun logi → gzip+base64 (faqat yopiq repo logida; Claude ochadi)
+     ielts [email]                  — 🇬🇧 Road to 8: bulutdagi natija (holat, jonli, norma) → gzip+base64 (faqat yopiq repo logida)
      ruxsat <email> <ok|rad|blok|ochir>
      ruxsat hammasi ok              — bulutda oilasi bor hamma akkauntga ruxsat (rad/blok qilinganlardan tashqari) — qoidalardan OLDIN
      admin <email> <ber|ol>         — custom claim admin=true (qoidalardagi admin())
@@ -119,6 +120,23 @@ B.tahlil = async ({ auth, db, log, A1 }) => {
   const b64 = zlib.gzipSync(JSON.stringify(out)).toString('base64');
   log(`📈 Tahlil: ${out.oila.length} oila, ${out.oila.reduce((s, o) => s + o.bolalar.length, 0)} bola, ${out.oila.reduce((s, o) => s + Object.keys(o.log).length, 0)} kunlik log (oxirgi ${kun} kun) · ${Math.round(b64.length / 1024)} KB`);
   log('=== TAHLIL-B64 BOSHI ==='); for (let i = 0; i < b64.length; i += 3000) log(b64.slice(i, i + 3000)); log('=== TAHLIL-B64 OXIRI ===');
+  return out;
+};
+
+/* 🇬🇧 Road to 8 (ielts/, 15.11): oila/{uid}/ielts/{holat,jonli,sozlama} — A1 = email (bo'sh — ielts hujjati bor hamma akkaunt).
+   Natija gzip+base64, faqat YOPIQ repo logida (IELTS-B64 belgilari orasida); Claude chatda ochib, tahlil.py bilan hisobot qiladi. */
+B.ielts = async ({ auth, db, log, A1 }) => {
+  const users = A1 ? [await foydalanuvchi(auth, A1)] : await hammaFoydalanuvchi(auth), out = { v: 1, ts: Date.now(), r: [] };
+  for (const u of users) {
+    const s = await db.collection('oila/' + u.uid + '/ielts').get(); if (s.empty) continue;
+    const d = {}; s.forEach(x => { d[x.id] = x.data() || {}; });
+    out.r.push({ email: u.email, oxirgiKirish: u.metadata && u.metadata.lastSignInTime, d });
+    const h = d.holat || {}, j = d.jonli || {};
+    log(`🇬🇧 ${u.email} · holat: ${vaqt(h.ts || 0)} (v${h.ver || '?'}, ${Math.round(String(h.j || '').length / 1024)} KB) · jonli: ${vaqt(j.oxirgi || 0)} · norma: ${(d.sozlama && d.sozlama.norma) || '—'}`);
+  }
+  if (!out.r.length) return log('🇬🇧 Road to 8: bulutda hech kimning natijasi yo\'q');
+  const b64 = zlib.gzipSync(JSON.stringify(out)).toString('base64');
+  log('=== IELTS-B64 BOSHI ==='); for (let i = 0; i < b64.length; i += 3000) log(b64.slice(i, i + 3000)); log('=== IELTS-B64 OXIRI ===');
   return out;
 };
 
