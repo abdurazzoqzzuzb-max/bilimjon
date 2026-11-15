@@ -100,6 +100,14 @@ const xato = async (b, x) => { try { await run(b, x); return null; } catch (e) {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'bjz')); L.length = 0; const f = await run('zaxira', { ZAXIRA_PAPKA: tmp });
   const z = JSON.parse(zlib.gunzipSync(fs.readFileSync(f)));
   ok(Object.keys(z.oila).length === 3 && z.oila.UjavUID.bolalar.s1 && Object.keys(z.oila.UjavUID.log).length === 1 && z.ruxsat.UjavUID && z.guruh.ABCDEFGH23.oilalar.UadminUID, 'zaxira: oila (bola, log), ruxsat, guruh — hammasi faylda');
+  // 📈 tahlil: hamma oila → gzip+base64 logda, rasm satrlari qisqartiriladi
+  ST['oila/UadminUID'].j = JSON.stringify({ oila: { nom: 'Admin oila' }, tartib: ['a1'], sovga: [{ rasm: 'data:image/jpeg;base64,' + 'A'.repeat(5000) }] });
+  L.length = 0; await run('tahlil', { A1: '30' });
+  const tb = L.slice(L.indexOf('=== TAHLIL-B64 BOSHI ===') + 1, L.indexOf('=== TAHLIL-B64 OXIRI ===')).join(''), tz = JSON.parse(zlib.gunzipSync(Buffer.from(tb, 'base64')));
+  const ta = tz.oila.find(o => o.email === 'admin@test.uz'), tj = tz.oila.find(o => o.email === 'dost@test.uz');
+  if (process.env.DBG) console.log(tz.oila.length, ta && ta.j.sovga, tj && Object.keys(tj.log), Math.max(...L.map(s => s.length)));
+  ok(tz.kun === 30 && tz.oila.length >= 2 && ta.bolalar[0].laqab === 'Ali' && tj.log['s1_' + bu[1]].e.length === 1 && ta.j.sovga[0].rasm === '[5023]' && L.every(s => s.length <= 3000),
+    'tahlil: 2 oila, bola holati, log, rasm qisqartirilgan, satr ≤ 3000');
   // 🏆 0.7.6: guruh <email1> <email2> — ikki oilani bitta reyting guruhiga ulash
   ok(/Ikkita email/.test(await xato('guruh', { A1: 'admin@test.uz' }) || ''), "guruh: 2-email yo'q — tushunarli xato");
   USERS.push(user('UbosUID', 'bos@test.uz'));
