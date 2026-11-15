@@ -30,6 +30,7 @@ try:
   with sync_playwright() as p:
     br = p.chromium.launch(args=['--use-fake-ui-for-media-stream', '--use-fake-device-for-media-stream', '--autoplay-policy=no-user-gesture-required'])
     ctx = br.new_context(viewport={'width': 390, 'height': 844}, service_workers='block', device_scale_factor=2)
+    ctx.clock.install(time=__import__('datetime').datetime(2026, 11, 14, 10, 0))   # 15.11: sana qotirildi — yakshanba kuni missiya «final» bo'ladi, sinov oddiy kunni kutadi
     P = ctx.new_page(); P.on('pageerror', lambda e: PE.append(str(e))); ev = P.evaluate
     P.goto(URL + '?tez=1'); P.wait_for_timeout(400)
     P.fill('#on', 'Sinov oila'); P.fill('#p1', '1234'); P.fill('#p2', '1234'); P.click('#go'); P.wait_for_timeout(300)
@@ -246,6 +247,7 @@ try:
     ev("""(()=>{navigator.mediaDevices.getUserMedia=window.__gum; delete navigator.audioSession; BJ.A.closeSheets()})()""")
 
     # ================= 10. 🆕 YANGILIK TURI 0.9.1 =================
+    ev("(()=>{const Y=BJ.A.yangilik.VER_YANGI; window.__vy=Y[BJ.A.VER]; Y[BJ.A.VER]=Y['0.9.1']})()")   # 0.10.0+: tur mexanizmi 0.9.1 ro'yxati bilan tekshiriladi
     X(AZ, "(()=>{A.yangiSinov=1; delete b.yv; delete b.kor; delete b.esYop; b.boshlandi=A.addDays(A.todayKey(),-6); delete b.missiya; A.save(true); return 1})()")
     GO('uy', 900); kutf(P, "!!document.querySelector('.ytb')", 4000); P.wait_for_timeout(200)
     ok(P.locator('.ytur').count() == 1 and "O'z maqsadim" in P.inner_text('.ytb'), "0.8.0 dan kelgan bola: tur 1-yangilik — 🎯 O'z maqsadim")

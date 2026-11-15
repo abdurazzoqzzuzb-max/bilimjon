@@ -10,6 +10,7 @@
      yordam                         — ro'yxat
      holat                          — hamma akkauntlar: email, admin, ruxsat, oila, bolalar, oxirgi kirish/sinxron, versiya
      statistika [email|hammasi]     — bolalar: bu hafta va o'tgan 4 hafta (kun, daqiqa, missiya, aniqlik), oxirgi faol kun
+     tahlil [kun=21]                — 📈 hamma oila: bola holati + oxirgi N kun logi → gzip+base64 (faqat yopiq repo logida; Claude ochadi)
      ruxsat <email> <ok|rad|blok|ochir>
      ruxsat hammasi ok              — bulutda oilasi bor hamma akkauntga ruxsat (rad/blok qilinganlardan tashqari) — qoidalardan OLDIN
      admin <email> <ber|ol>         — custom claim admin=true (qoidalardagi admin())
@@ -100,6 +101,25 @@ B.statistika = async ({ auth, db, log, A1 }) => {
         log(`      ${i === 0 ? 'bu hafta   ' : i + ' hafta oldin'}: ${s.kun} kun · ${s.daq} daq · ${s.mis} missiya · ${s.foiz == null ? 'javob yo\'q' : s.foiz + '% to\'g\'ri (' + s.n + ')'}`); });
     });
   }
+};
+
+/* 📈 TAHLIL 1-bosqich (docs/TAHLIL.md, 14.11): hamma oila → bola holati (b.kun, b.tugun …) + oxirgi N kun log (ans, o'yin, bo'lim).
+   Natija — JSON → gzip → base64, faqat YOPIQ repo logida (TAHLIL-B64 belgilari orasida); Claude chatda ochib tahlil qiladi.
+   Rasmlar (S.sovga/S.dokon — uzun data: satrlar) olib tashlanadi. Ochiq repoga va Drive'ga yozilmaydi. */
+const yengil = x => Array.isArray(x) ? x.map(yengil) : x && typeof x === 'object'
+  ? Object.fromEntries(Object.entries(x).map(([k, v]) => [k, yengil(v)])) : typeof x === 'string' && x.length > 1500 ? '[' + x.length + ']' : x;
+B.tahlil = async ({ auth, db, log, A1 }) => {
+  const kun = Math.max(1, Math.min(60, parseInt(A1, 10) || 21)), chegara = tk(new Date(Date.now() - kun * KUN));
+  const users = await hammaFoydalanuvchi(auth), out = { v: 1, ts: Date.now(), kun, oila: [] };
+  for (const u of users) {
+    const o = await oilaOl(db, u.uid); if (!o.bor) continue;
+    const L = {}; (await db.collection('oila/' + u.uid + '/log').get()).forEach(d => { const x = d.data() || {}; if (!x.kun || x.kun >= chegara) L[d.id] = x; });
+    out.oila.push({ email: u.email, oxirgiKirish: u.metadata && u.metadata.lastSignInTime, v: o.x.v || '', ts: o.x.ts || 0, j: yengil(o.j), bolalar: o.bolalar.map(yengil), log: L });
+  }
+  const b64 = zlib.gzipSync(JSON.stringify(out)).toString('base64');
+  log(`📈 Tahlil: ${out.oila.length} oila, ${out.oila.reduce((s, o) => s + o.bolalar.length, 0)} bola, ${out.oila.reduce((s, o) => s + Object.keys(o.log).length, 0)} kunlik log (oxirgi ${kun} kun) · ${Math.round(b64.length / 1024)} KB`);
+  log('=== TAHLIL-B64 BOSHI ==='); for (let i = 0; i < b64.length; i += 3000) log(b64.slice(i, i + 3000)); log('=== TAHLIL-B64 OXIRI ===');
+  return out;
 };
 
 B.ruxsat = async ({ auth, db, log, A1, A2 }) => {
