@@ -15,6 +15,7 @@ try:
   with sync_playwright() as p:
     br = p.chromium.launch()
     ctx = br.new_context(viewport={'width': 390, 'height': 844}, service_workers='block', device_scale_factor=2)
+    ctx.clock.install(time=__import__('datetime').datetime(2026, 11, 14, 10, 0))   # 15.11: sana qotirildi — yakshanba kuni missiya «final» bo'ladi, sinov oddiy kunni kutadi
     P = ctx.new_page(); P.on('pageerror', lambda e: PE.append(str(e))); ev = P.evaluate
     P.goto(URL + '?tez=1'); P.wait_for_timeout(400)
     P.fill('#on', 'Sinov oila'); P.fill('#p1', '1234'); P.fill('#p2', '1234'); P.click('#go'); P.wait_for_timeout(300)

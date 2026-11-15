@@ -7014,7 +7014,7 @@ const rnd = a => a[Math.floor(Math.random() * a.length)];
 
 /* ================= KATALOG ================= */
 /* t: jon · oyin · kiy · ulov · ras; d: 1 oddiy · 2 yaxshi · 3 noyob; j: 'q' qizlar · 'o' o'g'il bolalar · '' hamma; s — kiyim joyi; w — ulov dunyosi */
-const TUR = { jon: { ic: '🐾', nom: 'Jonivorlar' }, oyin: { ic: '🧸', nom: "O'yinchoqlar" }, kiy: { ic: '👕', nom: 'Kiyimlar' }, ulov: { ic: '🚗', nom: 'Ulovlar' }, ras: { ic: '🎨', nom: 'Rassom' } };
+const TUR = { jon: { ic: '🐾', nom: 'Jonivorlar', q: 'Jonivor' }, oyin: { ic: '🧸', nom: "O'yinchoqlar", q: "O'yinchoq" }, kiy: { ic: '👕', nom: 'Kiyimlar', q: 'Kiyim' }, ulov: { ic: '🚗', nom: 'Ulovlar' }, ras: { ic: '🎨', nom: 'Rassom' } };
 const JOY = { bosh: '🎩 Bosh', ust: '👕 Ust', oyoq: '👟 Oyoq', aks: '🎒 Aksessuar' };
 const K = [
   /* 🐾 jonivorlar — itsiz (u, 3A) */
@@ -7065,9 +7065,10 @@ const NOYOB = { 1: 'oddiy', 2: 'yaxshi', 3: 'noyob' };
 function st(b) {
   if (!b.sv || typeof b.sv !== 'object') b.sv = {};
   const v = b.sv; ['ega', 'kiy', 'jon', 'tq', 'ol', 'pick', 'rr'].forEach(k => { if (!v[k] || typeof v[k] !== 'object') v[k] = {}; });
-  v.ovq = Math.max(0, +v.ovq || 0); v.sarf = Math.max(0, +v.sarf || 0); return v;
+  v.ovq = Math.max(0, +v.ovq || 0); v.sarf = Math.max(0, +v.sarf || 0); v.bonus = Math.max(0, +v.bonus || 0); return v;
 }
-const yul = b => Math.max(0, (+b.yulduz || 0) - ((b.sv && +b.sv.sarf) || 0));
+/* 🎁 0.10.0 (15.11 tekshiruv): sovg'a/qism bonusi ⭐ — faqat do'kon va tuning uchun (v.bonus): haftalik yulduz, 🧰 sandiq va reytingga KIRMAYDI (sovg'a tanlagan bola yutqazmasin) */
+const yul = b => Math.max(0, (+b.yulduz || 0) + ((b.sv && +b.sv.bonus) || 0) - ((b.sv && +b.sv.sarf) || 0));
 const ega = (b, id) => !!(b.sv && b.sv.ega && b.sv.ega[id]);
 const kj = b => b.kjins === 'q' || b.kjins === 'o' ? b.kjins : b.dunyo === 'orol' ? 'q' : b.dunyo === 'garaj' ? 'o' : '';
 function mos(b, k) {   /* bolaga mos buyum: kiyim to'plami, ulov dunyosi, rassom bo'limi */
@@ -7102,7 +7103,7 @@ function prefTur(b) {
 function hovuz(b, d) { return K.filter(k => k.d === d && !ega(b, k.id) && mos(b, k)); }
 const XTRA = {
   x_ovq: b => ({ id: 'x_ovq', t: 'x', nom: 'Jonivor ovqati ×3', ic: '🍎', d: 1 }),
-  x_yul: (b, d) => ({ id: 'x_yul' + d, t: 'x', nom: `+${d * 10} yulduz`, ic: '⭐', d })
+  x_yul: (b, d) => ({ id: 'x_yul' + d, t: 'x', nom: `+${d * 10} ⭐ do'kon uchun`, ic: '⭐', d })
 };
 XTRA.x_qism = () => ({ id: 'x_qism', t: 'x', nom: '🔩 Mashina qismi ×2', ic: '🔩', d: 2 });
 XTRA.x_tun = () => ({ id: 'x_tun', t: 'x', nom: '+15 ⭐ tuning uchun', ic: '🏎️', d: 2 });
@@ -7123,7 +7124,7 @@ function tanlov(b, kalit, d) {
 }
 function olish(b, kalit, id, manba) {
   const v = st(b); if (v.ol[kalit]) return null; const it = itOf(b, id); if (!it) return null;
-  if (it.t === 'x') { if (id === 'x_ovq') v.ovq += 3; else if (id === 'x_qism') { if (A.avto) A.avto.qism(b, 2, 'sovga'); } else if (id === 'x_tun') A.addStar(b, 15); else A.addStar(b, it.d * 10); A.pushLog(b.id, { t: 'sovga', ts: Date.now(), bola: b.id, tur: manba, id }); }
+  if (it.t === 'x') { if (id === 'x_ovq') v.ovq += 3; else if (id === 'x_qism') { if (A.avto) A.avto.qism(b, 2, 'sovga'); } else if (id === 'x_tun') v.bonus += 15; else v.bonus += it.d * 10; A.pushLog(b.id, { t: 'sovga', ts: Date.now(), bola: b.id, tur: manba, id }); }
   else ber(b, id, manba);
   v.ol[kalit] = id; delete v.tq[kalit]; tozala(v); A.save(true); return it;
 }
@@ -7180,7 +7181,10 @@ function yolBelgi(b, m) {
 const OLOV_SOV = [3, 7, 14, 30, 50, 100];
 function kutilgan(b) {
   if (!on(b)) return []; const v = st(b), m = b.missiya, out = [];
-  if (m && m.done && m.sana === T() && !v.ol[m.sana + ':k']) out.push({ kalit: m.sana + ':k', d: m.final ? 3 : 2, ic: m.final ? '🏆' : '🎁', sarlavha: m.final ? '🏆 Yakshanba finali — KATTA sovg\'a!' : "🎉 Missiya bajarildi — KATTA sovg'a!", izoh: m.final ? "Noyob sovg'alardan birini tanla!" : "Bugungi mehnating uchun — birini tanla!", manba: 'missiya', ovq: 2 });
+  const katta = (kalit, fin) => ({ kalit, d: fin ? 3 : 2, ic: fin ? '🏆' : '🎁', sarlavha: fin ? '🏆 Yakshanba finali — KATTA sovg\'a!' : "🎉 Missiya bajarildi — KATTA sovg'a!", izoh: fin ? "Noyob sovg'alardan birini tanla!" : "Bugungi mehnating uchun — birini tanla!", manba: 'missiya', ovq: 2 });
+  if (m && m.done && m.sana === T() && !v.ol[m.sana + ':k']) { out.push(katta(m.sana + ':k', m.final)); if (!v.kk || v.kk.k !== m.sana + ':k') { v.kk = { k: m.sana + ':k', f: m.final ? 1 : 0 }; A.save(); } }
+  /* 0.10.0 (15.11): kechqurun tanlanmay qolgan KATTA sovg'a ertasi kuni ham kutadi (2 kungacha) — ilova yopilsa yo'qolmasin */
+  else if (v.kk && v.kk.k && !v.ol[v.kk.k] && v.kk.k.slice(0, 10) >= A.addDays(T(), -2)) out.push(katta(v.kk.k, v.kk.f));
   if (A.olov && m && m.done && m.sana === T()) { const n = A.olov.hisob(b).n, ms = OLOV_SOV.filter(x => x <= n).pop(); if (ms && !v.ol['olov:' + ms]) out.push({ kalit: 'olov:' + ms, d: 3, ic: '🔥', sarlavha: `🔥 ${ms} kun ketma-ket!`, izoh: "Muntazamliging uchun — NOYOB sovg'a!", manba: 'olov' }); }
   return out;
 }
@@ -7349,7 +7353,7 @@ function ulovOl(b) { const id = b && b.sv && b.sv.ulov, k = id && KAT[id]; retur
 function dokonHTML(b) {
   const T0 = Object.keys(TUR).filter(t => t !== 'ras' || A.bolimOn(b, 'rassom')).filter(t => t !== 'ulov' || b.dunyo); if (!T0.includes(DT)) DT = T0[0];
   const L = K.filter(k => k.t === DT && mos(b, k)).sort((x, y) => (ega(b, x.id) - ega(b, y.id)) || x.d - y.d), pb = pulBor();
-  return `<div class="svtabs">${T0.map(t => `<button class="chip${t === DT ? ' on' : ''}" data-svdt="${t}"><i>${TUR[t].ic}</i>${TUR[t].nom}</button>`).join('')}</div>
+  return `<div class="svtabs">${T0.map(t => `<button class="chip${t === DT ? ' on' : ''}" data-svdt="${t}"><i>${TUR[t].ic}</i>${TUR[t].q || TUR[t].nom}</button>`).join('')}</div>
   <div class="svgrid d">${L.map(k => { const e = ega(b, k.id), n = narx(k), yet = yul(b) >= n; return `<div class="svit dk${e ? ' on' : ''} d${k.d}"><span class="svkr">${yulduzlar(k.d)}</span>${rasmOf(b, k, 44)}<b>${esc(k.nom)}</b>
     ${e ? `<small>✅ Seniki</small>` : `<div class="svpb"><button class="btn sm${yet ? '' : ' ghost'}" data-svsot="${k.id}" data-p="yul">⭐ ${n}</button>${pb ? `<button class="btn sm ghost" data-svsot="${k.id}" data-p="som">💵 ${A.pul.fmt(somNarx(b, k))}</button>` : ''}</div>`}</div>`; }).join('')}</div>`;
 }
@@ -7590,6 +7594,8 @@ const css = `
 .svt b{font-size:1.02rem}.svt small{color:var(--mut);font-size:.78rem;line-height:1.2;overflow:hidden;text-overflow:ellipsis;max-width:100%}.svti{font-size:1.9rem;line-height:1}
 .svt.hot{box-shadow:0 0 0 2px #F2A900,0 3px 0 var(--line);animation:svpl 1.6s ease-in-out infinite}@keyframes svpl{50%{box-shadow:0 0 0 5px rgba(242,169,0,.35),0 3px 0 var(--line)}}
 .svtabs{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:6px;padding:4px 0 8px}.svtabs .chip{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:6px 2px;min-width:0;border-radius:14px;font-size:.78rem;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.svtabs .chip i{font-style:normal;font-size:1.25rem}
+/* 0.10.0 (15.11): kichik Android ekrani (360 px) — sarlavha ⭐/💵 pillari orasida siqilmasin, tablar sig'sin */
+@media (max-width:380px){.kidw .top{gap:6px}.kidw .top .pill{padding:3px 7px;font-size:.84rem}.kidw .top .ttl{font-size:.94rem}.svtabs .chip{font-size:.7rem;letter-spacing:-.01em}}
 .svkut{display:block;width:100%;text-align:left;border:2px solid #F2A900;font:inherit;color:var(--ink);cursor:pointer;animation:svpl 1.6s ease-in-out infinite}
 .svo{text-align:center}.svoh{font-size:2.6rem}.svkg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:10px 0}
 .svk{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 4px 8px;border-radius:16px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;cursor:pointer;min-width:0;transition:transform .25s,opacity .25s}
@@ -7802,7 +7808,7 @@ function decor(b) { const s = st(b), m = s.a; return Object.assign({ model: m },
 /* 🔩 qism: bosqich +1, missiya +2, sovg'a +2, mantiq g'alabasi (har 3 tasiga) +1 */
 function qism(b, n, sabab) {
   if (!garajMi(b) || !n) return null; const s = st(b); s.jami += n;
-  if (!s.maq) { if (A.addStar) A.addStar(b, 5 * n); A.save(true); return null; }
+  if (!s.maq) { if (A.sv) A.sv.st(b).bonus += 5 * n; A.save(true); return null; }   /* 0.10.0 (15.11): hamma mashina ochilgan — ⭐ tuning bonusi (sandiqqa kirmaydi) */
   s.q += n; const kerak = MODEL[s.maq].qism; let ochildi = null;
   if (s.q >= kerak) { ochildi = s.maq; s.ega[ochildi] = Date.now(); s.t[ochildi] = { rang: MODEL[ochildi].rang, vinil: MODEL[ochildi].vinil || 0 }; s.q -= kerak; s.yangi = ochildi; s.maq = TARTIB.find(m => !s.ega[m]) || null; if (!s.maq) s.q = 0; }
   A.pushLog(b.id, { t: 'avto', ts: Date.now(), bola: b.id, tur: 'qism', n, sabab, ochildi });
